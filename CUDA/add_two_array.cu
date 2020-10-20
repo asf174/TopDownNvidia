@@ -42,9 +42,9 @@ void addWithCuda(int* c, const int* a, const int* b, int size) {
 }
 
 int main(int argc, char** argv) {
-    const int arraySize = 5;
-    const int a[arraySize] = {  1,  2,  3,  4,  5 };
-    const int b[arraySize] = { 10, 20, 30, 40, 50 };
+    const int arraySize = 8;
+    const int a[arraySize] = {  1,  2,  3,  4,  5, 6, 7,8 };
+    const int b[arraySize] = { 10, 20, 30, 40, 50,60,70,80 };
     int c[arraySize] = { 0 };
 
     addWithCuda(c, a, b, arraySize);
