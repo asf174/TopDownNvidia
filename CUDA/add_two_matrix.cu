@@ -100,11 +100,8 @@ main(int argc, char* argv[])
 	float milliseconds = 0;
 	cudaEventElapsedTime(&milliseconds, start, stop);
 	//printf("Time elapsed in DEVICE: %f milliseconds / %g seconds\n",milliseconds, milliseconds/1000);
-	printf("Time elapsed in DEVICE (%d,%d) N = %d : %g milliseconds / %g seconds\n", numBlock,numThreadsPerBlock,N,
-	endtime - initime,(endtime - initime)/1000);
+	//printf("Time elapsed in DEVICE (%d,%d) N = %d : %g milliseconds / %g seconds\n", numBlock,numThreadsPerBlock,N,
+	//endtime - initime,(endtime - initime)/1000);
+
+	printf("%g %d\n",endtime - initime,numThreadsPerBlock);
 }
-
-/* SOME TIME measureS
-	Time elapsed in DEVICE (1,2) N = 3500 : 962.264 milliseconds / 0.962264 seconds
-
-*/
