@@ -16,7 +16,6 @@
 __global__ void addMatrix(int* a, int* b, int* result, int block)
 {
 	int idx = blockDim.x*blockIdx.x + threadIdx.x;
-	//printf("Hola mundo desde el device con thread: %d\n",idx);
 	for (int i = block*idx; i <block*(idx + 1); i++)
 			result[i] = a[i] + b[i];
 }

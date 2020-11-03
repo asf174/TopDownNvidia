@@ -1,21 +1,14 @@
-Time elapsed in DEVICE (1,2) N = 0 : 1.2251 milliseconds / 0.0012251 seconds
-Time elapsed in DEVICE (1,3) N = 100 : 50.0811 milliseconds / 0.0500811 seconds
-Time elapsed in DEVICE (1,4) N = 200 : 730.842 milliseconds / 0.730842 seconds
-Time elapsed in DEVICE (1,5) N = 300 : 732.788 milliseconds / 0.732788 seconds
-Time elapsed in DEVICE (1,6) N = 400 : 736.381 milliseconds / 0.736381 seconds
-Time elapsed in DEVICE (1,7) N = 500 : 739.535 milliseconds / 0.739535 seconds
-Time elapsed in DEVICE (1,8) N = 600 : 743.55 milliseconds / 0.74355 seconds
-Time elapsed in DEVICE (1,9) N = 700 : 747.488 milliseconds / 0.747488 seconds
-Time elapsed in DEVICE (1,10) N = 800 : 744.534 milliseconds / 0.744534 seconds
-Time elapsed in DEVICE (1,11) N = 900 : 757.894 milliseconds / 0.757894 seconds
-Time elapsed in DEVICE (1,12) N = 1000 : 760.884 milliseconds / 0.760884 seconds
-Time elapsed in DEVICE (1,13) N = 1100 : 767.249 milliseconds / 0.767249 seconds
-Time elapsed in DEVICE (1,14) N = 1200 : 772.815 milliseconds / 0.772815 seconds
-Time elapsed in DEVICE (1,15) N = 1300 : 778.948 milliseconds / 0.778948 seconds
-Time elapsed in DEVICE (1,16) N = 1400 : 786.126 milliseconds / 0.786126 seconds
-Time elapsed in DEVICE (1,17) N = 1500 : 792.368 milliseconds / 0.792368 seconds
-Time elapsed in DEVICE (1,18) N = 1600 : 800.009 milliseconds / 0.800009 seconds
-Time elapsed in DEVICE (1,19) N = 1700 : 807.426 milliseconds / 0.807426 seconds
-Time elapsed in DEVICE (1,20) N = 1800 : 815.055 milliseconds / 0.815055 seconds
-Time elapsed in DEVICE (1,21) N = 1900 : 823.991 milliseconds / 0.823991 seconds
-Time elapsed in DEVICE (1,22) N = 2000 : 830.861 milliseconds / 0.830861 seconds
+408.779 1
+795.182 2
+748.647 3
+754.748 4
+746.043 5
+739.484 6
+741.55 7
+738.907 8
+743.708 9
+753.138 10
+740.994 11
+745.272 12
+762.904 13
+741.742 14
