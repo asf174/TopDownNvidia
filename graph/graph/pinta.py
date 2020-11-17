@@ -2,28 +2,28 @@ import sys
 import pathlib
 import os.path
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
+#import matplotlib
+#matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
 
 # Arguments Features
-NUMBER_ARGUMENTS = 6
+MIN_NUMBER_ARGUMENTS = 6
+MAX_NUMBER_ARGUMENTS = 8
 NUMBER_ARGUMENT_WITH_SOME_LIMITS = 7
 NUMBER_ARGUMENT_WITH_ALL_LIMITS = 8
 HELP_OPTION = "help"
 
 
-if (len(sys.argv) != NUMBER_ARGUMENTS or len(sys.argv) != NUMBER_ARGUMENT_WITH_LIMITS 
-    or len(sys.argv) != NUMBER_ARGUMENT_WITH_ALL_LIMITS):
+if len(sys.argv) < MIN_NUMBER_ARGUMENTS or len(sys.argv) > MAX_NUMBER_ARGUMENTS :
+    print("Entro aki")
     if len(sys.argv) == 1:
         print("Error with number arguments")
     elif sys.argv[1] == HELP_OPTION:
-        print("python3 " + sys.argv[0] + " <title> <titleX> <titleY> <file> <nameFig> [<xLimStart>,<xLimEnd>,<XStep>]," +
-        + "[<yLimStart>,<yLimEnd>,<Ystep>]")
+        print("python3 " + sys.argv[0] + " <title> <titleX> <titleY> <file> <nameFig> [<xLimStart>,<xLimEnd>,<XStep>], [<yLimStart>,<yLimEnd>,<Ystep>]")
     sys.exit()
-
+print("Aqui antes")
 # Add title and axis names
 plt.title(sys.argv[1])
 plt.xlabel(sys.argv[2])
@@ -59,9 +59,9 @@ if len(sys.argv) == NUMBER_ARGUMENT_WITH_SOME_LIMITS:
     argument = argument.replace(']','')
     argument = argument.split(',')
     
-    if type_axis == 'y' or type_axis == 'Y':
+    if (type_axis == 'y') or (type_axis == 'Y'):
         plt.ylim(int(argument[0]),int(argument[1]))
-        plt.yticks(np.arange(int(argument[0]), int(argument[1]), step=int(argument[2]))
+        plt.yticks( np.arange(int(argument[0]), int(argument[1]), step=int(argument[2])))
     elif type_axis == 'X' or type_axis == 'x':
         plt.xlim(int(argument[0]), int(argument[1]))
         plt.xticks(np.arange(int(argument[0]), int(argument[1]), step=int(argument[2])))
@@ -93,11 +93,12 @@ elif len(sys.argv) == NUMBER_ARGUMENT_WITH_ALL_LIMITS:
     plt.ylim(int(argument[0]), int(argument[1]))
     plt.yticks(np.arange(int(argument[0]), int(argument[1]), step=int(argument[2])))    
 
+print("Aqui antes")
 # print and show
 plt.scatter(x_axis,y_axis,color='r',zorder=1)
 plt.plot(x_axis,y_axis,color='b',zorder=2)
 plt.grid()
 plt.show()
 
-# save
+#save
 plt.savefig(sys.argv[5])
