@@ -14,21 +14,7 @@ class Grafica:
     NUMBER_ARGUMENT_WITH_SOME_LIMITS = 7
     NUMBER_ARGUMENT_WITH_ALL_LIMITS = 8
     HELP_OPTION = "help"
-
-    def main():
-        _check_arguments()
-        _addFeatures()
-        _addData(x_axis,y_axis)
-        _check_limits()
-
-        # print and show
-        plt.scatter(x_axis,y_axis,color='r',zorder=1)
-        plt.plot(x_axis,y_axis,color='b',zorder=2)
-        plt.grid()
-        plt.show()
-
-        #save
-        plt.savefig(sys.argv[5])
+ 
 
     def _addFeatures():
         # Add title and axis names
@@ -37,29 +23,46 @@ class Grafica:
         plt.ylabel(sys.argv[3])
         pass
 
-    def _addData(x_axis,y_axis):
+    def _addData():
         # colours for graphs
-        colores = ['blue', 'red', 'orange', 'grey']
+        colourScatter = ['blue', 'red', 'orange', 'grey']
+        colourPlot = ['blue', 'red', 'orange', 'grey']
         
-        NUM_GRAPH = 4
+        # introduce fileNames in array
+        files = sys.argv[4]    
+        files = argument.replace('[','')
+        files = argument.replace(']','')
+        files = argument.split(',')
 
-        for i in NUM_GRAPH:
+        x_axis = []
+        y_axis = []
+        count = 0
+        colourNumber = 0
+        for fileName in files:
             # read file
-            file = open(sys.argv[4], 'r') 
-            Lines = file1.readlines() 
+            f = open(fileName, 'r') 
+            Lines = f.readlines() 
+            
             # add data
             for line in Lines: 
-            line = line.split()
-            for word in line:
-                if count == 0:
-                    x_axis.append(word)
-                    count = count + 1
-                else:
-                    y_axis.append(word)
-                    count = 0
+                lineList = line.split()
+                
+                for word in lineList:
+                    if count == 0:
+                        x_axis.append(word)
+                        count = count + 1
+                    else:
+                        y_axis.append(word)
+                        count = 0
+            plt.scatter(x_axis,y_axis,color=colourScatter[colourNumber],zorder=1)
+            plt.plot(x_axis,y_axis,color=colourPlot[colourNumber],zorder=2)
+            colourNumber = colourNumber + 1
+            x_axis = []
+            y_axis = []
         pass
 
-    def _check_arguments():
+    def _check_arguments(self):
+        MIN_NUMBER_ARGUMENTS = 6
         if len(sys.argv) < MIN_NUMBER_ARGUMENTS or len(sys.argv) > MAX_NUMBER_ARGUMENTS:
             print("Entro aki")
             if len(sys.argv) == 1:
@@ -113,3 +116,21 @@ class Grafica:
             plt.ylim(int(argument[0]), int(argument[1]))
             plt.yticks(np.arange(int(argument[0]), int(argument[1]), step=int(argument[2])))
         pass
+
+
+    def main(self):
+        _check_arguments()
+        _addFeatures()
+        _addData()
+        
+        _check_limits()
+
+        # show
+        plt.grid()
+        plt.show()
+
+        # save
+        plt.savefig(sys.argv[5])
+
+
+Grafica().main()
