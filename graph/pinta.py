@@ -2,8 +2,8 @@ import sys
 import pathlib
 import os.path
 import numpy as np
-#import matplotlib
-#matplotlib.use('Agg')
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
@@ -63,10 +63,10 @@ class Grafica:
             indexLegends = indexLegends + 1
             x_axis = []
             y_axis = []
-        plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.07),
-          fancybox=True, shadow=True, ncol=5)
-        plt.tick_params(axis='both',direction='inout', length=0, width=10000, colors='black',
-               grid_color='black', grid_alpha=1,labelsize=14)
+        #plt.legend(loc=2,fancybox=True, shadow=True, ncol=1)
+        plt.legend(title= 'Legend',loc='center left', bbox_to_anchor=(1, 0.5))
+        plt.tick_params(axis='both',direction='inout', length=0, width=10000, colors='black'
+               ,labelsize=10)
         plt.margins(0)
 
         pass
@@ -83,15 +83,15 @@ class Grafica:
                 print("Error with number arguments")
             elif sys.argv[1] == HELP_OPTION:
                 print("python3 " + sys.argv[0] + " <title> <titleX> <titleY> [<file[0]>,<file[n]>]" +
-                    ", [<legend<[0]>,<legend<[n]>] [<xLimStart>,<xLimEnd>,<XStep>], [<yLimStart>,<yLimEnd>,<Ystep>]")
+                    ", [<legend<[0]>,<legend<[n]>] <nameFig> [<xLimStart>,<xLimEnd>,<XStep>], [<yLimStart>,<yLimEnd>,<Ystep>]")
             sys.exit()
         pass
 
     def _check_limits(self):
-        NUMBER_ARGUMENT_WITH_SOME_LIMITS = 7
-        NUMBER_ARGUMENT_WITH_ALL_LIMITS = 8
+        NUMBER_ARGUMENT_WITH_SOME_LIMITS = 8
+        NUMBER_ARGUMENT_WITH_ALL_LIMITS = 9
         if len(sys.argv) == NUMBER_ARGUMENT_WITH_SOME_LIMITS:
-            argument = sys.argv[6]
+            argument = sys.argv[7]
             type_axis = argument[0]
             
             argument = argument.replace(argument[0],'')
@@ -145,6 +145,11 @@ class Grafica:
         # show
         plt.grid()
         plt.show()
+
+        # set size 
+        figure = plt.gcf()
+        figure.set_size_inches(16, 8)
+        plt.savefig(sys.argv[6],dpi=200)
 
     pass
 
