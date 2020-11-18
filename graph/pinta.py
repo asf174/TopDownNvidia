@@ -51,10 +51,10 @@ class Grafica:
                 
                 for word in lineList:
                     if count == 0:
-                        x_axis.append(word)
+                        x_axis.append(float(word))
                         count = count + 1
                     else:
-                        y_axis.append(word)
+                        y_axis.append(float(word))
                         count = 0
             plt.plot(x_axis,y_axis,color=colourPlot[colourNumber], label = legends[indexLegends], zorder=4)
             plt.legend(legends[indexLegends])
@@ -65,6 +65,10 @@ class Grafica:
             y_axis = []
         plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.07),
           fancybox=True, shadow=True, ncol=5)
+        plt.tick_params(axis='both',direction='inout', length=0, width=10000, colors='black',
+               grid_color='black', grid_alpha=1,labelsize=14)
+        plt.margins(0)
+
         pass
 
     def _check_arguments(self):
