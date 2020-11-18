@@ -8,7 +8,7 @@ if [ -f "$FILE" ]; then
     rm -f $FILE
 fi
 N_v=500
-numBlock_v=1
+numBlock_v=2
 numThreadsPerBlock_v=1
 for i in `seq 0 50 3000`; do
     sudo $(which nvcc) ../add_two_matrix.cu --run -D N=$N_v, -D numBlock=$numBlock_v, -D numThreadsPerBlock=$numThreadsPerBlock_v >> $FILE
@@ -24,7 +24,7 @@ for i in `seq 0 50 3000`; do
     #fi
 
     if [ $numThreadsPerBlock_v -eq "15" ]; then
-	numThreadsPerBlock_v=1
+	    exit 2
     fi
 done
 
