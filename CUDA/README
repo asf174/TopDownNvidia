@@ -1,0 +1,2 @@
+El directorio src/ contiene diferentes tipos de ficheros .cu para trabajar con vectores y matrices.
+Las ejecuciones deben de llevarse a cabo desde el directorio exec/ que contiene los scripts y/o binarios ejecutables.

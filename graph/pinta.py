@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 
 
 class Grafica:
-    
-
     def _addFeatures(self):
         # Add title and axis names
         plt.title(sys.argv[1])
@@ -83,7 +81,9 @@ class Grafica:
                 print("Error with number arguments")
             elif sys.argv[1] == HELP_OPTION:
                 print("python3 " + sys.argv[0] + " <title> <titleX> <titleY> [<file[0]>,<file[n]>]" +
-                    ", [<legend<[0]>,<legend<[n]>] <nameFig> [<xLimStart>,<xLimEnd>,<XStep>], [<yLimStart>,<yLimEnd>,<Ystep>]")
+                    ", [<legend<[0]>,<legend<[n]>] <nameFig> [<xLimStart>,<xLimEnd>,<xStep>], [<yLimStart>,<yLimEnd>,<ystep>]")
+                print("python3 " + sys.argv[0] + " <title> <titleX> <titleY> [<file[0]>,<file[n]>]" +
+                    ", [<legend<[0]>,<legend<[n]>] <nameFig> <x/y>[<<x/y>LimStart>,<<x/y>LimEnd>,<<x/y>Step>]")
             sys.exit()
         pass
 
@@ -149,7 +149,7 @@ class Grafica:
         # set size 
         figure = plt.gcf()
         figure.set_size_inches(16, 8)
-        plt.savefig(sys.argv[6],dpi=200)
+        plt.savefig(sys.argv[6],dpi=400)
 
     pass
 

@@ -10,8 +10,8 @@ fi
 N_v=500
 numBlock_v=8
 numThreadsPerBlock_v=1
-for i in `seq 0 50 3000`; do
-    sudo $(which nvcc) ../add_two_matrix.cu --run -D N=$N_v, -D numBlock=$numBlock_v, -D numThreadsPerBlock=$numThreadsPerBlock_v >> $FILE
+for i in `seq 1 1 15`; do
+    cpl ../src/add_two_matrix.cu --run -D N=$N_v, -D numBlock=$numBlock_v, -D numThreadsPerBlock=$numThreadsPerBlock_v >> $FILE
     numThreadsPerBlock_v=$((numThreadsPerBlock_v + 1))
 
     #if [ $i -eq "1000" ]; then
