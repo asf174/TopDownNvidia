@@ -32,7 +32,8 @@ class Grafica:
         legendsArgument = legendsArgument.replace(']','')
         legends = legendsArgument.split(',')
         
-
+        width = 0.25
+        w_increment = -0.25
         x_axis = []
         y_axis = []
         count = 0
@@ -49,17 +50,18 @@ class Grafica:
                 
                 for word in lineList:
                     if count == 0:
-                        x_axis.append(float(word))
+                        x_axis.append(float(word)+float(w_increment))
                         count = count + 1
                     else:
                         y_axis.append(float(word))
                         count = 0
-            plt.bar(x_axis,y_axis,color=colourPlot[colourNumber], label = legends[indexLegends], zorder=4)
+            plt.bar(x_axis,y_axis,width = width,color=colourPlot[colourNumber], label = legends[indexLegends], zorder=2, align = 'edge')
             plt.legend(legends[indexLegends])
             colourNumber = colourNumber + 1
             indexLegends = indexLegends + 1
             x_axis = []
             y_axis = []
+            w_increment = w_increment + width
         #plt.legend(loc=2,fancybox=True, shadow=True, ncol=1)
         plt.legend(title= 'Legend',loc='center left', bbox_to_anchor=(1, 0.5))
         plt.tick_params(axis='both',direction='inout', length=0, width=10000, colors='black'
