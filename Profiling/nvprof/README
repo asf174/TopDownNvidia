@@ -1,0 +1,4 @@
+Informacion disponible en: https://docs.nvidia.com/cuda/profiler-users-guide/index.html#event-summary-mode
+
+To see a list of all available events on a particular NVIDIA GPU, use the --query-events option. To see a list of all available 
+metrics on a particular NVIDIA GPU, use the --query-metrics option. nvprof is able to collect multiple events/metrics at the same time.
