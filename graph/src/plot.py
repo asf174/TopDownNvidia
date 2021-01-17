@@ -100,11 +100,11 @@ class Grafica:
             argument = argument.split(',')
             
             if (type_axis == 'y') or (type_axis == 'Y'):
-                plt.ylim(int(argument[0]),int(argument[1]))
-                plt.yticks( np.arange(int(argument[0]), int(argument[1]), step=int(argument[2])))
+                plt.ylim(float(argument[0]),float(argument[1]))
+                plt.yticks( np.arange(float(argument[0]), float(argument[1]), step=float(argument[2])))
             elif type_axis == 'X' or type_axis == 'x':
-                plt.xlim(int(argument[0]), int(argument[1]))
-                plt.xticks(np.arange(int(argument[0]), int(argument[1]), step=int(argument[2])))
+                plt.xlim(float(argument[0]), float(argument[1]))
+                plt.xticks(np.arange(float(argument[0]), float(argument[1]), step=float(argument[2])))
             else:
                 print("ERROR")
 
@@ -149,8 +149,7 @@ class Grafica:
         # set size 
         figure = plt.gcf()
         figure.set_size_inches(16, 8)
-        plt.savefig(sys.argv[6],dpi=400)
-
+        plt.savefig(sys.argv[6], dpi=400)
     pass
 
 
