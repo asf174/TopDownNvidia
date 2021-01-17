@@ -32,7 +32,7 @@ class Grafica:
         legendsArgument = legendsArgument.replace(']','')
         legends = legendsArgument.split(',')
         
-        width = 0.25
+        width = 10
         w_increment = -0.25
         x_axis = []
         y_axis = []

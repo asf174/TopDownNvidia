@@ -1,0 +1,3 @@
+==2673== NVPROF is profiling process 2673, command: ../../../CUDA/bin/add_two_matrix -D N=500
+==2673== Error: Application encountered error: unspecified launch failure (719).
+======== Error: CUDA device error.

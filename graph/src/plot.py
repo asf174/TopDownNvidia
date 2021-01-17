@@ -3,9 +3,11 @@ import pathlib
 import os.path
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
+import collections  as mc
 
+#!/usr/bin/env python
 
 class Grafica:
     def _addFeatures(self):
@@ -54,9 +56,9 @@ class Grafica:
                     else:
                         y_axis.append(float(word))
                         count = 0
-            plt.plot(x_axis,y_axis,color=colourPlot[colourNumber], label = legends[indexLegends], zorder=4)
+            plt.plot(x_axis,y_axis,linestyle='solid',color=colourPlot[colourNumber], label = legends[indexLegends])
             plt.legend(legends[indexLegends])
-            plt.scatter(x_axis,y_axis,color=colourScatter[colourNumber],zorder=1)
+            #plt.scatter(x_axis,y_axis,color=colourScatter[colourNumber],zorder=1)
             colourNumber = colourNumber + 1
             indexLegends = indexLegends + 1
             x_axis = []
