@@ -1,24 +1,25 @@
 #include <stdio.h>
 #include <sys/time.h>
+#include <cuda_runtime.h>
 
 #ifndef N 
 	#define N 3500
 #endif
 
-#ifndef numBlock
-	#define numBlock 1
+#ifndef numThreadsPerBlock
+	#define numThreadsPerBlock 256
 #endif
 
-#ifndef numThreadsPerBlock
-	#define numThreadsPerBlock 2
-#endif	
+#ifndef numBlock
+	#define numBlock (ceil( (float) N*N/numThreadsPerBlock))
+#endif
 
 __global__ void addMatrix(int* a, int* b, int* result, int size)
 {
+	printf("Achico\n");
 	int idx = blockDim.x*blockIdx.x + threadIdx.x;
-	if(idx < size)
-		for (int i = block*idx; i <block*(idx + 1); i++)
-			result[i] = a[i] + b[i];
+	if (idx < size)
+		result[idx] = a[idx] + b[idx];
 }
 
 // print matrix indicated by argument
@@ -80,7 +81,8 @@ main(int argc, char* argv[])
 	cudaMemcpy(matrixB_d,matrixB,N * N * sizeof(int),cudaMemcpyHostToDevice);
 		 
 	cudaEventRecord(start);
-	addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N/numBlock*numThreadsPerBlock);
+	printf("NUm bloques %d\n",(int) numBlock);
+	addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
 
 
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
@@ -93,15 +95,20 @@ main(int argc, char* argv[])
 
 	//printMtx(matrixResult);
 
+	//printMtx(matrixA);
+	//printMtx(matrixB);
+	//printMtx(matrixResult);
+
 	cudaFree(matrixA_d);
 	cudaFree(matrixB_d);
 	cudaFree(matrixResult_d);
 
 	float milliseconds = 0;
 	cudaEventElapsedTime(&milliseconds, start, stop);
+
+	printf("NUMBLOCKS: %d THREADS_PER_BLOCK: %d\n", (int) numBlock, (int) numThreadsPerBlock);
 	//printf("Time elapsed in DEVICE: %f milliseconds / %g seconds\n",milliseconds, milliseconds/1000);
 	//printf("Time elapsed in DEVICE (%d,%d) N = %d : %g milliseconds / %g seconds\n", numBlock,numThreadsPerBlock,N,
 	//endtime - initime,(endtime - initime)/1000);
-
-	printf("%g %d\n",endtime - initime,numThreadsPerBlock);
+	//printf("%g %d\n",endtime - initime,numThreadsPerBlock);
 }
