@@ -3,7 +3,7 @@
 #include <cuda_runtime.h>
 
 #ifndef N 
-	#define N 3500
+	#define N 3
 #endif
 
 #ifndef numThreadsPerBlock
@@ -16,9 +16,17 @@
 
 __global__ void addMatrix(int* a, int* b, int* result, int size)
 {
+	__shared__ int tmp[N*N];
 	int idx = blockDim.x*blockIdx.x + threadIdx.x;
 	if (idx < size)
-		result[idx] = a[idx] + b[idx];
+		tmp[idx] = a[idx] + b[idx];
+	__syncthreads();
+	int max = tmp[0]; 
+	for (int i = 1; i < N*N;i++) {
+		if(tmp[i] > max)
+			max = tmp[i];
+	}
+	result[idx] = tmp[idx];
 }
 
 // print matrix indicated by argument
@@ -34,7 +42,8 @@ printMtx(int * matrix)
     }
 }
 
-double time() {
+double time() 
+{
 	struct timeval time;
 
   	/* take time of execution */
@@ -58,12 +67,14 @@ main(int argc, char* argv[])
 	
 	// create matrix
 	
-	for (int i = 0; i < N; i++) {
+	for (int i = 0; i < N; i++) 
+	{
 		matrixA = (int *) malloc(N * N* sizeof(int));
 		matrixB = (int *) malloc(N * N* sizeof(int));
 		matrixResult = (int *) malloc(N * N * sizeof(int));
 	}
-	for(int i = 0; i < N*N; i++) {
+	for(int i = 0; i < N*N; i++) 
+	{
 			matrixA[i] = 4;
 			matrixB[i] = 10;
 	}
@@ -94,9 +105,9 @@ main(int argc, char* argv[])
 
 	//printMtx(matrixResult);
 
-	//printMtx(matrixA);
-	//printMtx(matrixB);
-	//printMtx(matrixResult);
+	printMtx(matrixA);
+	printMtx(matrixB);
+	printMtx(matrixResult);
 
 	cudaFree(matrixA_d);
 	cudaFree(matrixB_d);

@@ -81,8 +81,9 @@ Siguiendo el ensamblador:
     - un thread que hace la operacion ejecuta 11 + 11 = 22 instrucciones.
 
 
-Hay 12250000 threads que ejecutarán 25 instrucciones y (12250112 - 12250000) que ejecutarán 14.
+Hay 12250000 threads que ejecutarán 22 instrucciones y (12250112 - 12250000) que ejecutarán 11.
 
-    TOTAL: 12250000x22 + (12250112 - 12250000)x11 = 269501232 instrucciones ejecutadas
+    TOTAL: 12250000x22 + (12250112 - 12250000)x11 = 269501232 instrucciones ejecutadas. 
+    NI DE CASUALIDAD SE ACERCA.
 
 
