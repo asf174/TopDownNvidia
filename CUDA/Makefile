@@ -35,7 +35,6 @@ hello_world.ptx: $(dirCU)hello_world.cu
 
 add_two_matrix2.o: $(dirCU)add_two_matrix2.cu
 	$(CC) -c $(dirCU)add_two_matrix2.cu -o $(dirB)add_two_matrix2.o
-
 add_two_matrix2_ptx: $(dirCU)add_two_matrix2.cu
 	$(CC) $(dirCU)add_two_matrix2.cu -o $(dirB)add_two_matrix2.ptx --ptx
 
