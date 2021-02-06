@@ -143,8 +143,9 @@ class TopDown():
         shell.launch_command("ls")
         return True
     pass
-    def main(self):
+    def run(self):
         self.__read_arguments()
     pass
 
-TopDown().main()
+if __name__ == '__main__':
+    TopDown().run()
