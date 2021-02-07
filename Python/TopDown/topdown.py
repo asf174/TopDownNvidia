@@ -1,5 +1,5 @@
 """
-Program that implements the Top Down methodology on GPUs
+Program that implements the Top Down methodology on GPUs.
 
 @author:    Alvaro Saiz (UC)
 @date:      Jan 2021
@@ -9,6 +9,8 @@ import sys # for arguments
 from shell import Shell # launch shell arguments
 
 class TopDown():
+    """Class that implements TopDown methodology."""
+    
     # Arguments features
     C_MIN_NUMBER_ARGUMENTS              : int       = 1
     C_MAX_NUMBER_ARGUMENTS              : int       = 100*C_MIN_NUMBER_ARGUMENTS
@@ -30,18 +32,18 @@ class TopDown():
     C_HELP_LONG_OPTION                  : str       = "--help"
 
     # Output file
-    C_OUTPUT_FILE_SHORT_OPTION          : str       = '-o'
-    C_OUTPUT_FILE_LONG_OPTION           : str       = '--output'
+    C_OUTPUT_FILE_SHORT_OPTION          : str       = "-o"
+    C_OUTPUT_FILE_LONG_OPTION           : str       = "--output"
     
+    def read_arguments(self) -> bool:   
+        """
+        Check if arguments passed to program are correct. 
+        Show information with '-h'/'--help' option
 
-    """
-    Check if arguments passed to program are correct. 
-    Show information with '-h'/'--help' option
+        Returns:
+            True if are correct, False if not
+        """
 
-    Returns:
-        True if are correct, False if not
-    """
-    def __read_arguments(self) -> bool:
         if len(sys.argv) == self.C_MIN_NUMBER_ARGUMENTS:
             print("Error with arguments. Introduce '-h' or '--help' to see options")
             return False
@@ -68,15 +70,17 @@ class TopDown():
         return True
     pass
 
-    """ 
-    Find the TopDown run level
+    
+    def find_level(self) -> int:
+        """ 
+        Find the TopDown run level
 
-    Returns:
-        1 if it's level one, two if it's level two
-        or -1 to nofity ERROR (no level specified in the correct 
-        way)
-    """ 
-    def __find_level(self) -> int:
+        Returns:
+            1 if it's level one, two if it's level two
+            or -1 to nofity ERROR (no level specified in the correct 
+            way)
+        """ 
+
         for i in range(1, len(sys.argv)):
             # check simple arguments
             if sys.argv[i] == self.C_LEVEL_1_SHORT_OPTION:
@@ -94,29 +98,31 @@ class TopDown():
         return -1
     pass
 
-    """
-    Find path to output file
+    def find_output_file(self) -> str:
+        """
+        Find path to output file
 
-    Returns:
-        string with path to file, or None if 
-        option '-o' or '--output' has not been indicated
-    """
-    def __find_output_file(self) -> str:
+        Returns:
+            string with path to file, or None if 
+            option '-o' or '--output' has not been indicated
+        """
+
         for i in range(1, len(sys.argv)):
             # check long arguments
             if i + 1 <= len(sys.argv):
-                if sys.argv[i] == "-o" or sys.argv[i] == "--output":
+                if sys.argv[i] == self.C_OUTPUT_FILE_SHORT_OPTION or sys.argv[i] == self.C_OUTPUT_FILE_LONG_OPTION:
                     return sys.argv[i + 1]
         return None
     pass
     
-    """
-    Check if program has to show long description of results
+    def show_long_desc(self) -> bool:
+        """
+        Check if program has to show long description of results.
 
-    Returns:
-        True to show long description of False if not
-    """
-    def __show_long_desc() -> bool:
+        Returns:
+            True to show long description of False if not
+        """
+
         for i in range(1, len(sys.argv)):
             if (sys.argv[i] == self.C_LONG_DESCRIPTION_SHORT_OPTION or 
                 sys.argv[i] == self.C_LONG_DESCRIPTION_LONG_OPTION):
@@ -124,28 +130,53 @@ class TopDown():
         return False
     pass
 
-    """ 
-    Run TopDown level 1
-    """
     def level_1(self):
+        """ 
+        Run TopDown level 1.
+        """
+        
         # TODO
         shell = Shell()
-        shell.launch_command("pwd")
+        shell.launch_command("pwd", "LAUNCH PWD")
         return True
     pass
 
-    """ 
-    Run TopDown level 2
-    """
     def level_2(self):
+        """ 
+        Run TopDown level 2.
+        """
+        
         # TODO
         shell = Shell()
-        shell.launch_command("ls")
+        shell.launch_command("ls", "LAUNCH ls")
         return True
     pass
-    def run(self):
-        self.__read_arguments()
-    pass
-
+    
 if __name__ == '__main__':
-    TopDown().run()
+    td = TopDown()
+    
+    if not td.read_arguments():
+        sys.exit()
+    level : int = td.find_level()
+    
+    if level == -1:
+        print("ERROR LEVEL")
+        sys.exit()
+    print("LEVEL: " + str(level))
+
+    file : str = td.find_output_file()
+    if file is None:
+        print("NO OUTPUT-FILE")
+    else:
+        print("OUTPUT-FILE: " + file)
+
+    showLongDesc : bool = td.show_long_desc()
+    if showLongDesc:
+        print("SHOW Long-Desc")
+    else:
+        print ("DO NOT SHOW Long-Desc")
+
+    if level == 1:
+        td.level_1()
+    else:
+        td.level_2()
