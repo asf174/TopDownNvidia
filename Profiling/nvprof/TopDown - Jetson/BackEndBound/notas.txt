@@ -1,5 +1,0 @@
-Back End Bound: Impactos en la jerarquía de memoria.
-
-    - Memory Bound: Límites derivados de la jerarquía de memoria, eg. accesos a la memoria cache.
-    - Core Bound: Límites derivados por operaciones, eg, retardos derivados por bloqueos en el pipeline devidos a una división
-                  que tarda muchos ciclos.
