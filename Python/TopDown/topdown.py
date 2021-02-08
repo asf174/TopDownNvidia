@@ -7,6 +7,7 @@ Program that implements the Top Down methodology on GPUs.
 """
 import sys # for arguments
 from shell import Shell # launch shell arguments
+import argparse
 
 class TopDown():
     """Class that implements TopDown methodology."""
@@ -19,8 +20,7 @@ class TopDown():
     Options of program
     """
     # Level
-    C_LEVEL_1_SHORT_OPTION              : str       = "-l1"
-    C_LEVEL_2_SHORT_OPTION              : str       = "-l2"
+    C_LEVEL_SHORT_OPTION                : str       = "-l"
     C_LEVEL_LONG_OPTION                 : str       = "--level"
     
     # Long description
@@ -34,16 +34,79 @@ class TopDown():
     # Output file
     C_OUTPUT_FILE_SHORT_OPTION          : str       = "-o"
     C_OUTPUT_FILE_LONG_OPTION           : str       = "--output"
+
+    """Options."""
+    C_MAX_LEVEL_EXECUTION               : int       = 2
+    C_MIN_LEVEL_EXECUTION               : int       = 1
     
+    def __init__(self):
+        #self.__parser : argparse.ArgumentParser = argparse.ArgumentParser(description='Process some integers.') # Arguments
+        self.__parser = argparse.ArgumentParser(prog='tool',
+            formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position = 50),
+            description = "TopDown methodology on GPU",
+            epilog="Check options to run program") #exit_on_error=False)
+        self.__parser._optionals.title = "Optional Arguments"
+        self.__add_arguments()
+
+        # Save values into attributes
+        args : argparse.Namespace = self.__parser.parse_args()
+
+        self.__level : int = args.level[0]
+        self.__file = args.file
+        self.__show_long_desc : bool = args.desc
+    pass
+    
+
+    def __add_level_argument(self):
+        requiredNamed = self.__parser.add_argument_group("Required arguments")
+        requiredNamed.add_argument (
+            self.C_LEVEL_SHORT_OPTION, self.C_LEVEL_LONG_OPTION,
+            required = True,
+            help = 'level of execution',
+            type = int,
+            nargs = 1,
+            default = -1,
+            choices = range(1,3), # range [1,2], produces error, no if needed
+            metavar = 'NUM',
+            dest = 'level')
+    pass
+
+    def __add_ouput_file_argument(self):
+        self.__parser.add_argument(
+            self.C_OUTPUT_FILE_SHORT_OPTION, 
+            self.C_OUTPUT_FILE_LONG_OPTION, 
+            help = 'output file. Path to file.',
+            default = None,
+            nargs = '?', 
+            type = argparse.FileType('w+'), 
+            #metavar='/path/to/file',
+            dest = 'file')
+    pass
+
+    def __add_long_desc_argument(self):
+        self.__parser.add_argument (
+            self.C_LONG_DESCRIPTION_SHORT_OPTION, 
+            self.C_LONG_DESCRIPTION_LONG_OPTION, 
+            help = 'long description of results',
+            action = 'store_true',
+            dest = 'desc')
+    pass
+
+    def __add_arguments(self):
+        self.__add_level_argument()
+        self.__add_ouput_file_argument()
+        self.__add_long_desc_argument()
+    pass
+
     def read_arguments(self) -> bool:   
         """
         Check if arguments passed to program are correct. 
-        Show information with '-h'/'--help' option
+        Show information with '-h'/'--help' option. NOT USED
 
         Returns:
             True if are correct, False if not
         """
-
+        print("Llego aqui")
         if len(sys.argv) == self.C_MIN_NUMBER_ARGUMENTS:
             print("Error with arguments. Introduce '-h' or '--help' to see options")
             return False
@@ -71,48 +134,26 @@ class TopDown():
     pass
 
     
-    def find_level(self) -> int:
+    def level(self) -> int:
         """ 
         Find the TopDown run level
 
         Returns:
-            1 if it's level one, two if it's level two
-            or -1 to nofity ERROR (no level specified in the correct 
-            way)
+            1 if it's level one, 2 if it's level two
         """ 
-
-        for i in range(1, len(sys.argv)):
-            # check simple arguments
-            if sys.argv[i] == self.C_LEVEL_1_SHORT_OPTION:
-                return 1
-            if sys.argv[i] == self.C_LEVEL_2_SHORT_OPTION:
-                return 2
-
-            # check long arguments
-            if i + 1 <= len(sys.argv):
-                if sys.argv[i] == self.C_LEVEL_LONG_OPTION:
-                    if sys.argv[i+1] == "1":
-                        return 1
-                    if sys.argv[i+1] == "2":
-                        return 2
-        return -1
+        return self.__level
     pass
 
-    def find_output_file(self) -> str:
+    def output_file(self):
         """
         Find path to output file
 
         Returns:
-            string with path to file, or None if 
+            opened file to write, or None if 
             option '-o' or '--output' has not been indicated
         """
+        return self.__file # descriptor to file or None
 
-        for i in range(1, len(sys.argv)):
-            # check long arguments
-            if i + 1 <= len(sys.argv):
-                if sys.argv[i] == self.C_OUTPUT_FILE_SHORT_OPTION or sys.argv[i] == self.C_OUTPUT_FILE_LONG_OPTION:
-                    return sys.argv[i + 1]
-        return None
     pass
     
     def show_long_desc(self) -> bool:
@@ -122,14 +163,13 @@ class TopDown():
         Returns:
             True to show long description of False if not
         """
-
-        for i in range(1, len(sys.argv)):
-            if (sys.argv[i] == self.C_LONG_DESCRIPTION_SHORT_OPTION or 
-                sys.argv[i] == self.C_LONG_DESCRIPTION_LONG_OPTION):
-                return True
-        return False
+        return self.__show_long_desc
     pass
 
+    
+    
+    
+    
     def level_1(self):
         """ 
         Run TopDown level 1.
@@ -157,18 +197,18 @@ if __name__ == '__main__':
     
     if not td.read_arguments():
         sys.exit()
-    level : int = td.find_level()
+    level : int = td.level()
     
     if level == -1:
         print("ERROR LEVEL")
         sys.exit()
     print("LEVEL: " + str(level))
 
-    file : str = td.find_output_file()
+    file : str = td.output_file()
     if file is None:
         print("NO OUTPUT-FILE")
     else:
-        print("OUTPUT-FILE: " + file)
+        print("OUTPUT-FILE: ")
 
     showLongDesc : bool = td.show_long_desc()
     if showLongDesc:
@@ -176,7 +216,7 @@ if __name__ == '__main__':
     else:
         print ("DO NOT SHOW Long-Desc")
 
-    if level == 1:
+    """if level == 1:
         td.level_1()
     else:
-        td.level_2()
+        td.level_2()"""
