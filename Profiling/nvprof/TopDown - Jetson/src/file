@@ -1,0 +1,2 @@
+which: no nvprof in (/usr/local/cuda-11.2/bin:/app/bin:/usr/bin:/home/alvaro/.var/app/com.visualstudio.code/data/node_modules/bin)
+/bin/bash: line 1: sudo: command not found

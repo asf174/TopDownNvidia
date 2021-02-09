@@ -48,7 +48,7 @@ class TopDown():
     C_LEVEL_1_BACK_END_METRIS           : str       = ""
 
     def __init__(self):
-        parser : argparse.ArgumentParse = argparse.ArgumentParser(prog='[/path/to/PROGRAM]',
+        parser : argparse.ArgumentParse = argparse.ArgumentParser(#prog='[/path/to/PROGRAM]',
             formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position = 50),
             description = "TopDown methodology on GPU",
             epilog="Check options to run program")
@@ -69,10 +69,11 @@ class TopDown():
         requiredGroup.add_argument(
             self.C_FILE_SHORT_OPTION, 
             self.C_FILE_LONG_OPTION, 
+            required = True,
             help = 'run file. Path to file.',
             default = None,
             nargs = '?', 
-            type = argparse.FileType('w+'), 
+            type = str, 
             #metavar='/path/to/file',
             dest = 'program')
     pass
@@ -97,7 +98,7 @@ class TopDown():
             help = 'output file. Path to file.',
             default = None,
             nargs = '?', 
-            type = argparse.FileType('w+'), 
+            type = str, 
             #metavar='/path/to/file',
             dest = 'file')
     pass
@@ -129,7 +130,6 @@ class TopDown():
         Returns:
             True if are correct, False if not
         """
-        print("Llego aqui")
         if len(sys.argv) == self.C_MIN_NUMBER_ARGUMENTS:
             print("Error with arguments. Introduce '-h' or '--help' to see options")
             return False
@@ -199,10 +199,16 @@ class TopDown():
         """
 
         shell : Shell = Shell()
+        
         # FrontEnd Commands
         command : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_FRONT_END_METRIS + 
             " --unified-memory-profiling off --profile-from-start off " + self.__program)
-        shell.launch_command(command, "LAUNCH FRONT END")
+
+        output_file : str = self.output_file()
+        if output_file is None:
+            shell.launch_command(command, "LAUNCH FRONT END")
+        else:
+            shell.launch_command_redirect(command, "LAUNCH FRONT END", output_file)   
     pass
 
     def level_2(self):
@@ -219,8 +225,8 @@ class TopDown():
 if __name__ == '__main__':
     td = TopDown()
     
-    if not td.read_arguments():
-        sys.exit()
+   # if not td.read_arguments():
+    #    sys.exit()
     level : int = td.level()
     
     if level == -1:
@@ -240,7 +246,7 @@ if __name__ == '__main__':
     else:
         print ("DO NOT SHOW Long-Desc")
 
-    """if level == 1:
+    if level == 1:
         td.level_1()
     else:
-        td.level_2()"""
+        td.level_2()

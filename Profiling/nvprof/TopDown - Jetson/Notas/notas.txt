@@ -37,13 +37,9 @@ stall_constant_memory_dependency:  Percentage of stalls occurring because of imm
 
 stall_pipe_busy:  Percentage of stalls occurring because a compute operation cannot be performed because the compute pipeline is busy
 
-- stall_memory_throttle:  Percentage of stalls occurring because of memory throttle
+stall_memory_throttle:  Percentage of stalls occurring because of memory throttle
 
 stall_not_selected:  Percentage of stalls occurring because warp was not selected
-
-
-FrontEnd: stall_inst_fetch, stall_texture, stall_sync
-BackEnd: stall_exec_dependency, stall_memory_dependency, stall_constant_memory_dependency, stall_pipe_busy
 
 
 CLAVE: https://docs.nvidia.com/gameworks/content/developertools/desktop/analysis/report/cudaexperiments/kernellevel/issueefficiency.htm#IssueStallReasons
@@ -79,8 +75,18 @@ Other: https://stackoverflow.com/questions/14887807/what-are-other-issue-stall-r
 
 - stall_constant_memory_dependency: Porcentaje de STALLS ocurridos debido a fallos inmediatos de cache constante. 
 
-- stall_pipe_busy: STALLS provocados porque no se disponen de unidades funcionales suficientes para poder realizar una operación. Por ejemplo, 
+- stall_pipe_busy: STALLS provocados porque no se disponen de unidades funcionales suficientes para poder realizar una operación. Por ejemplo, un WARP entero
+                   va a realizar una operación X de la que se disponen menos del tamaño del WARP de UF para esa operación. Algunos threads la podrán hacer
+                   pero otros no, que tendrán que esperar.
 
-- stall_memory_throttle
+- stall_memory_throttle: STALLS producidos por la reducción del rendimiento de la memoria por altas temperaturas.
 
-- stall_not_selected
+- stall_not_selected: Stalls ocurridos porque un WARP elegible no ha sido seleccionado. 
+
+-------------------------------------------------------------------------- END EXPLICACION CONTADORES --------------------------------------------
+
+-------------------------- ASIGNACION NIVEL 1 ------------------------------------------------------------------------------------------
+- FrontEnd: stall_inst_fetch, stall_exec_dependency, stall_sync, stall_other, stall_not_selected
+
+- BackEnd: stall_memory_dependency, stall_constant_memory_dependency, stall_pipe_busy, stall_memory_throttle
+-------------------------- END ASIGNACION NIVEL 1 ------------------------------------------------------------------------------------------
