@@ -46,8 +46,9 @@ class Shell:
             sh.call(command, shell = True, executable = '/bin/bash')
             return True
         return False
-
-    def launch_command_redirect(self, command : str, message : str, dest : str) -> bool :
+    
+   
+    def launch_command_redirect(self, command : str, message : str, dest : str, add_to_end_file : bool) -> bool :
         """
         Launch Shell command and redirect all output to 'dest' file.
 
@@ -63,15 +64,26 @@ class Shell:
             to write
         """
 
+        is_correct : bool = False
         try:
-            f = open(dest, "w")
+            open_mode : str = "a" # set as end by default
+            if not add_to_end_file:
+                open_mode = "w"
+            f = open(dest, open_mode)
             try:
                 if command:
                     self.__check_and_show_message(message)
-                    sh.call(command, shell = True, stdout = f, stderr = f, executable = '/bin/bash')
-                    return True
-                return False
+                    output : sh.CompletedProcess = sh.run(args = command, shell = True, check = True, 
+                        stdout = sh.PIPE, stderr = sh.STDOUT, text = True) # text to use as string
+                    f.write(output.stdout)
+                    is_correct = True
             finally:
                 f.close()
-        except IOError:
-            return False
+        except IOError:  
+            pass # No need to do nothing, only don't execute command
+        return is_correct
+    pass
+
+#shell = Shell()
+#returna : bool = shell.launch_command_redirect("ls -l", None, "/home/")
+#print( str(returna))

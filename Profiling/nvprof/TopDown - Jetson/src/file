@@ -1,2 +1,5 @@
-which: no nvprof in (/usr/local/cuda-11.2/bin:/app/bin:/usr/bin:/home/alvaro/.var/app/com.visualstudio.code/data/node_modules/bin)
-/bin/bash: line 1: sudo: command not found
+total 16
+-rw-rw-r-- 1 alvaro alvaro    0 Feb  9 19:58 file
+drwxr-xr-x 2 alvaro alvaro 4096 Feb  9 19:38 __pycache__
+-rw-rw-r-- 1 alvaro alvaro 2422 Feb  9 19:57 shell.py
+-rwxrwxr-x 1 alvaro alvaro 8184 Feb  9 19:38 topdown.py

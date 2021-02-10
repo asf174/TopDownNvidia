@@ -44,8 +44,8 @@ class TopDown():
     C_MIN_LEVEL_EXECUTION               : int       = 1
     
     """Metrics."""
-    C_LEVEL_1_FRONT_END_METRIS          : str       = "stall_inst_fetch, stall_exec_dependency, stall_sync, stall_other, stall_not_selected"
-    C_LEVEL_1_BACK_END_METRIS           : str       = ""
+    C_LEVEL_1_FRONT_END_METRIS          : str       = "stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other,stall_not_selected,stall_not_selected"
+    C_LEVEL_1_BACK_END_METRIS           : str       = "stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy,stall_memory_throttle"
 
     def __init__(self):
         parser : argparse.ArgumentParse = argparse.ArgumentParser(#prog='[/path/to/PROGRAM]',
@@ -190,25 +190,26 @@ class TopDown():
     pass
 
     
-    
-    
-    
     def level_1(self):
         """ 
         Run TopDown level 1.
         """
 
         shell : Shell = Shell()
-        
-        # FrontEnd Commands
-        command : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_FRONT_END_METRIS + 
-            " --unified-memory-profiling off --profile-from-start off " + self.__program)
 
+        # FrontEnd Command
+        command_front_end : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_FRONT_END_METRIS + 
+            " --unified-memory-profiling off --profile-from-start off " + self.__program)
+        command_back_end : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_BACK_END_METRIS + 
+            " --unified-memory-profiling off --profile-from-start off " + self.__program)
         output_file : str = self.output_file()
+        
         if output_file is None:
-            shell.launch_command(command, "LAUNCH FRONT END")
+            shell.launch_command(command_front_end, "LAUNCH FRONT-END")
+            shell.launch_command(command_back_end, "LAUNCH BACK-END")
         else:
-            shell.launch_command_redirect(command, "LAUNCH FRONT END", output_file)   
+            shell.launch_command_redirect(command_front_end, "LAUNCH FRONT-END", output_file, True)
+            shell.launch_command_redirect(command_back_end, "LAUNCH BACK-END", output_file, True)
     pass
 
     def level_2(self):
@@ -219,7 +220,6 @@ class TopDown():
         # TODO
         shell = Shell()
         shell.launch_command("ls", "LAUNCH ls")
-        return True
     pass
     
 if __name__ == '__main__':
@@ -232,20 +232,19 @@ if __name__ == '__main__':
     if level == -1:
         print("ERROR LEVEL")
         sys.exit()
-    print("LEVEL: " + str(level))
+    #print("LEVEL: " + str(level))
 
-    file : str = td.output_file()
-    if file is None:
-        print("NO OUTPUT-FILE")
-    else:
-        print("OUTPUT-FILE: ")
+    #file : str = td.output_file()
+    #if file is None:
+     #   print("NO OUTPUT-FILE")
+    #else:
+    #    print("OUTPUT-FILE: ")
 
-    showLongDesc : bool = td.show_long_desc()
-    if showLongDesc:
-        print("SHOW Long-Desc")
-    else:
-        print ("DO NOT SHOW Long-Desc")
-
+   # showLongDesc : bool = td.show_long_desc()
+    #if showLongDesc:
+    #    print("SHOW Long-Desc")
+    #else:
+    #    print ("DO NOT SHOW Long-Desc")
     if level == 1:
         td.level_1()
     else:
