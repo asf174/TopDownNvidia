@@ -48,7 +48,7 @@ class Shell:
         return False
     
    
-    def launch_command_redirect(self, command : str, message : str, dest : str, add_to_end_file : bool) -> bool :
+    def launch_command_redirect(self, command : str, message : str, dest : str, add_to_end_file : bool) -> str :
         """
         Launch Shell command and redirect all output to 'dest' file.
 
@@ -59,12 +59,15 @@ class Shell:
             dest: str, path to dest file.
 
         Returns:
-            True if the command is executed correctly, or False 
-            if the command is empty or 'dest' file cannot be opened
-            to write
+            String with the output of command, or 'None' if an error ocurred and
+            and the information could not be stored in the file or the file could 
+            not be opened.
+        
+            If 'None' if returned there is no guarantee that the command has been 
+            executed.
         """
 
-        is_correct : bool = False
+        str_output : str = None
         try:
             open_mode : str = "a" # set as end by default
             if not add_to_end_file:
@@ -76,14 +79,14 @@ class Shell:
                     output : sh.CompletedProcess = sh.run(args = command, shell = True, check = True, 
                         stdout = sh.PIPE, stderr = sh.STDOUT, text = True) # text to use as string
                     f.write(output.stdout)
-                    is_correct = True
+                    str_output = output.stdout
             finally:
                 f.close()
         except:  
             pass # No need to do nothing, only don't execute command
-        return is_correct
+        return str_output
     pass
 
 #shell = Shell()
-#returna : bool = shell.launch_command_redirect("ls -l", None, "/home/")
-#print( str(returna))
+#returna : str = shell.launch_command_redirect("ls -l", None, "file", True)
+#print(returna)

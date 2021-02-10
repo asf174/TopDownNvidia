@@ -15,23 +15,15 @@ class FrontAndBackErrorOperation(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
+    pass
 
-class FrontErrorOperation(Exception):
-    """Exception raised in FrontEnd launch Command Operation."""
+class ErrorOutputResultCommand(Exception):
+    """Exception raised in case of error reading the output produced by command """
     
-    C_ERROR_MESSAGE     : str = "Error in launching FrontEnd operation."
+    C_ERROR_MESSAGE     : str = "Error reading the output produced by command"
 
     def __init__(self):
         """Show error message."""
-
+        
         super().__init__(self.C_ERROR_MESSAGE)
-
-class BackErrorOperation(Exception):
-    """Exception raised in BackEnd launch Command Operation."""
-    
-    C_ERROR_MESSAGE     : str = "Error in launching BackEnd operation."
-
-    def __init__(self):
-        """Show error message."""
-
-        super().__init__(self.C_ERROR_MESSAGE)
+    pass

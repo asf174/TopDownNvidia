@@ -8,8 +8,9 @@ Program that implements the Top Down methodology on GPUs.
 import sys # for arguments
 from shell import Shell # launch shell arguments
 import argparse
+import re
 
-from errors import FrontAndBackErrorOperation, FrontErrorOperation, BackErrorOperation
+from errors import FrontAndBackErrorOperation
 
 class TopDown:
     """Class that implements TopDown methodology."""
@@ -48,6 +49,9 @@ class TopDown:
     """Metrics."""
     C_LEVEL_1_FRONT_END_METRICS         : str       = "stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other,stall_not_selected,stall_not_selected"
     C_LEVEL_1_BACK_END_METRICS          : str       = "stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy,stall_memory_throttle"
+
+
+    C_INFO_MESSAGE_EXECUTION_NVPROF     : str       = "Launching Command... Wait to results."
 
     def __init__(self):
         parser : argparse.ArgumentParse = argparse.ArgumentParser(#prog='[/path/to/PROGRAM]',
@@ -207,35 +211,64 @@ class TopDown:
 
         Raises:
             FrontAndBackErrorOperation
-            FrontErrorOperation
-            BackErrorOperation
         """
 
         shell : Shell = Shell()
 
         # FrontEnd Command
-        front_end_command : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_FRONT_END_METRICS + 
-            " --unified-memory-profiling off --profile-from-start off " + self.__program)
-        back_end_command : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_BACK_END_METRICS + 
-            " --unified-memory-profiling off --profile-from-start off " + self.__program)
-        output_file : str = self.output_file()
+        command : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_FRONT_END_METRICS + 
+            "," + self.C_LEVEL_1_BACK_END_METRICS + " --unified-memory-profiling off --profile-from-start off " + self.__program)
         
-        front_has_launched : bool
-        back_has_launched : bool
+        output_file : str = self.output_file()
+        output_command : bool
+        
         if output_file is None:
-            front_has_launched = shell.launch_command(front_end_command, "LAUNCH FRONT-END")
-            back_has_launched  = shell.launch_command(back_end_command, "LAUNCH BACK-END")
+            output_command = shell.launch_command(command, self.C_INFO_MESSAGE_EXECUTION_NVPROF)
         else:
-            front_has_launched = shell.launch_command_redirect(front_end_command, "LAUNCH FRONT-END", output_file, True)
-            back_has_launched = shell.launch_command_redirect(back_end_command, "LAUNCH BACK-END", output_file, True)
+            output_command = shell.launch_command_redirect(command, self.C_INFO_MESSAGE_EXECUTION_NVPROF, output_file, True)
 
-    
-        if not (front_has_launched and back_has_launched):
+        if output_command is None:
             raise FrontAndBackErrorOperation
-        elif not front_has_launched:
-            raise FrontErrorOperation
-        elif not back_has_launched:
-            raise BackErrorOperation
+        else:
+            # Create dictionaries with name of counters as key.
+            dictionary_front_counters : dict = dict.fromkeys(self.C_LEVEL_1_FRONT_END_METRICS.split(","))
+            dictionary_back_counters : dict = dict.fromkeys(self.C_LEVEL_1_BACK_END_METRICS.split(","))
+            #print(output_command)
+            for line in output_command.splitlines():
+                line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
+                list_words = line.split(" ")
+                
+                # Check if it's line of interest:
+                # ['', 'X', 'NAME_COUNTER', ... , 'Min', 'Max', 'Avg' (Y%)] -> X (int number), Y (int/float number)
+                if list_words[0] == '' and list_words[len(list_words) - 1 ][0].isnumeric():
+                    # CORRECT FORMAT: OUR LINE
+                    name_counter : str = list_words[2]
+                    #description_counter : str = 
+                    avg_value : str = list_words[len(list_words) - 1]
+                    max_value : str = list_words[len(list_words) - 2]
+                    min_value : str = list_words[len(list_words) - 3]
+
+                    #if avg_value != max_value or avg_value != min_value:
+                        # Do Something. NOT USED
+
+                    if name_counter in dictionary_front_counters:
+                        dictionary_front_counters[name_counter] = avg_value
+                    elif name_counter in dictionary_back_counters:
+                        dictionary_back_counters[name_counter] = avg_value
+                    else: # counter not defined
+                        raise ErrorOutputResultCommand
+        # Show Results
+        print("FRONT-END RESULTS:")
+        print ("\t\t\t{:<45} {:<15}".format('Counter','Value'))
+        print("\t\t\t----------------------------------------------------")
+        for i in dictionary_front_counters:
+            print ("\t\t\t{:<45} {:<15}".format(i,dictionary_front_counters[i]))
+        
+        print("\n\nFRONT-END RESULTS:")
+        print ("\t\t\t{:<45} {:<15}".format('Counter','Value'))
+        print("\t\t\t----------------------------------------------------")
+        for i in dictionary_back_counters:
+            print ("\t\t\t{:<45} {:<15}".format(i,dictionary_back_counters[i]))
     pass
 
     def level_2(self):
@@ -253,23 +286,23 @@ if __name__ == '__main__':
     
    # if not td.read_arguments():
     #    sys.exit()
-    file : str = td.output_file()
-    if file is None:
-        print("NO OUTPUT-FILE")
-    else:
-        print("OUTPUT-FILE: " + file)
+    #file : str = td.output_file()
+    #if file is None:
+    #    print("NO OUTPUT-FILE")
+    #else:
+    #    print("OUTPUT-FILE: " + file)
 
-    showLongDesc : bool = td.show_long_desc()
-    if showLongDesc:
-        print("SHOW Long-Desc")
-    else:
-        print ("DO NOT SHOW Long-Desc")
+    #showLongDesc : bool = td.show_long_desc()
+    #if showLongDesc:
+    ##   print("SHOW Long-Desc")
+    #else:
+    #    print ("DO NOT SHOW Long-Desc")
 
     level : int = td.level()
     if level == -1:
         print("ERROR LEVEL")
         sys.exit()
-    print("LEVEL: " + str(level))
+    #print("LEVEL: " + str(level))
     if level == 1:
         td.level_1()
     elif level == 2:
