@@ -83,6 +83,23 @@ Other: https://stackoverflow.com/questions/14887807/what-are-other-issue-stall-r
 
 - stall_not_selected: Stalls ocurridos porque un WARP elegible no ha sido seleccionado. 
 
+
+------ EFICIENCIA
+- branch_efficiency:  Ratio of non-divergent branches to total branches
+
+- warp_execution_efficiency:  Ratio of the average active threads per warp to the maximum number of threads per warp supported on a multiprocessor
+
+- warp_nonpred_execution_efficiency:  Ratio of the average active threads per warp executing non-predicated instructions to the maximum number of threads per warp supported on a multiprocessor
+
+- shared_efficiency:  Ratio of requested shared memory throughput to required shared memory throughput
+
+- sm_efficiency:  The percentage of time at least one warp is active on a specific multiprocessor
+
+- flop_hp_efficiency:  Ratio of achieved to peak half-precision floating-point operations
+
+- flop_sp_efficiency:  Ratio of achieved to peak single-precision floating-point operations
+
+- flop_dp_efficiency:  Ratio of achieved to peak double-precision floating-point operations
 -------------------------------------------------------------------------- END EXPLICACION CONTADORES --------------------------------------------
 
 -------------------------- ASIGNACION NIVEL 1 ------------------------------------------------------------------------------------------

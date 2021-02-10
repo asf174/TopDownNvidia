@@ -67,7 +67,7 @@ class TopDown:
         self.__program = args.program
     pass
     
-    def __add_program_argument(self, requiredGroup):
+    def __add_program_argument(self, requiredGroup : argparse._ArgumentGroup):
         requiredGroup.add_argument(
             self.C_FILE_SHORT_OPTION, 
             self.C_FILE_LONG_OPTION, 
@@ -80,7 +80,7 @@ class TopDown:
             dest = 'program')
     pass
 
-    def __add_level_argument(self, requiredGroup):
+    def __add_level_argument(self, requiredGroup : argparse._ArgumentGroup):
         requiredGroup.add_argument (
             self.C_LEVEL_SHORT_OPTION, self.C_LEVEL_LONG_OPTION,
             required = True,
