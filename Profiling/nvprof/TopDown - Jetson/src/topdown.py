@@ -9,7 +9,9 @@ import sys # for arguments
 from shell import Shell # launch shell arguments
 import argparse
 
-class TopDown():
+from errors import FrontAndBackErrorOperation, FrontErrorOperation, BackErrorOperation
+
+class TopDown:
     """Class that implements TopDown methodology."""
     
     # Arguments features
@@ -44,8 +46,8 @@ class TopDown():
     C_MIN_LEVEL_EXECUTION               : int       = 1
     
     """Metrics."""
-    C_LEVEL_1_FRONT_END_METRIS          : str       = "stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other,stall_not_selected,stall_not_selected"
-    C_LEVEL_1_BACK_END_METRIS           : str       = "stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy,stall_memory_throttle"
+    C_LEVEL_1_FRONT_END_METRICS         : str       = "stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other,stall_not_selected,stall_not_selected"
+    C_LEVEL_1_BACK_END_METRICS          : str       = "stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy,stall_memory_throttle"
 
     def __init__(self):
         parser : argparse.ArgumentParse = argparse.ArgumentParser(#prog='[/path/to/PROGRAM]',
@@ -156,10 +158,19 @@ class TopDown():
         return True
     pass
 
+    def program(self) -> str:
+        """
+        Returns path to runnable program.
+
+        Returns:
+            str with path to program to be executed
+        """
+        return self.__program
+    pass
     
     def level(self) -> int:
         """ 
-        Find the TopDown run level
+        Find the TopDown run level.
 
         Returns:
             1 if it's level one, 2 if it's level two
@@ -169,7 +180,7 @@ class TopDown():
 
     def output_file(self):
         """
-        Find path to output file
+        Find path to output file.
 
         Returns:
             opened file to write, or None if 
@@ -193,23 +204,38 @@ class TopDown():
     def level_1(self):
         """ 
         Run TopDown level 1.
+
+        Raises:
+            FrontAndBackErrorOperation
+            FrontErrorOperation
+            BackErrorOperation
         """
 
         shell : Shell = Shell()
 
         # FrontEnd Command
-        command_front_end : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_FRONT_END_METRIS + 
+        front_end_command : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_FRONT_END_METRICS + 
             " --unified-memory-profiling off --profile-from-start off " + self.__program)
-        command_back_end : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_BACK_END_METRIS + 
+        back_end_command : str = ("sudo $(which nvprof) --metrics " + self.C_LEVEL_1_BACK_END_METRICS + 
             " --unified-memory-profiling off --profile-from-start off " + self.__program)
         output_file : str = self.output_file()
         
+        front_has_launched : bool
+        back_has_launched : bool
         if output_file is None:
-            shell.launch_command(command_front_end, "LAUNCH FRONT-END")
-            shell.launch_command(command_back_end, "LAUNCH BACK-END")
+            front_has_launched = shell.launch_command(front_end_command, "LAUNCH FRONT-END")
+            back_has_launched  = shell.launch_command(back_end_command, "LAUNCH BACK-END")
         else:
-            shell.launch_command_redirect(command_front_end, "LAUNCH FRONT-END", output_file, True)
-            shell.launch_command_redirect(command_back_end, "LAUNCH BACK-END", output_file, True)
+            front_has_launched = shell.launch_command_redirect(front_end_command, "LAUNCH FRONT-END", output_file, True)
+            back_has_launched = shell.launch_command_redirect(back_end_command, "LAUNCH BACK-END", output_file, True)
+
+    
+        if not (front_has_launched and back_has_launched):
+            raise FrontAndBackErrorOperation
+        elif not front_has_launched:
+            raise FrontErrorOperation
+        elif not back_has_launched:
+            raise BackErrorOperation
     pass
 
     def level_2(self):
@@ -227,25 +253,28 @@ if __name__ == '__main__':
     
    # if not td.read_arguments():
     #    sys.exit()
+    file : str = td.output_file()
+    if file is None:
+        print("NO OUTPUT-FILE")
+    else:
+        print("OUTPUT-FILE: " + file)
+
+    showLongDesc : bool = td.show_long_desc()
+    if showLongDesc:
+        print("SHOW Long-Desc")
+    else:
+        print ("DO NOT SHOW Long-Desc")
+
     level : int = td.level()
-    
     if level == -1:
         print("ERROR LEVEL")
         sys.exit()
-    #print("LEVEL: " + str(level))
-
-    #file : str = td.output_file()
-    #if file is None:
-     #   print("NO OUTPUT-FILE")
-    #else:
-    #    print("OUTPUT-FILE: ")
-
-   # showLongDesc : bool = td.show_long_desc()
-    #if showLongDesc:
-    #    print("SHOW Long-Desc")
-    #else:
-    #    print ("DO NOT SHOW Long-Desc")
+    print("LEVEL: " + str(level))
     if level == 1:
         td.level_1()
-    else:
+    elif level == 2:
         td.level_2()
+    else:
+        print("ERROR LEVEL")
+        sys.exit()
+

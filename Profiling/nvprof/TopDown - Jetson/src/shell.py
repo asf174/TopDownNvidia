@@ -79,7 +79,7 @@ class Shell:
                     is_correct = True
             finally:
                 f.close()
-        except IOError:  
+        except:  
             pass # No need to do nothing, only don't execute command
         return is_correct
     pass
