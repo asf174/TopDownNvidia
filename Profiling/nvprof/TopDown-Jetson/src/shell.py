@@ -6,87 +6,108 @@ Program that launch Shell commands.
 @version:   1.0
 """
 
-"""To Launch Shell commands."""
-import subprocess as sh
+import subprocess as sh # To Launch Shell commands.
 
 class Shell:
     """
     Class that launch shell commands with information.
     """
     
-    def __check_and_show_message(self, message : str):
-        """
-        Show non-empty message. Don't show if 'message' is empty.
-
-        Params:
-             message: str, message to be showed.
-                            'None' to show no message
-        """
-
-        if message:
-            print(message)
-    pass
-
-    def launch_command(self, command: str, message : str) -> bool:
+    def __launch_shell_and_message(self, command: str, message : str, hasToCheck : bool) -> str:
         """
         Launch Shell command.
         
         Params:
-            command: str, command to launch in shell
-            message: str, information about command.
-                            'None' to show no message
+            command     : str   ; command to launch in shell
+            message     : str   ; information about command.
+                                  'None' to show no message
+            hasToCheck  : bool  ; True to do not show the execution of command if command produces errors 
+                                  or false in other case 
         Returns:
-            True if the command is executed correctly, or False 
-            if the command is empty
-        """
-        
-        # check empty command
-        if command:
-            self.__check_and_show_message(message)
-            sh.run(args = command, shell = True, executable = '/bin/bash')
-            return True
-        return False
-    
-   
-    def launch_command_redirect(self, command : str, message : str, dest : str, add_to_end_file : bool) -> str :
-        """
-        Launch Shell command and redirect all output to 'dest' file.
-
-        Params:
-            command: str, command to launch in shell
-            message: str, information about command. 
-                        'None' to show no message
-            dest: str, path to dest file.
-
-        Returns:
-            String with the output of command, or 'None' if an error ocurred and
-            and the information could not be stored in the file or the file could 
-            not be opened.
-        
-            If 'None' if returned there is no guarantee that the command has been 
-            executed.
+            String with all the output of command, or 'None' if an error ocurred
+            launching command
         """
 
         str_output : str = None
         try:
-            open_mode : str = "a" # set as end by default
-            if not add_to_end_file:
-                open_mode = "w"
-            f : _io.TextIOWrapper = open(dest, open_mode)
-            try:
-                if command:
-                    self.__check_and_show_message(message)
+            if command:
+                if message:
+                    print(message)
+                if hasToCheck:
                     output : sh.CompletedProcess = sh.run(args = command, shell = True, check = True, 
                         stdout = sh.PIPE, stderr = sh.STDOUT, text = True, executable = '/bin/bash') # text to use as string
-                    f.write(output.stdout)
-                    str_output = output.stdout
-            finally:
-                f.close()
+                else:
+                    output : sh.CompletedProcess = sh.run(args = command, shell = True, 
+                        stdout = sh.PIPE, stderr = sh.STDOUT, text = True, executable = '/bin/bash') # text to use as string
+                str_output = output.stdout
         except:  
-            pass # No need to do nothing, only don't execute command
+            pass # No need to do nothing, command was not executed succesfully
+        return str_output
+
+    pass
+    def launch_command(self, command: str, message : str) -> str:
+        """
+        Launch Shell command.
+        
+        Params:
+            command     : str   ; command to launch in shell
+            message     : str   ; information about command.
+                                  'None' to show no message
+        Returns:
+            String with all the output of command, or 'None' if an error ocurred
+            launching command
+        """
+
+        return self.__launch_shell_and_message(command, message, True)
+    pass
+    
+   
+    def launch_command_redirect(self, command : str, message : str, dest : str, add_to_end_file : bool) -> str :
+        """
+        Launch Shell command and redirect output to 'dest' file 
+        in case the command is executed correctly.
+
+        Params:
+            command             : str   ; command to launch in shell
+            message             : str   ; information about command.
+                                          'None' to show no message
+            dest                : str   ; path to dest file.
+            add_to_end_file     : bool  ; True to add 'message' to the end of 'dest' file
+                                          or False if not
+        Returns:
+            String with all the output of command, or 'None' if an error ocurred and
+            and the information could not be stored in the file or the file could 
+            not be opened or error during command execution
+        """
+
+        str_output : str = None
+        try:
+            str_output = self.__launch_shell_and_message(command, message, True)
+            if not str_output is None:
+                open_mode : str = "a" # set as end by default
+                if not add_to_end_file:
+                    open_mode = "w"
+                f : _io.TextIOWrapper = open(dest, open_mode)
+                try:
+                    f.write(str_output)
+                finally:
+                    f.close()
+        except:  
+            str_output = None
         return str_output
     pass
 
-#shell = Shell()
-#returna : str = shell.launch_command_redirect("ls -l", None, "file", True)
-#print(returna)
+    def launch_command_show_error(self, command: str, message : str) -> str:
+        """
+        Launch Shell command and show the result of the execution (including errors)
+        
+        Params:
+            command     : str   ; command to launch in shell
+            message     : str   ; information about command.
+                                  'None' to show no message
+
+        Returns:
+            String with the output of the command executed
+        """
+        return self.__launch_shell_and_message(command, message, False)
+    pass

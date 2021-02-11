@@ -101,6 +101,7 @@ Other: https://stackoverflow.com/questions/14887807/what-are-other-issue-stall-r
 
 - flop_dp_efficiency:  Ratio of achieved to peak double-precision floating-point operations
 --------- END EFICIENCIA
+Explicacion: https://stackoverflow.com/questions/12539762/what-does-a-high-branch-efficiency-and-low-control-flow-efficiency-indicate
 -------------------------------------------------------------------------- END EXPLICACION CONTADORES --------------------------------------------
 
 -------------------------- ASIGNACION NIVEL 1 ------------------------------------------------------------------------------------------

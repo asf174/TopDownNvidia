@@ -18,7 +18,7 @@ class FrontAndBackErrorOperation(Exception):
     pass
 
 class OutputResultCommandError(Exception):
-    """Exception raised in case of error reading the output produced by command """
+    """Exception raised in case of error reading the output produced by command."""
     
     C_ERROR_MESSAGE     : str = "Error reading the output produced by command"
 
@@ -37,4 +37,19 @@ class WriteInOutPutFileError(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
+    pass
+
+class MetricOrEventNoDefined(Exception):
+    """Exception raised when a metric/event has introduced but does not exist in NVIDIA scan tool.
+    
+    Attributes:
+        name_counter    : str   ; name of the counter that produced the error
+    """
+    
+    C_ERROR_MESSAGE     : str = "Error. Following Metric/event does not exist in NVIDIA scan tool: "
+
+    def __init__(self, name_counter: str):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE + name_counter)
     pass
