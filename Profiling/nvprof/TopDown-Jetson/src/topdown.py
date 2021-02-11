@@ -211,7 +211,7 @@ class TopDown:
 
     def __write_in_file_at_end(self, file : str, message : list[str]):
         """
-        CWrite 'message' at the end of file with path 'file'
+        Write 'message' at the end of file with path 'file'
 
         Params:
             file    : str       ; path to file to write.
@@ -290,15 +290,15 @@ class TopDown:
                     #if avg_value != max_value or avg_value != min_value:
                         # Do Something. NOT USED
 
-                    if name_counter in (dictionary_front_counters and dictionary_front_counters_desc) :
+                    if self.C_LEVEL_1_FRONT_END_METRICS != "" and name_counter in (dictionary_front_counters and dictionary_front_counters_desc) :
                         dictionary_front_counters[name_counter] = avg_value
                         dictionary_front_counters_desc[name_counter] = description_counter
                     
-                    elif name_counter in (dictionary_back_counters and dictionary_back_counters_desc):
+                    elif self.C_LEVEL_1_BACK_END_METRICS != "" and name_counter in (dictionary_back_counters and dictionary_back_counters_desc):
                         dictionary_back_counters[name_counter] = avg_value
                         dictionary_back_counters_desc[name_counter] = description_counter
                     
-                    elif name_counter in (dictionary_divergence_counters and dictionary_divergence_counters_desc):
+                    elif self.C_LEVEL_1_DIVERGENCE_METRICS != "" and name_counter in (dictionary_divergence_counters and dictionary_divergence_counters_desc):
                         dictionary_divergence_counters[name_counter] = avg_value
                         dictionary_divergence_counters_desc[name_counter] = description_counter
                     else: # counter not defined
@@ -339,7 +339,7 @@ class TopDown:
             if self.show_long_desc():
                 # Write results in output-file if has been specified
                 if not self.output_file() is None:
-                    self.__write_in_file_at_end(self.output_file(),lst_output)
+                    self.__write_in_file_at_end(self.output_file(), lst_output)
                 for element in lst_output:
                     print(element)
 
