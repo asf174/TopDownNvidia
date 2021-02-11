@@ -10,7 +10,7 @@ import sys # for arguments
 import argparse
 import re
 #from tabulate import tabulate #TODO, pintar
-from errors import FrontAndBackErrorOperation, WriteInOutPutFileError, MetricOrEventNoDefined
+from errors import FrontAndBackErrorOperation, WriteInOutPutFileError, MetricOrEventNoDefined, OutputResultCommandError
 
 from shell import Shell # launch shell arguments
 from params import Parameters # parameters of program
@@ -299,14 +299,25 @@ class TopDown:
         else:
             # Create dictionaries with name of counters as key.
             if Parameters.C_LEVEL_1_FRONT_END_METRICS != "":
-                dictionary_front_counters : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
-                dictionary_front_counters_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
+                dictionary_front_metrics : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
+                dictionary_front_metrics_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
             if Parameters.C_LEVEL_1_BACK_END_METRICS != "":
-                dictionary_back_counters : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
-                dictionary_back_counters_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
+                dictionary_back_metrics : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
+                dictionary_back_metrics_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
             if Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "":
-                dictionary_divergence_counters : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))
-                dictionary_divergence_counters_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))
+                dictionary_divergence_metrics : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))
+                dictionary_divergence_metrics_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))
+            
+            if Parameters.C_LEVEL_1_FRONT_END_EVENTS != "":
+                dictionary_front_events : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_EVENTS.split(","))
+                dictionary_front_events_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
+            if Parameters.C_LEVEL_1_BACK_END_EVENTS != "":
+                dictionary_back_events : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_EVENTS.split(","))
+                dictionary_back_events_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_EVENTS.split(","))
+            if Parameters.C_LEVEL_1_DIVERGENCE_EVENTS!= "":
+                dictionary_divergence_events : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_EVENTS.split(","))
+                dictionary_divergence_events_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_EVENTS.split(","))
+
             for line in output_command.splitlines():
                 line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
                 list_words = line.split(" ")
@@ -324,18 +335,30 @@ class TopDown:
 
                     #if avg_value != max_value or avg_value != min_value:
                         # Do Something. NOT USED
-                    if (Parameters.C_LEVEL_1_FRONT_END_METRICS != "" and name_counter in 
-                        (dictionary_front_counters and dictionary_front_counters_desc)):
-                        dictionary_front_counters[name_counter] = avg_value
-                        dictionary_front_counters_desc[name_counter] = description_counter
+                    if (Parameters.C_LEVEL_1_FRONT_END_METRICS != "" and name_counter in # metrics
+                        (dictionary_front_metrics and dictionary_front_metrics_desc)):
+                        dictionary_front_metrics[name_counter] = avg_value
+                        dictionary_front_metrics_desc[name_counter] = description_counter
                     elif (Parameters.C_LEVEL_1_BACK_END_METRICS != "" and name_counter in 
-                        (dictionary_back_counters and dictionary_back_counters_desc)):
-                        dictionary_back_counters[name_counter] = avg_value
-                        dictionary_back_counters_desc[name_counter] = description_counter    
+                        (dictionary_back_metrics and dictionary_back_metrics_desc)):
+                        dictionary_back_metrics[name_counter] = avg_value
+                        dictionary_back_metrics_desc[name_counter] = description_counter    
                     elif (Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "" and name_counter in 
-                        (dictionary_divergence_counters and dictionary_divergence_counters_desc)): 
-                        dictionary_divergence_counters[name_counter] = avg_value
-                        dictionary_divergence_counters_desc[name_counter] = description_counter
+                        (dictionary_divergence_metrics and dictionary_divergence_metrics_desc)): 
+                        dictionary_divergence_metrics[name_counter] = avg_value
+                        dictionary_divergence_metrics_desc[name_counter] = description_counter
+                    elif (Parameters.C_LEVEL_1_FRONT_END_EVENTS != "" and name_counter in # events
+                        (dictionary_front_events and dictionary_front_events_desc)):
+                        dictionary_front_events[name_counter] = avg_value
+                        dictionary_front_events_desc[name_counter] = description_counter
+                    elif (Parameters.C_LEVEL_1_BACK_END_EVENTS != "" and name_counter in 
+                        (dictionary_back_events and dictionary_back_events_desc)):
+                        dictionary_back_events[name_counter] = avg_value
+                        dictionary_back_events_desc[name_counter] = description_counter    
+                    elif (Parameters.C_LEVEL_1_DIVERGENCE_EVENTS != "" and name_counter in 
+                        (dictionary_divergence_events and dictionary_divergence_events_desc)): 
+                        dictionary_divergence_events[name_counter] = avg_value
+                        dictionary_divergence_events_desc[name_counter] = description_counter
                     else: # counter not defined
                         raise OutputResultCommandError
             #  Keep Results
@@ -343,14 +366,14 @@ class TopDown:
             lst_output.append("\nList of counters measured according to the part."
                                 + " The result obtained is stored for each counter, as well as a description.")
             if Parameters.C_LEVEL_1_FRONT_END_METRICS != "":
-                self.__add_result_part_to_lst(dictionary_front_counters, 
-                    dictionary_front_counters_desc,"\n- FRONT-END RESULTS:", lst_output)
+                self.__add_result_part_to_lst(dictionary_front_metrics, 
+                    dictionary_front_metrics_desc,"\n- FRONT-END RESULTS:", lst_output)
             if Parameters.C_LEVEL_1_BACK_END_METRICS != "":
-                self.__add_result_part_to_lst(dictionary_back_counters, 
-                    dictionary_back_counters_desc,"\n\n- BACK-END RESULTS:", lst_output)
+                self.__add_result_part_to_lst(dictionary_back_metrics, 
+                    dictionary_back_metrics_desc,"\n\n- BACK-END RESULTS:", lst_output)
             if Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "":
-                self.__add_result_part_to_lst(dictionary_divergence_counters, 
-                    dictionary_divergence_counters_desc,"\n\n- DIVERGENCE RESULTS:", lst_output)
+                self.__add_result_part_to_lst(dictionary_divergence_metrics, 
+                    dictionary_divergence_metrics_desc,"\n\n- DIVERGENCE RESULTS:", lst_output)
             
             if self.show_long_desc():
                 # Write results in output-file if has been specified
