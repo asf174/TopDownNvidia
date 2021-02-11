@@ -40,7 +40,6 @@ class Parameters:
                                                         "stall_not_selected,stall_not_selected")
     C_LEVEL_1_BACK_END_METRICS          : str       = ("stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy," +
                                                         "stall_memory_throttle")
-    C_LEVEL_1_DIVERGENCE_METRICS        : str       = ("warp_nonpred_execution_efficiency")
-
-
+    C_LEVEL_1_DIVERGENCE_METRICS        : str       = ("branch_efficiency,warp_execution_efficiency,warp_nonpred_execution_efficiency")
+    
     C_INFO_MESSAGE_EXECUTION_NVPROF     : str       = "Launching Command... Wait to results."

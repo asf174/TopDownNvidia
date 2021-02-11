@@ -4,7 +4,7 @@
 
 __global__ void printHola() {
 	int idx = blockDim.x*blockIdx.x + threadIdx.x;
-	//printf("Hola mundo desde el device con thread: %d\n",idx);
+	printf("Hola mundo desde el device con thread: %d\n",idx);
 	// printf para evitar que salga warning al compilar
 }
 

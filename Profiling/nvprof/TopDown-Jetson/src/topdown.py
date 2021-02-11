@@ -33,7 +33,7 @@ class TopDown:
 
         parser : argparse.ArgumentParse = argparse.ArgumentParser(#prog='[/path/to/PROGRAM]',
             formatter_class = lambda prog: argparse.HelpFormatter(prog, max_help_position = 50),
-            description = "TopDown methodology on GPU",
+            description = "TopDown methodology on NVIDIA's GPUs",
             epilog = "Check options to run program")
             #usage='%(prog)s [OPTIONS]') #exit_on_error=False)
         parser._optionals.title = "Optional Arguments"
@@ -375,5 +375,3 @@ if __name__ == '__main__':
         td.level_1()
     elif level == 2:
         td.level_2()
-
-
