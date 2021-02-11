@@ -1,667 +1,934 @@
-==10970== NVPROF is profiling process 10970, command: ../../../../CUDA/bin/add_two_matrix2
-==10970== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==10970== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+======== Warning: Metric "a" cannot be found on device 0.
+==7620== NVPROF is profiling process 7620, command: ../../../../CUDA/bin/add_two_matrix2
+==7620== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7620== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==10970== Profiling result:
-==10970== Metric result:
+==7620== Profiling result:
+==7620== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.76%       2.76%       2.76%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      14.94%      14.94%      14.94%
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.52%       2.52%       2.52%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.73%      13.73%      13.73%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       5.17%       5.17%       5.17%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.38%       1.38%       1.38%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      74.29%      74.29%      74.29%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.72%       4.72%       4.72%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.35%       1.35%       1.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.34%      76.34%      76.34%
           1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.30%       0.30%       0.30%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.14%       1.14%       1.14%
-
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
-- FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.76%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         14.94% 
-			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        5.17%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.38%  
-
-
-- BACK-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 74.29% 
-			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.30%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.14%  ==10999== NVPROF is profiling process 10999, command: ../../../../CUDA/bin/add_two_matrix2
-==10999== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==10999== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.28%       0.28%       0.28%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.05%       1.05%       1.05%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7652== NVPROF is profiling process 7652, command: ../../../../CUDA/bin/add_two_matrix2
+==7652== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7652== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==10999== Profiling result:
-==10999== Metric result:
+==7652== Profiling result:
+==7652== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.45%       2.45%       2.45%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.32%      13.32%      13.32%
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.51%       2.51%       2.51%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.60%      13.60%      13.60%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.40%       4.40%       4.40%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.58%       1.58%       1.58%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.93%      76.93%      76.93%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.86%       4.86%       4.86%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.36%       1.36%       1.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.33%      76.33%      76.33%
           1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
           1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.03%       1.03%       1.03%
-
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
-- FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.45%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.32% 
-			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        4.40%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.58%  
-
-
-- BACK-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.93% 
-			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.03%  ==12069== NVPROF is profiling process 12069, command: ../../../../CUDA/bin/add_two_matrix2
-==12069== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12069== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.04%       1.04%       1.04%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7670== NVPROF is profiling process 7670, command: ../../../../CUDA/bin/add_two_matrix2
+==7670== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7670== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12069== Profiling result:
-==12069== Metric result:
+==7670== Profiling result:
+==7670== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       3.09%       3.09%       3.09%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      16.72%      16.72%      16.72%
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.52%       2.52%       2.52%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.55%      13.55%      13.55%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       5.75%       5.75%       5.75%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.54%       1.54%       1.54%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      71.18%      71.18%      71.18%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.77%       4.77%       4.77%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.35%       1.35%       1.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.49%      76.49%      76.49%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.02%       1.02%       1.02%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7687== NVPROF is profiling process 7687, command: ../../../../CUDA/bin/add_two_matrix2
+==7687== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7687== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7687== Profiling result:
+==7687== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.52%       2.52%       2.52%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.48%      13.48%      13.48%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.63%       4.63%       4.63%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.33%       1.33%       1.33%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.71%      76.71%      76.71%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.04%       1.04%       1.04%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7707== NVPROF is profiling process 7707, command: ../../../../CUDA/bin/add_two_matrix2
+==7707== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7707== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7707== Profiling result:
+==7707== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.28%       4.28%       4.28%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.70%      23.70%      23.70%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.13%       8.13%       8.13%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.32%       2.32%       2.32%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.33%      59.33%      59.33%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.72%       1.72%       1.72%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7724== NVPROF is profiling process 7724, command: ../../../../CUDA/bin/add_two_matrix2
+==7724== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7724== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7724== Profiling result:
+==7724== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.29%       4.29%       4.29%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.77%      23.77%      23.77%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.12%       8.12%       8.12%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.33%       2.33%       2.33%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.24%      59.24%      59.24%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.74%       1.74%       1.74%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7744== NVPROF is profiling process 7744, command: ../../../../CUDA/bin/add_two_matrix2
+==7744== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7744== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7744== Profiling result:
+==7744== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.51%       2.51%       2.51%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.59%      13.59%      13.59%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.84%       4.84%       4.84%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.36%       1.36%       1.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.37%      76.37%      76.37%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.28%       0.28%       0.28%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.03%       1.03%       1.03%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7761== NVPROF is profiling process 7761, command: ../../../../CUDA/bin/add_two_matrix2
+==7761== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7761== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7761== Profiling result:
+==7761== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.52%       2.52%       2.52%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.66%      13.66%      13.66%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.68%       4.68%       4.68%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.34%       1.34%       1.34%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.45%      76.45%      76.45%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.28%       0.28%       0.28%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.05%       1.05%       1.05%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7778== NVPROF is profiling process 7778, command: ../../../../CUDA/bin/add_two_matrix2
+==7778== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7778== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7778== Profiling result:
+==7778== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.26%       4.26%       4.26%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.66%      23.66%      23.66%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.39%       8.39%       8.39%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.37%       2.37%       2.37%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.09%      59.09%      59.09%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.48%       0.48%       0.48%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.72%       1.72%       1.72%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7795== NVPROF is profiling process 7795, command: ../../../../CUDA/bin/add_two_matrix2
+==7795== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7795== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7795== Profiling result:
+==7795== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.27%       4.27%       4.27%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.69%      23.69%      23.69%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.39%       8.39%       8.39%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.36%       2.36%       2.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.07%      59.07%      59.07%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.72%       1.72%       1.72%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7813== NVPROF is profiling process 7813, command: ../../../../CUDA/bin/add_two_matrix2
+==7813== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7813== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7813== Profiling result:
+==7813== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.28%       4.28%       4.28%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.71%      23.71%      23.71%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.34%       8.34%       8.34%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.36%       2.36%       2.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.08%      59.08%      59.08%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.73%       1.73%       1.73%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7830== NVPROF is profiling process 7830, command: ../../../../CUDA/bin/add_two_matrix2
+==7830== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7830== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7830== Profiling result:
+==7830== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.28%       4.28%       4.28%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.76%      23.76%      23.76%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.32%       8.32%       8.32%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.35%       2.35%       2.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.06%      59.06%      59.06%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.72%       1.72%       1.72%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+======== Warning: Metric "a" cannot be found on device 0.
+==7853== NVPROF is profiling process 7853, command: ../../../../CUDA/bin/add_two_matrix2
+==7853== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7853== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7853== Profiling result:
+==7853== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.28%       4.28%       4.28%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.74%      23.74%      23.74%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.14%       8.14%       8.14%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.34%       2.34%       2.34%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.28%      59.28%      59.28%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.71%       1.71%       1.71%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+==7870== NVPROF is profiling process 7870, command: ../../../../CUDA/bin/add_two_matrix2
+==7870== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7870== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7870== Profiling result:
+==7870== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.28%       4.28%       4.28%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.67%      23.67%      23.67%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.25%       8.25%       8.25%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.34%       2.34%       2.34%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.23%      59.23%      59.23%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.73%       1.73%       1.73%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+==7887== NVPROF is profiling process 7887, command: ../../../../CUDA/bin/add_two_matrix2
+==7887== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7887== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7887== Profiling result:
+==7887== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.50%       2.50%       2.50%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.46%      13.46%      13.46%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.53%       4.53%       4.53%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.46%       1.46%       1.46%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.67%      76.67%      76.67%
           1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.03%       0.03%       0.03%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.34%       0.34%       0.34%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.36%       1.36%       1.36%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.08%       1.08%       1.08%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
 - FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           3.09%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         16.72% 
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.50%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.46% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        5.75%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.54%  
+			stall_other                                   Issue Stall Reasons (Other)                        4.53%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.46%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 71.18% 
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.67% 
 			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.03%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.34%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.36%  ==12086== NVPROF is profiling process 12086, command: ../../../../CUDA/bin/add_two_matrix2
-==12086== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12086== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.08%  
+
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==7904== NVPROF is profiling process 7904, command: ../../../../CUDA/bin/add_two_matrix2
+==7904== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7904== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12086== Profiling result:
-==12086== Metric result:
+==7904== Profiling result:
+==7904== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.45%       2.45%       2.45%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.31%      13.31%      13.31%
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.52%       2.52%       2.52%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.68%      13.68%      13.68%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.38%       4.38%       4.38%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.58%       1.58%       1.58%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.96%      76.96%      76.96%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.71%       4.71%       4.71%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.35%       1.35%       1.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.40%      76.40%      76.40%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.05%       1.05%       1.05%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+- FRONT-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.52%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.68% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                        4.71%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.35%  
+
+
+- BACK-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.40% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.05%  
+
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==7922== NVPROF is profiling process 7922, command: ../../../../CUDA/bin/add_two_matrix2
+==7922== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7922== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7922== Profiling result:
+==7922== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.28%       4.28%       4.28%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.69%      23.69%      23.69%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.22%       8.22%       8.22%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.34%       2.34%       2.34%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.26%      59.26%      59.26%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.70%       1.70%       1.70%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+- FRONT-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           4.28%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         23.69% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                        8.22%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 2.34%  
+
+
+- BACK-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 59.26% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.49%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.70%  
+
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==7954== NVPROF is profiling process 7954, command: ../../../../CUDA/bin/add_two_matrix2
+==7954== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7954== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7954== Profiling result:
+==7954== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.52%       2.52%       2.52%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.61%      13.61%      13.61%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.71%       4.71%       4.71%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.34%       1.34%       1.34%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.47%      76.47%      76.47%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.28%       0.28%       0.28%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.05%       1.05%       1.05%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+==7972== NVPROF is profiling process 7972, command: ../../../../CUDA/bin/add_two_matrix2
+==7972== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7972== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7972== Profiling result:
+==7972== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.51%       2.51%       2.51%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.47%      13.47%      13.47%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.64%       4.64%       4.64%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.33%       1.33%       1.33%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.72%      76.72%      76.72%
           1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
           1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
           1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.03%       1.03%       1.03%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
+
 - FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.45%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.31% 
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.51%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.47% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        4.38%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.58%  
+			stall_other                                   Issue Stall Reasons (Other)                        4.64%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.33%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.96% 
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.72% 
 			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
 			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.03%  ==12103== NVPROF is profiling process 12103, command: ../../../../CUDA/bin/add_two_matrix2
-==12103== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12103== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.03%  
+
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==7989== NVPROF is profiling process 7989, command: ../../../../CUDA/bin/add_two_matrix2
+==7989== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7989== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12103== Profiling result:
-==12103== Metric result:
+==7989== Profiling result:
+==7989== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.75%       2.75%       2.75%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      14.77%      14.77%      14.77%
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.28%       4.28%       4.28%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.75%      23.75%      23.75%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       5.17%       5.17%       5.17%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.38%       1.38%       1.38%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      74.47%      74.47%      74.47%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.14%       8.14%       8.14%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.34%       2.34%       2.34%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.26%      59.26%      59.26%
           1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.30%       0.30%       0.30%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.14%       1.14%       1.14%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.72%       1.72%       1.72%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
+
 - FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.75%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         14.77% 
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           4.28%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         23.75% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        5.17%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.38%  
+			stall_other                                   Issue Stall Reasons (Other)                        8.14%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 2.34%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 74.47% 
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 59.26% 
 			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.30%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.14%  ==12120== NVPROF is profiling process 12120, command: ../../../../CUDA/bin/add_two_matrix2
-==12120== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12120== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.49%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.72%  
+
+
+- BACK-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==8013== NVPROF is profiling process 8013, command: ../../../../CUDA/bin/add_two_matrix2
+==8013== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8013== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12120== Profiling result:
-==12120== Metric result:
+==8013== Profiling result:
+==8013== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.76%       2.76%       2.76%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      14.90%      14.90%      14.90%
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.51%       2.51%       2.51%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.42%      13.42%      13.42%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       5.13%       5.13%       5.13%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.37%       1.37%       1.37%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      74.37%      74.37%      74.37%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.30%       0.30%       0.30%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.14%       1.14%       1.14%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.62%       4.62%       4.62%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.32%       1.32%       1.32%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.82%      76.82%      76.82%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.03%       0.03%       0.03%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.02%       1.02%       1.02%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
+
 - FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.76%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         14.90% 
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.51%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.42% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        5.13%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.37%  
+			stall_other                                   Issue Stall Reasons (Other)                        4.62%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.32%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 74.37% 
-			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.30%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.14%  ==12137== NVPROF is profiling process 12137, command: ../../../../CUDA/bin/add_two_matrix2
-==12137== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12137== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.82% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.03%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.02%  
+
+
+- BACK-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==8035== NVPROF is profiling process 8035, command: ../../../../CUDA/bin/add_two_matrix2
+==8035== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8035== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12137== Profiling result:
-==12137== Metric result:
+==8035== Profiling result:
+==8035== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.29%       4.29%       4.29%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.81%      23.81%      23.81%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.12%       8.12%       8.12%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.34%       2.34%       2.34%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.20%      59.20%      59.20%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.73%       1.73%       1.73%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
+- FRONT-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           4.29%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         23.81% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                        8.12%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 2.34%  
+
+
+- BACK-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 59.20% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.49%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.73%  
+
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==8067== NVPROF is profiling process 8067, command: ../../../../CUDA/bin/add_two_matrix2
+==8067== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8067== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8067== Profiling result:
+==8067== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
           1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.49%       2.49%       2.49%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.50%      13.50%      13.50%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.43%      13.43%      13.43%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.44%       4.44%       4.44%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.60%       1.60%       1.60%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.65%      76.65%      76.65%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.63%       4.63%       4.63%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.33%       1.33%       1.33%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.79%      76.79%      76.79%
           1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
           1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.02%       1.02%       1.02%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.03%       1.03%       1.03%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
 - FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
 			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.49%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.50% 
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.43% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        4.44%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.60%  
+			stall_other                                   Issue Stall Reasons (Other)                        4.63%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.33%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.65% 
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.79% 
 			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
 			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.02%  ==12154== NVPROF is profiling process 12154, command: ../../../../CUDA/bin/add_two_matrix2
-==12154== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12154== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.03%  
+
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==8095== NVPROF is profiling process 8095, command: ../../../../CUDA/bin/add_two_matrix2
+==8095== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8095== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12154== Profiling result:
-==12154== Metric result:
+==8095== Profiling result:
+==8095== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       3.95%       3.95%       3.95%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      21.62%      21.62%      21.62%
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.27%       4.27%       4.27%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.68%      23.68%      23.68%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       7.27%       7.27%       7.27%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.47%       2.47%       2.47%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      62.78%      62.78%      62.78%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.10%       8.10%       8.10%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.33%       2.33%       2.33%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.38%      59.38%      59.38%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.73%       1.73%       1.73%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
+- FRONT-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           4.27%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         23.68% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                        8.10%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 2.33%  
+
+
+- BACK-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 59.38% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.49%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.73%  
+
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==8113== NVPROF is profiling process 8113, command: ../../../../CUDA/bin/add_two_matrix2
+==8113== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8113== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8113== Profiling result:
+==8113== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       3.93%       3.93%       3.93%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      21.63%      21.63%      21.63%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       7.28%       7.28%       7.28%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.01%       2.01%       2.01%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      63.09%      63.09%      63.09%
           1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
           1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.44%       0.44%       0.44%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.46%       1.46%       1.46%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.61%       1.61%       1.61%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
 - FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           3.95%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         21.62% 
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           3.93%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         21.63% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        7.27%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 2.47%  
+			stall_other                                   Issue Stall Reasons (Other)                        7.28%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 2.01%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 62.78% 
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 63.09% 
 			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
 			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.44%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.46%  ==12171== NVPROF is profiling process 12171, command: ../../../../CUDA/bin/add_two_matrix2
-==12171== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12171== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12171== Profiling result:
-==12171== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.46%       2.46%       2.46%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.31%      13.31%      13.31%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.38%       4.38%       4.38%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.58%       1.58%       1.58%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.95%      76.95%      76.95%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.02%       1.02%       1.02%
-==12189== NVPROF is profiling process 12189, command: ../../../../CUDA/bin/add_two_matrix2
-==12189== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12189== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12189== Profiling result:
-==12189== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.44%       2.44%       2.44%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.32%      13.32%      13.32%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.38%       4.38%       4.38%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.58%       1.58%       1.58%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.97%      76.97%      76.97%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.02%       1.02%       1.02%
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.61%  
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
-- FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.44%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.32% 
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==8131== NVPROF is profiling process 8131, command: ../../../../CUDA/bin/add_two_matrix2
+==8131== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8131== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8131== Profiling result:
+==8131== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.27%       4.27%       4.27%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.67%      23.67%      23.67%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.36%       8.36%       8.36%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.36%       2.36%       2.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.14%      59.14%      59.14%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.48%       0.48%       0.48%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.69%       1.69%       1.69%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+==8148== NVPROF is profiling process 8148, command: ../../../../CUDA/bin/add_two_matrix2
+==8148== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8148== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8148== Profiling result:
+==8148== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.27%       4.27%       4.27%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.64%      23.64%      23.64%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.34%       8.34%       8.34%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.36%       2.36%       2.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.15%      59.15%      59.15%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.73%       1.73%       1.73%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
+- FRONT-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           4.27%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         23.64% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        4.38%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.58%  
+			stall_other                                   Issue Stall Reasons (Other)                        8.34%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 2.36%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.97% 
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 59.15% 
 			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.02%  ==12207== NVPROF is profiling process 12207, command: ../../../../CUDA/bin/add_two_matrix2
-==12207== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12207== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.49%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.73%  
+
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==8166== NVPROF is profiling process 8166, command: ../../../../CUDA/bin/add_two_matrix2
+==8166== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8166== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12207== Profiling result:
-==12207== Metric result:
+==8166== Profiling result:
+==8166== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.18%       2.18%       2.18%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      11.90%      11.90%      11.90%
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.52%       2.52%       2.52%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.71%      13.71%      13.71%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.00%       4.00%       4.00%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.36%       1.36%       1.36%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      79.46%      79.46%      79.46%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.01%       0.01%       0.01%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.24%       0.24%       0.24%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.85%       0.85%       0.85%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.68%       4.68%       4.68%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.35%       1.35%       1.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.39%      76.39%      76.39%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.28%       0.28%       0.28%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.05%       1.05%       1.05%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
 - FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.18%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         11.90% 
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.52%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.71% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        4.00%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.36%  
+			stall_other                                   Issue Stall Reasons (Other)                        4.68%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.35%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 79.46% 
-			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.01%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.24%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              0.85%  ==12225== NVPROF is profiling process 12225, command: ../../../../CUDA/bin/add_two_matrix2
-==12225== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12225== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12225== Profiling result:
-==12225== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.76%       2.76%       2.76%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      14.88%      14.88%      14.88%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       5.15%       5.15%       5.15%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.38%       1.38%       1.38%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      74.36%      74.36%      74.36%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.30%       0.30%       0.30%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.15%       1.15%       1.15%
-==12242== NVPROF is profiling process 12242, command: ../../../../CUDA/bin/add_two_matrix2
-==12242== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12242== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12242== Profiling result:
-==12242== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.44%       2.44%       2.44%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.19%      13.19%      13.19%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.35%       4.35%       4.35%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.57%       1.57%       1.57%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      77.15%      77.15%      77.15%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.02%       1.02%       1.02%
-==12263== NVPROF is profiling process 12263, command: ../../../../CUDA/bin/add_two_matrix2
-==12263== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12263== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12263== Profiling result:
-==12263== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.44%       2.44%       2.44%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.15%      13.15%      13.15%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.34%       4.34%       4.34%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.57%       1.57%       1.57%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      77.20%      77.20%      77.20%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.01%       1.01%       1.01%
-==12283== NVPROF is profiling process 12283, command: ../../../../CUDA/bin/add_two_matrix2
-==12283== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12283== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12283== Profiling result:
-==12283== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.45%       2.45%       2.45%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.18%      13.18%      13.18%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.34%       4.34%       4.34%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.57%       1.57%       1.57%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      77.16%      77.16%      77.16%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.01%       1.01%       1.01%
-
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
-- FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.45%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.18% 
-			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        4.34%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.57%  
-
-
-- BACK-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 77.16% 
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.39% 
 			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.01%  ==12300== NVPROF is profiling process 12300, command: ../../../../CUDA/bin/add_two_matrix2
-==12300== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12300== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.28%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.05%  
+
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==8191== NVPROF is profiling process 8191, command: ../../../../CUDA/bin/add_two_matrix2
+==8191== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8191== Profiling application: ../../../../CUDA/bin/add_two_matrix2
 NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12300== Profiling result:
-==12300== Metric result:
+==8191== Profiling result:
+==8191== Metric result:
 Invocations                               Metric Name                           Metric Description         Min         Max         Avg
 Device "NVIDIA Tegra X2 (0)"
     Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.43%       2.43%       2.43%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.25%      13.25%      13.25%
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.28%       4.28%       4.28%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.74%      23.74%      23.74%
           1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.36%       4.36%       4.36%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.57%       1.57%       1.57%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      77.09%      77.09%      77.09%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.11%       8.11%       8.11%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.33%       2.33%       2.33%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.31%      59.31%      59.31%
           1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.02%       1.02%       1.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.72%       1.72%       1.72%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
 - FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.43%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.25% 
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           4.28%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         23.74% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        4.36%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.57%  
+			stall_other                                   Issue Stall Reasons (Other)                        8.11%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 2.33%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 77.09% 
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 59.31% 
 			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.02%  ==12319== NVPROF is profiling process 12319, command: ../../../../CUDA/bin/add_two_matrix2
-==12319== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12319== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12319== Profiling result:
-==12319== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.74%       2.74%       2.74%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      14.83%      14.83%      14.83%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       5.14%       5.14%       5.14%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.38%       1.38%       1.38%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      74.46%      74.46%      74.46%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.30%       0.30%       0.30%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.13%       1.13%       1.13%
-==12339== NVPROF is profiling process 12339, command: ../../../../CUDA/bin/add_two_matrix2
-==12339== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12339== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12339== Profiling result:
-==12339== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.46%       2.46%       2.46%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.35%      13.35%      13.35%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       4.38%       4.38%       4.38%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.58%       1.58%       1.58%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.92%      76.92%      76.92%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.03%       0.03%       0.03%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.27%       0.27%       0.27%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.01%       1.01%       1.01%
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.49%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.72%  
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
-- FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.46%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         13.35% 
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% ==8227== NVPROF is profiling process 8227, command: ../../../../CUDA/bin/add_two_matrix2
+==8227== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8227== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8227== Profiling result:
+==8227== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.28%       4.28%       4.28%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.68%      23.68%      23.68%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.23%       8.23%       8.23%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.34%       2.34%       2.34%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.24%      59.24%      59.24%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.48%       0.48%       0.48%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.72%       1.72%       1.72%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      95.83%      95.83%      95.83%
+
+List of counters measured according to the part. The result obtained is stored for each counter, as well as a description.
+
+- FRONT-END RESULTS:
+			Metric Name                                   Metric Description                                 Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           4.28%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         23.68% 
 			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        4.38%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.58%  
+			stall_other                                   Issue Stall Reasons (Other)                        8.23%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                 2.34%  
 
 
 - BACK-END RESULTS:
-			Counter                                       Description                                        Value 
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 76.92% 
-			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.03%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.27%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.01%  ==12356== NVPROF is profiling process 12356, command: ../../../../CUDA/bin/add_two_matrix2
-==12356== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12356== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12356== Profiling result:
-==12356== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.74%       2.74%       2.74%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      15.00%      15.00%      15.00%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       5.07%       5.07%       5.07%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.37%       1.37%       1.37%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      74.34%      74.34%      74.34%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.30%       0.30%       0.30%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.14%       1.14%       1.14%
-
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
-- FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           2.74%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         15.00% 
-			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        5.07%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.37%  
-
-
-- BACK-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 74.34% 
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 59.24% 
 			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.02%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.30%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.14%  ==12378== NVPROF is profiling process 12378, command: ../../../../CUDA/bin/add_two_matrix2
-==12378== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12378== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12378== Profiling result:
-==12378== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       3.10%       3.10%       3.10%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      16.84%      16.84%      16.84%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       5.78%       5.78%       5.78%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.55%       1.55%       1.55%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      71.02%      71.02%      71.02%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.03%       0.03%       0.03%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.34%       0.34%       0.34%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.35%       1.35%       1.35%
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.48%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.72%  
 
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
-- FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
+
+- DIVERGENCE RESULTS:
+			Metric Name                                   Metric Description                                 Value 
 			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           3.10%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         16.84% 
-			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        5.78%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.55%  
-
-
-- BACK-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 71.02% 
-			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.03%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.34%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.35%  ==12396== NVPROF is profiling process 12396, command: ../../../../CUDA/bin/add_two_matrix2
-==12396== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
-==12396== Profiling application: ../../../../CUDA/bin/add_two_matrix2
-NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
-==12396== Profiling result:
-==12396== Metric result:
-Invocations                               Metric Name                           Metric Description         Min         Max         Avg
-Device "NVIDIA Tegra X2 (0)"
-    Kernel: addMatrix(int*, int*, int*, int)
-          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       3.10%       3.10%       3.10%
-          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      16.99%      16.99%      16.99%
-          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
-          1                               stall_other                  Issue Stall Reasons (Other)       5.75%       5.75%       5.75%
-          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.55%       1.55%       1.55%
-          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      70.89%      70.89%      70.89%
-          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.03%       0.03%       0.03%
-          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.34%       0.34%       0.34%
-          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.34%       1.34%       1.34%
-
-List of counters measured according to the part measured. The result obtained is stored for each counter, as well as a description.
-- FRONT-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)           3.10%  
-			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)         16.99% 
-			stall_sync                                    Issue Stall Reasons (Synchronization)              0.00%  
-			stall_other                                   Issue Stall Reasons (Other)                        5.75%  
-			stall_not_selected                            Issue Stall Reasons (Not Selected)                 1.55%  
-
-
-- BACK-END RESULTS:
-			Counter                                       Description                                        Value 
-			-------------------------------------------------------------------------------------------------------
-			stall_memory_dependency                       Issue Stall Reasons (Data Request)                 70.89% 
-			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)           0.03%  
-			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                    0.34%  
-			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)              1.34%  
+			warp_nonpred_execution_efficiency             Warp Non-Predicated Execution Efficiency           95.83% 
