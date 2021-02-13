@@ -97,7 +97,7 @@ class Shell:
         return str_output
     pass
 
-    def launch_command_show_error(self, command: str, message : str) -> str:
+    def launch_command_show_all(self, command: str, message : str) -> str:
         """
         Launch Shell command and show the result of the execution (including errors)
         

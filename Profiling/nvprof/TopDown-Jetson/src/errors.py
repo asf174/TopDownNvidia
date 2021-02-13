@@ -6,10 +6,10 @@ Errores launched by TopDown class
 @version:   1.0
 """
 
-class FrontAndBackErrorOperation(Exception):
-    """Exception raised in FrontEnd and BackEnd launch Command Operation."""
+class ProfilingError(Exception):
+    """Exception raised when NVIDIA scan tool has failed"""
     
-    C_ERROR_MESSAGE     : str = "Error in launching FrontEnd and BackEnd operations."
+    C_ERROR_MESSAGE     : str = "Error with the NVIDIA scan tool"
 
     def __init__(self):
         """Show error message."""
@@ -39,17 +39,33 @@ class WriteInOutPutFileError(Exception):
         super().__init__(self.C_ERROR_MESSAGE)
     pass
 
-class MetricOrEventNoDefined(Exception):
-    """Exception raised when a metric/event has introduced but does not exist in NVIDIA scan tool.
+class MetricNoDefined(Exception):
+    """Exception raised when a metric has introduced but does not exist in NVIDIA scan tool.
     
     Attributes:
-        name_counter    : str   ; name of the counter that produced the error
+        metric_name    : str   ; name of the metric that produced the error
     """
     
-    C_ERROR_MESSAGE     : str = "Error. Following Metric/event does not exist in NVIDIA scan tool: "
+    C_ERROR_MESSAGE     : str = "Error. Following Metric does not exist in NVIDIA scan tool: "
 
-    def __init__(self, name_counter: str):
+    def __init__(self, metric_name: str):
         """Show error message."""
         
-        super().__init__(self.C_ERROR_MESSAGE + name_counter)
+        super().__init__(self.C_ERROR_MESSAGE + metric_name)
     pass
+
+class EventNoDefined(Exception):
+    """Exception raised when a event has introduced but does not exist in NVIDIA scan tool.
+    
+    Attributes:
+        event_name    : str   ; name of the event that produced the error
+    """
+    
+    C_ERROR_MESSAGE     : str = "Error. Following event does not exist in NVIDIA scan tool: "
+
+    def __init__(self, event_name: str):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE + event_name)
+    pass
+

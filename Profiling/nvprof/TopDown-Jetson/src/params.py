@@ -40,11 +40,11 @@ class Parameters:
                                                         "stall_not_selected,stall_not_selected")
     C_LEVEL_1_BACK_END_METRICS          : str       = ("stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy," +
                                                         "stall_memory_throttle")
-    C_LEVEL_1_DIVERGENCE_METRICS        : str       = ("branch_efficiency,warp_execution_efficiency,warp_nonpred_execution_efficiency")
+    C_LEVEL_1_DIVERGENCE_METRICS        : str       = ("")
     
-    """Events."""
-    C_LEVEL_1_FRONT_END_EVENTS          : str       = ("")
-    C_LEVEL_1_BACK_END_EVENTS           : str       = ("")
+    """Events.""" # Not found if i repeat some event/metric in more than one part
+    C_LEVEL_1_FRONT_END_EVENTS          : str       = ("active_cycles")
+    C_LEVEL_1_BACK_END_EVENTS           : str       = ("l2_subp1_total_read_sector_queries,active_warps")
     C_LEVEL_1_DIVERGENCE_EVENTS         : str       = ("")
     
     C_INFO_MESSAGE_EXECUTION_NVPROF     : str       = "Launching Command... Wait to results."
