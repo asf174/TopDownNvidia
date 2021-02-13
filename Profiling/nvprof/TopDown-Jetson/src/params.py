@@ -32,8 +32,8 @@ class Parameters:
     C_FILE_LONG_OPTION                  : str       = "--file"
 
     """Options."""
-    C_MAX_LEVEL_EXECUTION               : int       = 2
     C_MIN_LEVEL_EXECUTION               : int       = 1
+    C_MAX_LEVEL_EXECUTION               : int       = 2
     
     """Metrics."""
     C_LEVEL_1_FRONT_END_METRICS         : str       = ("stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other," +
@@ -45,6 +45,8 @@ class Parameters:
     """Events.""" # Not found if i repeat some event/metric in more than one part
     C_LEVEL_1_FRONT_END_EVENTS          : str       = ("active_cycles")
     C_LEVEL_1_BACK_END_EVENTS           : str       = ("l2_subp1_total_read_sector_queries,active_warps")
-    C_LEVEL_1_DIVERGENCE_EVENTS         : str       = ("")
+    C_LEVEL_1_DIVERGENCE_EVENTS         : str       = ("active_warps")
     
     C_INFO_MESSAGE_EXECUTION_NVPROF     : str       = "Launching Command... Wait to results."
+
+    # TODO preguntar separaciones, si anhadir el espacio

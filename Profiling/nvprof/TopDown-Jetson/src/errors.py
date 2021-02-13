@@ -1,5 +1,5 @@
 """
-Errores launched by TopDown class
+Mistakes launched by TopDown class
 
 @author:    Alvaro Saiz (UC)
 @date:      Jan 2021
@@ -7,9 +7,9 @@ Errores launched by TopDown class
 """
 
 class ProfilingError(Exception):
-    """Exception raised when NVIDIA scan tool has failed"""
+    """Exception raised when NVIDIA scan tool has failed (results not produced)"""
     
-    C_ERROR_MESSAGE     : str = "Error with the NVIDIA scan tool"
+    C_ERROR_MESSAGE     : str = "Error with the NVIDIA scan tool (results not generated)"
 
     def __init__(self):
         """Show error message."""
@@ -17,15 +17,26 @@ class ProfilingError(Exception):
         super().__init__(self.C_ERROR_MESSAGE)
     pass
 
-class OutputResultCommandError(Exception):
-    """Exception raised in case of error reading the output produced by command."""
+class MetricNotAsignedToPart(Exception):
+    """Exception raised when a metric has not been assigned to any analysis part"""
     
-    C_ERROR_MESSAGE     : str = "Error reading the output produced by command"
+    C_ERROR_MESSAGE     : str = "Following Metric has not been assigned to any analysis part: "
 
-    def __init__(self):
+    def __init__(self, metric_name : str):
         """Show error message."""
         
-        super().__init__(self.C_ERROR_MESSAGE)
+        super().__init__(self.C_ERROR_MESSAGE + metric_name)
+    pass
+
+class EventNotAsignedToPart(Exception):
+    """Exception raised when an event has not been assigned to any analysis part"""
+    
+    C_ERROR_MESSAGE     : str = "Following event has not been assigned to any analysis part: "
+
+    def __init__(self, event_name : str):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE + event_name)
     pass
 
 class WriteInOutPutFileError(Exception):

@@ -9,8 +9,7 @@ Program that implements the Top Down methodology over NVIDIA GPUs.
 import argparse
 import re
 #from tabulate import tabulate #TODO, pintar
-from errors import ProfilingError, WriteInOutPutFileError, MetricNoDefined, EventNoDefined, OutputResultCommandError
-
+from errors import *    
 from shell import Shell # launch shell arguments
 from params import Parameters # parameters of program
 
@@ -218,9 +217,9 @@ class TopDown:
         Add results of execution part (FrontEnd, BackEnd...) to list indicated by argument.
 
         Params:
-            dict_values     : dict      ; diccionary with counter_name-value elements of the part to 
+            dict_values     : dict      ; diccionary with name_metric/event-value elements of the part to 
                                           add to 'lst_to_add'
-            dict_desc       : dict      ; diccionary with counter_name-description elements of the 
+            dict_desc       : dict      ; diccionary with name_metric/event-description elements of the 
                                           part to add to 'lst_to_add'
             message         : str       ; introductory message to append to 'lst_to_add' to delimit 
                                           the beginning of the region
@@ -273,7 +272,8 @@ class TopDown:
         Run TopDown level 1.
 
         Raises:
-            OutputResultCommandError    ; raised in case of error in NVIDIA scan tool 
+            EventNotAsignedToPart       ; raised when an event has not been assigned to any analysis part 
+            MetricNotAsignedToPart      ; raised when a metric has not been assigned to any analysis part
             ProfilingError              ; raised in case of error reading results from NVIDIA scan tool
         """
 
@@ -346,10 +346,11 @@ class TopDown:
             line : str
             i : int
             list_words : list[str]
+            has_found_part : bool = False
             for line in output_command.splitlines():
                 line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
                 list_words = line.split(" ")
-                
+                has_found_part = False
                 if not has_read_all_events:
                     # Check if it's line of interest:
                     # ['', 'X', 'event_name','Min', 'Max', 'Avg', 'Total'] event_name is str. Rest: numbers (less '', it's an space)
@@ -362,14 +363,17 @@ class TopDown:
                             if (Parameters.C_LEVEL_1_FRONT_END_EVENTS != "" and event_name in dict_front_events):
                                 dict_front_events[event_name] = event_total_value
                                 #dict_front_events_desc[name_counter] = description_counter
-                            elif (Parameters.C_LEVEL_1_BACK_END_EVENTS != "" and event_name in dict_back_events):
+                                has_found_part = True
+                            if (Parameters.C_LEVEL_1_BACK_END_EVENTS != "" and event_name in dict_back_events):
                                 dict_back_events[event_name] = event_total_value
-                                #dict_back_events_desc[name_counter] = description_counter    
-                            elif (Parameters.C_LEVEL_1_DIVERGENCE_EVENTS != "" and event_name in dict_divergence_events): 
+                                #dict_back_events_desc[name_counter] = description_counter
+                                has_found_part = True
+                            if (Parameters.C_LEVEL_1_DIVERGENCE_EVENTS != "" and event_name in dict_divergence_events): 
                                 dict_divergence_events[event_name] = event_total_value
                                 #dict_divergence_events_desc[name_counter] = description_counter
-                            else:
-                                raise OutputResultCommandError     
+                                has_found_part = True
+                            if not has_found_part:
+                                raise EventNotAsignedToPart(event_name)     
                 else: # metrics
                     # Check if it's line of interest:
                     # ['', 'X', 'NAME_COUNTER', ... , 'Min', 'Max', 'Avg' (Y%)] where X (int number), Y (int/float number)
@@ -388,16 +392,19 @@ class TopDown:
                             (dict_front_metrics and dict_front_metrics_desc)):
                             dict_front_metrics[metric_name] = metric_avg_value
                             dict_front_metrics_desc[metric_name] = metric_description
-                        elif (Parameters.C_LEVEL_1_BACK_END_METRICS != "" and metric_name in 
+                            has_found_part = True
+                        if (Parameters.C_LEVEL_1_BACK_END_METRICS != "" and metric_name in 
                             (dict_back_metrics and dict_back_metrics_desc)):
                             dict_back_metrics[metric_name] = metric_avg_value
-                            dict_back_metrics_desc[metric_name] = metric_description    
-                        elif (Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "" and metric_name in 
+                            dict_back_metrics_desc[metric_name] = metric_description
+                            has_found_part = True 
+                        if (Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "" and metric_name in 
                             (dict_divergence_metrics and dict_divergence_metrics_desc)): 
                             dict_divergence_metrics[metric_name] = metric_avg_value
                             dict_divergence_metrics_desc[metric_name] = metric_description
-                        else: # not defined
-                            raise OutputResultCommandError
+                            has_found_part = True
+                        if not has_found_part:
+                            raise MetricNotAsignedToPart(metric_name)
             #  Keep Results
             lst_output : list[str] = list()
             lst_output.append("\nList of counters/metrics measured according to the part.")
