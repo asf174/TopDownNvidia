@@ -9,4 +9,4 @@
 #sudo $(which nvprof) --metrics stall_other --unified-memory-profiling off --profile-from-start off ../../../CUDA/bin/add_two_matrix2
 #sudo $(which nvprof) --metrics stall_not_selected --unified-memory-profiling off --profile-from-start off ../../../CUDA/bin/add_two_matrix2
 
-sudo $(which nvprof) --metrics stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other,stall_not_selected,stall_not_selected --unified-memory-profiling off --profile-from-start off ../../../CUDA/bin/add_two_matrix2
+sudo $(which nvprof) --metrics stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other,stall_not_selected,stall_not_selected --unified-memory-profiling off --profile-from-start off ../../../../CUDA/bin/add_two_matrix2

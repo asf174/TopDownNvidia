@@ -245,7 +245,8 @@ class TopDown:
             raise WriteInOutPutFileError
     pass
 
-    def __add_result_part_to_lst(self, dict_values : dict, dict_desc : dict, message : str, lst_to_add : list[str]):
+    def __add_result_part_to_lst(self, dict_values : dict, dict_desc : dict, message : str, 
+        lst_to_add : list[str], isMetric : bool):
         """
         Add results of execution part (FrontEnd, BackEnd...) to list indicated by argument.
 
@@ -257,13 +258,19 @@ class TopDown:
             message         : str       ; introductory message to append to 'lst_to_add' to delimit 
                                           the beginning of the region
             lst_output      : list[str] ; list where to add all elements
+            isMetric        : bool      ; True if they are metrics or False if they are events
 
         Raises:
             MetricOrEventNoDefined      ; raised in case you have added an event / metric that is 
                                           not supported or does not exist in the NVIDIA analysis tool
         """
         lst_to_add.append(message)
-        lst_to_add.append("\t\t\t{:<45} {:<49}  {:<5} ".format('Metric Name','Metric Description', 'Value'))
+        lst_to_add.append( "\t\t\t----------------------------------------------------"
+            +"---------------------------------------------------")
+        if isMetric:
+            lst_to_add.append("\t\t\t{:<45} {:<49}  {:<5} ".format('Metric Name','Metric Description', 'Value'))
+        else:
+            lst_to_add.append("\t\t\t{:<45} {:<49}  {:<5} ".format('Event Name','Event Description', 'Value'))
         lst_to_add.append( "\t\t\t----------------------------------------------------"
             +"---------------------------------------------------")
         for (counter, value), (counter, desc) in zip(dict_values.items(), 
@@ -271,6 +278,8 @@ class TopDown:
             if counter is None or desc is None or value is None:
                 raise MetricOrEventNoDefined(counter)
             lst_to_add.append("\t\t\t{:<45} {:<50} {:<6} ".format(counter, desc, value))
+        lst_to_add.append( "\t\t\t----------------------------------------------------"
+            +"---------------------------------------------------")
     pass
 
     def level_1(self):
@@ -286,8 +295,11 @@ class TopDown:
         # FrontEnd Command
         command : str = ("sudo $(which nvprof) --metrics " + Parameters.C_LEVEL_1_FRONT_END_METRICS + 
             "," + Parameters.C_LEVEL_1_BACK_END_METRICS + "," + Parameters.C_LEVEL_1_DIVERGENCE_METRICS 
-            + " --unified-memory-profiling off --profile-from-start off " + self.__program)
-        
+            + "  --events " + Parameters.C_LEVEL_1_FRONT_END_EVENTS + 
+            "," + Parameters.C_LEVEL_1_BACK_END_EVENTS + "," + Parameters.C_LEVEL_1_DIVERGENCE_EVENTS + 
+            " --unified-memory-profiling off --profile-from-start off " + self.__program)
+
+        print(command)
         output_file : str = self.output_file()
         output_command : bool
         if output_file is None:
@@ -297,26 +309,40 @@ class TopDown:
         if output_command is None:
             raise FrontAndBackErrorOperation
         else:
+            dictionary_front_metrics : dict = dict() 
+            dictionary_front_metrics_desc : dict = dict()
+            dictionary_back_metrics : dict = dict()
+            dictionary_back_metrics_desc : dict = dict()
+            dictionary_divergence_metrics : dict = dict()
+            dictionary_divergence_metrics_desc : dict = dict() 
+
+            dictionary_front_events : dict = dict() 
+            dictionary_front_events_desc : dict = dict() 
+            dictionary_back_events : dict = dict() 
+            dictionary_back_events_desc : dict = dict() 
+            dictionary_divergence_events : dict = dict() 
+            dictionary_divergence_events_desc : dict = dict() 
+
             # Create dictionaries with name of counters as key.
             if Parameters.C_LEVEL_1_FRONT_END_METRICS != "":
-                dictionary_front_metrics : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
-                dictionary_front_metrics_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
+                dictionary_front_metrics = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
+                dictionary_front_metrics_desc = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
             if Parameters.C_LEVEL_1_BACK_END_METRICS != "":
-                dictionary_back_metrics : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
-                dictionary_back_metrics_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
+                dictionary_back_metrics = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
+                dictionary_back_metrics_desc = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
             if Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "":
-                dictionary_divergence_metrics : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))
-                dictionary_divergence_metrics_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))
+                dictionary_divergence_metrics = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))
+                dictionary_divergence_metrics_desc = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))
             
             if Parameters.C_LEVEL_1_FRONT_END_EVENTS != "":
-                dictionary_front_events : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_EVENTS.split(","))
-                dictionary_front_events_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
+                dictionary_front_events = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_EVENTS.split(","))
+                dictionary_front_events_desc = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_EVENTS.split(","))
             if Parameters.C_LEVEL_1_BACK_END_EVENTS != "":
-                dictionary_back_events : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_EVENTS.split(","))
-                dictionary_back_events_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_EVENTS.split(","))
+                dictionary_back_events = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_EVENTS.split(","))
+                dictionary_back_events_desc = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_EVENTS.split(","))
             if Parameters.C_LEVEL_1_DIVERGENCE_EVENTS!= "":
-                dictionary_divergence_events : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_EVENTS.split(","))
-                dictionary_divergence_events_desc : dict = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_EVENTS.split(","))
+                dictionary_divergence_events = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_EVENTS.split(","))
+                dictionary_divergence_events_desc = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_EVENTS.split(","))
 
             for line in output_command.splitlines():
                 line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
@@ -324,7 +350,7 @@ class TopDown:
                 
                 # Check if it's line of interest:
                 # ['', 'X', 'NAME_COUNTER', ... , 'Min', 'Max', 'Avg' (Y%)] where X (int number), Y (int/float number)
-                if list_words[0] == '' and list_words[len(list_words) - 1 ][0].isnumeric():
+                if len(list_words) > 1 and list_words[0] == '' and list_words[len(list_words) - 1][0].isnumeric():
                     name_counter : str = list_words[2]
                     description_counter : str = ""
                     for i in range(3, len(list_words) - 3):
@@ -360,20 +386,33 @@ class TopDown:
                         dictionary_divergence_events[name_counter] = avg_value
                         dictionary_divergence_events_desc[name_counter] = description_counter
                     else: # counter not defined
+                        print(name_counter)
                         raise OutputResultCommandError
             #  Keep Results
             lst_output : list[str] = []
             lst_output.append("\nList of counters measured according to the part."
                                 + " The result obtained is stored for each counter, as well as a description.")
+            
             if Parameters.C_LEVEL_1_FRONT_END_METRICS != "":
                 self.__add_result_part_to_lst(dictionary_front_metrics, 
-                    dictionary_front_metrics_desc,"\n- FRONT-END RESULTS:", lst_output)
+                    dictionary_front_metrics_desc,"\n- FRONT-END RESULTS:", lst_output, True)
+            if Parameters.C_LEVEL_1_FRONT_END_EVENTS != "":
+                    self.__add_result_part_to_lst(dictionary_front_events, 
+                    dictionary_front_events_desc,"", lst_output, False)
+                    
             if Parameters.C_LEVEL_1_BACK_END_METRICS != "":
                 self.__add_result_part_to_lst(dictionary_back_metrics, 
-                    dictionary_back_metrics_desc,"\n\n- BACK-END RESULTS:", lst_output)
+                    dictionary_back_metrics_desc,"\n- BACK-END RESULTS:", lst_output, True)
+            if Parameters.C_LEVEL_1_BACK_END_EVENTS != "":
+                    self.__add_result_part_to_lst(dictionary_back_events, 
+                    dictionary_back_events_desc,"", lst_output, False)
+
             if Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "":
                 self.__add_result_part_to_lst(dictionary_divergence_metrics, 
-                    dictionary_divergence_metrics_desc,"\n\n- DIVERGENCE RESULTS:", lst_output)
+                    dictionary_divergence_metrics_desc,"\n\n- DIVERGENCE RESULTS:", lst_output, True)
+            if Parameters.C_LEVEL_1_DIVERGENCE_EVENTS != "":
+                self.__add_result_part_to_lst(dictionary_divergence_events, 
+                    dictionary_divergence_events_desc, "", lst_output, False)
             
             if self.show_long_desc():
                 # Write results in output-file if has been specified

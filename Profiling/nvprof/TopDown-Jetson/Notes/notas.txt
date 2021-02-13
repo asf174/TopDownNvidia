@@ -79,7 +79,9 @@ Other: https://stackoverflow.com/questions/14887807/what-are-other-issue-stall-r
                    va a realizar una operación X de la que se disponen menos del tamaño del WARP de UF para esa operación. Algunos threads la podrán hacer
                    pero otros no, que tendrán que esperar.
 
-- stall_memory_throttle: STALLS producidos por la reducción del rendimiento de la memoria por altas temperaturas.
+- stall_memory_throttle: if the warp cannot issue because the LSU pipe is not available: 
+LSU instruction queue is a FIFO of instructions sent to the Load Store Unit.
+The LSU executes global/local/shared loads/store/atomics and several warp level operations (e.g. VOTE, SHUFFLE).
 
 - stall_not_selected: Stalls ocurridos porque un WARP elegible no ha sido seleccionado. 
 
