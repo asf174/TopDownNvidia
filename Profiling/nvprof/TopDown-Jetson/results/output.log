@@ -863,3 +863,662 @@ List of counters/metrics measured according to the part.
 			active_warps                                  -                                               892194730 
 			-------------------------------------------------------------------------------------------------------
 
+==6708== NVPROF is profiling process 6708, command: ../../../../CUDA/bin/add_two_matrix2
+==6708== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==6708== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==6708== Profiling result:
+==6708== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                             active_cycles    20182283    20182283    20182283    20182283
+          1        l2_subp1_total_read_sector_queries     1552628     1552628     1552628     1552628
+          1                              active_warps  1174873754  1174873754  1174873754  1174873754
+
+==6708== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.80%       0.80%       0.80%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       3.80%       3.80%       3.80%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.51%       1.51%       1.51%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.31%       0.31%       0.31%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      93.01%      93.01%      93.01%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.07%       0.07%       0.07%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.08%       0.08%       0.08%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.42%       0.42%       0.42%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.80%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        3.80%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.51%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.31%  
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               20182283 
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                93.01% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.07%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.08%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.42%  
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			l2_subp1_total_read_sector_queries            -                                               1552628 
+			active_warps                                  -                                               1174873754 
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_warps                                  -                                               1174873754 
+			-------------------------------------------------------------------------------------------------------
+
+==6931== NVPROF is profiling process 6931, command: ../../../../CUDA/bin/add_two_matrix2
+==6931== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==6931== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==6931== Profiling result:
+==6931== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.93%       0.93%       0.93%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       4.35%       4.35%       4.35%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.75%       1.75%       1.75%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.36%       0.36%       0.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      91.97%      91.97%      91.97%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.06%       0.06%       0.06%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.10%       0.10%       0.10%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.49%       0.49%       0.49%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.35%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.75%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.36%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                91.97% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.06%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==7011== NVPROF is profiling process 7011, command: ../../../../CUDA/bin/add_two_matrix2
+==7011== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7011== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==7011== Profiling result:
+==7011== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.79%       0.79%       0.79%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       3.69%       3.69%       3.69%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.52%       1.52%       1.52%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.31%       0.31%       0.31%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      93.15%      93.15%      93.15%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.05%       0.05%       0.05%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.08%       0.08%       0.08%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.41%       0.41%       0.41%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.79%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        3.69%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.52%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.31%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                93.15% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.05%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.08%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.41%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==7030== NVPROF is profiling process 7030, command: ../../../../CUDA/bin/add_two_matrix2
+==7030== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7030== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==7030== Profiling result:
+==7030== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.81%       0.81%       0.81%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       3.69%       3.69%       3.69%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.51%       1.51%       1.51%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.31%       0.31%       0.31%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      93.15%      93.15%      93.15%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.05%       0.05%       0.05%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.08%       0.08%       0.08%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.41%       0.41%       0.41%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.81%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        3.69%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.51%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.31%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                93.15% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.05%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.08%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.41%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==8551== NVPROF is profiling process 8551, command: ../../../../CUDA/bin/add_two_matrix2
+==8551== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8551== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==8551== Profiling result:
+==8551== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.91%       0.91%       0.91%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       4.30%       4.30%       4.30%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.72%       1.72%       1.72%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.36%       0.36%       0.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      92.08%      92.08%      92.08%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.05%       0.05%       0.05%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.09%       0.09%       0.09%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.48%       0.48%       0.48%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.91%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.30%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.72%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.36%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.08% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.05%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.09%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.48%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==8570== NVPROF is profiling process 8570, command: ../../../../CUDA/bin/add_two_matrix2
+==8570== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8570== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==8570== Profiling result:
+==8570== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.93%       0.93%       0.93%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       4.35%       4.35%       4.35%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.69%       1.69%       1.69%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.35%       0.35%       0.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      92.04%      92.04%      92.04%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.05%       0.05%       0.05%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.10%       0.10%       0.10%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.49%       0.49%       0.49%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.35%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.69%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.35%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.04% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.05%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==8587== NVPROF is profiling process 8587, command: ../../../../CUDA/bin/add_two_matrix2
+==8587== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8587== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==8587== Profiling result:
+==8587== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.92%       0.92%       0.92%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       4.36%       4.36%       4.36%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.69%       1.69%       1.69%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.35%       0.35%       0.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      92.05%      92.05%      92.05%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.05%       0.05%       0.05%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.09%       0.09%       0.09%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.49%       0.49%       0.49%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.92%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.36%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.69%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.35%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.05% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.05%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.09%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==9314== NVPROF is profiling process 9314, command: ../../../../CUDA/bin/add_two_matrix2
+==9314== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==9314== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==9314== Profiling result:
+==9314== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.93%       0.93%       0.93%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       4.37%       4.37%       4.37%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.71%       1.71%       1.71%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.36%       0.36%       0.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      92.01%      92.01%      92.01%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.05%       0.05%       0.05%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.10%       0.10%       0.10%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.49%       0.49%       0.49%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.37%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.71%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.36%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.01% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.05%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==9331== NVPROF is profiling process 9331, command: ../../../../CUDA/bin/add_two_matrix2
+==9331== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==9331== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==9331== Profiling result:
+==9331== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.93%       0.93%       0.93%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       4.38%       4.38%       4.38%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.69%       1.69%       1.69%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.35%       0.35%       0.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      92.01%      92.01%      92.01%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.05%       0.05%       0.05%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.10%       0.10%       0.10%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.49%       0.49%       0.49%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.38%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.69%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.35%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.01% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.05%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==9820== NVPROF is profiling process 9820, command: ../../../../CUDA/bin/add_two_matrix2
+==9820== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==9820== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==9820== Profiling result:
+==9820== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.93%       0.93%       0.93%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       4.33%       4.33%       4.33%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.72%       1.72%       1.72%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.35%       0.35%       0.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      92.03%      92.03%      92.03%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.06%       0.06%       0.06%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.09%       0.09%       0.09%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.48%       0.48%       0.48%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.33%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.72%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.35%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.03% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.06%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.09%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.48%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==9839== NVPROF is profiling process 9839, command: ../../../../CUDA/bin/add_two_matrix2
+==9839== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==9839== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==9839== Profiling result:
+==9839== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.93%       0.93%       0.93%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       4.36%       4.36%       4.36%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.73%       1.73%       1.73%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.36%       0.36%       0.36%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      91.98%      91.98%      91.98%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.05%       0.05%       0.05%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.10%       0.10%       0.10%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.49%       0.49%       0.49%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.36%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.73%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.36%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                91.98% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.05%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+==9965== NVPROF is profiling process 9965, command: ../../../../CUDA/bin/add_two_matrix2
+==9965== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==9965== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+==9965== Profiling result:
+==9965== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "GeForce GTX 1070 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.94%       0.94%       0.94%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       4.36%       4.36%       4.36%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.70%       1.70%       1.70%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.35%       0.35%       0.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      92.01%      92.01%      92.01%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.05%       0.05%       0.05%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.10%       0.10%       0.10%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.49%       0.49%       0.49%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.94%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.36%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.70%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.35%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.01% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.05%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+

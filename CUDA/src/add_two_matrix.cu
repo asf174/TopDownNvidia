@@ -17,10 +17,13 @@
 
 __global__ void addMatrix(int* a, int* b, int* result, int size)
 {
-	int idx = blockDim.x*blockIdx.x + threadIdx.x;
+	int idx = blockDim.x*blockIdx.x + threadIdx.x;	
 	if (idx < size)
 		result[idx] = a[idx] + b[idx];
-		
+	if (result[idx] == 4)
+		result[idx*result[idx] % size] = a[idx*result[idx] % size] + b[idx*result[idx] % size];
+	else
+		result[idx*result[idx] % size] = a[idx*result[idx] % size];
 }
 
 // print matrix indicated by argument
