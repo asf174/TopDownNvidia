@@ -45,7 +45,7 @@ class Parameters:
     """Events.""" # Not found if i repeat some event/metric in more than one part
     C_LEVEL_1_FRONT_END_EVENTS          : str       = ("")
     C_LEVEL_1_BACK_END_EVENTS           : str       = ("")
-    C_LEVEL_1_DIVERGENCE_EVENTS         : str       = ("")
+    C_LEVEL_1_DIVERGENCE_EVENTS         : str       = ("branch,divergent_branch")
     
     C_INFO_MESSAGE_EXECUTION_NVPROF     : str       = "Launching Command... Wait to results."
 
