@@ -284,7 +284,7 @@ class TopDown:
             + "  --events " + Parameters.C_LEVEL_1_FRONT_END_EVENTS + 
             "," + Parameters.C_LEVEL_1_BACK_END_EVENTS + "," + Parameters.C_LEVEL_1_DIVERGENCE_EVENTS + 
             " --unified-memory-profiling off --profile-from-start off " + self.__program)
-        print(command)
+
 	output_file : str = self.output_file()
         output_command : bool
 	
