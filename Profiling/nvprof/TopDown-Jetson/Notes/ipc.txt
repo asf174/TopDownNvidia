@@ -1,0 +1,20 @@
+Calculo del IPC 'real'. Este es el que nos arroja la aplicación, a través de la métrica 'ipc'.
+    
+                                            ipc = 1.769549
+
+que sale de dividir las instrucciones (medias por warp) entre los ciclos medios por warp, de la siguiente manera:
+
+                                            ipc = inst_executed / active_cycles = 16843904/(9518754) = 1.769549
+
+Este es el IPC 'real', ahora vamos a calcular el teórico máximo, que se obtendrá de la misma manera, pero eliminando todos los
+stall. Dicho de otro modo, IPC de Alicia en el país de las maravillas...
+------------------------------------------------ FRONT-END STALS --------------------------------------------
+Contadores necesarios para obtener cada 'stall':
+
+stall_inst_fetch                = inst_issued0
+stall_exec_dependency           =
+stall_sync                      =
+stall_other                     =
+stall_not_selected              =
+------------------------------------------------ END FRONT-END STALS --------------------------------------------
+                                                

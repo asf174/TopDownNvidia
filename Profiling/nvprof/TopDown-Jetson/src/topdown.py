@@ -2,16 +2,21 @@
 Program that implements the Top Down methodology over NVIDIA GPUs.
 
 @author:    Alvaro Saiz (UC)
-@date:      Jan 2021
+@date:      Jan-2021
 @version:   1.0
 """
 
 import argparse
 import re
 #from tabulate import tabulate #TODO, pintar
-from errors import *    
-from shell import Shell # launch shell arguments
-from params import Parameters # parameters of program
+from errors.topdown_errors import *
+from measure_parts.extra_measure import ExtraMeasure    
+from shell.shell import Shell # launch shell arguments
+from parameters.topdown_params import TopDownParameters # parameters of program
+import sys
+sys.path.insert(1, '/home/alvaro/Documents/Facultad/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_levels')
+from level_one import LevelOne
+from show_messages.message_format import MessageFormat
 
 class TopDown:
     """
@@ -46,7 +51,7 @@ class TopDown:
         self.__file_output : str = args.file
         self.__show_long_desc : bool = args.desc
         self.__program : str = args.program
-    pass
+        pass
     
     def __add_program_argument(self, group : argparse._ArgumentGroup) :
         """ 
@@ -58,8 +63,8 @@ class TopDown:
         """
 
         group.add_argument(
-            Parameters.C_FILE_SHORT_OPTION, 
-            Parameters.C_FILE_LONG_OPTION, 
+            TopDownParameters.C_FILE_SHORT_OPTION, 
+            TopDownParameters.C_FILE_LONG_OPTION, 
             required = True,
             help = 'run file. Path to file.',
             default = None,
@@ -67,7 +72,7 @@ class TopDown:
             type = str, 
             #metavar='/path/to/file',
             dest = 'program')
-    pass
+        pass
 
     def __add_level_argument(self, group : argparse._ArgumentGroup):
         """ 
@@ -79,17 +84,16 @@ class TopDown:
         """
         
         group.add_argument (
-            Parameters.C_LEVEL_SHORT_OPTION, Parameters.C_LEVEL_LONG_OPTION,
+            TopDownParameters.C_LEVEL_SHORT_OPTION, TopDownParameters.C_LEVEL_LONG_OPTION,
             required = True,
             help = 'level of execution.',
             type = int,
             nargs = 1,
             default = -1,
-            choices = range(Parameters.C_MIN_LEVEL_EXECUTION, Parameters.C_MAX_LEVEL_EXECUTION + 1), # range [1,2], produces error, no if needed
+            choices = range(TopDownParameters.C_MIN_LEVEL_EXECUTION, TopDownParameters.C_MAX_LEVEL_EXECUTION + 1), # range [1,2], produces error, no if needed
             metavar = '[NUM]',
             dest = 'level')
-        
-    pass
+        pass
 
     def __add_ouput_file_argument(self, parser : argparse.ArgumentParser):
         """ 
@@ -101,15 +105,15 @@ class TopDown:
         """
         
         parser.add_argument (
-            Parameters.C_OUTPUT_FILE_SHORT_OPTION, 
-            Parameters.C_OUTPUT_FILE_LONG_OPTION, 
+            TopDownParameters.C_OUTPUT_FILE_SHORT_OPTION, 
+            TopDownParameters.C_OUTPUT_FILE_LONG_OPTION, 
             help = 'output file. Path to file.',
             default = None,
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
             dest = 'file')
-    pass
+        pass
 
     def __add_long_desc_argument(self, parser : argparse.ArgumentParser):
         """ 
@@ -121,12 +125,12 @@ class TopDown:
         """
 
         parser.add_argument (
-            Parameters.C_LONG_DESCRIPTION_SHORT_OPTION, 
-            Parameters.C_LONG_DESCRIPTION_LONG_OPTION, 
+            TopDownParameters.C_LONG_DESCRIPTION_SHORT_OPTION, 
+            TopDownParameters.C_LONG_DESCRIPTION_LONG_OPTION, 
             help = 'long description of results.',
             action = 'store_true',
             dest = 'desc')
-    pass
+        pass
     
     def __add_arguments(self, parser : argparse.ArgumentParser):
         """ 
@@ -143,7 +147,7 @@ class TopDown:
         self.__add_level_argument(requiredGroup)
         self.__add_ouput_file_argument(parser)
         self.__add_long_desc_argument(parser)
-    pass
+        pass
 
     def program(self) -> str:
         """
@@ -153,7 +157,7 @@ class TopDown:
             str with path to program to be executed
         """
         return self.__program
-    pass
+        pass
     
     def level(self) -> int:
         """ 
@@ -163,7 +167,7 @@ class TopDown:
             1 if it's level one, 2 if it's level two
         """ 
         return self.__level
-    pass
+        pass
 
     def output_file(self) -> str:
         """
@@ -174,8 +178,7 @@ class TopDown:
             option '-o' or '--output' has not been indicated
         """
         return self.__file_output # descriptor to file or None
-
-    pass
+        pass
     
     def show_long_desc(self) -> bool:
         """
@@ -185,7 +188,7 @@ class TopDown:
             True to show long description of False if not
         """
         return self.__show_long_desc
-    pass
+        pass
 
     def __write_in_file_at_end(self, file : str, message : list[str]):
         """
@@ -209,248 +212,164 @@ class TopDown:
                 f.close()
         except:  
             raise WriteInOutPutFileError
-    pass
+        pass
 
-    def __add_result_part_to_lst(self, dict_values : dict, dict_desc : dict, message : str, 
-        lst_to_add : list[str], isMetric : bool):
+    def get_device_max_ipc(self) -> float:
         """
-        Add results of execution part (FrontEnd, BackEnd...) to list indicated by argument.
-
-        Params:
-            dict_values     : dict      ; diccionary with name_metric/event-value elements of the part to 
-                                          add to 'lst_to_add'
-            dict_desc       : dict      ; diccionary with name_metric/event-description elements of the 
-                                          part to add to 'lst_to_add'
-            message         : str       ; introductory message to append to 'lst_to_add' to delimit 
-                                          the beginning of the region
-            lst_output      : list[str] ; list where to add all elements
-            isMetric        : bool      ; True if they are metrics or False if they are events
+        Get Max IPC of device
 
         Raises:
-            MetricNoDefined             ; raised in case you have added an metric that is 
-                                          not supported or does not exist in the NVIDIA analysis tool
-            EventNoDefined              ; raised in case you have added an event that is 
-                                          not supported or does not exist in the NVIDIA analysis tool
-        """
-        
-        lst_to_add.append(message)
-        lst_to_add.append( "\t\t\t----------------------------------------------------"
-            + "---------------------------------------------------")
-        if isMetric:
-            lst_to_add.append("\t\t\t{:<45} {:<48}  {:<5} ".format('Metric Name','Metric Description', 'Value'))
-            lst_to_add.append( "\t\t\t----------------------------------------------------"
-            +"---------------------------------------------------")
-            for (metric_name, value), (metric_name, desc) in zip(dict_values.items(), 
-                dict_desc.items()):
-                if metric_name is None or desc is None or value is None:
-                    print(str(desc) + str(value) + str(isMetric))
-                    raise MetricNoDefined(metric_name)
-                lst_to_add.append("\t\t\t{:<45} {:<49} {:<6} ".format(metric_name, desc, value))
-        else:
-            lst_to_add.append("\t\t\t{:<45} {:<46}  {:<5} ".format('Event Name','Event Description', 'Value'))
-            lst_to_add.append( "\t\t\t----------------------------------------------------"
-            +"---------------------------------------------------")
-            #for (counter, value), (counter, desc) in zip(dict_values.items(), 
-            #    dict_desc.items()):
-            #    if counter is None or desc is None or value is None:
-            #        print(str(desc) + str(value) + str(isMetric))
-            #        raise MetricNoDefined(counter)
-            #    lst_to_add.append("\t\t\t{:<45} {:<50} {:<6} ".format(counter, desc, value))
-            value_event : str 
-            for event_name in dict_values:
-                value_event = dict_values.get(event_name)
-                if event_name is None or value_event is None:
-                    print(str(event_name) + " " + str(value_event))
-                    raise EventNoDefined(event_name)
-                lst_to_add.append("\t\t\t{:<45} {:<47} {:<6} ".format(event_name, "-", value_event))
-        lst_to_add.append("\t\t\t----------------------------------------------------"
-            +"---------------------------------------------------")
-    pass
-
-    def level_1(self):
-        """ 
-        Run TopDown level 1.
-
-        Raises:
-            EventNotAsignedToPart       ; raised when an event has not been assigned to any analysis part 
-            MetricNotAsignedToPart      ; raised when a metric has not been assigned to any analysis part
-            ProfilingError              ; raised in case of error reading results from NVIDIA scan tool
         """
 
         shell : Shell = Shell()
-        # Command to launch
-        command : str = ("sudo $(which nvprof) --metrics " + Parameters.C_LEVEL_1_FRONT_END_METRICS + 
-            "," + Parameters.C_LEVEL_1_BACK_END_METRICS + "," + Parameters.C_LEVEL_1_DIVERGENCE_METRICS 
-            + "  --events " + Parameters.C_LEVEL_1_FRONT_END_EVENTS + 
-            "," + Parameters.C_LEVEL_1_BACK_END_EVENTS + "," + Parameters.C_LEVEL_1_DIVERGENCE_EVENTS + 
-            " --unified-memory-profiling off --profile-from-start off " + self.__program)
+        compute_capability : str = shell.launch_command_show_all("nvcc ../src/measure_parts/compute_capability.cu --run", None)
+        shell.launch_command("rm -f a.out", None) # delete 'a.out' generated
+        if not compute_capability:
+            raise ComputeCapabilityError
+        dict_warps_schedulers_per_cc : dict = dict({3.0: 4, 3.2: 4, 3.5: 4, 3.7: 4, 5.0: 4, 5.2: 4, 5.3: 4, 
+            6.0: 2, 6.1: 4, 6.2: 4, 7.0: 4, 7.5: 4, 8.0: 1}) 
+        dict_ins_per_cycle : dict = dict({3.0: 1.5, 3.2: 1.5, 3.5: 1.5, 3.7: 1.5, 5.0: 1.5, 5.2: 1.5, 5.3: 1.5, 
+            6.0: 1.5, 6.1: 1.5, 6.2: 1.5, 7.0: 1, 7.5: 1, 8.0: 1})
+        return dict_warps_schedulers_per_cc.get(float(compute_capability))*dict_ins_per_cycle.get(float(compute_capability))
+        pass
 
-	output_file : str = self.output_file()
-        output_command : bool
-	
-        if output_file is None:
-            output_command = shell.launch_command(command, Parameters.C_INFO_MESSAGE_EXECUTION_NVPROF)
-        else:
-            output_command = shell.launch_command_redirect(command, Parameters.C_INFO_MESSAGE_EXECUTION_NVPROF, output_file, True)
-        if output_command is None:
-            raise ProfilingError
-        else:
-            dict_front_metrics : dict = dict() 
-            dict_front_metrics_desc : dict = dict()
-            dict_back_metrics : dict = dict()
-            dict_back_metrics_desc : dict = dict()
-            dict_divergence_metrics : dict = dict()
-            dict_divergence_metrics_desc : dict = dict() 
+    def ipc(self, extra_measure : ExtraMeasure) -> float:
+        """
+        Get IPC of execution (this method muste be called after '__get_results_level_1')
 
-            dict_front_events : dict = dict() 
-            dict_front_events_desc : dict = dict() 
-            dict_back_events : dict = dict() 
-            dict_back_events_desc : dict = dict() 
-            dict_divergence_events : dict = dict() 
-            dict_divergence_events_desc : dict = dict() 
+        Params:
+            extra_measure   : ExtraMeasure  ; part of the measures where IPC resides
 
-            # Create dictionaries with name of counters as key.
-            if Parameters.C_LEVEL_1_FRONT_END_METRICS != "":
-                dict_front_metrics = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
-                dict_front_metrics_desc = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_METRICS.split(","))
-            if Parameters.C_LEVEL_1_BACK_END_METRICS != "":
-                dict_back_metrics = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
-                dict_back_metrics_desc = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_METRICS.split(","))
-            if Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "":
-                dict_divergence_metrics = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))
-                dict_divergence_metrics_desc = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_METRICS.split(","))   
-            if Parameters.C_LEVEL_1_FRONT_END_EVENTS != "":
-                dict_front_events = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_EVENTS.split(","))
-                dict_front_events_desc = dict.fromkeys(Parameters.C_LEVEL_1_FRONT_END_EVENTS.split(","))
-            if Parameters.C_LEVEL_1_BACK_END_EVENTS != "":
-                dict_back_events = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_EVENTS.split(","))
-                dict_back_events_desc = dict.fromkeys(Parameters.C_LEVEL_1_BACK_END_EVENTS.split(","))
-            if Parameters.C_LEVEL_1_DIVERGENCE_EVENTS!= "":
-                dict_divergence_events = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_EVENTS.split(","))
-                dict_divergence_events_desc = dict.fromkeys(Parameters.C_LEVEL_1_DIVERGENCE_EVENTS.split(","))
+        Raises:
+            IpcMetricNotDefined ; raised if IPC cannot be obtanied because it was not 
+            computed by the NVIDIA scan tool 
+        """
+        ipc : str = extra_measure.get_metric_value(TopDownParameters.C_IPC_METRIC_NAME)
+        if ipc is None:
+            raise IpcMetricNotDefined
+        return float(ipc)
+        pass
 
-            line : str
-            list_words : list[str]
-            
-            # events
-            event_name : str
-            event_total_value : str
+    def intro_message(self): 
+        printer : MessageFormat = MessageFormat()
+        printer.print_center_msg_box(msg = "TopDown Metholodgy over NVIDIA's GPUs", indent = 1, title = "")
+        print()
+        print()
+        print()
+        message : str = "Welcome to the " + sys.argv[0] + " program where you can check the bottlenecks of your " + \
+            "CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural " + \
+            "aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your " + \
+            "program, which cause the IPC (Instructions per Cycle) to be drastically reduced."
+        printer.print_max_line_length_message(message, 130)
+        print()
+        message = "Next, you can see general information about the program"
+        printer.print_max_line_length_message(message, 130)
+        message = ("\n- Program Name:    topdown.py\n" + \
+                   "- Author:          Alvaro Saiz (UC)\n" + \
+                   "- Contact info:    asf174@alumnos.unican.es\n" + \
+                   "- Company:         University Of Cantabria\n" + \
+                   "- Place:           Santander, Cantabria, Kingdom of Spain\n" + \
+                   "- Helpers:         Pablo Prieto (UC) <pablo.prieto@unican.es>, Pablo Abad (UC) <pablo.abad@unican.es>\n" + \
+                   "- Bugs Report:     asf174@alumnos.unican.es"+ 
+                   "\n\n- Licence:         Open Source")
+        printer.print_msg_box(msg = message, indent = 1, title = "GENERAL INFORMATION")
+        print()
+        message = "In accordance with what has been entered, the execution will be carried out following the following terms:"
+        printer.print_max_line_length_message(message, 130)
+        message = ("\n- Execution Level:     " + str(self.level()) + "\n" + \
+                   "- Analyzed program:    " + self.program() + "\n" + \
+                   "- Output File:         " + self.output_file() + "\n" + \
+                   "- Long-Description:    " + str(self.show_long_desc()) )
+        printer.print_msg_box(msg = message, indent = 1, title = "PROGRAM FEATURES")
+        print()
+        message = "Said that, according to the level entered by you, WE START THE ANALYSIS."
+        printer.print_max_line_length_message(message, 130)
+        print()
+        pass
 
-            #metrics 
-            metric_name : str
-            metric_description : str = ""
-            metric_avg_value : str 
-            #metric_max_value : str 
-            #metric_min_value : str
+    def _show_level_one_results(self, level_one : LevelOne):
+        """ Show Results of level one of execution indicated by argument.
 
-            #control
-            has_read_all_events : bool = False
-            line : str
-            i : int
-            list_words : list[str]
-            has_found_part : bool = False
-            for line in output_command.splitlines():
-                line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
-                list_words = line.split(" ")
-                has_found_part = False
-                if not has_read_all_events:
-                    # Check if it's line of interest:
-                    # ['', 'X', 'event_name','Min', 'Max', 'Avg', 'Total'] event_name is str. Rest: numbers (less '', it's an space)
-                    if len(list_words) > 1: 
-                        if list_words[1] == "Metric": # check end events
-                            has_read_all_events = True
-                        elif list_words[0] == '' and list_words[len(list_words) - 1][0].isnumeric():
-                            event_name = list_words[2]
-                            event_total_value = list_words[len(list_words) - 1]
-                            if (Parameters.C_LEVEL_1_FRONT_END_EVENTS != "" and event_name in dict_front_events):
-                                dict_front_events[event_name] = event_total_value
-                                #dict_front_events_desc[name_counter] = description_counter
-                                has_found_part = True
-                            if (Parameters.C_LEVEL_1_BACK_END_EVENTS != "" and event_name in dict_back_events):
-                                dict_back_events[event_name] = event_total_value
-                                #dict_back_events_desc[name_counter] = description_counter
-                                has_found_part = True
-                            if (Parameters.C_LEVEL_1_DIVERGENCE_EVENTS != "" and event_name in dict_divergence_events): 
-                                dict_divergence_events[event_name] = event_total_value
-                                #dict_divergence_events_desc[name_counter] = description_counter
-                                has_found_part = True
-                            if not has_found_part:
-                                raise EventNotAsignedToPart(event_name)     
-                else: # metrics
-                    # Check if it's line of interest:
-                    # ['', 'X', 'NAME_COUNTER', ... , 'Min', 'Max', 'Avg' (Y%)] where X (int number), Y (int/float number)
-                    if len(list_words) > 1 and list_words[0] == '' and list_words[len(list_words) - 1][0].isnumeric():
-                        metric_name = list_words[2]
-                        metric_description = ""
-                        for i in range(3, len(list_words) - 3):
-                            metric_description += list_words[i] + " "     
-                        metric_avg_value = list_words[len(list_words) - 1]
-                        #metric_max_value = list_words[len(list_words) - 2]
-                        #metric_min_value = list_words[len(list_words) - 3]
+        Parameters:
+            level_one   : LevelOne  ; reference to level-one analysis ALREADY DONE.
+        """
+        print()
+        printer : MessageFormat = MessageFormat()
+        message : str = "The results have been obtained correctly. General results of IPC are the following:"
+        printer.print_max_line_length_message(message, 130)
+        print()
+        message = "IPC OBTAINED: " + str(level_one.ipc()) + " | MAXIMUM POSSIBLE IPC: " +  str(self.get_device_max_ipc())
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = "")
+        print()
+        message = ("'IPC OBTAINED' is the IPC of the analyzed program and 'MAXIMUM POSSIBLE IPC' is the the maximum IPC " +  
+            "your GPU can achieve. This is computed taking into account architectural concepts, such as the number of warp " +
+            "planners per SM, as well as the number of Dispatch units of each SM.")
+        printer.print_max_line_length_message(message, 130)
+        message = ("    As you can see, the IPC obtanied it " + "is " + str(round((self.get_device_max_ipc()/level_one.ipc())*100, 2)) + 
+            "% smaller than you could get. This lower IPC is due to STALLS in the different parts of the architecture. We analyze "
+            "them based on the level of the TopDown:")
+        printer.print_max_line_length_message(message, 130)
+        print()
+        
+        message = level_one.front_end().name() + ": " + level_one.front_end().description()
+        printer.print_max_line_length_message(message, 130)
+        print()
+        message = ("STALLS PERCENTAGE (on the total): " + str(round(level_one.get_front_end_stall(), 2)) + "%  | PERCENTAGE OF " +
+            "IPC DEGRADATION: X")
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.front_end().name() + " RESULTS")
+        print()
 
-                        #if metric_avg_value != metric_max_value or metric_avg_value != metric_min_value:
-                            # Do Something. NOT USED
-                        if (Parameters.C_LEVEL_1_FRONT_END_METRICS != "" and metric_name in # metrics
-                            (dict_front_metrics and dict_front_metrics_desc)):
-                            dict_front_metrics[metric_name] = metric_avg_value
-                            dict_front_metrics_desc[metric_name] = metric_description
-                            has_found_part = True
-                        if (Parameters.C_LEVEL_1_BACK_END_METRICS != "" and metric_name in 
-                            (dict_back_metrics and dict_back_metrics_desc)):
-                            dict_back_metrics[metric_name] = metric_avg_value
-                            dict_back_metrics_desc[metric_name] = metric_description
-                            has_found_part = True 
-                        if (Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "" and metric_name in 
-                            (dict_divergence_metrics and dict_divergence_metrics_desc)): 
-                            dict_divergence_metrics[metric_name] = metric_avg_value
-                            dict_divergence_metrics_desc[metric_name] = metric_description
-                            has_found_part = True
-                        if not has_found_part:
-                            raise MetricNotAsignedToPart(metric_name)
-            #  Keep Results
-            lst_output : list[str] = list()
-            lst_output.append("\nList of counters/metrics measured according to the part.")
-            if Parameters.C_LEVEL_1_FRONT_END_METRICS != "":
-                self.__add_result_part_to_lst(dict_front_metrics, 
-                    dict_front_metrics_desc,"\n- FRONT-END RESULTS:", lst_output, True)
-            if Parameters.C_LEVEL_1_FRONT_END_EVENTS != "":
-                    self.__add_result_part_to_lst(dict_front_events, 
-                    dict_front_events_desc,"", lst_output, False)
-            if Parameters.C_LEVEL_1_BACK_END_METRICS != "":
-                self.__add_result_part_to_lst(dict_back_metrics, 
-                    dict_back_metrics_desc,"\n- BACK-END RESULTS:", lst_output, True)
-            if Parameters.C_LEVEL_1_BACK_END_EVENTS != "":
-                    self.__add_result_part_to_lst(dict_back_events, 
-                    dict_back_events_desc,"", lst_output, False)
-            if Parameters.C_LEVEL_1_DIVERGENCE_METRICS != "":
-                self.__add_result_part_to_lst(dict_divergence_metrics, 
-                    dict_divergence_metrics_desc,"\n\n- DIVERGENCE RESULTS:", lst_output, True)
-            if Parameters.C_LEVEL_1_DIVERGENCE_EVENTS != "":
-                self.__add_result_part_to_lst(dict_divergence_events, 
-                    dict_divergence_events_desc, "", lst_output, False)
-            lst_output.append("\n")
-            if self.show_long_desc():
-                # Write results in output-file if has been specified
-                if not self.output_file() is None:
-                    self.__write_in_file_at_end(self.output_file(), lst_output)
-                element : str
-                for element in lst_output:
-                    print(element)
-    pass
+        message = level_one.back_end().name() + ": " + level_one.back_end().description()
+        printer.print_max_line_length_message(message, 130)
+        print()
+        message = ("STALLS PERCENTAGE (on the total): " + str(round(level_one.get_back_end_stall(), 2)) + "%  | PERCENTAGE OF " +
+            "IPC DEGRADATION: X")
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.back_end().name() + " RESULTS")
+        print()
 
-    def level_2(self):
+        message = level_one.divergence().name() + ": " + level_one.divergence().description()
+        printer.print_max_line_length_message(message, 130)
+        print()
+        message = ("PERCENTAGE OF IPC DEGRADATION: X")
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.divergence().name() + " RESULTS")
+        print()
+        
+        pass
+
+    def level_one(self):
+        """ 
+        Run TopDown level 1.
+        """
+
+        self.intro_message()
+
+        level_one : LevelOne = LevelOne(self.program(), self.output_file())
+        lst_output : list[str] = list()
+        level_one.run(lst_output)
+        self._show_level_one_results(level_one)
+        if self.show_long_desc():
+            # Write results in output-file if has been specified
+            if not self.output_file() is None:
+                self.__write_in_file_at_end(self.output_file(), lst_output)
+            element : str
+            for element in lst_output:
+                print(element)
+        pass
+
+    def level_two(self):
         """ 
         Run TopDown level 2.
         """
         # TODO
-    pass
+        pass
     
 if __name__ == '__main__':
     td = TopDown()
     level : int = td.level()
 
     if level == 1:
-        td.level_1()
+        td.level_one()
     elif level == 2:
-        td.level_2()
+        td.level_two()
+    print()
     print("Analysis performed correctly!")
