@@ -6,9 +6,9 @@ Support (extra) meassures of TopDown methodology
 @version:   1.0
 """
 import sys
-sys.path.insert(1, '/home/alvaro/Documents/Facultad/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors')
-sys.path.insert(1, '/home/alvaro/Documents/Facultad/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters')
-sys.path.insert(1, '/home/alvaro/Documents/Facultad/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_parts')
+sys.path.insert(1, '/mnt/HDD/alvaro/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors')
+sys.path.insert(1, '/mnt/HDD/alvaro/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters')
+sys.path.insert(1, '/mnt/HDD/alvaro/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_parts')
 
 from metric_measure_errors import * 
 from metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES

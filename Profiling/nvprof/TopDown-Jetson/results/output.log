@@ -18321,3 +18321,467 @@ Device "GeForce GTX 1070 (0)"
           1                  eligible_warps_per_cycle              Eligible Warps Per Active Cycle    2.866667    2.866667    2.866667
           1                        achieved_occupancy                           Achieved Occupancy    0.957034    0.957034    0.957034
           1                                       ipc                                 Executed IPC    1.961849    1.961849    1.961849
+==2869== NVPROF is profiling process 2869, command: ../../../../CUDA/bin/add_two_matrix
+==2869== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==2869== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==2869== Profiling result:
+==2869== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch     1531264     1531264     1531264     1531264
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles   136825205   136825205   136825205   136825205
+          1                             inst_executed    28328382    28328382    28328382    28328382
+          1                         elapsed_cycles_sm    37988048    37988048    37988048    37988048
+          1                              active_warps  6721220772  6721220772  6721220772  6721220772
+
+==2869== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.32%       0.32%       0.32%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      17.49%      17.49%      17.49%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       5.75%       5.75%       5.75%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.08%       0.08%       0.08%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      62.71%      62.71%      62.71%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.00%       0.00%       0.00%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.05%       0.05%       0.05%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)      13.61%      13.61%      13.61%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                  eligible_warps_per_cycle              Eligible Warps Per Active Cycle    0.217701    0.217701    0.217701
+          1                        achieved_occupancy                           Achieved Occupancy    0.767101    0.767101    0.767101
+          1                                       ipc                                 Executed IPC    0.206922    0.206922    0.206922
+==3459== NVPROF is profiling process 3459, command: ../../../../CUDA/bin/add_two_matrix
+==3459== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==3459== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==3459== Profiling result:
+==3459== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch     1531264     1531264     1531264     1531264
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles   177998451   177998451   177998451   177998451
+          1                             inst_executed    28328382    28328382    28328382    28328382
+          1                         elapsed_cycles_sm    84290190    84290190    84290190    84290190
+          1                              active_warps  8767990080  8767990080  8767990080  8767990080
+
+==3459== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.21%       0.21%       0.21%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.35%      23.35%      23.35%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.63%       4.63%       4.63%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.05%       0.05%       0.05%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      53.36%      53.36%      53.36%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.00%       0.00%       0.00%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.03%       0.03%       0.03%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)      18.35%      18.35%      18.35%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                  eligible_warps_per_cycle              Eligible Warps Per Active Cycle    0.165806    0.165806    0.165806
+          1                        achieved_occupancy                           Achieved Occupancy    0.767469    0.767469    0.767469
+          1                                       ipc                                 Executed IPC    0.158695    0.158695    0.158695
+==3646== NVPROF is profiling process 3646, command: ../../../../CUDA/bin/add_two_matrix
+==3646== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==3646== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==3646== Profiling result:
+==3646== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch     1531264     1531264     1531264     1531264
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles   182106573   182106573   182106573   182106573
+          1                             inst_executed    28328382    28328382    28328382    28328382
+          1                         elapsed_cycles_sm   158142364   158142364   158142364   158142364
+          1                              active_warps  8945034512  8945034512  8945034512  8945034512
+
+==3646== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.20%       0.20%       0.20%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      25.93%      25.93%      25.93%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.12%       1.12%       1.12%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.05%       0.05%       0.05%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      52.13%      52.13%      52.13%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.00%       0.00%       0.00%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.03%       0.03%       0.03%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)      20.53%      20.53%      20.53%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                  eligible_warps_per_cycle              Eligible Warps Per Active Cycle    0.162066    0.162066    0.162066
+          1                        achieved_occupancy                           Achieved Occupancy    0.765045    0.765045    0.765045
+          1                                       ipc                                 Executed IPC    0.155063    0.155063    0.155063
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.20%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        25.93% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.12%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.05%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                52.13% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.00%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.03%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             20.53% 
+			-------------------------------------------------------------------------------------------------------
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               1531264 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+- RETIRE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      0.155063 
+			-------------------------------------------------------------------------------------------------------
+
+- EXTRA-MEASURE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			eligible_warps_per_cycle                      Eligible Warps Per Active Cycle                   0.162066 
+			achieved_occupancy                            Achieved Occupancy                                0.765045 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               182106573 
+			inst_executed                                 -                                               28328382 
+			elapsed_cycles_sm                             -                                               158142364 
+			active_warps                                  -                                               8945034512 
+			-------------------------------------------------------------------------------------------------------
+
+==3784== NVPROF is profiling process 3784, command: ../../../../CUDA/bin/add_two_matrix
+==3784== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==3784== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==3784== Profiling result:
+==3784== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch     1531264     1531264     1531264     1531264
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles   178773695   178773695   178773695   178773695
+          1                             inst_executed    28328382    28328382    28328382    28328382
+          1                         elapsed_cycles_sm   153804148   153804148   153804148   153804148
+          1                              active_warps  8735911100  8735911100  8735911100  8735911100
+
+==3784== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.21%       0.21%       0.21%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      25.89%      25.89%      25.89%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       1.14%       1.14%       1.14%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.05%       0.05%       0.05%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      52.31%      52.31%      52.31%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.00%       0.00%       0.00%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.03%       0.03%       0.03%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)      20.37%      20.37%      20.37%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                  eligible_warps_per_cycle              Eligible Warps Per Active Cycle    0.164973    0.164973    0.164973
+          1                        achieved_occupancy                           Achieved Occupancy    0.769777    0.769777    0.769777
+          1                                       ipc                                 Executed IPC    0.159756    0.159756    0.159756
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.21%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        25.89% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.14%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.05%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                52.31% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.00%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.03%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             20.37% 
+			-------------------------------------------------------------------------------------------------------
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               1531264 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+- RETIRE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      0.159756 
+			-------------------------------------------------------------------------------------------------------
+
+- EXTRA-MEASURE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			eligible_warps_per_cycle                      Eligible Warps Per Active Cycle                   0.164973 
+			achieved_occupancy                            Achieved Occupancy                                0.769777 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               178773695 
+			inst_executed                                 -                                               28328382 
+			elapsed_cycles_sm                             -                                               153804148 
+			active_warps                                  -                                               8735911100 
+			-------------------------------------------------------------------------------------------------------
+
+======== Warning: Event "max_warps_per_sm" cannot be found on device 0.
+==3893== NVPROF is profiling process 3893, command: ../../../../CUDA/bin/add_two_matrix
+==3893== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==3893== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==3893== Profiling result:
+==3893== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch     1531264     1531264     1531264     1531264
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles   182082711   182082711   182082711   182082711
+          1                             inst_executed    28328382    28328382    28328382    28328382
+          1                         elapsed_cycles_sm    87497610    87497610    87497610    87497610
+          1                              active_warps  8949303884  8949303884  8949303884  8949303884
+
+==3893== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.21%       0.21%       0.21%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.18%      23.18%      23.18%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.70%       4.70%       4.70%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.05%       0.05%       0.05%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      53.48%      53.48%      53.48%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.00%       0.00%       0.00%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.03%       0.03%       0.03%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)      18.34%      18.34%      18.34%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                  eligible_warps_per_cycle              Eligible Warps Per Active Cycle    0.161833    0.161833    0.161833
+          1                        achieved_occupancy                           Achieved Occupancy    0.766358    0.766358    0.766358
+          1                                       ipc                                 Executed IPC    0.155255    0.155255    0.155255
+======== Warning: Event "elapsed_cycles_sys" cannot be found on device 0.
+==3929== NVPROF is profiling process 3929, command: ../../../../CUDA/bin/add_two_matrix
+==3929== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==3929== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==3929== Profiling result:
+==3929== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch     1531264     1531264     1531264     1531264
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles   181897113   181897113   181897113   181897113
+          1                             inst_executed    28328382    28328382    28328382    28328382
+          1                         elapsed_cycles_sm    87189224    87189224    87189224    87189224
+          1                              active_warps  7785270120  7785270120  7785270120  7785270120
+
+==3929== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.31%       0.31%       0.31%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)       8.91%       8.91%       8.91%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       6.88%       6.88%       6.88%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.07%       0.07%       0.07%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      77.84%      77.84%      77.84%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.00%       0.00%       0.00%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.05%       0.05%       0.05%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       5.93%       5.93%       5.93%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                  eligible_warps_per_cycle              Eligible Warps Per Active Cycle    0.162126    0.162126    0.162126
+          1                        achieved_occupancy                           Achieved Occupancy    0.767851    0.767851    0.767851
+          1                                       ipc                                 Executed IPC    0.178816    0.178816    0.178816
+======== Warning: Metric "elapsed_cycles_sys" cannot be found on device 0.
+==3947== NVPROF is profiling process 3947, command: ../../../../CUDA/bin/add_two_matrix
+==3947== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==3947== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==3947== Profiling result:
+==3947== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch     1531264     1531264     1531264     1531264
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles   182584416   182584416   182584416   182584416
+          1                             inst_executed    28328382    28328382    28328382    28328382
+          1                         elapsed_cycles_sm   180220102   180220102   180220102   180220102
+          1                              active_warps  1873014392  1873014392  1873014392  1873014392
+
+==3947== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.20%       0.20%       0.20%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      24.71%      24.71%      24.71%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.52%       4.52%       4.52%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.05%       0.05%       0.05%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      51.04%      51.04%      51.04%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.00%       0.00%       0.00%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.03%       0.03%       0.03%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)      19.43%      19.43%      19.43%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                  eligible_warps_per_cycle              Eligible Warps Per Active Cycle    0.161617    0.161617    0.161617
+          1                        achieved_occupancy                           Achieved Occupancy    0.759326    0.759326    0.759326
+          1                                       ipc                                 Executed IPC    0.735003    0.735003    0.735003
+==3964== NVPROF is profiling process 3964, command: ../../../../CUDA/bin/add_two_matrix
+==3964== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==3964== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==3964== Profiling result:
+==3964== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch     1531264     1531264     1531264     1531264
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles   181658901   181658901   181658901   181658901
+          1                             inst_executed    28328382    28328382    28328382    28328382
+          1                         elapsed_cycles_sm    46385268    46385268    46385268    46385268
+          1                              active_warps  9038473308  9038473308  9038473308  9038473308
+
+==3964== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       0.24%       0.24%       0.24%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      19.51%      19.51%      19.51%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       5.31%       5.31%       5.31%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.06%       0.06%       0.06%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      59.73%      59.73%      59.73%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.00%       0.00%       0.00%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.04%       0.04%       0.04%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)      15.12%      15.12%      15.12%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                  eligible_warps_per_cycle              Eligible Warps Per Active Cycle    0.162478    0.162478    0.162478
+          1                        achieved_occupancy                           Achieved Occupancy    0.770550    0.770550    0.770550
+          1                                       ipc                                 Executed IPC    0.154564    0.154564    0.154564
+
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.24%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        19.51% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       5.31%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.06%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                59.73% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.00%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.04%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             15.12% 
+			-------------------------------------------------------------------------------------------------------
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               1531264 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+- RETIRE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      0.154564 
+			-------------------------------------------------------------------------------------------------------
+
+- EXTRA-MEASURE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			eligible_warps_per_cycle                      Eligible Warps Per Active Cycle                   0.162478 
+			achieved_occupancy                            Achieved Occupancy                                0.770550 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               181658901 
+			inst_executed                                 -                                               28328382 
+			elapsed_cycles_sm                             -                                               46385268 
+			active_warps                                  -                                               9038473308 
+			-------------------------------------------------------------------------------------------------------
+

@@ -6,9 +6,9 @@ Measurements made by the TopDown methodology in front end part.
 @version:   1.0
 """
 import sys
-sys.path.insert(1, '/home/alvaro/Documents/Facultad/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors')
-sys.path.insert(1, '/home/alvaro/Documents/Facultad/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters')
-sys.path.insert(1, '/home/alvaro/Documents/Facultad/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure')
+sys.path.insert(1, '/mnt/HDD/alvaro/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors')
+sys.path.insert(1, '/mnt/HDD/alvaro/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters')
+sys.path.insert(1, '/mnt/HDD/alvaro/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure')
 
 from metric_measure_errors import * 
 from metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES
