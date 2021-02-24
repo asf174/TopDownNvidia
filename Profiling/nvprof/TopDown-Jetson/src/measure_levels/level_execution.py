@@ -65,9 +65,29 @@ class LevelExecution(ABC):
         """
 
         ipc : str = self._retire.get_metric_value(LevelExecutionParameters.C_IPC_METRIC_NAME)
-        if ipc is None:
+        warp_execution_efficiency : str = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
+        if ipc is None or warp_execution_efficiency is None:
             raise IpcMetricNotDefined
-        return float(ipc)
+        return float(ipc)*(float(warp_execution_efficiency[0: len(warp_execution_efficiency) - 1])/100)
+        pass
+
+    def get_device_max_ipc(self) -> float:
+        """
+        Get Max IPC of device
+
+        Raises:
+        """
+
+        shell : Shell = Shell()
+        compute_capability : str = shell.launch_command_show_all("nvcc ../src/measure_parts/compute_capability.cu --run", None)
+        shell.launch_command("rm -f a.out", None) # delete 'a.out' generated
+        if not compute_capability:
+            raise ComputeCapabilityError
+        dict_warps_schedulers_per_cc : dict = dict({3.0: 4, 3.2: 4, 3.5: 4, 3.7: 4, 5.0: 4, 5.2: 4, 5.3: 4, 
+            6.0: 2, 6.1: 4, 6.2: 4, 7.0: 4, 7.5: 4, 8.0: 1}) 
+        dict_ins_per_cycle : dict = dict({3.0: 1.5, 3.2: 1.5, 3.5: 1.5, 3.7: 1.5, 5.0: 1.5, 5.2: 1.5, 5.3: 1.5, 
+            6.0: 1.5, 6.1: 1.5, 6.2: 1.5, 7.0: 1, 7.5: 1, 8.0: 1})
+        return dict_warps_schedulers_per_cc.get(float(compute_capability))*dict_ins_per_cycle.get(float(compute_capability))
         pass
     
     def _add_result_part_to_lst(self, dict_values : dict, dict_desc : dict, message : str, 
@@ -328,7 +348,7 @@ class LevelExecution(ABC):
                 value_str = self._front_end.metrics().get(key)
                 if value_str[len(value_str) - 1] == "%":  # check percenttage
                     total_value += float(value_str[0 : len(value_str) - 1])
-        return total_value
+        return round(total_value, 3)
         pass
     
     def get_back_end_stall(self) -> float:
@@ -345,5 +365,48 @@ class LevelExecution(ABC):
                 value_str = self._back_end.metrics().get(key)
                 if value_str[len(value_str) - 1] == "%":  # check percenttage
                     total_value += float(value_str[0 : len(value_str) - 1])
-        return total_value
+        return round(total_value, 3)
+        pass
+
+    def divergence_percentage_ipc_degradation(self) -> float:
+        """
+        Find percentage of IPC degradation due to Divergence part.
+
+        Returns:
+            Float with the percent of Divergence's IPC degradation
+        """
+
+        ipc : float = self.ipc() 
+        warp_execution_efficiency  : str = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
+        # revisar eleve de excepcion
+        issued_ipc : str = self._divergence.get_metric_value(LevelExecutionParameters.C_ISSUE_IPC_NAME)
+        if issued_ipc is None:
+            raise MetricDivergencePercentageIpc(LevelExecutionParameters.C_ISSUE_IPC_NAME)
+        ipc_degradation : float = ipc * (1 - (float(warp_execution_efficiency[0: len(warp_execution_efficiency) - 1])/100.0)) + (float(issued_ipc) - ipc)
+        return self.ipc()/ipc_degradation
+        pass
+
+    def front_end_percentage_ipc_degradation(self) -> float:
+        """
+        Find percentage of IPC degradation due to FrontEnd part.
+
+        Returns:
+            Float with the percent of FrontEnd's IPC degradation
+        """
+        ipc_stalls : float = self.get_device_max_ipc() - self.ipc() - self.divergence_percentage_ipc_degradation()
+        ipc_degradation : float = ipc_stalls*self.get_front_end_stall()
+        return ((ipc_degradation*(self.get_front_end_stall()/100.0))/self.get_device_max_ipc())*100.0
+        pass
+
+    def back_end_percentage_ipc_degradation(self) -> float:
+        """
+        Find percentage of IPC degradation due to BackEnd part.
+
+        Returns:
+            Float with the percent of BackEnd's IPC degradation
+        """
+
+        ipc_stalls : float = self.get_device_max_ipc() - self.ipc() - self.divergence_percentage_ipc_degradation()
+        ipc_degradation : float = ipc_stalls*self.get_back_end_stall()
+        return ((ipc_degradation*(self.get_back_end_stall()/100.0))/self.get_device_max_ipc())*100.0
         pass

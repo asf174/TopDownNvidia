@@ -86,3 +86,19 @@ class EventNoDefined(Exception):
         
         super().__init__(self.C_ERROR_MESSAGE + event_name)
         pass
+
+class MetricDivergencePercentageIpc(Exception):
+    """Exception raised when a metric required to calculate the percentage of IPC lost in 
+    divergence is not defined.
+    
+    Attributes:
+        metric_name    : str   ; name of the event that produced the error"""
+    
+    C_ERROR_MESSAGE     : str = ("Following Metric is necessary to calculate the percentage of " +
+    "IPC lost in divergence: ")
+
+    def __init__(self, metric_name : str):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE + metric_name)
+        pass

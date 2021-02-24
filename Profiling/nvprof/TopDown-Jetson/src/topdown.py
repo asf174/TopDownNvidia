@@ -214,41 +214,6 @@ class TopDown:
             raise WriteInOutPutFileError
         pass
 
-    def get_device_max_ipc(self) -> float:
-        """
-        Get Max IPC of device
-
-        Raises:
-        """
-
-        shell : Shell = Shell()
-        compute_capability : str = shell.launch_command_show_all("nvcc ../src/measure_parts/compute_capability.cu --run", None)
-        shell.launch_command("rm -f a.out", None) # delete 'a.out' generated
-        if not compute_capability:
-            raise ComputeCapabilityError
-        dict_warps_schedulers_per_cc : dict = dict({3.0: 4, 3.2: 4, 3.5: 4, 3.7: 4, 5.0: 4, 5.2: 4, 5.3: 4, 
-            6.0: 2, 6.1: 4, 6.2: 4, 7.0: 4, 7.5: 4, 8.0: 1}) 
-        dict_ins_per_cycle : dict = dict({3.0: 1.5, 3.2: 1.5, 3.5: 1.5, 3.7: 1.5, 5.0: 1.5, 5.2: 1.5, 5.3: 1.5, 
-            6.0: 1.5, 6.1: 1.5, 6.2: 1.5, 7.0: 1, 7.5: 1, 8.0: 1})
-        return dict_warps_schedulers_per_cc.get(float(compute_capability))*dict_ins_per_cycle.get(float(compute_capability))
-        pass
-
-    def ipc(self, extra_measure : ExtraMeasure) -> float:
-        """
-        Get IPC of execution (this method muste be called after '__get_results_level_1')
-
-        Params:
-            extra_measure   : ExtraMeasure  ; part of the measures where IPC resides
-
-        Raises:
-            IpcMetricNotDefined ; raised if IPC cannot be obtanied because it was not 
-            computed by the NVIDIA scan tool 
-        """
-        ipc : str = extra_measure.get_metric_value(TopDownParameters.C_IPC_METRIC_NAME)
-        if ipc is None:
-            raise IpcMetricNotDefined
-        return float(ipc)
-        pass
 
     def intro_message(self): 
         printer : MessageFormat = MessageFormat()
@@ -298,14 +263,14 @@ class TopDown:
         message : str = "The results have been obtained correctly. General results of IPC are the following:"
         printer.print_max_line_length_message(message, 130)
         print()
-        message = "IPC OBTAINED: " + str(level_one.ipc()) + " | MAXIMUM POSSIBLE IPC: " +  str(self.get_device_max_ipc())
+        message = "IPC OBTAINED: " + str(level_one.ipc()) + " | MAXIMUM POSSIBLE IPC: " +  str(level_one.get_device_max_ipc())
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = "")
         print()
-        message = ("'IPC OBTAINED' is the IPC of the analyzed program and 'MAXIMUM POSSIBLE IPC' is the the maximum IPC " +  
+        message = ("'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC' is the the maximum IPC " +  
             "your GPU can achieve. This is computed taking into account architectural concepts, such as the number of warp " +
             "planners per SM, as well as the number of Dispatch units of each SM.")
         printer.print_max_line_length_message(message, 130)
-        message = ("    As you can see, the IPC obtanied it " + "is " + str(round((self.get_device_max_ipc()/level_one.ipc())*100, 2)) + 
+        message = ("    As you can see, the IPC obtanied it " + "is " + str(round((level_one.get_device_max_ipc()/level_one.ipc())*100, 2)) + 
             "% smaller than you could get. This lower IPC is due to STALLS in the different parts of the architecture. We analyze "
             "them based on the level of the TopDown:")
         printer.print_max_line_length_message(message, 130)
@@ -314,23 +279,27 @@ class TopDown:
         message = level_one.front_end().name() + ": " + level_one.front_end().description()
         printer.print_max_line_length_message(message, 130)
         print()
-        message = ("STALLS PERCENTAGE (on the total): " + str(round(level_one.get_front_end_stall(), 2)) + "%  | PERCENTAGE OF " +
-            "IPC DEGRADATION: X")
+        
+        message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_front_end_stall()) + '%\n\n'))
+        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(level_one.front_end_percentage_ipc_degradation()) + '%\n'))
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.front_end().name() + " RESULTS")
         print()
 
         message = level_one.back_end().name() + ": " + level_one.back_end().description()
         printer.print_max_line_length_message(message, 130)
         print()
-        message = ("STALLS PERCENTAGE (on the total): " + str(round(level_one.get_back_end_stall(), 2)) + "%  | PERCENTAGE OF " +
-            "IPC DEGRADATION: X")
+        
+        message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_back_end_stall()) + '%\n\n'))
+        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(level_one.back_end_percentage_ipc_degradation()) + '%\n'))
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.back_end().name() + " RESULTS")
         print()
 
         message = level_one.divergence().name() + ": " + level_one.divergence().description()
         printer.print_max_line_length_message(message, 130)
         print()
-        message = ("PERCENTAGE OF IPC DEGRADATION: X")
+        
+        #message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_divergence_stall()) + '%\n\n'))
+        message = ("{:<34} {:<5}".format('\nIPC DEGRADATION (%):', str(level_one.divergence_percentage_ipc_degradation()) + '%\n'))
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.divergence().name() + " RESULTS")
         print()
         

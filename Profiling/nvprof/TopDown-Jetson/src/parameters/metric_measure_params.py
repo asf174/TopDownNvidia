@@ -17,8 +17,8 @@ class MetricMeasureParameters:
     C_FRONT_END_EVENTS              : str       = ("")
 
     C_FRONT_END_NAME                : str       = "FRONT-END"
-    C_FRONT_END_DESCRIPTION         : str       = ("FrontEnd bound analyzes the parts of the GPU architecture where the FrontEnd produces a bottleneck, " 
-                                                    + "where there is a loss of the IPC. In this part, aspects related to the fetch of instructions"
+    C_FRONT_END_DESCRIPTION         : str       = ("FrontEnd bound analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, " 
+                                                    + "which leads to IPC losses. In this part, aspects related to the fetch of instructions"
                                                     + "are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.")
 
     # back_end.py
@@ -26,11 +26,12 @@ class MetricMeasureParameters:
                                                         "stall_memory_throttle")
     C_BACK_END_EVENTS               : str       = ("")
     C_BACK_END_NAME                 : str       = "BACK-END"
-    C_BACK_END_DESCRIPTION          : str       = ("BackEnd bound analyzes the parts of the GPU architecture where the BackEnd produces a bottleneck,"
-                                                    + "where there is a loss of the IPC. In ")
+    C_BACK_END_DESCRIPTION          : str       = ("BackEnd bound analyzes the parts of the GPU architecture where the BackEnd produces bottleneck,"
+                                                    + "which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of "
+                                                    + "the instructions, in which aspects such as limitations by functional units, memory limits, etc.")
 
     # divergence.py
-    C_DIVERGENCE_METRICS            : str       = ("branch_efficiency,warp_execution_efficiency")
+    C_DIVERGENCE_METRICS            : str       = ("branch_efficiency,warp_execution_efficiency,issued_ipc")
     C_DIVERGENCE_EVENTS             : str       = ("branch,divergent_branch")
     C_DIVERGENCE_NAME               : str       = "DIVERGENCE"
     C_DIVERGENCE_DESCRIPTION        : str       = ("D Description") # TODO preguntar separaciones, si anhadir el espacio

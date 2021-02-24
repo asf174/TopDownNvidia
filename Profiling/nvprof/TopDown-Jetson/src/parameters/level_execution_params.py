@@ -10,4 +10,6 @@ and their subclasses of the hierachy
 class LevelExecutionParameters:
 
     C_IPC_METRIC_NAME                   : str       = "ipc"
+    C_WARP_EXECUTION_EFFICIENCY_NAME    : str       = "warp_execution_efficiency"
+    C_ISSUE_IPC_NAME                    : str       = "issued_ipc"
     C_INFO_MESSAGE_EXECUTION_NVPROF     : str       = "Launching Command... Wait to results."
