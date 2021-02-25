@@ -169,7 +169,5 @@ class LevelOne(LevelExecution):
         
         # compute results
         self.__get_results_level_1(lst_output)
-
-        # 
         pass
     

@@ -424,7 +424,7 @@ class LevelExecution(ABC):
         Returns:
             Float with the percent of Divergence's IPC degradation
         """
-        print(str(self.__divergence_ipc_degradation()))
+
         return (self.__divergence_ipc_degradation()/(self.get_device_max_ipc()-self.ipc()))*100.0
         pass
 

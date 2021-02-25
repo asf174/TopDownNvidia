@@ -216,7 +216,7 @@ class TopDown:
                    "- Contact info:    asf174@alumnos.unican.es\n" + \
                    "- Company:         University Of Cantabria\n" + \
                    "- Place:           Santander, Cantabria, Kingdom of Spain\n" + \
-                   "- Helpers:         Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es>\n" + \
+                   "- Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es>\n" + \
                    "- Bugs Report:     asf174@alumnos.unican.es"+ 
                    "\n\n- Licence:         GNU GPL")
         printer.print_msg_box(msg = message, indent = 1, title = "GENERAL INFORMATION", output_file = self.output_file(), width = None)
