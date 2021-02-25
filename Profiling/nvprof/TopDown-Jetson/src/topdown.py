@@ -14,11 +14,7 @@ from measure_parts.extra_measure import ExtraMeasure
 from shell.shell import Shell # launch shell arguments
 from parameters.topdown_params import TopDownParameters # parameters of program
 import sys
-path : str = "/home/alvaro/Documents/Facultad/"
-path_desp : str = "/mnt/HDD/alvaro/"
-sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_levels")
-
-from level_one import LevelOne
+from measure_levels.level_one import LevelOne
 from show_messages.message_format import MessageFormat
 
 class TopDown:
@@ -54,6 +50,9 @@ class TopDown:
         self.__file_output : str = args.file
         self.__show_long_desc : bool = args.desc
         self.__program : str = args.program
+
+        # introduction
+        self.__intro_message()
         pass
     
     def __add_program_argument(self, group : argparse._ArgumentGroup) :
@@ -190,68 +189,48 @@ class TopDown:
         Returns:
             True to show long description of False if not
         """
+
         return self.__show_long_desc
         pass
 
-    def __write_in_file_at_end(self, file : str, message : list[str]):
-        """
-        Write 'message' at the end of file with path 'file'
+    def __intro_message(self): 
+        """ Intro message with information."""
 
-        Params:
-            file    : str           ; path to file to write.
-            message : list[str]     ; list of string with the information to be written (in order) to file.
-                                      Each element of the list corresponds to a line.
-
-        Raises:
-            WriteInOutPutFileError  ; error when opening or write in file. Operation not performed
-        """
-
-        try:
-            f : _io.TextIOWrapper = open(file, "a")
-            try:
-                f.write("\n".join(str(item) for item in message))
-
-            finally:
-                f.close()
-        except:  
-            raise WriteInOutPutFileError
-        pass
-
-
-    def intro_message(self): 
         printer : MessageFormat = MessageFormat()
-        printer.print_center_msg_box(msg = "TopDown Metholodgy over NVIDIA's GPUs", indent = 1, title = "")
+        printer.print_center_msg_box(msg = "TopDown Metholodgy over NVIDIA's GPUs", indent = 1, title = "", output_file = self.output_file(), width = None)
         print()
         print()
         print()
-        message : str = "Welcome to the " + sys.argv[0] + " program where you can check the bottlenecks of your " + \
-            "CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural " + \
-            "aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your " + \
+        message : str = "\n\n\nWelcome to the " + sys.argv[0] + " program where you can check the bottlenecks of your \n" + \
+            "CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural \n" + \
+            "aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your \n" + \
             "program, which cause the IPC (Instructions per Cycle) to be drastically reduced."
-        printer.print_max_line_length_message(message, 130)
+        printer.print_max_line_length_message(message, 130, self.output_file())
         print()
-        message = "Next, you can see general information about the program"
-        printer.print_max_line_length_message(message, 130)
+        print()
+        message = "\n\nNext, you can see general information about the program\n"
+        printer.print_max_line_length_message(message, 130, self.output_file())
+
         message = ("\n- Program Name:    topdown.py\n" + \
                    "- Author:          Alvaro Saiz (UC)\n" + \
                    "- Contact info:    asf174@alumnos.unican.es\n" + \
                    "- Company:         University Of Cantabria\n" + \
                    "- Place:           Santander, Cantabria, Kingdom of Spain\n" + \
-                   "- Helpers:         Pablo Prieto (UC) <pablo.prieto@unican.es>, Pablo Abad (UC) <pablo.abad@unican.es>\n" + \
+                   "- Helpers:         Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es>\n" + \
                    "- Bugs Report:     asf174@alumnos.unican.es"+ 
-                   "\n\n- Licence:         Open Source")
-        printer.print_msg_box(msg = message, indent = 1, title = "GENERAL INFORMATION")
+                   "\n\n- Licence:         GNU GPL")
+        printer.print_msg_box(msg = message, indent = 1, title = "GENERAL INFORMATION", output_file = self.output_file(), width = None)
         print()
-        message = "In accordance with what has been entered, the execution will be carried out following the following terms:"
-        printer.print_max_line_length_message(message, 130)
+        message = "\n\nIn accordance with what has been entered, the execution will be carried out following the following terms:\n"
+        printer.print_max_line_length_message(message, 130, self.output_file())
         message = ("\n- Execution Level:     " + str(self.level()) + "\n" + \
                    "- Analyzed program:    " + self.program() + "\n" + \
                    "- Output File:         " + self.output_file() + "\n" + \
                    "- Long-Description:    " + str(self.show_long_desc()) )
-        printer.print_msg_box(msg = message, indent = 1, title = "PROGRAM FEATURES")
+        printer.print_msg_box(msg = message, indent = 1, title = "PROGRAM FEATURES", output_file = self.output_file(), width = None)
         print()
-        message = "Said that, according to the level entered by you, WE START THE ANALYSIS."
-        printer.print_max_line_length_message(message, 130)
+        message = "\n\nSaid that, according to the level entered by you, WE START THE ANALYSIS.\n"
+        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
         pass
 
@@ -263,49 +242,52 @@ class TopDown:
         """
         print()
         printer : MessageFormat = MessageFormat()
-        message : str = "The results have been obtained correctly. General results of IPC are the following:"
-        printer.print_max_line_length_message(message, 130)
+        message : str = "\nThe results have been obtained correctly. General results of IPC are the following:\n\n"
+        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
         message = "IPC OBTAINED: " + str(level_one.ipc()) + " | MAXIMUM POSSIBLE IPC: " +  str(level_one.get_device_max_ipc())
-        printer.print_desplazed_msg_box(msg = message, indent = 1, title = "")
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = "", output_file = self.output_file(), width = None)
         print()
-        message = ("'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC' is the the maximum IPC " +  
-            "your GPU can achieve. This is computed taking into account architectural concepts, such as the number of warp " +
-            "planners per SM, as well as the number of Dispatch units of each SM.")
-        printer.print_max_line_length_message(message, 130)
-        message = ("    As you can see, the IPC obtanied it " + "is " + str(round((level_one.get_device_max_ipc()/level_one.ipc())*100, 2)) + 
-            "% smaller than you could get. This lower IPC is due to STALLS in the different parts of the architecture. We analyze "
-            "them based on the level of the TopDown:")
-        printer.print_max_line_length_message(message, 130)
+        message = ("\n\n'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'\n" +
+            "is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the \n" +
+            "number of warp planners per SM, as well as the number of Dispatch units of each SM.")
+        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
+        message = ("    \n\nAs you can see, the IPC obtanied it " + "is " + str(round((level_one.get_device_max_ipc()/level_one.ipc())*100, 2)) + 
+            "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts of the architecture and DIVERGENCE problems. " +
+            "We analyze them based on the level of the TopDown:\n")
+        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
         
-        message = level_one.front_end().name() + ": " + level_one.front_end().description()
-        printer.print_max_line_length_message(message, 130)
+        message = "\n\n" + level_one.front_end().name() + ": " + level_one.front_end().description() + "\n\n"
+        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
         
         message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_front_end_stall()) + '%\n\n'))
-        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(level_one.front_end_percentage_ipc_degradation()) + '%\n'))
-        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.front_end().name() + " RESULTS")
+        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_one.front_end_percentage_ipc_degradation(), 3)) + '%\n'))
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.front_end().name() + " RESULTS", 
+            output_file = self.output_file(), width = None)
         print()
 
-        message = level_one.back_end().name() + ": " + level_one.back_end().description()
-        printer.print_max_line_length_message(message, 130)
+        message = "\n\n" + level_one.back_end().name() + ": " + level_one.back_end().description() + "\n\n"
+        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
         
         message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_back_end_stall()) + '%\n\n'))
-        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(level_one.back_end_percentage_ipc_degradation()) + '%\n'))
-        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.back_end().name() + " RESULTS")
+        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_one.back_end_percentage_ipc_degradation(), 3)) + '%\n'))
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.back_end().name() + " RESULTS", 
+            output_file = self.output_file(), width = None)
         print()
 
-        message = level_one.divergence().name() + ": " + level_one.divergence().description()
-        printer.print_max_line_length_message(message, 130)
+        message = "\n\n" + level_one.divergence().name() + ": " + level_one.divergence().description() + "\n\n"
+        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
         
         #message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_divergence_stall()) + '%\n\n'))
-        message = ("{:<34} {:<5}".format('\nIPC DEGRADATION (%):', str(level_one.divergence_percentage_ipc_degradation()) + '%\n'))
-        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.divergence().name() + " RESULTS")
+        message = ("{:<34} {:<5}".format('\nIPC DEGRADATION (%):', str(round(level_one.divergence_percentage_ipc_degradation(), 3)) + '%\n'))
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.divergence().name() + " RESULTS", 
+            output_file = self.output_file(), width = None)
         print()
-        
+    
         pass
 
     def level_one(self):
@@ -313,16 +295,14 @@ class TopDown:
         Run TopDown level 1.
         """
 
-        self.intro_message()
-
         level_one : LevelOne = LevelOne(self.program(), self.output_file())
         lst_output : list[str] = list()
         level_one.run(lst_output)
         self._show_level_one_results(level_one)
-        if self.show_long_desc():
+        if self.show_long_desc(): ### revisar este IF no deberia ir aqui
             # Write results in output-file if has been specified
             if not self.output_file() is None:
-                self.__write_in_file_at_end(self.output_file(), lst_output)
+                MessageFormat().write_in_file_at_end(self.output_file(), lst_output)
             element : str
             for element in lst_output:
                 print(element)

@@ -9,9 +9,9 @@ Measurements made by the TopDown methodology in retire part.
 import sys
 path : str = "/home/alvaro/Documents/Facultad/"
 path_desp : str = "/mnt/HDD/alvaro/"
-sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
-sys.path.insert(1,  path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
-sys.path.insert(1,  path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure")
+sys.path.insert(1, path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
+sys.path.insert(1,  path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
+sys.path.insert(1,  path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure")
 
 from metric_measure_errors import * 
 from metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES

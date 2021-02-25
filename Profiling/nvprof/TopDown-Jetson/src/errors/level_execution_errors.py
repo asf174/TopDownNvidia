@@ -7,19 +7,6 @@ and its subclasses in the hierarchy.
 @version:   1.0
 """
 
-class IpcMetricNotDefined(Exception):
-    """Exception raised if IPC cannot be obtanied because it was not 
-            computed by the NVIDIA scan tool
-    """
-    
-    C_ERROR_MESSAGE     : str = "IPC cannot be obtanied from NVIDIA scan tool (it hasn't computed)"
-
-    def __init__(self):
-        """Show error message."""
-        
-        super().__init__(self.C_ERROR_MESSAGE)
-        pass
-
 class ProfilingError(Exception):
     """Exception raised when NVIDIA scan tool has failed (results not produced)"""
     
@@ -87,7 +74,34 @@ class EventNoDefined(Exception):
         super().__init__(self.C_ERROR_MESSAGE + event_name)
         pass
 
-class MetricDivergencePercentageIpc(Exception):
+class IpcMetricNotDefined(Exception):
+    """Exception raised if IPC cannot be obtanied because it was not 
+            computed by the NVIDIA scan tool
+    """
+    
+    C_ERROR_MESSAGE     : str = "IPC cannot be obtanied from NVIDIA scan tool (it hasn't computed)"
+
+    def __init__(self):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE)
+        pass
+
+class RetireIpcMetricNotDefined(Exception):
+    """Exception raised if "retire" IPC cannot be obtanied because it was not 
+            computed by the NVIDIA scan tool
+    """
+    
+    C_ERROR_MESSAGE     : str = ("Retire IPC cannot be obtanied from NVIDIA scan tool" 
+                                + " (it hasn't computed)")
+
+    def __init__(self):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE)
+        pass
+
+class MetricDivergenceIpcDegradationNotDefined(Exception):
     """Exception raised when a metric required to calculate the percentage of IPC lost in 
     divergence is not defined.
     

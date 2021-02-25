@@ -17,18 +17,18 @@ class MetricMeasureParameters:
     C_FRONT_END_EVENTS              : str       = ("")
 
     C_FRONT_END_NAME                : str       = "FRONT-END"
-    C_FRONT_END_DESCRIPTION         : str       = ("FrontEnd bound analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, " 
-                                                    + "which leads to IPC losses. In this part, aspects related to the fetch of instructions"
-                                                    + "are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.")
+    C_FRONT_END_DESCRIPTION         : str       = ("FrontEnd bound analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, \n" 
+                                                    + "which leads to IPC losses. In this part, aspects related to the fetch of instructions\n"
+                                                    + "are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.\n")
 
     # back_end.py
     C_BACK_END_METRICS              : str       = ("stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy," +
                                                         "stall_memory_throttle")
     C_BACK_END_EVENTS               : str       = ("")
     C_BACK_END_NAME                 : str       = "BACK-END"
-    C_BACK_END_DESCRIPTION          : str       = ("BackEnd bound analyzes the parts of the GPU architecture where the BackEnd produces bottleneck,"
-                                                    + "which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of "
-                                                    + "the instructions, in which aspects such as limitations by functional units, memory limits, etc.")
+    C_BACK_END_DESCRIPTION          : str       = ("BackEnd bound analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, \n"
+                                                    + "which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of \n"
+                                                    + "the instructions, in which aspects such as limitations by functional units, memory limits, etc. \n")
 
     # divergence.py
     C_DIVERGENCE_METRICS            : str       = ("branch_efficiency,warp_execution_efficiency,issued_ipc")
