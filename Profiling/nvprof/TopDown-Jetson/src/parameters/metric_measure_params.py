@@ -37,8 +37,8 @@ class MetricMeasureParameters:
     C_DIVERGENCE_DESCRIPTION        : str       = ("D Description") # TODO preguntar separaciones, si anhadir el espacio
 
     # extra_measure.py
-    C_EXTRA_MEASURE_METRICS         : str       = ("eligible_warps_per_cycle,achieved_occupancy")
-    C_EXTRA_MEASURE_EVENTS          : str       = ("active_cycles,inst_executed,elapsed_cycles_sm,active_warps")
+    C_EXTRA_MEASURE_METRICS         : str       = ("inst_issued")
+    C_EXTRA_MEASURE_EVENTS          : str       = ("active_cycles")
     C_EXTRA_MEASURE_NAME            : str       = "EXTRA_MEASURE"
     C_EXTRA_MEASURE_DESCRIPTION     : str       = ("EM Description") # TODO preguntar separaciones, si anhadir el espacio
 

@@ -6,7 +6,10 @@ Measurements made by the TopDown methodology.
 @version:   1.0
 """
 import sys
-sys.path.insert(1, '/mnt/HDD/alvaro/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors')
+path : str = "/home/alvaro/Documents/Facultad/"
+path_desp : str = "/mnt/HDD/alvaro/"
+sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
+sys.path.insert(1,  path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
 
 from metric_measure_errors import * 
 from abc import ABC # abstract class

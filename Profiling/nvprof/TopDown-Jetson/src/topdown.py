@@ -14,7 +14,10 @@ from measure_parts.extra_measure import ExtraMeasure
 from shell.shell import Shell # launch shell arguments
 from parameters.topdown_params import TopDownParameters # parameters of program
 import sys
-sys.path.insert(1, '/mnt/HDD/alvaro/TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_levels')
+path : str = "/home/alvaro/Documents/Facultad/"
+path_desp : str = "/mnt/HDD/alvaro/"
+sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_levels")
+
 from level_one import LevelOne
 from show_messages.message_format import MessageFormat
 
