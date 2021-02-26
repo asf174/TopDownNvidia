@@ -7,10 +7,10 @@ Program that shows messages in different format.
 """
 ## faltan comentarios y comparar diferencia str None, o ""
 import textwrap # text message
-import sys
-path : str = "/home/alvaro/Documents/Facultad/"
-path_desp : str = "/mnt/HDD/alvaro/"
-sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
+import os, sys, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
 from errors.message_format_errors import *
 
 class MessageFormat:

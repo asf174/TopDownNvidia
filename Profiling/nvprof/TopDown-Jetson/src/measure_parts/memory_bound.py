@@ -5,14 +5,10 @@ Measurements made by the TopDown methodology in memory bound part.
 @date:      Jan-2021
 @version:   1.0
 """
-import sys
-sys.path.insert(1, '../errors/')
-sys.path.insert(1, '../parameters/')
 
-from metric_measure_errors import * 
 from metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES
-from back_end import BackEnd
 from metric_measure import MetricMeasure
+from back_end import BackEnd
 
 class MemoryBound(BackEnd):
     """Class that defines the MemoryBound (sub-part of BackEnd) part."""

@@ -1,0 +1,2262 @@
+							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    False                               ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==5726== NVPROF is profiling process 5726, command: ../../../../CUDA/bin/add_two_matrix
+==5726== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==5726== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==5726== Profiling result:
+==5726== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch           8           8           8           8
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles         226         226         226         226
+
+==5726== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)      10.91%      10.91%      10.91%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.99%      23.99%      23.99%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)      14.29%      14.29%      14.29%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.00%       0.00%       0.00%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)       0.00%       0.00%       0.00%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)      50.29%      50.29%      50.29%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.51%       0.51%       0.51%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    0.212389    0.212389    0.212389
+          1                               inst_issued                          Instructions Issued          48          48          48
+          1                                       ipc                                 Executed IPC    0.176991    0.176991    0.176991
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 0.176991 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 3390.0% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔════════════════════════════════════════════╗
+			║ FRONT-END RESULTS                          ║
+			║ -----------------                          ║
+			║                                            ║
+			║ STALLS, on the total (%):          49.19%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               48.891% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔════════════════════════════════════════════╗
+			║ BACK-END RESULTS                           ║
+			║ ----------------                           ║
+			║                                            ║
+			║ STALLS, on the total (%):          50.8%   ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               50.491% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔═══════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS             ║
+			║ -----------------------------             ║
+			║                                           ║
+			║ STALLS, on the total (%):          50.8%  ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               25.65% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔═════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS             ║
+			║ ---------------------------             ║
+			║                                         ║
+			║ STALLS, on the total (%):          0.0% ║
+			║                                         ║
+			║ IPC DEGRADATION (%):               0.0% ║
+			║                                         ║
+			╚═════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔══════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                       ║
+			║ ------------------                       ║
+			║                                          ║
+			║ IPC DEGRADATION (%):              0.608% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    False                               ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==6226== NVPROF is profiling process 6226, command: ../../../../CUDA/bin/add_two_matrix
+==6226== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==6226== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==6226== Profiling result:
+==6226== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch           8           8           8           8
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles         227         227         227         227
+
+==6226== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)      10.97%      10.97%      10.97%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      24.12%      24.12%      24.12%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)      13.34%      13.34%      13.34%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.00%       0.00%       0.00%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)       0.00%       0.00%       0.00%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)      51.06%      51.06%      51.06%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.51%       0.51%       0.51%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    0.211454    0.211454    0.211454
+          1                               inst_issued                          Instructions Issued          48          48          48
+          1                                       ipc                                 Executed IPC    0.176991    0.176991    0.176991
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 0.176991 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 3390.0% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔════════════════════════════════════════════╗
+			║ FRONT-END RESULTS                          ║
+			║ -----------------                          ║
+			║                                            ║
+			║ STALLS, on the total (%):          48.43%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               48.143% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔════════════════════════════════════════════╗
+			║ BACK-END RESULTS                           ║
+			║ ----------------                           ║
+			║                                            ║
+			║ STALLS, on the total (%):          51.57%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               51.265% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔════════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS              ║
+			║ -----------------------------              ║
+			║                                            ║
+			║ STALLS, on the total (%):          51.57%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               26.437% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔═════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS             ║
+			║ ---------------------------             ║
+			║                                         ║
+			║ STALLS, on the total (%):          0.0% ║
+			║                                         ║
+			║ IPC DEGRADATION (%):               0.0% ║
+			║                                         ║
+			╚═════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔══════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                       ║
+			║ ------------------                       ║
+			║                                          ║
+			║ IPC DEGRADATION (%):              0.592% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    False                               ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==6706== NVPROF is profiling process 6706, command: ../../../../CUDA/bin/add_two_matrix
+==6706== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==6706== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==6706== Profiling result:
+==6706== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch           8           8           8           8
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles         226         226         226         226
+
+==6706== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)      11.03%      11.03%      11.03%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      24.24%      24.24%      24.24%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)      13.41%      13.41%      13.41%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.00%       0.00%       0.00%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)       0.00%       0.00%       0.00%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)      50.81%      50.81%      50.81%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.52%       0.52%       0.52%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    0.212389    0.212389    0.212389
+          1                               inst_issued                          Instructions Issued          48          48          48
+          1                                       ipc                                 Executed IPC    0.176991    0.176991    0.176991
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 0.176991 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 3390.0% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔════════════════════════════════════════════╗
+			║ FRONT-END RESULTS                          ║
+			║ -----------------                          ║
+			║                                            ║
+			║ STALLS, on the total (%):          48.68%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               48.384% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔════════════════════════════════════════════╗
+			║ BACK-END RESULTS                           ║
+			║ ----------------                           ║
+			║                                            ║
+			║ STALLS, on the total (%):          51.33%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               51.018% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔════════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS              ║
+			║ -----------------------------              ║
+			║                                            ║
+			║ STALLS, on the total (%):          51.33%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               26.188% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔═════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS             ║
+			║ ---------------------------             ║
+			║                                         ║
+			║ STALLS, on the total (%):          0.0% ║
+			║                                         ║
+			║ IPC DEGRADATION (%):               0.0% ║
+			║                                         ║
+			╚═════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔══════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                       ║
+			║ ------------------                       ║
+			║                                          ║
+			║ IPC DEGRADATION (%):              0.608% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    False                               ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==7188== NVPROF is profiling process 7188, command: ../../../../CUDA/bin/add_two_matrix
+==7188== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7188== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7188== Profiling result:
+==7188== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch           8           8           8           8
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles         226         226         226         226
+
+==7188== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)      10.91%      10.91%      10.91%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.99%      23.99%      23.99%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)      14.29%      14.29%      14.29%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.00%       0.00%       0.00%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)       0.00%       0.00%       0.00%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)      50.29%      50.29%      50.29%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.51%       0.51%       0.51%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    0.212389    0.212389    0.212389
+          1                               inst_issued                          Instructions Issued          48          48          48
+          1                                       ipc                                 Executed IPC    0.176991    0.176991    0.176991
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 0.176991 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 3390.0% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔════════════════════════════════════════════╗
+			║ FRONT-END RESULTS                          ║
+			║ -----------------                          ║
+			║                                            ║
+			║ STALLS, on the total (%):          49.19%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               48.891% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔════════════════════════════════════════════╗
+			║ BACK-END RESULTS                           ║
+			║ ----------------                           ║
+			║                                            ║
+			║ STALLS, on the total (%):          50.8%   ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               50.491% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔═══════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS             ║
+			║ -----------------------------             ║
+			║                                           ║
+			║ STALLS, on the total (%):          50.8%  ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               25.65% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔═════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS             ║
+			║ ---------------------------             ║
+			║                                         ║
+			║ STALLS, on the total (%):          0.0% ║
+			║                                         ║
+			║ IPC DEGRADATION (%):               0.0% ║
+			║                                         ║
+			╚═════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔══════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                       ║
+			║ ------------------                       ║
+			║                                          ║
+			║ IPC DEGRADATION (%):              0.608% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    False                               ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==7670== NVPROF is profiling process 7670, command: ../../../../CUDA/bin/add_two_matrix
+==7670== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==7670== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==7670== Profiling result:
+==7670== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch           8           8           8           8
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles         226         226         226         226
+
+==7670== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)      11.01%      11.01%      11.01%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      23.93%      23.93%      23.93%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)      14.26%      14.26%      14.26%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.00%       0.00%       0.00%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)       0.00%       0.00%       0.00%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)      50.29%      50.29%      50.29%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.51%       0.51%       0.51%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    0.212389    0.212389    0.212389
+          1                               inst_issued                          Instructions Issued          48          48          48
+          1                                       ipc                                 Executed IPC    0.176991    0.176991    0.176991
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 0.176991 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 3390.0% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔════════════════════════════════════════════╗
+			║ FRONT-END RESULTS                          ║
+			║ -----------------                          ║
+			║                                            ║
+			║ STALLS, on the total (%):          49.2%   ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               48.901% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔════════════════════════════════════════════╗
+			║ BACK-END RESULTS                           ║
+			║ ----------------                           ║
+			║                                            ║
+			║ STALLS, on the total (%):          50.8%   ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               50.491% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔═══════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS             ║
+			║ -----------------------------             ║
+			║                                           ║
+			║ STALLS, on the total (%):          50.8%  ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               25.65% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔═════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS             ║
+			║ ---------------------------             ║
+			║                                         ║
+			║ STALLS, on the total (%):          0.0% ║
+			║                                         ║
+			║ IPC DEGRADATION (%):               0.0% ║
+			║                                         ║
+			╚═════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔══════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                       ║
+			║ ------------------                       ║
+			║                                          ║
+			║ IPC DEGRADATION (%):              0.608% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    True                                ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==8157== NVPROF is profiling process 8157, command: ../../../../CUDA/bin/add_two_matrix
+==8157== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8157== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8157== Profiling result:
+==8157== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch           8           8           8           8
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles         226         226         226         226
+
+==8157== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)      11.03%      11.03%      11.03%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      24.24%      24.24%      24.24%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)      13.41%      13.41%      13.41%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.00%       0.00%       0.00%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)       0.00%       0.00%       0.00%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)      50.81%      50.81%      50.81%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.52%       0.52%       0.52%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    0.212389    0.212389    0.212389
+          1                               inst_issued                          Instructions Issued          48          48          48
+          1                                       ipc                                 Executed IPC    0.176211    0.176211    0.176211
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 0.176211 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 3405.01% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔════════════════════════════════════════════╗
+			║ FRONT-END RESULTS                          ║
+			║ -----------------                          ║
+			║                                            ║
+			║ STALLS, on the total (%):          48.68%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               48.378% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔════════════════════════════════════════════╗
+			║ BACK-END RESULTS                           ║
+			║ ----------------                           ║
+			║                                            ║
+			║ STALLS, on the total (%):          51.33%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               51.011% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔════════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS              ║
+			║ -----------------------------              ║
+			║                                            ║
+			║ STALLS, on the total (%):          51.33%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               26.184% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔═════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS             ║
+			║ ---------------------------             ║
+			║                                         ║
+			║ STALLS, on the total (%):          0.0% ║
+			║                                         ║
+			║ IPC DEGRADATION (%):               0.0% ║
+			║                                         ║
+			╚═════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔══════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                       ║
+			║ ------------------                       ║
+			║                                          ║
+			║ IPC DEGRADATION (%):              0.621% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          11.03% 
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        24.24% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       13.41% 
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.00%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.00%  
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          50.81% 
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.00%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.52%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.CORE_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.00%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.MEMORY_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.00%  
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          50.81% 
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.52%  
+			-------------------------------------------------------------------------------------------------------
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        0.212389 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               8      
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+- RETIRE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      0.176211 
+			-------------------------------------------------------------------------------------------------------
+
+- EXTRA_MEASURE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               48     
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               226    
+			-------------------------------------------------------------------------------------------------------
+
+							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    True                                ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==8642== NVPROF is profiling process 8642, command: ../../../../CUDA/bin/add_two_matrix
+==8642== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==8642== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==8642== Profiling result:
+==8642== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch           8           8           8           8
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles         226         226         226         226
+
+==8642== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)      11.03%      11.03%      11.03%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      24.24%      24.24%      24.24%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)      13.41%      13.41%      13.41%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.00%       0.00%       0.00%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)       0.00%       0.00%       0.00%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)      50.81%      50.81%      50.81%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.52%       0.52%       0.52%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    0.212389    0.212389    0.212389
+          1                               inst_issued                          Instructions Issued          48          48          48
+          1                                       ipc                                 Executed IPC    0.176991    0.176991    0.176991
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 0.176991 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 3390.0% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔════════════════════════════════════════════╗
+			║ FRONT-END RESULTS                          ║
+			║ -----------------                          ║
+			║                                            ║
+			║ STALLS, on the total (%):          48.68%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               48.384% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔════════════════════════════════════════════╗
+			║ BACK-END RESULTS                           ║
+			║ ----------------                           ║
+			║                                            ║
+			║ STALLS, on the total (%):          51.33%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               51.018% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔════════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS              ║
+			║ -----------------------------              ║
+			║                                            ║
+			║ STALLS, on the total (%):          51.33%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               51.018% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔═════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS             ║
+			║ ---------------------------             ║
+			║                                         ║
+			║ STALLS, on the total (%):          0.0% ║
+			║                                         ║
+			║ IPC DEGRADATION (%):               0.0% ║
+			║                                         ║
+			╚═════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔══════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                       ║
+			║ ------------------                       ║
+			║                                          ║
+			║ IPC DEGRADATION (%):              0.608% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          11.03% 
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        24.24% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       13.41% 
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.00%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.00%  
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          50.81% 
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.00%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.52%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.CORE_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.00%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.MEMORY_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.00%  
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          50.81% 
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.52%  
+			-------------------------------------------------------------------------------------------------------
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        0.212389 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               8      
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+- RETIRE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      0.176991 
+			-------------------------------------------------------------------------------------------------------
+
+- EXTRA_MEASURE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               48     
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               226    
+			-------------------------------------------------------------------------------------------------------
+
+							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    True                                ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==9366== NVPROF is profiling process 9366, command: ../../../../CUDA/bin/add_two_matrix
+==9366== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==9366== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==9366== Profiling result:
+==9366== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch      382816      382816      382816      382816
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles     1277896     1277896     1277896     1277896
+
+==9366== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)      13.77%      13.77%      13.77%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      55.09%      55.09%      55.09%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)      29.16%      29.16%      29.16%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       0.72%       0.72%       0.72%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)       0.00%       0.00%       0.00%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.03%       0.03%       0.03%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.22%       1.22%       1.22%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    1.497988    1.497988    1.497988
+          1                               inst_issued                          Instructions Issued     1914273     1914273     1914273
+          1                                       ipc                                 Executed IPC    1.496822    1.496822    1.496822
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 1.496822 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 400.85% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔════════════════════════════════════════════╗
+			║ FRONT-END RESULTS                          ║
+			║ -----------------                          ║
+			║                                            ║
+			║ STALLS, on the total (%):          98.74%  ║
+			║                                            ║
+			║ IPC DEGRADATION (%):               98.714% ║
+			║                                            ║
+			╚════════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔══════════════════════════════════════════╗
+			║ BACK-END RESULTS                         ║
+			║ ----------------                         ║
+			║                                          ║
+			║ STALLS, on the total (%):          1.25% ║
+			║                                          ║
+			║ IPC DEGRADATION (%):               1.25% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔══════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS            ║
+			║ -----------------------------            ║
+			║                                          ║
+			║ STALLS, on the total (%):          1.25% ║
+			║                                          ║
+			║ IPC DEGRADATION (%):               1.25% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔═════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS             ║
+			║ ---------------------------             ║
+			║                                         ║
+			║ STALLS, on the total (%):          0.0% ║
+			║                                         ║
+			║ IPC DEGRADATION (%):               0.0% ║
+			║                                         ║
+			╚═════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔══════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                       ║
+			║ ------------------                       ║
+			║                                          ║
+			║ IPC DEGRADATION (%):              0.026% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          13.77% 
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        55.09% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       29.16% 
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.72%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.00%  
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.03%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.00%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             1.22%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.CORE_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.00%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.MEMORY_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.00%  
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.03%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             1.22%  
+			-------------------------------------------------------------------------------------------------------
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        1.497988 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               382816 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+- RETIRE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      1.496822 
+			-------------------------------------------------------------------------------------------------------
+
+- EXTRA_MEASURE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               1914273 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               1277896 
+			-------------------------------------------------------------------------------------------------------
+
+							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    True                                ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==10067== NVPROF is profiling process 10067, command: ../../../../CUDA/bin/add_two_matrix
+==10067== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==10067== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==10067== Profiling result:
+==10067== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch      765629      765629      765629      765629
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles     5025828     5025828     5025828     5025828
+
+==10067== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.54%       2.54%       2.54%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.78%      13.78%      13.78%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.76%       4.76%       4.76%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.43%       1.43%       1.43%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.13%      76.13%      76.13%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.28%       0.28%       0.28%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.06%       1.06%       1.06%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    1.660741    1.660741    1.660741
+          1                               inst_issued                          Instructions Issued     9188008     9188008     9188008
+          1                                       ipc                                 Executed IPC    1.828065    1.828065    1.828065
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 1.828065 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 328.22% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔═══════════════════════════════════════════╗
+			║ FRONT-END RESULTS                         ║
+			║ -----------------                         ║
+			║                                           ║
+			║ STALLS, on the total (%):          22.51% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               22.51% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔═══════════════════════════════════════════╗
+			║ BACK-END RESULTS                          ║
+			║ ----------------                          ║
+			║                                           ║
+			║ STALLS, on the total (%):          77.49% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               77.49% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔═══════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS             ║
+			║ -----------------------------             ║
+			║                                           ║
+			║ STALLS, on the total (%):          77.21% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               77.21% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔══════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS              ║
+			║ ---------------------------              ║
+			║                                          ║
+			║ STALLS, on the total (%):          0.28% ║
+			║                                          ║
+			║ IPC DEGRADATION (%):               0.28% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                     ║
+			║ ------------------                     ║
+			║                                        ║
+			║ IPC DEGRADATION (%):              0.0% ║
+			║                                        ║
+			╚════════════════════════════════════════╝
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          2.54%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        13.78% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       4.76%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                1.43%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                76.13% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.02%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.28%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             1.06%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.CORE_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.28%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.MEMORY_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                76.13% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.02%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             1.06%  
+			-------------------------------------------------------------------------------------------------------
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        1.660741 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               765629 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+- RETIRE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      1.828065 
+			-------------------------------------------------------------------------------------------------------
+
+- EXTRA_MEASURE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               9188008 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               5025828 
+			-------------------------------------------------------------------------------------------------------
+
+							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    True                                ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==10567== NVPROF is profiling process 10567, command: ../../../../CUDA/bin/add_two_matrix
+==10567== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==10567== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==10567== Profiling result:
+==10567== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch      765629      765629      765629      765629
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles     5041933     5041933     5041933     5041933
+
+==10567== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.57%       2.57%       2.57%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.94%      13.94%      13.94%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.85%       4.85%       4.85%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.38%       1.38%       1.38%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      75.95%      75.95%      75.95%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.01%       0.01%       0.01%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.28%       0.28%       0.28%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.02%       1.02%       1.02%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    1.649680    1.649680    1.649680
+          1                               inst_issued                          Instructions Issued     9188085     9188085     9188085
+          1                                       ipc                                 Executed IPC    1.822226    1.822226    1.822226
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 1.822226 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 329.27% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔═══════════════════════════════════════════╗
+			║ FRONT-END RESULTS                         ║
+			║ -----------------                         ║
+			║                                           ║
+			║ STALLS, on the total (%):          22.74% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               22.74% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔═══════════════════════════════════════════╗
+			║ BACK-END RESULTS                          ║
+			║ ----------------                          ║
+			║                                           ║
+			║ STALLS, on the total (%):          77.26% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               77.26% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔═══════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS             ║
+			║ -----------------------------             ║
+			║                                           ║
+			║ STALLS, on the total (%):          76.98% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               76.98% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔══════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS              ║
+			║ ---------------------------              ║
+			║                                          ║
+			║ STALLS, on the total (%):          0.28% ║
+			║                                          ║
+			║ IPC DEGRADATION (%):               0.28% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    True                                ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==11071== NVPROF is profiling process 11071, command: ../../../../CUDA/bin/add_two_matrix
+==11071== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==11071== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==11071== Profiling result:
+==11071== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch      765629      765629      765629      765629
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles     5084065     5084065     5084065     5084065
+
+==11071== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.54%       2.54%       2.54%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      13.69%      13.69%      13.69%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       4.71%       4.71%       4.71%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       1.35%       1.35%       1.35%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      76.44%      76.44%      76.44%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.01%       0.01%       0.01%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.28%       0.28%       0.28%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       0.99%       0.99%       0.99%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    1.649101    1.649101    1.649101
+          1                               inst_issued                          Instructions Issued     9187995     9187995     9187995
+          1                                       ipc                                 Executed IPC    1.807125    1.807125    1.807125
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 1.807125 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 332.02% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔═══════════════════════════════════════════╗
+			║ FRONT-END RESULTS                         ║
+			║ -----------------                         ║
+			║                                           ║
+			║ STALLS, on the total (%):          22.29% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               22.29% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔═══════════════════════════════════════════╗
+			║ BACK-END RESULTS                          ║
+			║ ----------------                          ║
+			║                                           ║
+			║ STALLS, on the total (%):          77.72% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               77.72% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔═══════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS             ║
+			║ -----------------------------             ║
+			║                                           ║
+			║ STALLS, on the total (%):          77.44% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               77.44% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔══════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS              ║
+			║ ---------------------------              ║
+			║                                          ║
+			║ STALLS, on the total (%):          0.28% ║
+			║                                          ║
+			║ IPC DEGRADATION (%):               0.28% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                     ║
+			║ ------------------                     ║
+			║                                        ║
+			║ IPC DEGRADATION (%):              0.0% ║
+			║                                        ║
+			╚════════════════════════════════════════╝
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          2.54%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        13.69% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       4.71%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                1.35%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                76.44% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.01%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.28%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.99%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.CORE_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.28%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.MEMORY_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                76.44% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.01%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.99%  
+			-------------------------------------------------------------------------------------------------------
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        1.649101 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               765629 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+- RETIRE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      1.807125 
+			-------------------------------------------------------------------------------------------------------
+
+- EXTRA_MEASURE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               9187995 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               5084065 
+			-------------------------------------------------------------------------------------------------------
+
+							╔═══════════════════════════════════════╗
+							║ TopDown Metholodgy over NVIDIA's GPUs ║
+							╚═══════════════════════════════════════╝
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your 
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural 
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your 
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔════════════════════════════════════════════════════════════╗
+║ PROGRAM FEATURES                                           ║
+║ ----------------                                           ║
+║                                                            ║
+║ - Execution Level:     2                                   ║
+║ - Analyzed program:    ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:         ../results/output2.log              ║
+║ - Long-Description:    True                                ║
+╚════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+==11552== NVPROF is profiling process 11552, command: ../../../../CUDA/bin/add_two_matrix
+==11552== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==11552== Profiling application: ../../../../CUDA/bin/add_two_matrix
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==11552== Profiling result:
+==11552== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                                    branch      765629      765629      765629      765629
+          1                          divergent_branch           0           0           0           0
+          1                             active_cycles     5118319     5118319     5118319     5118319
+
+==11552== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       4.33%       4.33%       4.33%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      24.10%      24.10%      24.10%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.43%       8.43%       8.43%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       2.39%       2.39%       2.39%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      58.49%      58.49%      58.49%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.02%       0.02%       0.02%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       0.49%       0.49%       0.49%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       1.74%       1.74%       1.74%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1                                issued_ipc                                   Issued IPC    1.657715    1.657715    1.657715
+          1                               inst_issued                          Instructions Issued     9187978     9187978     9187978
+          1                                       ipc                                 Executed IPC    1.795031    1.795031    1.795031
+
+The results have been obtained correctly. General results of IPC are the following:
+
+			╔════════════════════════════════════════════════════╗
+			║ IPC OBTAINED: 1.795031 | MAXIMUM POSSIBLE IPC: 6.0 ║
+			╚════════════════════════════════════════════════════╝
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the 
+number of warp planners per SM, as well as the number of Dispatch units of each SM.    
+
+As you can see, the IPC obtanied it is 334.26% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks, 
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+			╔═══════════════════════════════════════════╗
+			║ FRONT-END RESULTS                         ║
+			║ -----------------                         ║
+			║                                           ║
+			║ STALLS, on the total (%):          39.25% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               39.25% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck, 
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of 
+the instructions, in which aspects such as limitations by functional units, memory limits, etc. 
+
+
+			╔═══════════════════════════════════════════╗
+			║ BACK-END RESULTS                          ║
+			║ ----------------                          ║
+			║                                           ║
+			║ STALLS, on the total (%):          60.74% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               60.74% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.MEMORY_BOUND: M_B Description
+
+			╔═══════════════════════════════════════════╗
+			║ BACK_END.MEMORY_BOUND RESULTS             ║
+			║ -----------------------------             ║
+			║                                           ║
+			║ STALLS, on the total (%):          60.25% ║
+			║                                           ║
+			║ IPC DEGRADATION (%):               60.25% ║
+			║                                           ║
+			╚═══════════════════════════════════════════╝
+
+BACK_END.CORE_BOUND: C_B Description
+
+			╔══════════════════════════════════════════╗
+			║ BACK_END.CORE_BOUND RESULTS              ║
+			║ ---------------------------              ║
+			║                                          ║
+			║ STALLS, on the total (%):          0.49% ║
+			║                                          ║
+			║ IPC DEGRADATION (%):               0.49% ║
+			║                                          ║
+			╚══════════════════════════════════════════╝
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where the where divergence causes a loss of performance. 
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are 
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores 
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and 
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the 
+cores will not be used.
+
+			╔════════════════════════════════════════╗
+			║ DIVERGENCE RESULTS                     ║
+			║ ------------------                     ║
+			║                                        ║
+			║ IPC DEGRADATION (%):              0.0% ║
+			║                                        ║
+			╚════════════════════════════════════════╝
+List of counters/metrics measured according to the part.
+
+- FRONT-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          4.33%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        24.10% 
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       8.43%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                2.39%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK-END RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                58.49% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.02%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.49%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             1.74%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.CORE_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.49%  
+			-------------------------------------------------------------------------------------------------------
+
+- BACK_END.MEMORY_BOUND RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                58.49% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.02%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             1.74%  
+			-------------------------------------------------------------------------------------------------------
+
+- DIVERGENCE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        1.657715 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               765629 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+- RETIRE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      1.795031 
+			-------------------------------------------------------------------------------------------------------
+
+- EXTRA_MEASURE RESULTS:
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               9187978 
+			-------------------------------------------------------------------------------------------------------
+
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               5118319 
+			-------------------------------------------------------------------------------------------------------
+

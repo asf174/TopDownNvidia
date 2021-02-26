@@ -5,13 +5,12 @@ Measurements made by the TopDown methodology in front end part.
 @date:      Jan-2021
 @version:   1.0
 """
-import sys
-path : str = "/home/alvaro/Documents/Facultad/"
-path_desp : str = "/mnt/HDD/alvaro/"
-sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
-sys.path.insert(1,  path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
 
-from metric_measure_errors import * 
+import os, sys, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
+
 from metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES
 from metric_measure import MetricMeasure
 

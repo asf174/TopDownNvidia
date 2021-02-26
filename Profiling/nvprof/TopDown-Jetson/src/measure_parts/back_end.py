@@ -5,14 +5,9 @@ Measurements made by the TopDown methodology in back end part.
 @date:      Jan-2021
 @version:   1.0
 """
-import sys
-sys.path.insert(1, '../errors/')
-sys.path.insert(1, '../parameters/')
 
-from metric_measure_errors import * 
 from metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES
 from metric_measure import MetricMeasure
-
 
 class BackEnd(MetricMeasure):
     """Class that defines the Back-End part."""

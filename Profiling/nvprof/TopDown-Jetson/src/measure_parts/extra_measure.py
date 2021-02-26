@@ -5,16 +5,16 @@ Support (extra) meassures of TopDown methodology
 @date:      Jan-2021
 @version:   1.0
 """
-import sys
-path : str = "/home/alvaro/Documents/Facultad/"
-path_desp : str = "/mnt/HDD/alvaro/"
-sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
-sys.path.insert(1,  path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
-sys.path.insert(1,  path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_parts")
 
-from metric_measure_errors import * 
-from metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES
-from metric_measure import MetricMeasure
+import os, sys, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(1, parentdir) 
+print(parentdir)
+
+from parameters.metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES
+from measure_parts.metric_measure import MetricMeasure
+
 
 class ExtraMeasure(MetricMeasure):
     """Class that defines the Front-End part."""
