@@ -282,7 +282,7 @@ class LevelTwo(LevelExecution):
                         not(core_bound_description_has_found or memory_bound_description_has_found)): 
                         if not self.__metricExists(metric_name):
                             raise MetricNotAsignedToPart(metric_name)
-                                         
+
     def run(self, lst_output : list[str]):
         """Run execution."""
         
@@ -294,3 +294,48 @@ class LevelTwo(LevelExecution):
         self._get_results(lst_output)
         pass
     
+    def core_bound_percentage_ipc_degradation(self) -> float:
+        """
+        Find percentage of IPC degradation due to BackEnd.Core_Bound part.
+
+        Returns:
+            Float with the percent of BackEnd.Core_Bound's IPC degradation
+        """
+        
+        return (((self._stall_ipc()*(self.get_back_end_stall()/100.0)*(self.get_core_bound_stall()/100.0))/
+            (self.get_device_max_ipc()-self.ipc()))*100.0)
+        pass
+
+    def memory_bound_percentage_ipc_degradation(self) -> float:
+        """
+        Find percentage of IPC degradation due to BackEnd.Memory_Bound part.
+
+        Returns:
+            Float with the percent of BackEnd.Memory_Bound's IPC degradation
+        """
+        
+        return (((self._stall_ipc()*(self.get_back_end_stall()/100.0)*(self.get_memory_bound_stall()/100.0))/
+            (self.get_device_max_ipc()-self.ipc()))*100.0)
+        pass
+
+    def get_memory_bound_stall(self) -> float:
+        """
+        Returns percent of stalls due to BackEnd.Memory_Bound part.
+
+        Returns:
+            Float with percent of total stalls due to BackEnd.Memory_Bound
+        """
+
+        return self._get_stalls_of_part(self.__memory_bound.metrics())
+        pass
+
+    def get_core_bound_stall(self) -> float:
+        """
+        Returns percent of stalls due to BackEnd.Core_Bound part.
+
+        Returns:
+            Float with percent of total stalls due to BackEnd.Core_Bound
+        """
+
+        return self._get_stalls_of_part(self.__core_bound.metrics())
+        pass

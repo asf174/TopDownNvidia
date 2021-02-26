@@ -87,7 +87,6 @@ class MessageFormat:
         self.__write_str_in_file(box, output_file)
         pass
 
-
     def print_max_line_length_message(self, message : str, max_length : int, output_file : str):
         """Print Message with max length per line."""
 

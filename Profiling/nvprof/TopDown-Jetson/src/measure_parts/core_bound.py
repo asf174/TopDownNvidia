@@ -12,11 +12,9 @@ sys.path.insert(1, '../parameters/')
 from metric_measure_errors import * 
 from metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES
 from back_end import BackEnd
-from metric_measure import MetricMeasure
-
 
 class CoreBound(BackEnd):
-    """Class that defines the Back-End part."""
+    """Class that defines the CoreBound (sub-part of BackEnd) part."""
 
     def __init__(self):
         """Set attributes with DEFAULT values."""

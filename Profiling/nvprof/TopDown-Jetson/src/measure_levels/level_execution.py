@@ -376,6 +376,26 @@ class LevelExecution(ABC):
             return self.__get__key_max_value(self._retire.metrics())
         pass
 
+    def _get_stalls_of_part(self, dict : dict) -> float:
+        """
+        Get percent of stalls of the dictionary indicated by argument.
+
+        Params:
+            dic :   dict    ; dictionary with stalls of the corresponding part
+
+        Returns:
+            A float with percent of stalls of the dictionary indicated by argument.
+        """
+
+        total_value : float = 0.0
+        value_str : str 
+        for key in dict.keys():
+                value_str = dict.get(key)
+                if value_str[len(value_str) - 1] == "%":  # check percenttage
+                    total_value += float(value_str[0 : len(value_str) - 1])
+        return round(total_value, 3)
+        pass
+
     def get_front_end_stall(self) -> float:
         """
         Returns percent of stalls due to FrontEnd part.
@@ -384,13 +404,7 @@ class LevelExecution(ABC):
             Float with percent of total stalls due to FrontEnd
         """
 
-        total_value : float = 0.0
-        value_str : str 
-        for key in self._front_end.metrics().keys():
-                value_str = self._front_end.metrics().get(key)
-                if value_str[len(value_str) - 1] == "%":  # check percenttage
-                    total_value += float(value_str[0 : len(value_str) - 1])
-        return round(total_value, 3)
+        return self._get_stalls_of_part(self._front_end.metrics())
         pass
     
     def get_back_end_stall(self) -> float:
@@ -401,13 +415,7 @@ class LevelExecution(ABC):
             Float with percent of total stalls due to BackEnd
         """
 
-        total_value : float = 0.0
-        value_str : str 
-        for key in self._back_end.metrics().keys():
-                value_str = self._back_end.metrics().get(key)
-                if value_str[len(value_str) - 1] == "%":  # check percenttage
-                    total_value += float(value_str[0 : len(value_str) - 1])
-        return round(total_value, 3)
+        return self._get_stalls_of_part(self._back_end.metrics())
         pass
 
     def __divergence_ipc_degradation(self) -> float:
@@ -430,7 +438,7 @@ class LevelExecution(ABC):
         return ipc * (1.0 - (float(warp_execution_efficiency[0: len(warp_execution_efficiency) - 1])/100.0)) + ipc_diference
         pass
 
-    def __stalls_ipc(self) -> float:
+    def _stall_ipc(self) -> float:
         """
         Find IPC due to STALLS
 
@@ -460,7 +468,7 @@ class LevelExecution(ABC):
             Float with the percent of FrontEnd's IPC degradation
         """
         
-        return ((self.__stalls_ipc()*(self.get_front_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
+        return ((self._stall_ipc()*(self.get_front_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
         pass
 
     def back_end_percentage_ipc_degradation(self) -> float:
@@ -471,7 +479,7 @@ class LevelExecution(ABC):
             Float with the percent of BackEnd's IPC degradation
         """
         
-        return ((self.__stalls_ipc()*(self.get_back_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
+        return ((self._stall_ipc()*(self.get_back_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
         pass
 
     def _set_front_back_divergence_retire_results(self, results_launch : str):

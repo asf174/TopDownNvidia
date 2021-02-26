@@ -15,7 +15,7 @@ from back_end import BackEnd
 from metric_measure import MetricMeasure
 
 class MemoryBound(BackEnd):
-    """Class that defines the Back-End part."""
+    """Class that defines the MemoryBound (sub-part of BackEnd) part."""
 
     def __init__(self):
         """Set attributes with DEFAULT values."""
