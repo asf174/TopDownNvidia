@@ -16,6 +16,7 @@ from parameters.topdown_params import TopDownParameters # parameters of program
 import sys
 from measure_levels.level_one import LevelOne
 from show_messages.message_format import MessageFormat
+from args.unique_argument import DontRepeat
 
 class TopDown:
     """
@@ -71,6 +72,7 @@ class TopDown:
             help = 'run file. Path to file.',
             default = None,
             nargs = '?', 
+            action = DontRepeat,
             type = str, 
             #metavar='/path/to/file',
             dest = 'program')
@@ -90,6 +92,7 @@ class TopDown:
             required = True,
             help = 'level of execution.',
             type = int,
+            action = DontRepeat,
             nargs = 1,
             default = -1,
             choices = range(TopDownParameters.C_MIN_LEVEL_EXECUTION, TopDownParameters.C_MAX_LEVEL_EXECUTION + 1), # range [1,2], produces error, no if needed
