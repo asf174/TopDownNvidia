@@ -7,14 +7,14 @@ Program that implements the Top Down methodology over NVIDIA GPUs.
 """
 
 import argparse
-import re
+import sys
 #from tabulate import tabulate #TODO, pintar
 from errors.topdown_errors import *
 from measure_parts.extra_measure import ExtraMeasure    
 from shell.shell import Shell # launch shell arguments
 from parameters.topdown_params import TopDownParameters # parameters of program
-import sys
 from measure_levels.level_one import LevelOne
+from measure_levels.level_two import LevelTwo
 from show_messages.message_format import MessageFormat
 
 class TopDown:
@@ -234,7 +234,7 @@ class TopDown:
         print()
         pass
 
-    def _show_level_one_results(self, level_one : LevelOne):
+    def __show_level_one_results(self, level_one : LevelOne):
         """ Show Results of level one of execution indicated by argument.
 
         Parameters:
@@ -290,15 +290,20 @@ class TopDown:
     
         pass
 
-    def level_one(self):
-        """ 
-        Run TopDown level 1.
-        """
-
-        level_one : LevelOne = LevelOne(self.program(), self.output_file())
+    def __launch_level(self):
+        """ Launch level one/two execution."""
+        
+        if self.level() == 1:
+           level : LevelOne = LevelOne(self.program(), self.output_file())
+        else:
+            level : LevelTwo = LevelTwo(self.program(), self.output_file()) 
         lst_output : list[str] = list()
-        level_one.run(lst_output)
-        self._show_level_one_results(level_one)
+        level.run(lst_output)
+        if self.level() == 1:
+            self.__show_level_one_results(level)
+        else:
+            #self._show_level_two_results(level)
+            pass
         if self.show_long_desc(): ### revisar este IF no deberia ir aqui
             # Write results in output-file if has been specified
             if not self.output_file() is None:
@@ -306,13 +311,21 @@ class TopDown:
             element : str
             for element in lst_output:
                 print(element)
+
+    def level_one(self):
+        """ 
+        Run TopDown level 1.
+        """
+
+        self.__launch_level()
         pass
 
     def level_two(self):
         """ 
         Run TopDown level 2.
         """
-        # TODO
+        
+        self.__launch_level()
         pass
     
 if __name__ == '__main__':

@@ -8,8 +8,8 @@ Measurements made by the TopDown methodology.
 import sys
 path : str = "/home/alvaro/Documents/Facultad/"
 path_desp : str = "/mnt/HDD/alvaro/"
-sys.path.insert(1, path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
-sys.path.insert(1,  path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
+sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
+sys.path.insert(1,  path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
 
 from metric_measure_errors import * 
 from abc import ABC # abstract class
@@ -202,7 +202,7 @@ class MetricMeasure(ABC):
             'metric_name' doesn't exist or it's not a metric
 
         """
-        if not self.is_metric() or self.is_event():
+        if not self.is_metric(metric_name) or self.is_event(metric_name):
             return None
         return self._metrics_desc.get(metric_name)
         pass
