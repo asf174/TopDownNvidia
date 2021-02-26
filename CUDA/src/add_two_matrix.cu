@@ -18,12 +18,13 @@
 __global__ void addMatrix(int* a, int* b, int* result, int size)
 {
 	int idx = blockDim.x*blockIdx.x + threadIdx.x;	
-	if (idx < size)
+	int idxa = idx + 2;
+	/*if (idx < size)
 		result[idx] = a[idx] + b[idx];
 	if (result[idx] == 4)
 		result[idx*result[idx] % size] = a[idx*result[idx] % size] + b[idx*result[idx] % size];
 	else
-		result[idx*result[idx] % size] = a[idx*result[idx] % size];
+		result[idx*result[idx] % size] = a[idx*result[idx] % size];*/
 }
 
 // print matrix indicated by argument
@@ -86,8 +87,8 @@ main(int argc, char* argv[])
 	cudaEventRecord(start);
 	
 	cudaProfilerStart();
-	addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
-
+	//addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+	addMatrix<<<1,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
     // any errors encountered during the launch.
 	cudaDeviceSynchronize();

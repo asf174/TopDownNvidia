@@ -7,14 +7,14 @@ Program that implements the Top Down methodology over NVIDIA GPUs.
 """
 
 import argparse
-import re
+import sys
 #from tabulate import tabulate #TODO, pintar
 from errors.topdown_errors import *
 from measure_parts.extra_measure import ExtraMeasure    
 from shell.shell import Shell # launch shell arguments
 from parameters.topdown_params import TopDownParameters # parameters of program
-import sys
 from measure_levels.level_one import LevelOne
+from measure_levels.level_two import LevelTwo
 from show_messages.message_format import MessageFormat
 from args.unique_argument import DontRepeat
 
@@ -236,72 +236,91 @@ class TopDown:
         printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
         pass
-
-    def _show_level_one_results(self, level_one : LevelOne):
-        """ Show Results of level one of execution indicated by argument.
+      
+    def __show_results(self, level_execution):
+        """ Show Results of execution indicated by argument.
 
         Parameters:
-            level_one   : LevelOne  ; reference to level-one analysis ALREADY DONE.
+            level_one   : LevelOne/LevelTwo  ; reference to level one/two analysis ALREADY DONE.
         """
+
+        # check type of level execution
+        if type(level_execution) is LevelOne:
+            level_execution.__class__ = LevelOne
+        elif type(level_execution) is LevelTwo:
+            level_execution.__class__ = LevelTwo
+        else:
+            print("ERROR")
         print()
         printer : MessageFormat = MessageFormat()
         message : str = "\nThe results have been obtained correctly. General results of IPC are the following:\n\n"
         printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
-        message = "IPC OBTAINED: " + str(level_one.ipc()) + " | MAXIMUM POSSIBLE IPC: " +  str(level_one.get_device_max_ipc())
+        message = "IPC OBTAINED: " + str(level_execution.ipc()) + " | MAXIMUM POSSIBLE IPC: " +  str(level_execution.get_device_max_ipc())
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = "", output_file = self.output_file(), width = None)
         print()
         message = ("\n\n'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'\n" +
             "is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the \n" +
             "number of warp planners per SM, as well as the number of Dispatch units of each SM.")
         printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
-        message = ("    \n\nAs you can see, the IPC obtanied it " + "is " + str(round((level_one.get_device_max_ipc()/level_one.ipc())*100, 2)) + 
+        message = ("    \n\nAs you can see, the IPC obtanied it " + "is " + str(round((level_execution.get_device_max_ipc()/level_execution.ipc())*100, 2)) + 
             "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts of the architecture and DIVERGENCE problems. " +
             "We analyze them based on the level of the TopDown:\n")
         printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
-        print()
-        
-        message = "\n\n" + level_one.front_end().name() + ": " + level_one.front_end().description() + "\n\n"
+        print()  
+        message = "\n\n" + level_execution.front_end().name() + ": " + level_execution.front_end().description() + "\n\n"
         printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
-        
-        message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_front_end_stall()) + '%\n\n'))
-        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_one.front_end_percentage_ipc_degradation(), 3)) + '%\n'))
-        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.front_end().name() + " RESULTS", 
+        message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_front_end_stall()) + '%\n\n'))
+        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.front_end_percentage_ipc_degradation(), 3)) + '%\n'))
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.front_end().name() + " RESULTS", 
             output_file = self.output_file(), width = None)
         print()
-
-        message = "\n\n" + level_one.back_end().name() + ": " + level_one.back_end().description() + "\n\n"
+        message = "\n\n" + level_execution.back_end().name() + ": " + level_execution.back_end().description() + "\n\n"
         printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
-        
-        message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_back_end_stall()) + '%\n\n'))
-        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_one.back_end_percentage_ipc_degradation(), 3)) + '%\n'))
-        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.back_end().name() + " RESULTS", 
+        message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_back_end_stall()) + '%\n\n'))
+        message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.back_end_percentage_ipc_degradation(), 3)) + '%\n'))
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.back_end().name() + " RESULTS", 
             output_file = self.output_file(), width = None)
         print()
-
-        message = "\n\n" + level_one.divergence().name() + ": " + level_one.divergence().description() + "\n\n"
+        if type(level_execution) is LevelTwo:
+            message = "\n\n" + level_execution.memory_bound().name() + ": " + level_execution.memory_bound().description() + "\n\n"
+            printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
+            print()
+            message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_memory_bound_stall()) + '%\n\n'))
+            message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.memory_bound_percentage_ipc_degradation(), 3)) + '%\n'))
+            printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.memory_bound().name() + " RESULTS", 
+                output_file = self.output_file(), width = None)
+            print()
+            message = "\n\n" + level_execution.core_bound().name() + ": " + level_execution.core_bound().description() + "\n\n"
+            printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
+            print()
+            message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_core_bound_stall()) + '%\n\n'))
+            message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.core_bound_percentage_ipc_degradation(), 3)) + '%\n'))
+            printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.core_bound().name() + " RESULTS", 
+                output_file = self.output_file(), width = None)
+            print()
+        message = "\n\n" + level_execution.divergence().name() + ": " + level_execution.divergence().description() + "\n\n"
         printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
         print()
-        
         #message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_divergence_stall()) + '%\n\n'))
-        message = ("{:<34} {:<5}".format('\nIPC DEGRADATION (%):', str(round(level_one.divergence_percentage_ipc_degradation(), 3)) + '%\n'))
-        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_one.divergence().name() + " RESULTS", 
+        message = ("{:<34} {:<5}".format('\nIPC DEGRADATION (%):', str(round(level_execution.divergence_percentage_ipc_degradation(), 3)) + '%\n'))
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.divergence().name() + " RESULTS", 
             output_file = self.output_file(), width = None)
         print()
-    
         pass
 
-    def level_one(self):
-        """ 
-        Run TopDown level 1.
-        """
-
-        level_one : LevelOne = LevelOne(self.program(), self.output_file())
+    def __launch_level(self):
+        """ Launch level one/two execution."""
+        
+        if self.level() == 1:
+           level : LevelOne = LevelOne(self.program(), self.output_file())
+        else:
+            level : LevelTwo = LevelTwo(self.program(), self.output_file()) 
         lst_output : list[str] = list()
-        level_one.run(lst_output)
-        self._show_level_one_results(level_one)
+        level.run(lst_output)
+        self.__show_results(level)
         if self.show_long_desc(): ### revisar este IF no deberia ir aqui
             # Write results in output-file if has been specified
             if not self.output_file() is None:
@@ -309,13 +328,21 @@ class TopDown:
             element : str
             for element in lst_output:
                 print(element)
+
+    def level_one(self):
+        """ 
+        Run TopDown level 1.
+        """
+
+        self.__launch_level()
         pass
 
     def level_two(self):
         """ 
         Run TopDown level 2.
         """
-        # TODO
+        
+        self.__launch_level()
         pass
     
 if __name__ == '__main__':

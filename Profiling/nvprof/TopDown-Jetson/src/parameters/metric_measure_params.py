@@ -52,5 +52,19 @@ class MetricMeasureParameters:
     C_RETIRE_EVENTS                 : str       = ("")
     C_RETIRE_NAME                   : str       = "RETIRE"
     C_RETIRE_DESCRIPTION            : str       = ("R Description")
+
+
+    # memory_bound.py
+    C_MEMORY_BOUND_METRICS                : str       = ("stall_memory_dependency,stall_constant_memory_dependency,stall_memory_throttle")
+    C_MEMORY_BOUND_EVENTS                 : str       = ("")
+    C_MEMORY_BOUND_NAME                   : str       = "BACK_END.MEMORY_BOUND"
+    C_MEMORY_BOUND_DESCRIPTION            : str       = ("M_B Description")
+
+
+    # core_bound.py
+    C_CORE_BOUND_METRICS        : str       = ("stall_pipe_busy")
+    C_CORE_BOUND_EVENTS         : str       = ("")
+    C_CORE_BOUND_NAME           : str       = "BACK_END.CORE_BOUND"
+    C_CORE_BOUND_DESCRIPTION    : str       = ("C_B Description")
 pass
 

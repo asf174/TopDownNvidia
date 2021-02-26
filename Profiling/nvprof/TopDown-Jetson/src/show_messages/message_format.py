@@ -10,7 +10,7 @@ import textwrap # text message
 import sys
 path : str = "/home/alvaro/Documents/Facultad/"
 path_desp : str = "/mnt/HDD/alvaro/"
-sys.path.insert(1, path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
+sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
 from errors.message_format_errors import *
 
 class MessageFormat:
@@ -86,7 +86,6 @@ class MessageFormat:
         print(box)
         self.__write_str_in_file(box, output_file)
         pass
-
 
     def print_max_line_length_message(self, message : str, max_length : int, output_file : str):
         """Print Message with max length per line."""

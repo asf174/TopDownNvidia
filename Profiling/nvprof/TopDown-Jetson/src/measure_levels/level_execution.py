@@ -8,11 +8,12 @@ Class that represents the levels of the execution.
 
 from abc import ABC, abstractmethod # abstract class
 import sys
+import re
 path : str = "/home/alvaro/Documents/Facultad/"
 path_desp : str = "/mnt/HDD/alvaro/"
-sys.path.insert(1, path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
-sys.path.insert(1,  path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
-sys.path.insert(1,  path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_parts")
+sys.path.insert(1, path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
+sys.path.insert(1,  path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
+sys.path.insert(1,  path + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_parts")
 
 from measure_parts.extra_measure import ExtraMeasure    
 from shell.shell import Shell # launch shell arguments
@@ -51,10 +52,33 @@ class LevelExecution(ABC):
     @abstractmethod
     def run(self, lst_output : list[str]):
         """
-        Run execution.
+        Makes execution.
         
         Parameters:
             lst_output  : list[str] ; list with results
+        """
+        pass
+
+    @abstractmethod
+    def _launch(self,) -> str:
+        """ 
+        Launch NVIDIA scan tool.
+        
+        Returns:
+            String with results.
+
+        Raises:
+            ProfilingError              ; raised in case of error reading results from NVIDIA scan tool
+        """
+        pass
+
+    @abstractmethod
+    def _get_results(self, lst_output : list[str]):
+        """ 
+        Get results of the different parts.
+
+        Parameters:
+            lst_output              : list[str]     ; OUTPUT list with results
         """
         pass
 
@@ -352,6 +376,26 @@ class LevelExecution(ABC):
             return self.__get__key_max_value(self._retire.metrics())
         pass
 
+    def _get_stalls_of_part(self, dict : dict) -> float:
+        """
+        Get percent of stalls of the dictionary indicated by argument.
+
+        Params:
+            dic :   dict    ; dictionary with stalls of the corresponding part
+
+        Returns:
+            A float with percent of stalls of the dictionary indicated by argument.
+        """
+
+        total_value : float = 0.0
+        value_str : str 
+        for key in dict.keys():
+                value_str = dict.get(key)
+                if value_str[len(value_str) - 1] == "%":  # check percenttage
+                    total_value += float(value_str[0 : len(value_str) - 1])
+        return round(total_value, 3)
+        pass
+
     def get_front_end_stall(self) -> float:
         """
         Returns percent of stalls due to FrontEnd part.
@@ -360,13 +404,7 @@ class LevelExecution(ABC):
             Float with percent of total stalls due to FrontEnd
         """
 
-        total_value : float = 0.0
-        value_str : str 
-        for key in self._front_end.metrics().keys():
-                value_str = self._front_end.metrics().get(key)
-                if value_str[len(value_str) - 1] == "%":  # check percenttage
-                    total_value += float(value_str[0 : len(value_str) - 1])
-        return round(total_value, 3)
+        return self._get_stalls_of_part(self._front_end.metrics())
         pass
     
     def get_back_end_stall(self) -> float:
@@ -377,13 +415,7 @@ class LevelExecution(ABC):
             Float with percent of total stalls due to BackEnd
         """
 
-        total_value : float = 0.0
-        value_str : str 
-        for key in self._back_end.metrics().keys():
-                value_str = self._back_end.metrics().get(key)
-                if value_str[len(value_str) - 1] == "%":  # check percenttage
-                    total_value += float(value_str[0 : len(value_str) - 1])
-        return round(total_value, 3)
+        return self._get_stalls_of_part(self._back_end.metrics())
         pass
 
     def __divergence_ipc_degradation(self) -> float:
@@ -406,7 +438,7 @@ class LevelExecution(ABC):
         return ipc * (1.0 - (float(warp_execution_efficiency[0: len(warp_execution_efficiency) - 1])/100.0)) + ipc_diference
         pass
 
-    def __stalls_ipc(self) -> float:
+    def _stall_ipc(self) -> float:
         """
         Find IPC due to STALLS
 
@@ -436,7 +468,7 @@ class LevelExecution(ABC):
             Float with the percent of FrontEnd's IPC degradation
         """
         
-        return ((self.__stalls_ipc()*(self.get_front_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
+        return ((self._stall_ipc()*(self.get_front_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
         pass
 
     def back_end_percentage_ipc_degradation(self) -> float:
@@ -447,5 +479,94 @@ class LevelExecution(ABC):
             Float with the percent of BackEnd's IPC degradation
         """
         
-        return ((self.__stalls_ipc()*(self.get_back_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
+        return ((self._stall_ipc()*(self.get_back_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
+        pass
+
+    def _set_front_back_divergence_retire_results(self, results_launch : str):
+        """ Get Results from FrontEnd, BanckEnd, Divergence and Retire parts.
+        
+        Params:
+            results_launch  : str   ; results generated by NVIDIA scan tool
+            
+        Raises:
+            EventNotAsignedToPart       ; raised when an event has not been assigned to any analysis part 
+            MetricNotAsignedToPart      ; raised when a metric has not been assigned to any analysis part
+        """
+
+        event_name : str
+        event_total_value : str 
+        metric_name : str
+        metric_description : str = ""
+        metric_avg_value : str 
+        #metric_max_value : str 
+        #metric_min_value : str
+        has_read_all_events : bool = False
+        line : str
+        i : int
+        list_words : list[str]
+        front_end_value_has_found : bool
+        frond_end_description_has_found : bool
+        back_end_value_has_found : bool
+        back_end_description_has_found : bool
+        divergence_value_has_found : bool
+        divergence_description_has_found : bool
+        extra_measure_value_has_found : bool
+        extra_measure_description_has_found : bool
+        retire_value_has_found : bool 
+        retire_description_has_found : bool
+        for line in results_launch.splitlines():
+            line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
+            list_words = line.split(" ")
+            if not has_read_all_events:
+                # Check if it's line of interest:
+                # ['', 'X', 'event_name','Min', 'Max', 'Avg', 'Total'] event_name is str. Rest: numbers (less '', it's an space)
+                if len(list_words) > 1: 
+                    if list_words[1] == "Metric": # check end events
+                        has_read_all_events = True
+                    elif list_words[0] == '' and list_words[len(list_words) - 1][0].isnumeric():
+                        event_name = list_words[2]
+                        event_total_value = list_words[len(list_words) - 1]     
+                        front_end_value_has_found = self._front_end.set_event_value(event_name, event_total_value)
+                        #frond_end_description_has_found = front_end.set_event_description(event_name, metric_description)
+                        back_end_value_has_found = self._back_end.set_event_value(event_name, event_total_value)
+                        #back_end_description_has_found = back_end.set_event_description(event_name, metric_description)
+                        divergence_value_has_found = self._divergence.set_event_value(event_name, event_total_value)
+                        #divergence_description_has_found = divergence.set_event_description(event_name, metric_description)
+                        extra_measure_value_has_found = self._extra_measure.set_event_value(event_name, event_total_value)
+                        #extra_measure_description_has_found = extra_measure.set_event_description(event_name, metric_description)
+                        retire_value_has_found = self._retire.set_event_value(event_name, event_total_value)
+                        #retire_description_has_found = extra_measure.set_event_description(event_name, metric_description)
+                        if (not (front_end_value_has_found or back_end_value_has_found or divergence_value_has_found or 
+                            extra_measure_value_has_found or retire_value_has_found)): #or 
+                            #not(frond_end_description_has_found or back_end_description_has_found 
+                            #or divergence_description_has_found or extra_measure_description_has_found)):
+                            raise EventNotAsignedToPart(event_name)
+            else: # metrics
+                # Check if it's line of interest:
+                # ['', 'X', 'NAME_COUNTER', ... , 'Min', 'Max', 'Avg' (Y%)] where X (int number), Y (int/float number)
+                if len(list_words) > 1 and list_words[0] == '' and list_words[len(list_words) - 1][0].isnumeric():
+                    metric_name = list_words[2]
+                    metric_description = ""
+                    for i in range(3, len(list_words) - 3):
+                        metric_description += list_words[i] + " "     
+                    metric_avg_value = list_words[len(list_words) - 1]
+                    #metric_max_value = list_words[len(list_words) - 2]
+                    #metric_min_value = list_words[len(list_words) - 3]
+                    #if metric_avg_value != metric_max_value or metric_avg_value != metric_min_value:
+                        # Do Something. NOT USED
+                    front_end_value_has_found = self._front_end.set_metric_value(metric_name, metric_avg_value)
+                    frond_end_description_has_found = self._front_end.set_metric_description(metric_name, metric_description)
+                    back_end_value_has_found = self._back_end.set_metric_value(metric_name, metric_avg_value)
+                    back_end_description_has_found = self._back_end.set_metric_description(metric_name, metric_description)
+                    divergence_value_has_found = self._divergence.set_metric_value(metric_name, metric_avg_value)
+                    divergence_description_has_found = self._divergence.set_metric_description(metric_name, metric_description)
+                    extra_measure_value_has_found = self._extra_measure.set_metric_value(metric_name, metric_avg_value)
+                    extra_measure_description_has_found = self._extra_measure.set_metric_description(metric_name, metric_description)
+                    retire_value_has_found = self._retire.set_metric_value(metric_name, metric_avg_value)
+                    retire_description_has_found = self._retire.set_metric_description(metric_name, metric_description)
+                    if (not (front_end_value_has_found or back_end_value_has_found or divergence_value_has_found or 
+                        extra_measure_value_has_found or retire_value_has_found) or 
+                        not(frond_end_description_has_found or back_end_description_has_found or divergence_description_has_found 
+                        or extra_measure_description_has_found or retire_description_has_found)):
+                        raise MetricNotAsignedToPart(metric_name)
         pass
