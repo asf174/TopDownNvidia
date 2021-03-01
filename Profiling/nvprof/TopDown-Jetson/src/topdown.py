@@ -284,7 +284,7 @@ class TopDown:
         printer.print_max_line_length_message(message, TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
         message = ("\n- Execution Level:                  " + str(self.level()) + "\n" + \
                    "- Analyzed program:                 " + self.program() + "\n" + \
-                   "- Output File:                      " + self.output_file() + "\n" + \
+                   "- Output File:                      " + str(self.output_file()) + "\n" + \
                    "- Verbose:                          " + str(self.show_verbose()) + "\n" + \
                    "- Delete output's file content:     " + str(self.delete_output_file_content()))
         printer.print_msg_box(msg = message, indent = 1, title = "EXECUTION FEATURES", output_file = self.output_file(), width = None,
@@ -303,7 +303,7 @@ class TopDown:
         ipc_degradation_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
             str(round(level_execution.divergence_percentage_ipc_degradation(), 2)) + '%'))   
         ipc_retire_message : str = ("{:<20} {:<5}".format('PERFORMANCE (REAL) IPC (%):', 
-            str(round(level_execution.retire_ipc(), 3)))) 
+            str(round(level_execution.retire_ipc_percentage(), 3)))) 
 
         ipc_degradation_front_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION (%): ', 
             str(round(level_execution.front_end_percentage_ipc_degradation(), 2)) + '%'))
@@ -361,35 +361,37 @@ class TopDown:
         print()
         message = "IPC OBTAINED: " + str(level_execution.ipc()) + " | MAXIMUM POSSIBLE IPC: " +  str(level_execution.get_device_max_ipc())
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = "", output_file = self.output_file(), width = None, delete_content_file = False)
-        message = ("\n\n'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'\n" +
-            "is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the\n" +
-            "number of warp planners per SM, as well as the number of Dispatch units of each SM.")
-        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
-        message = ("\n    As you can see, the IPC obtanied it " + "is " + str(round((level_execution.get_device_max_ipc()/level_execution.ipc())*100, 2)) + 
-            "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts of the architecture and DIVERGENCE problems. " +
-            "We analyze them based on the level of the TopDown:\n")
-        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
-        print()  
-        if self.show_verbose():
+        if self.show_desc():
+            message = ("\n\n'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'\n" +
+                "is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the\n" +
+                "number of warp planners per SM, as well as the number of Dispatch units of each SM.")
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
+            message = ("\n    As you can see, the IPC obtanied it " + "is " + str(round((level_execution.get_device_max_ipc()/level_execution.ipc())*100, 2)) + 
+                "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts of the architecture and DIVERGENCE problems. " +
+                "We analyze them based on the level of the TopDown:\n")
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
+            print()
+            message = "DESCRIPTION OF MEASURE PARTS"
+            printer.print_desplazed_msg_box(msg = message, indent = 1, title = "", output_file = self.output_file(), width = None, delete_content_file = False)
+            print()
             message = "\n" + level_execution.front_end().name() + ": " + level_execution.front_end().description() + "\n\n"
             printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
             print()
             if type(level_execution) is LevelTwo:
-                if self.show_desc():
-                    message = "\n" + level_execution.front_band_width().name() + ": " + level_execution.front_band_width().description() + "\n\n"
-                    printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
-                    output_file = self.output_file(), delete_content_file = False)
-                    print()
+                message = "\n" + level_execution.front_band_width().name() + ": " + level_execution.front_band_width().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
+                print()
 
-                    message = "\n" + level_execution.front_dependency().name() + ": " + level_execution.front_dependency().description() + "\n\n"
-                    printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
-                    output_file = self.output_file(), delete_content_file = False)
-                    print()
+                message = "\n" + level_execution.front_dependency().name() + ": " + level_execution.front_dependency().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
+                print()
             message = "\n" + level_execution.back_end().name() + ": " + level_execution.back_end().description() + "\n\n"
             printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
             delete_content_file = False)
             print()
-            if self.show_verbose() and type(level_execution) is LevelTwo:
+            if type(level_execution) is LevelTwo:
                 message = "\n" + level_execution.back_memory_bound().name() + ": " + level_execution.back_memory_bound().description() + "\n\n"
                 printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                 output_file = self.output_file(), delete_content_file = False)
@@ -402,22 +404,24 @@ class TopDown:
             printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
             output_file = self.output_file(), delete_content_file = False)
             print()
+        if type(level_execution) is LevelTwo:
+            message = "\n LEVEL ONE RESULTS:"
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+            output_file = self.output_file(), delete_content_file = False)
+            self.__show_level_one_results(level_execution)
+            print()
 
-            if type(level_execution) is LevelTwo:
-                message = "\n LEVEL ONE RESULTS:"
-                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
-                output_file = self.output_file(), delete_content_file = False)
-                self.__show_level_one_results(level_execution)
-                print()
-
-                message = "\n LEVEL TWO RESULTS:"
-                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
-                output_file = self.output_file(), delete_content_file = False)
-                self.__show_level_two_results(level_execution)
-                print()
-            else: # level one
-                self.__show_level_one_results(level_execution)
-                print()
+            message = "\n LEVEL TWO RESULTS:"
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+            output_file = self.output_file(), delete_content_file = False)
+            self.__show_level_two_results(level_execution)
+            print()
+        else: # level one
+            message = "\n RESULTS:"
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+            output_file = self.output_file(), delete_content_file = False)
+            self.__show_level_one_results(level_execution)
+            print()
         pass
 
     def launch(self):
@@ -434,7 +438,7 @@ class TopDown:
         lst_output : list[str] = list() # for extra information
         level.run(lst_output)
         self.__show_results(level)
-        if self.show_desc() and self.show_verbose(): ### revisar este IF no deberia ir aqui
+        if self.show_desc(): ### revisar este IF no deberia ir aqui
             # Write results in output-file if has been specified
             if not self.output_file() is None:
                 MessageFormat().write_in_file_at_end(self.output_file(), lst_output)

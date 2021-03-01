@@ -1,6 +1,6 @@
 ╔═══════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔═══════════════════════════════════╗
 ║ FRONT-END                         ║  ║ BACK-END                          ║  ║ DIVERGENCE                        ║  ║ RETIRE                            ║
 ║ ---------                         ║  ║ --------                          ║  ║ ----------                        ║  ║ ------                            ║
-║ STALLS, on the total (%):  10.24% ║  ║ STALLS, on the total (%):  89.76% ║  ║ IPC DEGRADATION (%):  0.0%        ║  ║ PERFORMANCE (REAL) IPC (%): 0.863 ║  
-║ IPC DEGRADATION (%):       10.24% ║  ║ IPC DEGRADATION (%):       89.76% ║  ║                                   ║  ║                                   ║  
+║ STALLS, on the total (%):  7.46%  ║  ║ STALLS, on the total (%):  92.55% ║  ║ IPC DEGRADATION (%):  0.07%       ║  ║ PERFORMANCE (REAL) IPC (%): 0.556 ║  
+║ IPC DEGRADATION (%):       7.45%  ║  ║ IPC DEGRADATION (%):       92.48% ║  ║                                   ║  ║                                   ║  
 ╚═══════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚═══════════════════════════════════╝  Analysis performed correctly!

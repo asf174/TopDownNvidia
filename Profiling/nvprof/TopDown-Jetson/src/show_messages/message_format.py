@@ -7,7 +7,6 @@ Program that shows messages in different format.
 """
 ## faltan comentarios y comparar diferencia str None, o ""
 import textwrap # text message
-import numpy as np
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -26,7 +25,8 @@ class MessageFormat:
             delete_content_file     : bool  ; True if you want to delete content of file before write or
                                                 false if you want to add 'str_to_write' at the end of file
         """
-        if output_file != "" or not output_file is None:
+        
+        if not output_file is None:
             try:
                 option : str = "w" # by default
                 if not delete_content_file:
@@ -83,12 +83,12 @@ class MessageFormat:
         space = " " * indent
         if not width:
             width = max(map(len, lines))
-        box = f'\t\t\t╔{"═" * (width + indent * 2)}╗\n'  # upper_border
+        box = f'\t\t\t\t\t╔{"═" * (width + indent * 2)}╗\n'  # upper_border
         if title:
-            box += f'\t\t\t║{space}{title:<{width}}{space}║\n'  # title
-            box += f'\t\t\t║{space}{"-" * len(title):<{width}}{space}║\n'  # underscore
-        box += ''.join([f'\t\t\t║{space}{line:<{width}}{space}║\n' for line in lines])
-        box += f'\t\t\t╚{"═" * (width + indent * 2)}╝\n'  # lower_border
+            box += f'\t\t\t\t\t║{space}{title:<{width}}{space}║\n'  # title
+            box += f'\t\t\t\t\t║{space}{"-" * len(title):<{width}}{space}║\n'  # underscore
+        box += ''.join([f'\t\t\t\t\t║{space}{line:<{width}}{space}║\n' for line in lines])
+        box += f'\t\t\t\t\t╚{"═" * (width + indent * 2)}╝\n'  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
         pass
@@ -126,7 +126,7 @@ class MessageFormat:
                     box += f'║{space}{matrix[i][j]:<{width}}{space}║  '
             num_ite = num_ite + 1
         box += "\n"
-        for i in range(np.size(matrix, 1)):
+        for i in range(len(matrix[0])):
             box += f'╚{"═" * (width + indent * 2)}╝  '  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
@@ -136,7 +136,8 @@ class MessageFormat:
         """Print Message with max length per line."""
 
         print('\n'.join(textwrap.wrap(message, max_length, break_long_words = False)))
-        self.__write_str_in_file(message, output_file, delete_content_file)
+        if not output_file is None:
+            self.__write_str_in_file(message, output_file, delete_content_file)
         pass
 
     def write_in_file_at_end(self, file : str, message : list[str]):

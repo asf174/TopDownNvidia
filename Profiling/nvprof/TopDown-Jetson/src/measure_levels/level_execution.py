@@ -199,6 +199,7 @@ class LevelExecution(ABC):
         Returns:
             reference to FrontEnd part of the execution
         """
+
         return self._front_end
         pass
     
@@ -209,6 +210,7 @@ class LevelExecution(ABC):
         Returns:
             reference to BackEnd part of the execution
         """
+
         return self._back_end
         pass
 
@@ -219,6 +221,7 @@ class LevelExecution(ABC):
         Returns:
             reference to Divergence part of the execution
         """
+
         return self._divergence
         pass
 
@@ -229,6 +232,7 @@ class LevelExecution(ABC):
         Returns:
             reference to Retire part of the execution
         """
+
         return self._retire
         pass
 
@@ -239,6 +243,7 @@ class LevelExecution(ABC):
         Returns:
             reference to ExtraMeasure part of the execution
         """
+        
         return self._extra_measure
         pass
 
@@ -466,7 +471,7 @@ class LevelExecution(ABC):
             Float with the percent of Divergence's IPC degradation
         """
 
-        return (self.__divergence_ipc_degradation()/(self.get_device_max_ipc()-self.ipc()))*100.0
+        return (self.__divergence_ipc_degradation()/self.get_device_max_ipc())*100.0
         pass
 
     def front_end_percentage_ipc_degradation(self) -> float:
@@ -477,7 +482,7 @@ class LevelExecution(ABC):
             Float with the percent of FrontEnd's IPC degradation
         """
         
-        return ((self._stall_ipc()*(self.get_front_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
+        return ((self._stall_ipc()*(self.get_front_end_stall()/100.0))/self.get_device_max_ipc())*100.0
         pass
 
     def back_end_percentage_ipc_degradation(self) -> float:
@@ -488,7 +493,7 @@ class LevelExecution(ABC):
             Float with the percent of BackEnd's IPC degradation
         """
         
-        return ((self._stall_ipc()*(self.get_back_end_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0
+        return ((self._stall_ipc()*(self.get_back_end_stall()/100.0))/self.get_device_max_ipc())*100.0
         pass
 
     def _set_front_back_divergence_retire_results(self, results_launch : str):
@@ -579,3 +584,12 @@ class LevelExecution(ABC):
                         or extra_measure_description_has_found or retire_description_has_found)):
                         raise MetricNotAsignedToPart(metric_name)
         pass
+
+    def retire_ipc_percentage(self) -> float:
+        """
+        Get percentage of TOTAL IPC due to RETIRE.
+
+        Returns:
+            Float with percentage of TOTAL IPC due to RETIRE
+        """
+        return (self.ipc()/self.get_device_max_ipc())*100.0
