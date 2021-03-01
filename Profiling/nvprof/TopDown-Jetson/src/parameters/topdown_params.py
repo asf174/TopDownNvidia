@@ -31,9 +31,26 @@ class TopDownParameters:
     C_FILE_SHORT_OPTION                 : str       = "-f"
     C_FILE_LONG_OPTION                  : str       = "--file"
 
-    """Options."""
+    # delete content
+    C_DELETE_CONTENT_SHORT_OPTION       : str       = "-dc"
+    C_DELETE_CONTENT_LONG_OPTION        : str       = "--delete-content"
+
+    # show description
+    C_SHOW_DESCRIPTION_SHORT_OPTION     : str       = "-nd"
+    C_SHOW_DESCRIPTION_LONG_OPTION      : str       = "--no-desc"
+
     C_MIN_LEVEL_EXECUTION               : int       = 1
     C_MAX_LEVEL_EXECUTION               : int       = 2
 
 
+    C_INTRO_MESSAGE_GENERAL_INFORMATION : str       = ("\n- Program Name:    topdown.py\n" + \
+                                                        "- Author:          Alvaro Saiz (UC)\n" + \
+                                                        "- Contact info:    asf174@alumnos.unican.es\n" + \
+                                                        "- Company:         University Of Cantabria\n" + \
+                                                        "- Place:           Santander, Cantabria, Kingdom of Spain\n" + \
+                                                        "- Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es>\n" + \
+                                                        "- Bugs Report:     asf174@alumnos.unican.es"+ 
+                                                        "\n\n- Licence:         GNU GPL")
+
+    C_NUM_MAX_CHARACTERS_PER_LINE       : int       = 129
 

@@ -16,16 +16,21 @@ from errors.message_format_errors import *
 class MessageFormat:
     """Class with different methods to show messages."""
     
-    def __write_str_in_file(self, str_to_write : str, output_file : str):
+    def __write_str_in_file(self, str_to_write : str, output_file : str, delete_content_file : bool):
         """ Write string ((if it's correct) in file.
 
         Params:
-            str_to_write    : str   ; string to write
-            output_file     : str   ; path to file
+            str_to_write            : str   ; string to write
+            output_file             : str   ; path to file
+            delete_content_file     : bool  ; True if you want to delete content of file before write or
+                                                false if you want to add 'str_to_write' at the end of file
         """
         if output_file != "" or not output_file is None:
             try:
-                f : _io.TextIOWrapper = open(output_file, "a")
+                option : str = "w" # by default
+                if not delete_content_file:
+                    option = "a"
+                f : _io.TextIOWrapper = open(output_file, option)
                 try:
                     #f.write("\n".join(str(item) for item in message))
                     f.write(str_to_write)
@@ -36,7 +41,7 @@ class MessageFormat:
                 raise WriteInOutPutFileError
         pass
 
-    def print_msg_box(self, msg, indent, width, title, output_file : str):
+    def print_msg_box(self, msg, indent, width, title, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
 
         lines = msg.split('\n')
@@ -50,10 +55,10 @@ class MessageFormat:
         box += ''.join([f'║{space}{line:<{width}}{space}║\n' for line in lines])
         box += f'╚{"═" * (width + indent * 2)}╝'  # lower_border
         print(box)
-        self.__write_str_in_file(box, output_file)
+        self.__write_str_in_file(box, output_file, delete_content_file)
         pass
 
-    def print_center_msg_box(self, msg, indent, width, title, output_file : str):
+    def print_center_msg_box(self, msg, indent, width, title, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
 
         lines = msg.split('\n')
@@ -67,10 +72,10 @@ class MessageFormat:
         box += ''.join([f'\t\t\t\t\t\t\t║{space}{line:<{width}}{space}║\n' for line in lines])
         box += f'\t\t\t\t\t\t\t╚{"═" * (width + indent * 2)}╝'  # lower_border
         print(box)
-        self.__write_str_in_file(box, output_file)
+        self.__write_str_in_file(box, output_file, delete_content_file)
         pass
 
-    def print_desplazed_msg_box(self, msg, indent, width, title, output_file : str):
+    def print_desplazed_msg_box(self, msg, indent, width, title, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
 
         lines = msg.split('\n')
@@ -82,16 +87,16 @@ class MessageFormat:
             box += f'\t\t\t║{space}{title:<{width}}{space}║\n'  # title
             box += f'\t\t\t║{space}{"-" * len(title):<{width}}{space}║\n'  # underscore
         box += ''.join([f'\t\t\t║{space}{line:<{width}}{space}║\n' for line in lines])
-        box += f'\t\t\t╚{"═" * (width + indent * 2)}╝'  # lower_border
+        box += f'\t\t\t╚{"═" * (width + indent * 2)}╝\n'  # lower_border
         print(box)
-        self.__write_str_in_file(box, output_file)
+        self.__write_str_in_file(box, output_file, delete_content_file)
         pass
 
-    def print_max_line_length_message(self, message : str, max_length : int, output_file : str):
+    def print_max_line_length_message(self, message : str, max_length : int, output_file : str, delete_content_file : bool):
         """Print Message with max length per line."""
 
         print('\n'.join(textwrap.wrap(message, max_length, break_long_words = False)))
-        self.__write_str_in_file(message, output_file)
+        self.__write_str_in_file(message, output_file, delete_content_file)
         pass
 
     def write_in_file_at_end(self, file : str, message : list[str]):

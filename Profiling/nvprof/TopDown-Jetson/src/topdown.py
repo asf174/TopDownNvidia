@@ -10,8 +10,6 @@ import argparse
 import sys
 #from tabulate import tabulate #TODO, pintar
 from errors.topdown_errors import *
-from measure_parts.extra_measure import ExtraMeasure    
-from shell.shell import Shell # launch shell arguments
 from parameters.topdown_params import TopDownParameters # parameters of program
 from measure_levels.level_one import LevelOne
 from measure_levels.level_two import LevelTwo
@@ -23,12 +21,16 @@ class TopDown:
     Class that implements TopDown methodology over NVIDIA GPUs.
     
     Attributes:
-        __level             : int   ;   level of the exection
-        __file_output       : str   ;   path to log to show results or 'None' if option
-                                        is not specified
-        __show_long_desc    : bool  ;   True to show long-descriptions of results or
-                                        false in other case
-        __program           : str   ;   path to program to be executed
+        __level                         : int   ;   level of the exection
+        __file_output                   : str   ;   path to log to show results or 'None' if option
+                                                    is not specified
+        __show_long_desc                : bool  ;   True to show long-descriptions of results or
+                                                    False in other case
+        __program                       : str   ;   path to program to be executed
+        __delete_output_file_content    : bool  ;   If '-o/--output' is set delete output's file contents before 
+                                                    write results
+        __show_desc                     : bool  ;   True to show descriptions of results or
+                                                    False in other case
     """
 
     def __init__(self):
@@ -51,11 +53,29 @@ class TopDown:
         self.__file_output : str = args.file
         self.__show_long_desc : bool = args.desc
         self.__program : str = args.program
-
+        self.__delete_output_file_content : bool = args.delete_output_file_content
+        self.__show_desc : bool = args.show_desc
         # introduction
         self.__intro_message()
         pass
     
+    def __add_show_desc_argument(self, parser : argparse.ArgumentParser):
+        """ 
+        Add show-description argument. 'C_LONG_DESCRIPTION_SHORT_OPTION' is the short 
+        option of argument and 'C_LONG_DESCRIPTION_LONG_OPTION' is the long version of argument.
+
+        Params:
+            parser : argparse.ArgumentParser ; group of the argument.
+        """
+
+        parser.add_argument (
+            TopDownParameters.C_SHOW_DESCRIPTION_SHORT_OPTION, 
+            TopDownParameters.C_SHOW_DESCRIPTION_LONG_OPTION, 
+            help = 'description of results.',
+            action = 'store_false',
+            dest = 'show_desc')
+        pass
+
     def __add_program_argument(self, group : argparse._ArgumentGroup) :
         """ 
         Add program argument. 'C_FILE_SHORT_OPTION' is the short option of argument
@@ -114,6 +134,7 @@ class TopDown:
             TopDownParameters.C_OUTPUT_FILE_LONG_OPTION, 
             help = 'output file. Path to file.',
             default = None,
+            action = DontRepeat, # preguntar TODO
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
@@ -137,6 +158,23 @@ class TopDown:
             dest = 'desc')
         pass
     
+    def __add_delete_output_file_content(self, parser : argparse.ArgumentParser):
+        """ 
+        Add output's file delete content argument. 'C_DELETE_CONTENT_SHORT_OPTION' is the short 
+        option of argument and 'C_DELETE_CONTENT_LONG_OPTION' is the long version of argument.
+
+        Params:
+            parser : argparse.ArgumentParser ; group of the argument.
+        """
+
+        parser.add_argument (
+            TopDownParameters.C_DELETE_CONTENT_SHORT_OPTION, 
+            TopDownParameters.C_DELETE_CONTENT_LONG_OPTION, 
+            help = "If '-o/--output' is set delete output's file contents before write results",
+            action = 'store_true',
+            dest = 'delete_output_file_content')
+        pass
+
     def __add_arguments(self, parser : argparse.ArgumentParser):
         """ 
         Add arguments of the pogram.
@@ -152,6 +190,8 @@ class TopDown:
         self.__add_level_argument(requiredGroup)
         self.__add_ouput_file_argument(parser)
         self.__add_long_desc_argument(parser)
+        self.__add_delete_output_file_content(parser)
+        self.__add_show_desc_argument(parser)
         pass
 
     def program(self) -> str:
@@ -171,6 +211,7 @@ class TopDown:
         Returns:
             1 if it's level one, 2 if it's level two
         """ 
+
         return self.__level
         pass
 
@@ -182,6 +223,7 @@ class TopDown:
             path to file to write, or None if 
             option '-o' or '--output' has not been indicated
         """
+
         return self.__file_output # descriptor to file or None
         pass
     
@@ -196,44 +238,62 @@ class TopDown:
         return self.__show_long_desc
         pass
 
+    def show_desc(self) -> bool:
+        """
+        Check if program has to show description of results.
+
+        Returns:
+            True to show description of False if not
+        """
+
+        return self.__show_desc
+        pass
+
+    def delete_output_file_content(self) -> bool:
+        """
+        Check if program has to delete output's file contents.
+
+        Returns:
+            True to delete output's file content or False if not
+        """
+
+        return self.__delete_output_file_content
+        pass
+
     def __intro_message(self): 
         """ Intro message with information."""
 
         printer : MessageFormat = MessageFormat()
-        printer.print_center_msg_box(msg = "TopDown Metholodgy over NVIDIA's GPUs", indent = 1, title = "", output_file = self.output_file(), width = None)
+        printer.print_center_msg_box(msg = "TopDown Metholodgy over NVIDIA's GPUs", indent = 1, title = "", output_file = self.output_file(), 
+        width = None, delete_content_file = self.delete_output_file_content())
         print()
         print()
         print()
-        message : str = "\n\n\nWelcome to the " + sys.argv[0] + " program where you can check the bottlenecks of your \n" + \
-            "CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural \n" + \
-            "aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your \n" + \
+        message : str = "\n\n\nWelcome to the " + sys.argv[0] + " program where you can check the bottlenecks of your\n" + \
+            "CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural\n" + \
+            "aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your\n" + \
             "program, which cause the IPC (Instructions per Cycle) to be drastically reduced."
-        printer.print_max_line_length_message(message, 130, self.output_file())
+        printer.print_max_line_length_message(message, TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
         print()
         print()
         message = "\n\nNext, you can see general information about the program\n"
-        printer.print_max_line_length_message(message, 130, self.output_file())
+        printer.print_max_line_length_message(message, TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
 
-        message = ("\n- Program Name:    topdown.py\n" + \
-                   "- Author:          Alvaro Saiz (UC)\n" + \
-                   "- Contact info:    asf174@alumnos.unican.es\n" + \
-                   "- Company:         University Of Cantabria\n" + \
-                   "- Place:           Santander, Cantabria, Kingdom of Spain\n" + \
-                   "- Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es>\n" + \
-                   "- Bugs Report:     asf174@alumnos.unican.es"+ 
-                   "\n\n- Licence:         GNU GPL")
-        printer.print_msg_box(msg = message, indent = 1, title = "GENERAL INFORMATION", output_file = self.output_file(), width = None)
+        printer.print_msg_box(msg = TopDownParameters.C_INTRO_MESSAGE_GENERAL_INFORMATION, indent = 1, title = "GENERAL INFORMATION",
+         output_file = self.output_file(), width = None, delete_content_file = False)
         print()
         message = "\n\nIn accordance with what has been entered, the execution will be carried out following the following terms:\n"
-        printer.print_max_line_length_message(message, 130, self.output_file())
-        message = ("\n- Execution Level:     " + str(self.level()) + "\n" + \
-                   "- Analyzed program:    " + self.program() + "\n" + \
-                   "- Output File:         " + self.output_file() + "\n" + \
-                   "- Long-Description:    " + str(self.show_long_desc()) )
-        printer.print_msg_box(msg = message, indent = 1, title = "PROGRAM FEATURES", output_file = self.output_file(), width = None)
+        printer.print_max_line_length_message(message, TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
+        message = ("\n- Execution Level:                  " + str(self.level()) + "\n" + \
+                   "- Analyzed program:                 " + self.program() + "\n" + \
+                   "- Output File:                      " + self.output_file() + "\n" + \
+                   "- Long-Description:                 " + str(self.show_long_desc()) + "\n" + \
+                   "- Delete output's file content:     " + str(self.delete_output_file_content()))
+        printer.print_msg_box(msg = message, indent = 1, title = "EXECUTION FEATURES", output_file = self.output_file(), width = None,
+            delete_content_file = False)
         print()
         message = "\n\nSaid that, according to the level entered by you, WE START THE ANALYSIS.\n"
-        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
+        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
         print()
         pass
       
@@ -254,104 +314,113 @@ class TopDown:
         print()
         printer : MessageFormat = MessageFormat()
         message : str = "\nThe results have been obtained correctly. General results of IPC are the following:\n\n"
-        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
+        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
         print()
         message = "IPC OBTAINED: " + str(level_execution.ipc()) + " | MAXIMUM POSSIBLE IPC: " +  str(level_execution.get_device_max_ipc())
-        printer.print_desplazed_msg_box(msg = message, indent = 1, title = "", output_file = self.output_file(), width = None)
+        printer.print_desplazed_msg_box(msg = message, indent = 1, title = "", output_file = self.output_file(), width = None, delete_content_file = False)
         print()
         message = ("\n\n'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'\n" +
-            "is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the \n" +
+            "is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the\n" +
             "number of warp planners per SM, as well as the number of Dispatch units of each SM.")
-        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
-        message = ("    \n\nAs you can see, the IPC obtanied it " + "is " + str(round((level_execution.get_device_max_ipc()/level_execution.ipc())*100, 2)) + 
+        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
+        message = ("\n    As you can see, the IPC obtanied it " + "is " + str(round((level_execution.get_device_max_ipc()/level_execution.ipc())*100, 2)) + 
             "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts of the architecture and DIVERGENCE problems. " +
             "We analyze them based on the level of the TopDown:\n")
-        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
+        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
         print()  
-        message = "\n\n" + level_execution.front_end().name() + ": " + level_execution.front_end().description() + "\n\n"
-        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
-        print()
+        if self.show_desc():
+            message = "\n" + level_execution.front_end().name() + ": " + level_execution.front_end().description() + "\n\n"
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
+            print()
         message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_front_end_stall()) + '%\n\n'))
         message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.front_end_percentage_ipc_degradation(), 3)) + '%\n'))
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.front_end().name() + " RESULTS", 
-            output_file = self.output_file(), width = None)
-        print()
-        message = "\n\n" + level_execution.back_end().name() + ": " + level_execution.back_end().description() + "\n\n"
-        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
-        print()
+            output_file = self.output_file(), width = None, delete_content_file = False)
+        if type(level_execution) is LevelTwo:
+            if self.show_desc():
+                message = "\n" + level_execution.front_band_width().name() + ": " + level_execution.front_band_width().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
+            print()
+            message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_front_band_width_stall()) + '%\n\n'))
+            message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.front_band_width_percentage_ipc_degradation(), 3)) + '%\n'))
+            printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.front_band_width().name() + " RESULTS", 
+                output_file = self.output_file(), width = None, delete_content_file = False)
+            print()
+            if self.show_desc():
+                message = "\n" + level_execution.front_dependency().name() + ": " + level_execution.front_dependency().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
+                print()
+            message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_front_dependency_stall()) + '%\n\n'))
+            message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.front_dependency_percentage_ipc_degradation(), 3)) + '%\n'))
+            message += "\n"
+            printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.front_dependency().name() + " RESULTS", 
+                output_file = self.output_file(), width = None, delete_content_file = False)
+            print()
+        if self.show_desc():
+            message = "\n" + level_execution.back_end().name() + ": " + level_execution.back_end().description() + "\n\n"
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
+            delete_content_file = False)
+            print()
         message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_back_end_stall()) + '%\n\n'))
         message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.back_end_percentage_ipc_degradation(), 3)) + '%\n'))
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.back_end().name() + " RESULTS", 
-            output_file = self.output_file(), width = None)
+            output_file = self.output_file(), width = None, delete_content_file = False)
         print()
         if type(level_execution) is LevelTwo:
-            message = "\n\n" + level_execution.memory_bound().name() + ": " + level_execution.memory_bound().description() + "\n\n"
-            printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
-            print()
+            if self.show_desc():
+                message = "\n" + level_execution.memory_bound().name() + ": " + level_execution.memory_bound().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
+                print()
             message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_memory_bound_stall()) + '%\n\n'))
             message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.memory_bound_percentage_ipc_degradation(), 3)) + '%\n'))
             printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.memory_bound().name() + " RESULTS", 
-                output_file = self.output_file(), width = None)
+                output_file = self.output_file(), width = None, delete_content_file = False)
             print()
-            message = "\n\n" + level_execution.core_bound().name() + ": " + level_execution.core_bound().description() + "\n\n"
-            printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
-            print()
+            if self.show_desc():
+                message = "\n" + level_execution.core_bound().name() + ": " + level_execution.core_bound().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
+                print()
             message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_execution.get_core_bound_stall()) + '%\n\n'))
             message += ("{:<34} {:<5}".format('IPC DEGRADATION (%):', str(round(level_execution.core_bound_percentage_ipc_degradation(), 3)) + '%\n'))
             printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.core_bound().name() + " RESULTS", 
-                output_file = self.output_file(), width = None)
+                output_file = self.output_file(), width = None, delete_content_file = False)
             print()
-        message = "\n\n" + level_execution.divergence().name() + ": " + level_execution.divergence().description() + "\n\n"
-        printer.print_max_line_length_message(message = message, max_length = 130, output_file = self.output_file())
-        print()
+        if self.show_desc():
+            message = "\n" + level_execution.divergence().name() + ": " + level_execution.divergence().description() + "\n\n"
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+            output_file = self.output_file(), delete_content_file = False)
+            print()
         #message = ("{:<35} {:<5}".format('\nSTALLS, on the total (%):', str(level_one.get_divergence_stall()) + '%\n\n'))
         message = ("{:<34} {:<5}".format('\nIPC DEGRADATION (%):', str(round(level_execution.divergence_percentage_ipc_degradation(), 3)) + '%\n'))
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = level_execution.divergence().name() + " RESULTS", 
-            output_file = self.output_file(), width = None)
+            output_file = self.output_file(), width = None, delete_content_file = False)
         print()
         pass
 
-    def __launch_level(self):
-        """ Launch level one/two execution."""
+    def launch(self):
+        """ Launch execution."""
         
         if self.level() == 1:
            level : LevelOne = LevelOne(self.program(), self.output_file())
         else:
             level : LevelTwo = LevelTwo(self.program(), self.output_file()) 
-        lst_output : list[str] = list()
+        lst_output : list[str] = list() # for extra information
         level.run(lst_output)
         self.__show_results(level)
-        if self.show_long_desc(): ### revisar este IF no deberia ir aqui
+        if self.show_desc() and self.show_long_desc(): ### revisar este IF no deberia ir aqui
             # Write results in output-file if has been specified
             if not self.output_file() is None:
                 MessageFormat().write_in_file_at_end(self.output_file(), lst_output)
             element : str
             for element in lst_output:
                 print(element)
-
-    def level_one(self):
-        """ 
-        Run TopDown level 1.
-        """
-
-        self.__launch_level()
-        pass
-
-    def level_two(self):
-        """ 
-        Run TopDown level 2.
-        """
-        
-        self.__launch_level()
-        pass
     
 if __name__ == '__main__':
     td = TopDown()
-    level : int = td.level()
-
-    if level == 1:
-        td.level_one()
-    elif level == 2:
-        td.level_two()
-    print()
-    print("Analysis performed correctly!")
+    td.launch()
+    MessageFormat().print_max_line_length_message(message = "Analysis performed correctly!", 
+    max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = td.output_file(), delete_content_file = False)

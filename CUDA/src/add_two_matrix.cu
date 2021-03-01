@@ -18,14 +18,25 @@
 __global__ void addMatrix(int* a, int* b, int* result, int size)
 {
 	int idx = blockDim.x*blockIdx.x + threadIdx.x;	
-	int idxa = idx + 2;
-	/*if (idx < size)
+	if (idx < size)
 		result[idx] = a[idx] + b[idx];
-	if (result[idx] == 4)
+	/*if (result[idx] == 4)
 		result[idx*result[idx] % size] = a[idx*result[idx] % size] + b[idx*result[idx] % size];
 	else
 		result[idx*result[idx] % size] = a[idx*result[idx] % size];*/
 }
+
+__global__ void addMatrix2(int* a, int* b, int* result, int size)
+{
+	int idx = blockDim.x*blockIdx.x + threadIdx.x;	
+	if (idx < size)
+		result[idx] = a[idx] + b[idx];
+	/*if (result[idx] == 4)
+		result[idx*result[idx] % size] = a[idx*result[idx] % size] + b[idx*result[idx] % size];
+	else
+		result[idx*result[idx] % size] = a[idx*result[idx] % size];*/
+}
+
 
 // print matrix indicated by argument
 void 
@@ -77,7 +88,7 @@ main(int argc, char* argv[])
 	// allocate memory in device
 	int *matrixA_d, *matrixB_d, *matrixResult_d;
 
-	cudaMalloc((void **) &matrixA_d, N * N * sizeof(int));
+	cudaMalloc((void **) &matrixA_d, N * N *sizeof(int));
 	cudaMalloc((void **) &matrixB_d, N * N * sizeof(int));
 	cudaMalloc((void **) &matrixResult_d, N * N * sizeof(int));
 
@@ -87,8 +98,10 @@ main(int argc, char* argv[])
 	cudaEventRecord(start);
 	
 	cudaProfilerStart();
-	//addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
-	addMatrix<<<1,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+	
+	
+	addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+	addMatrix2<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
     // any errors encountered during the launch.
 	cudaDeviceSynchronize();

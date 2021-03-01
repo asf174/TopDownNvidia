@@ -7,14 +7,11 @@ Class that represents the levels of the execution.
 """
 
 from abc import ABC, abstractmethod # abstract class
-import sys
 import re
-path : str = "/home/alvaro/Documents/Facultad/"
-path_desp : str = "/mnt/HDD/alvaro/"
-sys.path.insert(1, path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/errors")
-sys.path.insert(1,  path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/parameters")
-sys.path.insert(1,  path_desp + "TopDownNvidia/Profiling/nvprof/TopDown-Jetson/src/measure_parts")
-
+import os, sys, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
 from measure_parts.extra_measure import ExtraMeasure    
 from shell.shell import Shell # launch shell arguments
 from parameters.level_execution_params import LevelExecutionParameters # parameters of program
@@ -50,6 +47,17 @@ class LevelExecution(ABC):
         pass 
 
     @abstractmethod
+    def _generate_command(self) -> str:
+        """ 
+        Generate command of execution with NVIDIA scan tool.
+
+        Returns:
+            String with command to be executed
+        """
+
+        pass
+
+    @abstractmethod
     def run(self, lst_output : list[str]):
         """
         Makes execution.
@@ -57,6 +65,7 @@ class LevelExecution(ABC):
         Parameters:
             lst_output  : list[str] ; list with results
         """
+        
         pass
 
     @abstractmethod
