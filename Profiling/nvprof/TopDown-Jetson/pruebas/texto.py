@@ -26,10 +26,10 @@ def print_2_msg_box(msg, msg2, indent, width, title):
         print(box)
         pass
 
-def print_4_msg_box(matrix, titles, indent, width):
+def print_n_per_line_msg_box(matrix : list[list], titles, indent, width):
         """Print message-box with optional title."""
 
-        lines = matrix[0][0].split('\n')
+        lines = matrix[0][0].split('\n') # by default
         space = " " * indent
         if not width:
             width = max(map(len, lines))
@@ -45,9 +45,9 @@ def print_4_msg_box(matrix, titles, indent, width):
                     box += f'║{space}{titles[i]:<{width}}{space}║  '  # title
             for i in range(len(titles)):
                 if i == len(titles) - 1:
-                    box += f'║{space}{"-" * len(titles):<{width}}{space}║\n'  # underscore
+                    box += f'║{space}{"-" * len(titles[i]):<{width}}{space}║\n'  # underscore
                 else:
-                    box += f'║{space}{"-" * len(titles):<{width}}{space}║  '  # underscore
+                    box += f'║{space}{"-" * len(titles[i]):<{width}}{space}║  '  # underscore
         num_ite : int = 0
         for i in range(len(matrix)):
             if i == len(matrix) - 1:
@@ -59,14 +59,14 @@ def print_4_msg_box(matrix, titles, indent, width):
                     box += f'║{space}{matrix[i][j]:<{width}}{space}║  '
             num_ite = num_ite + 1
         box += "\n"
-        print(num_ite)
         for i in range(np.size(matrix, 1)):
             box += f'╚{"═" * (width + indent * 2)}╝  '  # lower_border
         print(box)
         pass
 
-#message = ("{:<5} {:<5}".format('\nSTALLS, on the total (%):', str(1) + '%'))
-message = [ ["Hola afkjlsd","SALUDOS1","SALUDOS2","SALUDOS3"], [" "," "," "," "]]
+me = ("{:<25} {:<2}".format('STALLS, on the total (%): ', str(1) + '%'))
+print(len("STALLS, on the total (%):"))
+message = [ [me,me,me,me], [" "," "," "," "]]
 titles = ["FRONT END", "BACK END", "DIVERGENCE", "RETIRE"]
 #message += ("{:<5} {:<5}".format('IPC DEGRADATION (%):', str(1) + '%'))
 
@@ -75,4 +75,4 @@ titles = ["FRONT END", "BACK END", "DIVERGENCE", "RETIRE"]
 
 #stri : str = print_4_msg_box(msg = "STALLS, on the total (%):", msg2 = "STALLS, on the total (%):", msg3 = "STALLS, on the total (%):", msg4 = "STALLS, on the total (%):",
 # indent = 1, title = "RESULTS TOP", width = None)
-print_4_msg_box(matrix = message, titles = titles, indent = 1, width = None )
+print_n_per_line_msg_box(matrix = message, titles = titles, indent = 1, width = None )

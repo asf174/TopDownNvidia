@@ -58,7 +58,7 @@ class LevelOne(LevelExecution):
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
             + "," + self._retire.metrics_str() + "  --events " + self._front_end.events_str() + 
             "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + self._extra_measure.events_str() +
-             "," + self._retire.events_str() + " --unified-memory-profiling off --profile-from-start off " + self._program)
+             "," + self._retire.events_str() + " --unified-memory-profiling off " + self._program)
         return command
         pass
 

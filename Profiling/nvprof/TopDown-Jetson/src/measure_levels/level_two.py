@@ -26,22 +26,22 @@ class LevelTwo(LevelExecution):
     Class with level two of the execution.
     
     Atributes:
-        __memory_bound      : MemoryBound       ; memory bound part
-        __core_bound        : CoreBound         ; core bound part
+        __back_memory_bound : MemoryBound       ; memory bound part
+        __back_core_bound        : CoreBound         ; core bound part
         __front_band_width  : FrontBandWidth    ; front's bandwith part
         __front_dependency  : FrontDepdendency  ; front's dependency part
     """
 
     def __init__(self, program : str, output_file : str):
         
-        self.__core_bound : CoreBound = CoreBound()
-        self.__memory_bound : MemoryBound = MemoryBound()
+        self.__back_core_bound : CoreBound = CoreBound()
+        self.__back_memory_bound : MemoryBound = MemoryBound()
         self.__front_band_width : FrontBandWidth = FrontBandWidth()
         self.__front_dependency : FrontDependency = FrontDependency()
         super().__init__(program, output_file)
         pass
 
-    def core_bound(self) -> CoreBound:
+    def back_core_bound(self) -> CoreBound:
         """
         Return CoreBound part of the execution.
 
@@ -49,10 +49,10 @@ class LevelTwo(LevelExecution):
             reference to CoreBound part of the execution
         """
         
-        return self.__core_bound
+        return self.__back_core_bound
         pass
 
-    def memory_bound(self) -> MemoryBound:
+    def back_memory_bound(self) -> MemoryBound:
         """
         Return MemoryBound part of the execution.
 
@@ -60,7 +60,7 @@ class LevelTwo(LevelExecution):
             reference to MemoryBound part of the execution
         """
         
-        return self.__memory_bound
+        return self.__back_memory_bound
         pass
 
     def front_band_width(self) -> FrontBandWidth:
@@ -95,10 +95,10 @@ class LevelTwo(LevelExecution):
 
         command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
-            + "," + self._retire.metrics_str() + "," + self.__core_bound.metrics_str() + "," + self.__memory_bound.metrics_str() + 
+            + "," + self._retire.metrics_str() + "," + self.__back_core_bound.metrics_str() + "," + self.__back_memory_bound.metrics_str() + 
             "  --events " + self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  
-            "," + self._extra_measure.events_str() + "," + self._retire.events_str() + "," + self.__core_bound.events_str() + 
-            "," + self.__memory_bound.events_str() +" --unified-memory-profiling off --profile-from-start off " + self._program)
+            "," + self._extra_measure.events_str() + "," + self._retire.events_str() + "," + self.__back_core_bound.events_str() + 
+            "," + self.__back_memory_bound.events_str() +" --unified-memory-profiling off --profile-from-start off " + self._program)
         return command
         pass
 
@@ -238,18 +238,18 @@ class LevelTwo(LevelExecution):
         if self._back_end.events_str() != "":
                 self._add_result_part_to_lst(self._back_end.events(), 
                 self._back_end.events_description(), "", lst_output, False)
-        if self.__core_bound.metrics_str() != "":
-            self._add_result_part_to_lst(self.__core_bound.metrics(), 
-                self.__core_bound.metrics_description(),"\n- " + self.core_bound().name() + " RESULTS:", lst_output, True)
-        if self.__core_bound.events_str() != "":
-                self._add_result_part_to_lst(self.__core_bound.events(), 
-                self.__core_bound.events_description(), "", lst_output, False) 
-        if self.__memory_bound.metrics_str() != "":
-            self._add_result_part_to_lst(self.__memory_bound.metrics(), 
-                self.__memory_bound.metrics_description(),"\n- " + self.memory_bound().name() + " RESULTS:", lst_output, True)
-        if self.__memory_bound.events_str() != "":
-                self._add_result_part_to_lst(self.__memory_bound.events(), 
-                self.__memory_bound.events_description(), "", lst_output, False)
+        if self.__back_core_bound.metrics_str() != "":
+            self._add_result_part_to_lst(self.__back_core_bound.metrics(), 
+                self.__back_core_bound.metrics_description(),"\n- " + self.back_core_bound().name() + " RESULTS:", lst_output, True)
+        if self.__back_core_bound.events_str() != "":
+                self._add_result_part_to_lst(self.__back_core_bound.events(), 
+                self.__back_core_bound.events_description(), "", lst_output, False) 
+        if self.__back_memory_bound.metrics_str() != "":
+            self._add_result_part_to_lst(self.__back_memory_bound.metrics(), 
+                self.__back_memory_bound.metrics_description(),"\n- " + self.back_memory_bound().name() + " RESULTS:", lst_output, True)
+        if self.__back_memory_bound.events_str() != "":
+                self._add_result_part_to_lst(self.__back_memory_bound.events(), 
+                self.__back_memory_bound.events_description(), "", lst_output, False)
         if self._divergence.metrics_str() != "":
             self._add_result_part_to_lst(self._divergence.metrics(), 
                 self._divergence.metrics_description(),"\n- " + self.divergence().name() + " RESULTS:", lst_output, True)
@@ -300,10 +300,10 @@ class LevelTwo(LevelExecution):
                     elif list_words[0] == '' and list_words[len(list_words) - 1][0].isnumeric():
                         event_name = list_words[2]
                         event_total_value = list_words[len(list_words) - 1]     
-                        core_bound_value_has_found = self.__core_bound.set_event_value(event_name, event_total_value)
-                        #core_bound_description_has_found = self.__core_bound.set_event_description(event_name, metric_description)
-                        memory_bound_value_has_found = self.__memory_bound.set_event_value(event_name, event_total_value)
-                        #memory_bound_description_has_found = self.__memory_bound.set_event_description(event_name, metric_description)
+                        core_bound_value_has_found = self.__back_core_bound.set_event_value(event_name, event_total_value)
+                        #core_bound_description_has_found = self.__back_core_bound.set_event_description(event_name, metric_description)
+                        memory_bound_value_has_found = self.__back_memory_bound.set_event_value(event_name, event_total_value)
+                        #memory_bound_description_has_found = self.__back_memory_bound.set_event_description(event_name, metric_description)
                         front_band_width_value_has_found = self.__front_band_width.set_event_value(event_name, event_total_value)
                         #front_band_width_description_has_found = self.__front_band_width.set_event_description(event_name, metric_description)
                         front_dependency_value_has_found = self.__front_dependency.set_event_value(event_name, event_total_value)
@@ -328,10 +328,10 @@ class LevelTwo(LevelExecution):
                     #if metric_avg_value != metric_max_value or metric_avg_value != metric_min_value:
                         # Do Something. NOT USED
                     
-                    core_bound_value_has_found = self.__core_bound.set_metric_value(metric_name, metric_avg_value)
-                    core_bound_description_has_found = self.__core_bound.set_metric_description(metric_name, metric_description)
-                    memory_bound_value_has_found = self.__memory_bound.set_metric_value(metric_name, metric_avg_value)
-                    memory_bound_description_has_found = self.__memory_bound.set_metric_description(metric_name, metric_description)
+                    core_bound_value_has_found = self.__back_core_bound.set_metric_value(metric_name, metric_avg_value)
+                    core_bound_description_has_found = self.__back_core_bound.set_metric_description(metric_name, metric_description)
+                    memory_bound_value_has_found = self.__back_memory_bound.set_metric_value(metric_name, metric_avg_value)
+                    memory_bound_description_has_found = self.__back_memory_bound.set_metric_description(metric_name, metric_description)
                     front_band_width_value_has_found = self.__front_band_width.set_metric_value(metric_name, metric_avg_value)
                     front_band_width_description_has_found = self.__front_band_width.set_metric_description(metric_name, metric_description)  
                     front_dependency_value_has_found = self.__front_dependency.set_metric_value(metric_name, metric_avg_value)
@@ -353,7 +353,7 @@ class LevelTwo(LevelExecution):
         self._get_results(lst_output)
         pass
     
-    def core_bound_percentage_ipc_degradation(self) -> float:
+    def back_core_bound_percentage_ipc_degradation(self) -> float:
         """
         Find percentage of IPC degradation due to BackEnd.Core_Bound part.
 
@@ -361,10 +361,10 @@ class LevelTwo(LevelExecution):
             Float with the percent of BackEnd.Core_Bound's IPC degradation
         """
         
-        return (((self._stall_ipc()*(self.get_core_bound_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0)
+        return (((self._stall_ipc()*(self.get_back_core_bound_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0)
         pass
 
-    def memory_bound_percentage_ipc_degradation(self) -> float:
+    def back_memory_bound_percentage_ipc_degradation(self) -> float:
         """
         Find percentage of IPC degradation due to BackEnd.Memory_Bound part.
 
@@ -372,7 +372,7 @@ class LevelTwo(LevelExecution):
             Float with the percent of BackEnd.Memory_Bound's IPC degradation
         """
 
-        return (((self._stall_ipc()*(self.get_memory_bound_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0)
+        return (((self._stall_ipc()*(self.get_back_memory_bound_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0)
         pass
 
     def front_band_width_percentage_ipc_degradation(self) -> float:
@@ -397,7 +397,7 @@ class LevelTwo(LevelExecution):
         return (((self._stall_ipc()*(self.get_front_dependency_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0)
         pass
 
-    def get_memory_bound_stall(self) -> float:
+    def get_back_memory_bound_stall(self) -> float:
         """
         Returns percent of stalls due to BackEnd.Memory_Bound part.
 
@@ -405,10 +405,10 @@ class LevelTwo(LevelExecution):
             Float with percent of total stalls due to BackEnd.Memory_Bound
         """
 
-        return self._get_stalls_of_part(self.__memory_bound.metrics())
+        return self._get_stalls_of_part(self.__back_memory_bound.metrics())
         pass
 
-    def get_core_bound_stall(self) -> float:
+    def get_back_core_bound_stall(self) -> float:
         """
         Returns percent of stalls due to BackEnd.Core_Bound part.
 
@@ -416,7 +416,7 @@ class LevelTwo(LevelExecution):
             Float with percent of total stalls due to BackEnd.Core_Bound
         """
 
-        return self._get_stalls_of_part(self.__core_bound.metrics())
+        return self._get_stalls_of_part(self.__back_core_bound.metrics())
         pass
 
     def get_front_band_width_stall(self) -> float:

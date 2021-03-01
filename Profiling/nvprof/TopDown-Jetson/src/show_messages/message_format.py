@@ -7,6 +7,7 @@ Program that shows messages in different format.
 """
 ## faltan comentarios y comparar diferencia str None, o ""
 import textwrap # text message
+import numpy as np
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -88,6 +89,45 @@ class MessageFormat:
             box += f'\t\t\t║{space}{"-" * len(title):<{width}}{space}║\n'  # underscore
         box += ''.join([f'\t\t\t║{space}{line:<{width}}{space}║\n' for line in lines])
         box += f'\t\t\t╚{"═" * (width + indent * 2)}╝\n'  # lower_border
+        print(box)
+        self.__write_str_in_file(box, output_file, delete_content_file)
+        pass
+
+    def print_n_per_line_msg_box(self, matrix : list[list[str]], titles, indent, width, output_file : str, delete_content_file : bool):
+        """Print message-box with optional title."""
+
+        lines = matrix[0][0].split('\n') # by default
+        space = " " * indent
+        if not width:
+            width = max(map(len, lines))
+        box = ""
+        for i in range(len(titles) - 1):
+            box += f'╔{"═" * (width + indent * 2)}╗  '  # upper_border
+        box += f'╔{"═" * (width + indent * 2)}╗\n'
+        if len(titles) > 1:
+            for i in range(len(titles)):
+                if i == len(titles) - 1:
+                    box += f'║{space}{titles[i]:<{width}}{space}║\n'  # title
+                else:
+                    box += f'║{space}{titles[i]:<{width}}{space}║  '  # title
+            for i in range(len(titles)):
+                if i == len(titles) - 1:
+                    box += f'║{space}{"-" * len(titles[i]):<{width}}{space}║\n'  # underscore
+                else:
+                    box += f'║{space}{"-" * len(titles[i]):<{width}}{space}║  '  # underscore
+        num_ite : int = 0
+        for i in range(len(matrix)):
+            if i == len(matrix) - 1:
+                box += "\n"
+            for j in range(len(matrix[i])):
+                if num_ite ==  len(matrix)*len(matrix[0])- 1 :
+                    box += f'║{space}{matrix[i][j]:<{width}}{space}║\n'
+                else:
+                    box += f'║{space}{matrix[i][j]:<{width}}{space}║  '
+            num_ite = num_ite + 1
+        box += "\n"
+        for i in range(np.size(matrix, 1)):
+            box += f'╚{"═" * (width + indent * 2)}╝  '  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
         pass

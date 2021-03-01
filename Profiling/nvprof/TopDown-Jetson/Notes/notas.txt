@@ -111,3 +111,29 @@ Explicacion: https://stackoverflow.com/questions/12539762/what-does-a-high-branc
 
 - BackEnd: stall_memory_dependency, stall_constant_memory_dependency, stall_pipe_busy, stall_memory_throttle
 -------------------------- END ASIGNACION NIVEL 1 ------------------------------------------------------------------------------------------
+
+
+------------------- POSIBLES ASIGNACIONES NIVEL 0 (1) ---------------------------------
+    STALLS
+    DIVERGENCE
+--------------------------- POSIBLES ASIGNACIONES NIVEL 0 (1) ---------------------------------
+
+------------------- POSIBLES ASIGNACIONES NIVEL 3 ---------------------------------
+    tex_utilization:  The utilization level of the unified cache relative to the peak utilization
+    shared_utilization:  The utilization level of the shared memory relative to peak utilization
+    ldst_fu_utilization:  The utilization level of the multiprocessor function units that execute shared load, shared store and constant load instructions
+    cf_fu_utilization:  The utilization level of the multiprocessor function units that execute control-flow instructions on a scale of 0 to 10
+    special_fu_utilization:  The utilization level of the multiprocessor function units that execute sin, cos, ex2, popc, flo, and similar instructions on a scale of 0 to 10
+    tex_fu_utilization:  The utilization level of the multiprocessor function units that execute global, local and texture memory instructions on a scale of 0 to 10
+    single_precision_fu_utilization:  The utilization level of the multiprocessor function units that execute single-precision floating-point instructions and integer instructions
+    l2_utilization:  The utilization level of the L2 cache relative to the peak utilization on a scale of 0 to 10
+    dram_utilization:  The utilization level of the device memory relative to the peak utilization on a scale of 0 to 10
+    half_precision_fu_utilization:  The utilization level of the multiprocessor function units that execute 16 bit floating-point instructions and integer instructions on a scale of 0 to 10
+
+
+    double_precision_fu_utilization:  The utilization level of the multiprocessor function units that execute double-precision floating-point instructions
+    flop_hp_efficiency:  Ratio of achieved to peak half-precision floating-point operations
+    flop_sp_efficiency:  Ratio of achieved to peak single-precision floating-point operations
+    flop_dp_efficiency:  Ratio of achieved to peak double-precision floating-point operations
+    
+--------------------------- POSIBLES ASIGNACIONES NIVEL 3 ---------------------------------

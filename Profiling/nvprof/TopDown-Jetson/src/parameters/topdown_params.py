@@ -16,8 +16,8 @@ class TopDownParameters:
     C_LEVEL_LONG_OPTION                 : str       = "--level"
     
     # Long description
-    C_LONG_DESCRIPTION_SHORT_OPTION     : str       = "-ld"
-    C_LONG_DESCRIPTION_LONG_OPTION      : str       = "--long-desc"
+    C_VERBOSE_SHORT_OPTION              : str       = "-v"
+    C_VERBOSE_LONG_OPTION               : str       = "--verbose"
     
     # Help 
     C_HELP_SHORT_OPTION                 : str       = "-h"
