@@ -407,7 +407,7 @@ class LevelExecution(ABC):
                 value_str = dict.get(key)
                 if value_str[len(value_str) - 1] == "%":  # check percenttage
                     total_value += float(value_str[0 : len(value_str) - 1])
-        return round(total_value, 3)
+        return total_value
         pass
 
     def get_front_end_stall(self) -> float:

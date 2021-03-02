@@ -48,9 +48,10 @@ class TopDownParameters:
                                                         "- Contact info:    asf174@alumnos.unican.es\n" + \
                                                         "- Company:         University Of Cantabria\n" + \
                                                         "- Place:           Santander, Cantabria, Kingdom of Spain\n" + \
-                                                        "- Teachers:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es>\n" + \
+                                                        "- Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es>\n" + \
                                                         "- Bugs Report:     asf174@alumnos.unican.es"+ 
                                                         "\n\n- Licence:         GNU GPL")
 
     C_NUM_MAX_CHARACTERS_PER_LINE       : int       = 129
 
+    C_MAX_NUM_RESULTS_DECIMALS          : int       = 3

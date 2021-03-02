@@ -441,4 +441,52 @@ class LevelTwo(LevelExecution):
         return self._get_stalls_of_part(self.__front_dependency.metrics())
         pass
 
-    
+    def get_back_memory_bound_stall_on_back(self) -> float:
+        """ 
+        Obtain the percentage of stalls due to BackEnd.Memory_Bound
+        on the total BackEnd
+
+        Returns:
+            Float the percentage of stalls due to BackEnd.Memory_Bound
+            on the total BackEnd
+        """
+
+        return (self.get_back_memory_bound_stall()/super().get_back_end_stall())*100.0 
+
+    def get_back_core_bound_stall_on_back(self) -> float:
+        """ 
+        Obtain the percentage of stalls due to BackEnd.Core_Bound
+        on the total BackEnd
+
+        Returns:
+            Float the percentage of stalls due to BackEnd.Core_Bound
+        on the total BackEnd
+        """
+
+        return (self.get_back_core_bound_stall()/super().get_back_end_stall())*100.0 
+
+    def get_front_band_width_stall_on_front(self) -> float:
+        """ 
+        Obtain the percentage of stalls due to FrontEnd.Band_width
+        on the total FrontEnd
+
+        Returns:
+            Float the percentage of stalls due to FrontEnd.Band_width
+            on the total FrontEnd
+        """
+
+        return (self.get_front_band_width_stall()/super().get_front_end_stall())*100.0 
+        pass
+
+    def get_front_dependency_stall_on_front(self) -> float:
+        """ 
+        Obtain the percentage of stalls due to FrontEnd.Dependency
+        on the total FrontEnd
+
+        Returns:
+            Float the percentage of stalls due to FrontEnd.Dependency
+            on the total FrontEnd
+        """
+
+        return (self.get_front_dependency_stall()/super().get_front_end_stall())*100.0 
+        pass

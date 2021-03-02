@@ -297,18 +297,18 @@ class TopDown:
       
     def __show_level_one_results(self, level_execution : LevelOne):
         stalls_front_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(level_execution.get_front_end_stall()) + '%'))
+            str(round(level_execution.get_front_end_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(level_execution.get_back_end_stall()) + '%'))
+            str(round(level_execution.get_back_end_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         ipc_degradation_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
-            str(round(level_execution.divergence_percentage_ipc_degradation(), 2)) + '%'))   
-        ipc_retire_message : str = ("{:<20} {:<5}".format('PERFORMANCE (REAL) IPC (%):', 
+            str(round(level_execution.divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
+        ipc_retire_message : str = ("{:<21} {:<4}".format('PERFORMANCE IPC (%):', 
             str(round(level_execution.retire_ipc_percentage(), 3)))) 
 
-        ipc_degradation_front_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION (%): ', 
-            str(round(level_execution.front_end_percentage_ipc_degradation(), 2)) + '%'))
-        ipc_degradation_back_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION (%): ', 
-            str(round(level_execution.back_end_percentage_ipc_degradation(), 2)) + '%'))
+        ipc_degradation_front_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
+            str(round(level_execution.front_end_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        ipc_degradation_back_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
+            str(round(level_execution.back_end_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         
         messages : list[list[str]] = [[stalls_front_message, stalls_back_message, ipc_degradation_divergence_message, ipc_retire_message],
         [ipc_degradation_front_message, ipc_degradation_back_message, " ", " "]]
@@ -316,36 +316,49 @@ class TopDown:
         titles : list[str] = [level_execution.front_end().name(), level_execution.back_end().name(),
             level_execution.divergence().name(),level_execution.retire().name()]
 
-        MessageFormat().print_n_per_line_msg_box(messages, titles, 1, None, self.output_file(), self.delete_output_file_content())
+        MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
 
     def __show_level_two_results(self, level_execution : LevelTwo):
-        stalls_front_band_width_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(level_execution.get_front_band_width_stall()) + '%'))
-        stalls_front_dependency_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(level_execution.get_front_dependency_stall()) + '%'))
-        stalls_back_core_bound_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(level_execution.get_back_core_bound_stall()) + '%'))
-        stalls_back_memory_bound_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(level_execution.get_back_memory_bound_stall()) + '%'))
+        stalls_front_band_width_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
+            str(round(level_execution.get_front_band_width_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        stalls_front_dependency_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
+            str(round(level_execution.get_front_dependency_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        stalls_back_core_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
+            str(round(level_execution.get_back_core_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        stalls_back_memory_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
+            str(round(level_execution.get_back_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
 
-        ipc_degradation_front_band_width_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION (%): ', 
-            str(round(level_execution.front_band_width_percentage_ipc_degradation(), 2)) + '%'))
-        ipc_degradation_front_dependency_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION (%): ', 
-            str(round(level_execution.front_dependency_percentage_ipc_degradation(), 2)) + '%'))
-        ipc_degradation_back_core_bound_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION (%): ', 
-            str(round(level_execution.back_core_bound_percentage_ipc_degradation(), 2)) + '%'))
-        ipc_degradation_back_memory_bound_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION (%): ', 
-            str(round(level_execution.back_memory_bound_percentage_ipc_degradation(), 2)) + '%'))
+        stalls_front_band_width_on_front_message : str = ("{:<22} {:<6}".format('STALLS, on FrontEnd  (%): ', 
+            str(round(level_execution.get_front_band_width_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        stalls_front_dependency_on_front_message : str = ("{:<20} {:<6}".format('STALLS, on FrontEnd  (%): ', 
+            str(round(level_execution.get_front_dependency_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        stalls_back_core_bound_on_back_message : str = ("{:<20} {:<6}".format('STALLS, on BackEnd   (%): ', 
+            str(round(level_execution.get_back_core_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        stalls_back_memory_bound_on_back_message : str = ("{:<20} {:<6}".format('STALLS, on BackEnd   (%): ', 
+            str(round(level_execution.get_back_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+
+
+        ipc_degradation_front_band_width_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
+            str(round(level_execution.front_band_width_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        ipc_degradation_front_dependency_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
+            str(round(level_execution.front_dependency_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        ipc_degradation_back_core_bound_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
+            str(round(level_execution.back_core_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        ipc_degradation_back_memory_bound_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
+            str(round(level_execution.back_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
        
-        
-        messages : list[list[str]] = [[stalls_front_band_width_message, stalls_front_dependency_message, stalls_back_core_bound_message, stalls_back_memory_bound_message],
-        [ipc_degradation_front_band_width_message, ipc_degradation_front_dependency_message, ipc_degradation_back_core_bound_message, ipc_degradation_back_memory_bound_message]]
+        messages : list[list[str]] = [[stalls_front_band_width_on_total_message, stalls_front_dependency_on_total_message, 
+            stalls_back_core_bound_on_total_message,stalls_back_memory_bound_on_total_message],
+            [stalls_front_band_width_on_front_message, stalls_front_dependency_on_front_message, 
+            stalls_back_core_bound_on_back_message, stalls_back_memory_bound_on_back_message],
+            ["", "", "", ""], [ipc_degradation_front_band_width_message, ipc_degradation_front_dependency_message,
+            ipc_degradation_back_core_bound_message, ipc_degradation_back_memory_bound_message]]
 
         titles : list[str] = [level_execution.front_band_width().name(), level_execution.front_dependency().name(),
             level_execution.back_core_bound().name(),level_execution.back_memory_bound().name()]
 
-        MessageFormat().print_n_per_line_msg_box(messages, titles, 1, None, self.output_file(), self.delete_output_file_content())
+        MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
     
     def __show_results(self, level_execution):
