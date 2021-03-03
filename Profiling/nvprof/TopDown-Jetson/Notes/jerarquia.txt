@@ -37,7 +37,7 @@ El objetivo es el de obtener los STALLS provocados por los espacios de memoria..
 Espacios de memoria:
 
     - Memoria Global: gld_transactions, gst_transactions
-    - Memoria Constante:
+    - Memoria Constante: stall_constant_memory_dependency. DICE TEXTUALMENTE: "Percentage of stalls occurring because of immediate CONSTANT cache miss."
     - Memoria Shared: shared_store_transactions, shared_load_transactions
     - Memoria Local: local_load_transactions, local_store_transactions
     - Memoria caché Unificada L1/ Cache de Texturas:
