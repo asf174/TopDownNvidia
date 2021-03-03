@@ -6,15 +6,14 @@
 int main(int argc, char** argv)
 {
     cudaError_t result;
-    int device, frequency;
-
-    //cudaSetDevice(CURRENT_DEVICE);
-    cudaGetDevice(&device);
-    result = cudaDeviceGetAttribute(&frequency, cudaDevAttrClockRate, device);
+    int device, freq_khz;
     
+    cudaGetDevice(&device);
+    result = cudaDeviceGetAttribute(&freq_khz, cudaDevAttrClockRate, device);
     if (result != cudaSuccess)
         exit(EXIT_ERROR);
-    printf("%d\n",result);
+    int freq_hz = (long long int) freq_khz * 1000;  // Convert from KHz.
+    printf("%d\n", freq_hz);
     exit(EXIT_SUCCESSFULLY);
 }  // preguntar
 

@@ -1,0 +1,44 @@
+---METRICAS---------
+- shared_load_transactions_per_request:  Average number of shared memory load transactions performed for each shared memory load
+- shared_store_transactions_per_request:  Average number of shared memory store transactions performed for each shared memory store
+- local_load_transactions_per_request:  Average number of local memory load transactions performed for each local memory load
+- local_store_transactions_per_request:  Average number of local memory store transactions performed for each local memory store
+- gld_transactions_per_request:  Average number of global memory load transactions performed for each global memory load.
+- gst_transactions_per_request:  Average number of global memory store transactions performed for each global memory store
+- shared_store_transactions:  Number of shared memory store transactions
+- shared_load_transactions:  Number of shared memory load transactions
+- local_load_transactions:  Number of local memory load transactions
+- local_store_transactions:  Number of local memory store transactions
+- gld_transactions:  Number of global memory load transactions
+- gst_transactions:  Number of global memory store transactions
+- sysmem_read_transactions:  Number of system memory read transactions
+- sysmem_write_transactions:  Number of system memory write transactions
+- l2_read_transactions:  Memory read transactions seen at L2 cache for all read requests
+- l2_write_transactions:  Memory write transactions seen at L2 cache for all write requests
+- global_hit_rate:  Hit rate for global loads in unified l1/tex cache
+- local_hit_rate:  Hit rate for local loads and stores
+- gld_requested_throughput:  Requested global memory load throughput
+- gst_requested_throughput:  Requested global memory store throughput
+- gld_throughput:  Global memory load throughput
+- gst_throughput:  Global memory store throughput
+- local_memory_overhead:  Ratio of local memory traffic to total memory traffic between the L1 and L2 caches
+- tex_cache_hit_rate:  Unified cache hit rate
+- tex_cache_throughput:  Unified cache throughput
+- l2_tex_read_throughput:  Memory read throughput seen at L2 cache for read requests from the texture cache
+- l2_tex_write_throughput:  Memory write throughput seen at L2 cache for write requests from the texture cache
+- l2_read_throughput:  Memory read throughput seen at L2 cache for all read requests
+- l2_write_throughput:  Memory write throughput seen at L2 cache for all write requests
+---FIN METRICAS-----
+
+
+
+--------------------------------- 
+El objetivo es el de obtener los STALLS provocados por los espacios de memoria...
+Espacios de memoria:
+
+    - Memoria Global: gld_transactions, gst_transactions
+    - Memoria Constante:
+    - Memoria Shared:
+    - Memoria Local: local_load_transactions, local_store_transactions
+    - Memoria caché Unificada L1/ Cache de Texturas:
+    - Memoria caché L2:

@@ -2,3 +2,7 @@ Apartado System Profiling: https://docs.nvidia.com/cuda/profiler-users-guide/ind
 
 La frecuencia no se puede calcular... Cuando activo la opcion '--system-profiling on' me salta un mensaje en
 la ejecucion: "======== Warning: System profiling is not supported on the underlying platform"
+
+
+'--event-collection-mode continuous' con esto mediríamos todos los eventos y métricas a la vez, pero solo
+para los Teslas. Estas, al no ser teslas, no SE PUEDE.
