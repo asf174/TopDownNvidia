@@ -93,12 +93,13 @@ class LevelTwo(LevelExecution):
             String with command to be executed
         """
 
-        command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
+        command : str = ("sudo $(which nvprof) --event-collection-mode continuous  --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
             + "," + self._retire.metrics_str() + "," + self.__back_core_bound.metrics_str() + "," + self.__back_memory_bound.metrics_str() + 
             "  --events " + self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  
             "," + self._extra_measure.events_str() + "," + self._retire.events_str() + "," + self.__back_core_bound.events_str() + 
             "," + self.__back_memory_bound.events_str() +" --unified-memory-profiling off --profile-from-start off " + self._program)
+        print(command)
         return command
         pass
 
