@@ -38,7 +38,7 @@ Espacios de memoria:
 
     - Memoria Global: gld_transactions, gst_transactions
     - Memoria Constante:
-    - Memoria Shared:
+    - Memoria Shared: shared_store_transactions, shared_load_transactions
     - Memoria Local: local_load_transactions, local_store_transactions
     - Memoria caché Unificada L1/ Cache de Texturas:
-    - Memoria caché L2:
+    - Memoria caché L2: l2_read_transactions, l2_write_transactions
