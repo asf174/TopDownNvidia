@@ -40,8 +40,8 @@ class MetricMeasureParameters:
                                                         "cores will not be used.") # TODO preguntar separaciones, si anhadir el espacio
 
     # extra_measure.py
-    C_EXTRA_MEASURE_METRICS             : str       = ("inst_issued,flop_dp_efficiency,flop_dp_efficiency")
-    C_EXTRA_MEASURE_EVENTS              : str       = ("active_cycles")
+    C_EXTRA_MEASURE_METRICS             : str       = ("inst_issued,flop_dp_efficiency,flop_dp_efficiency,gst_transactions,shared_store_transactions,local_store_transactions,l2_write_transactions,gst_transactions_per_request")
+    C_EXTRA_MEASURE_EVENTS              : str       = ("active_cycles,warps_launched,local_store")
     C_EXTRA_MEASURE_NAME                : str       = "EXTRA_MEASURE"
     C_EXTRA_MEASURE_DESCRIPTION         : str       = ("") # TODO preguntar separaciones, si anhadir el espacio
 

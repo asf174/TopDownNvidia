@@ -69,7 +69,7 @@ class TopDown:
         parser.add_argument (
             TopDownParameters.C_SHOW_DESCRIPTION_SHORT_OPTION, 
             TopDownParameters.C_SHOW_DESCRIPTION_LONG_OPTION, 
-            help = 'description of results.',
+            help = "don't show description of results.",
             action = 'store_false',
             dest = 'show_desc')
         pass
@@ -303,7 +303,7 @@ class TopDown:
         ipc_degradation_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
             str(round(level_execution.divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
         ipc_retire_message : str = ("{:<21} {:<4}".format('PERFORMANCE IPC (%):', 
-            str(round(level_execution.retire_ipc_percentage(), 3)))) 
+            str(round(level_execution.retire_ipc_percentage(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')) 
 
         ipc_degradation_front_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
             str(round(level_execution.front_end_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))

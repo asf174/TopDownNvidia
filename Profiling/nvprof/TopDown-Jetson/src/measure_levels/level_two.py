@@ -93,7 +93,7 @@ class LevelTwo(LevelExecution):
             String with command to be executed
         """
 
-        command : str = ("sudo $(which nvprof) --event-collection-mode continuous  --metrics " + self._front_end.metrics_str() + 
+        command : str = ("sudo $(which nvprof)  --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
             + "," + self._retire.metrics_str() + "," + self.__back_core_bound.metrics_str() + "," + self.__back_memory_bound.metrics_str() + 
             "  --events " + self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  
@@ -373,7 +373,7 @@ class LevelTwo(LevelExecution):
             Float with the percent of BackEnd.Memory_Bound's IPC degradation
         """
 
-        return (((self._stall_ipc()*(self.get_back_memory_bound_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0)
+        return (((self._stall_ipc()*(self.get_back_memory_bound_stall()/100.0))/self.get_device_max_ipc())*100.0)
         pass
 
     def front_band_width_percentage_ipc_degradation(self) -> float:
@@ -384,7 +384,7 @@ class LevelTwo(LevelExecution):
             Float with the percent of FrontEnd.BandWidth's IPC degradation
         """
 
-        return (((self._stall_ipc()*(self.get_front_band_width_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0)
+        return (((self._stall_ipc()*(self.get_front_band_width_stall()/100.0))/self.get_device_max_ipc())*100.0)
         pass
 
     def front_dependency_percentage_ipc_degradation(self) -> float:
@@ -395,7 +395,7 @@ class LevelTwo(LevelExecution):
             Float with the percent of FrontEnd.Dependency's IPC degradation
         """
 
-        return (((self._stall_ipc()*(self.get_front_dependency_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0)
+        return (((self._stall_ipc()*(self.get_front_dependency_stall()/100.0))/self.get_device_max_ipc())*100.0)
         pass
 
     def get_back_memory_bound_stall(self) -> float:
