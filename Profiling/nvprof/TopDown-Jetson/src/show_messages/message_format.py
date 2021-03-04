@@ -140,7 +140,7 @@ class MessageFormat:
         pass
 
     def print_n_per_line_msg_box(self, matrix : list[list[str]], titles, indent, width, output_file : str, delete_content_file : bool):
-        """Print message-box with optional title."""
+        """Print message-box with optional title.""" # NOT USED. DONT USE
 
         lines = matrix[0][0].split('\n') # by default
         space = " " * indent
