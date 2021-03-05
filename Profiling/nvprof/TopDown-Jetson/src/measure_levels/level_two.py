@@ -99,7 +99,6 @@ class LevelTwo(LevelExecution):
             "  --events " + self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  
             "," + self._extra_measure.events_str() + "," + self._retire.events_str() + "," + self.__back_core_bound.events_str() + 
             "," + self.__back_memory_bound.events_str() +" --unified-memory-profiling off --profile-from-start off " + self._program)
-        print(command)
         return command
         pass
 
