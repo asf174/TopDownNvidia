@@ -13,12 +13,13 @@ from parameters.metric_measure_params import MetricMeasureParameters # TODO IMPO
 from measure_parts.memory_bound import MemoryBound
 
 class ConstantMemoryBound(MemoryBound):
-    """Class that defines the MemoryBound (sub-part of BackEnd) part."""
+    """Class that defines the ConstantMemoryBound (sub-part of MemoryBound) part."""
 
     def __init__(self):
         """Set attributes with DEFAULT values."""
         
-        super(MemoryBound, self).__init__(MetricMeasureParameters.C_MEMORY_BOUND_NAME, MetricMeasureParameters.C_MEMORY_BOUND_DESCRIPTION,
-            MetricMeasureParameters.C_MEMORY_BOUND_METRICS, MetricMeasureParameters.C_MEMORY_BOUND_EVENTS, 
-            MetricMeasureParameters.C_MEMORY_BOUND_METRICS, MetricMeasureParameters.C_MEMORY_BOUND_EVENTS)
+        super(MemoryBound, self).__init__(MetricMeasureParameters.C_CONSTANT_MEMORY_BOUND_NAME, 
+            MetricMeasureParameters.C_CONSTANT_MEMORY_BOUND_DESCRIPTION, MetricMeasureParameters.C_CONSTANT_MEMORY_BOUND_METRICS, 
+            MetricMeasureParameters.C_CONSTANT_MEMORY_BOUND_EVENTS, MetricMeasureParameters.C_CONSTANT_MEMORY_BOUND_METRICS, 
+            MetricMeasureParameters.C_CONSTANT_MEMORY_BOUND_EVENTS)
         pass

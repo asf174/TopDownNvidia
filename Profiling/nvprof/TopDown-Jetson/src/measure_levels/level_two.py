@@ -21,7 +21,7 @@ from errors.level_execution_errors import *
 from measure_parts.front_band_width import FrontBandWidth
 from measure_parts.front_dependency import FrontDependency
 
-class LevelTwo(LevelExecution):
+class LevelTwo(LevelOne):
     """
     Class with level two of the execution.
     
@@ -100,32 +100,6 @@ class LevelTwo(LevelExecution):
             "," + self._extra_measure.events_str() + "," + self._retire.events_str() + "," + self.__back_core_bound.events_str() + 
             "," + self.__back_memory_bound.events_str() +" --unified-memory-profiling off --profile-from-start off " + self._program)
         return command
-        pass
-
-    def _launch(self) -> str:
-        """ 
-        Launch NVIDIA scan tool.
-        
-        Returns:
-            String with results.
-
-        Raises:
-            ProfilingError      ; raised in case of error reading results from NVIDIA scan tool
-        """
-
-        shell : Shell = Shell()
-        #output_file : str = self._output_file
-        output_command : bool
-        # if que muestra el resultado del NVPROF en el fichero
-        #if output_file is None:
-        #    output_command = shell.launch_command(self._generate_command(), LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF)
-        #else:
-        #    output_command = shell.launch_command_redirect(self._generate_command(), LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF, 
-        #        output_file, True)
-        output_command = shell.launch_command(self._generate_command(), LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF)
-        if output_command is None:
-            raise ProfilingError
-        return output_command  
         pass
 
     def __metricExists(self, metric_name : str) -> bool:
@@ -346,9 +320,8 @@ class LevelTwo(LevelExecution):
         """Run execution."""
         
         # compute results
-        output_command : str = self._launch()
-        # level one results
-        super()._set_front_back_divergence_retire_results(output_command)
+        output_command : str = self._launch(self._generate_command())
+        super()._set_front_back_divergence_retire_results(output_command) # level one results
         self.__set_memory_core_bandwith_dependency_results(output_command)
         self._get_results(lst_output)
         pass

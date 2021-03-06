@@ -77,3 +77,9 @@ class MetricMeasureParameters:
     C_FRONT_DEPENDENCY_EVENTS           : str       = ("")
     C_FRONT_DEPENDENCY_NAME             : str       = "FRONT_END.DEPENDENCY"
     C_FRONT_DEPENDENCY_DESCRIPTION      : str       = ("D description")
+
+    # front_dependency.py
+    C_CONSTANT_MEMORY_BOUND_METRICS     : str       = ("stall_constant_memory_dependency")
+    C_CONSTANT_MEMORY_BOUND_EVENTS      : str       = ("")
+    C_CONSTANT_MEMORY_BOUND_NAME        : str       = "MEMORY_BOUND.CONSTANT_MEMORY_BOUND"
+    C_CONSTANT_MEMORY_BOUND_DESCRIPTION : str       = ("CMB description")
