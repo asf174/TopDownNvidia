@@ -22,16 +22,22 @@ class LevelExecution(ABC):
     Class that represents the levels of the execution.
      
     Attributes:
-        _extra_measure  : ExtraMeasure  ; support measures
-        _output_file    : str           ; path to output file with results. 'None' to don't use
+        _extra_measure      : ExtraMeasure  ; support measures
+        _output_file        : str           ; path to output file with results. 'None' to don't use
                                           output file
-        _program        : str           ; program of the execution
+        _program            : str           ; program of the execution
+        _recolect_metrics   : bool          ; True if the execution must recolted the metrics used by NVIDIA scan tool
+                                              or False in other case
+        _recolect_events    : bool          ; True if the execution must recolted the events used by NVIDIA scan tool
+                                              or False in other case
     """
 
-    def __init__(self, program : str, output_file : str):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
         self._extra_measure : ExtraMeasure = ExtraMeasure()
         self._program = program
         self._output_file : str = output_file
+        self._recolect_metrics = recoltect_metrics
+        self._recolect_events = recolect_events
         pass 
 
     @abstractmethod
@@ -125,7 +131,7 @@ class LevelExecution(ABC):
         return dict_warps_schedulers_per_cc.get(float(compute_capability))*dict_ins_per_cycle.get(float(compute_capability))
         pass
     
-    def _add_result_part_to_lst(self, dict_values : dict, dict_desc : dict, message : str, 
+    def _add_result_part_to_lst(self, dict_values : dict, dict_desc : dict, 
         lst_to_add : list[str], isMetric : bool):
         """
         Add results of execution part (FrontEnd, BackEnd...) to list indicated by argument.
@@ -135,8 +141,6 @@ class LevelExecution(ABC):
                                           add to 'lst_to_add'
             dict_desc       : dict      ; diccionary with name_metric/event-description elements of the 
                                           part to add to 'lst_to_add'
-            message         : str       ; introductory message to append to 'lst_to_add' to delimit 
-                                          the beginning of the region
             lst_output      : list[str] ; list where to add all elements
             isMetric        : bool      ; True if they are metrics or False if they are events
 
@@ -147,7 +151,6 @@ class LevelExecution(ABC):
                                           not supported or does not exist in the NVIDIA analysis tool
         """
         
-        lst_to_add.append(message)
         #lst_to_add.append("\n")
         lst_to_add.append( "\t\t\t----------------------------------------------------"
             + "---------------------------------------------------")
@@ -228,4 +231,26 @@ class LevelExecution(ABC):
                 if value_str[len(value_str) - 1] == "%":  # check percenttage
                     total_value += float(value_str[0 : len(value_str) - 1])
         return total_value
+        pass
+
+    def recolect_metrics(self) -> bool:
+        """
+        Check if execution must recolect NVIDIA's scan tool metrics.
+
+        Returns:
+            Boolean with True if it has to recolect metrics or False if not
+        """
+
+        return self._recolect_metrics
+        pass
+
+    def recolect_events(self) -> bool:
+        """
+        Check if execution must recolect NVIDIA's scan tool events.
+
+        Returns:
+            Boolean with True if it has to recolect events or False if not
+        """
+
+        return self._recolect_events
         pass

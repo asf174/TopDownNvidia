@@ -209,3 +209,28 @@ class MessageFormat:
         except:  
             raise WriteInOutPutFileError
         pass
+
+    def print_underlined_str(self, message : str, output_file : str, delete_content_file : bool):
+        """ Print a string underlined. """
+        message : str = '{:s}'.format('\u0332'.join(" " + message))
+        print(message)
+        if not output_file is None:
+            self.__write_str_in_file(message, output_file, delete_content_file)
+        pass
+
+    def print_desplazed_underlined_str(self, message : str, output_file : str, delete_content_file : bool):
+        """ Print a desplazed string underlined. """
+
+        message = "\t\t\t\t\t " + message
+        #message : str = '{:s}'.format('\u0332'.join(message))
+        message : str = '{:s}'.format('\u0332'.join(message))
+        print(message)
+        if not output_file is None:
+            self.__write_str_in_file(message, output_file, delete_content_file)
+        pass
+
+    def underlined_str(self, message : str) -> str:
+        """ Returns a string underlined. """
+        
+        return '{:s}'.format('\u0332'.join(" " + message))
+        pass

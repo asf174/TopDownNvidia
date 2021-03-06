@@ -11,34 +11,34 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from measure_levels.level_execution import LevelExecution
-from parameters.level_execution_params import LevelExecutionParameters
-from shell.shell import Shell # launch shell arguments
 from errors.level_execution_errors import *
 from measure_parts.core_bound import CoreBound
 from measure_parts.memory_bound import MemoryBound
 from errors.level_execution_errors import *
 from measure_parts.front_band_width import FrontBandWidth
 from measure_parts.front_dependency import FrontDependency
+from measure_levels.level_one import LevelOne
+from show_messages.message_format import MessageFormat
+
 
 class LevelTwo(LevelOne):
     """
     Class with level two of the execution.
     
     Atributes:
-        __back_memory_bound : MemoryBound       ; memory bound part
-        __back_core_bound        : CoreBound         ; core bound part
-        __front_band_width  : FrontBandWidth    ; front's bandwith part
-        __front_dependency  : FrontDepdendency  ; front's dependency part
+        _back_memory_bound : MemoryBound       ; memory bound part
+        _back_core_bound        : CoreBound         ; core bound part
+        _front_band_width  : FrontBandWidth    ; front's bandwith part
+        _front_dependency  : FrontDepdendency  ; front's dependency part
     """
 
-    def __init__(self, program : str, output_file : str):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
         
-        self.__back_core_bound : CoreBound = CoreBound()
-        self.__back_memory_bound : MemoryBound = MemoryBound()
-        self.__front_band_width : FrontBandWidth = FrontBandWidth()
-        self.__front_dependency : FrontDependency = FrontDependency()
-        super().__init__(program, output_file)
+        self._back_core_bound : CoreBound = CoreBound()
+        self._back_memory_bound : MemoryBound = MemoryBound()
+        self._front_band_width : FrontBandWidth = FrontBandWidth()
+        self._front_dependency : FrontDependency = FrontDependency()
+        super().__init__(program, output_file, recoltect_metrics, recolect_events)
         pass
 
     def back_core_bound(self) -> CoreBound:
@@ -49,7 +49,7 @@ class LevelTwo(LevelOne):
             reference to CoreBound part of the execution
         """
         
-        return self.__back_core_bound
+        return self._back_core_bound
         pass
 
     def back_memory_bound(self) -> MemoryBound:
@@ -60,7 +60,7 @@ class LevelTwo(LevelOne):
             reference to MemoryBound part of the execution
         """
         
-        return self.__back_memory_bound
+        return self._back_memory_bound
         pass
 
     def front_band_width(self) -> FrontBandWidth:
@@ -71,7 +71,7 @@ class LevelTwo(LevelOne):
             reference to FrontBandWidth part of the execution
         """
         
-        return self.__front_band_width
+        return self._front_band_width
         pass
 
     def front_dependency(self) -> FrontDependency:
@@ -82,7 +82,7 @@ class LevelTwo(LevelOne):
             reference to FrontDependency part of the execution
         """
         
-        return self.__front_dependency
+        return self._front_dependency
         pass
 
     def _generate_command(self) -> str:
@@ -93,12 +93,12 @@ class LevelTwo(LevelOne):
             String with command to be executed
         """
 
-        command : str = ("sudo $(which nvprof)  --metrics " + self._front_end.metrics_str() + 
+        command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
-            + "," + self._retire.metrics_str() + "," + self.__back_core_bound.metrics_str() + "," + self.__back_memory_bound.metrics_str() + 
+            + "," + self._retire.metrics_str() + "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() + 
             "  --events " + self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  
-            "," + self._extra_measure.events_str() + "," + self._retire.events_str() + "," + self.__back_core_bound.events_str() + 
-            "," + self.__back_memory_bound.events_str() +" --unified-memory-profiling off --profile-from-start off " + self._program)
+            "," + self._extra_measure.events_str() + "," + self._retire.events_str() + "," + self._back_core_bound.events_str() + 
+            "," + self._back_memory_bound.events_str() +" --unified-memory-profiling off --profile-from-start off " + self._program)
         return command
         pass
 
@@ -188,64 +188,104 @@ class LevelTwo(LevelOne):
 
         # revisar en unos usa atributo y en otros la llamada al metodo
         #  Keep Results
-        lst_output.append("\n\nList of counters/metrics measured according to the part.")
-        if self._front_end.metrics_str() != "":
+        converter : MessageFormat = MessageFormat()
+
+        if not self._recolect_metrics and not self._recolect_events:
+            return
+
+        if (self._recolect_metrics and self._front_end.metrics_str() != "" or 
+            self._recolect_events and self._front_end.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._front_end.name()))
+        if self._recolect_metrics and self._front_end.metrics_str() != "":
             self._add_result_part_to_lst(self._front_end.metrics(), 
-                self._front_end.metrics_description(),"\n- " + self.front_end().name() + " RESULTS:", lst_output, True)
-        if self._front_end.events_str() != "":
+                self._front_end.metrics_description(), lst_output, True)
+        if self._recolect_events and self._front_end.events_str() != "":
                 self._add_result_part_to_lst(self._front_end.events(), 
                 self._front_end.events_description(), "", lst_output, False)
-        if self.__front_band_width.metrics_str() != "":
-            self._add_result_part_to_lst(self.__front_band_width.metrics(), 
-                self.__front_band_width.metrics_description(),"\n- " + self.front_band_width().name() + " RESULTS:", lst_output, True)
-        if self.__front_band_width.events_str() != "":
-                self._add_result_part_to_lst(self.__front_band_width.events(), 
-                self.__front_band_width.events_description(), "", lst_output, False)
-        if self.__front_dependency.metrics_str() != "":
-            self._add_result_part_to_lst(self.__front_dependency.metrics(), 
-                self.__front_dependency.metrics_description(),"\n- " + self.front_dependency().name() + " RESULTS:", lst_output, True)
-        if self.__front_dependency.events_str() != "":
-                self._add_result_part_to_lst(self.__front_dependency.events(), self.__front_dependency.events_description(), "", lst_output, False)
-        if self._back_end.metrics_str() != "":
+        
+        if (self._recolect_metrics and self._front_band_width.metrics_str() != "" or 
+            self._recolect_events and self._front_band_width.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._front_band_width.name()))
+        if  self._recolect_metrics and self._front_band_width.metrics_str() != "":
+            self._add_result_part_to_lst(self._front_band_width.metrics(), 
+                self._front_band_width.metrics_description(), lst_output, True)
+        if self._recolect_events and self._front_band_width.events_str() != "":
+                self._add_result_part_to_lst(self._front_band_width.events(), 
+                self._front_band_width.events_description(), lst_output, False)
+        
+        if (self._recolect_metrics and self._front_dependency.metrics_str() != "" or 
+            self._recolect_events and self._front_dependency.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._front_dependency.name()))
+        if self._recolect_metrics and self._front_dependency.metrics_str() != "":
+            self._add_result_part_to_lst(self._front_dependency.metrics(), 
+                self._front_dependency.metrics_description(), lst_output, True)
+        if self._recolect_events and self._front_dependency.events_str() != "":
+                self._add_result_part_to_lst(self._front_dependency.events(), 
+                self._front_dependency.events_description(), lst_output, False)
+        
+        if (self._recolect_metrics and self._back_end.metrics_str() != "" or 
+            self._recolect_events and self._back_end.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._back_end.name()))
+        if self._recolect_metrics and self._back_end.metrics_str() != "":
             self._add_result_part_to_lst(self._back_end.metrics(), 
-                self._back_end.metrics_description(),"\n- " + self.back_end().name() + " RESULTS:", lst_output, True)
-        if self._back_end.events_str() != "":
+                self._back_end.metrics_description(), lst_output, True)
+        if self._recolect_events and self._back_end.events_str() != "":
                 self._add_result_part_to_lst(self._back_end.events(), 
-                self._back_end.events_description(), "", lst_output, False)
-        if self.__back_core_bound.metrics_str() != "":
-            self._add_result_part_to_lst(self.__back_core_bound.metrics(), 
-                self.__back_core_bound.metrics_description(),"\n- " + self.back_core_bound().name() + " RESULTS:", lst_output, True)
-        if self.__back_core_bound.events_str() != "":
-                self._add_result_part_to_lst(self.__back_core_bound.events(), 
-                self.__back_core_bound.events_description(), "", lst_output, False) 
-        if self.__back_memory_bound.metrics_str() != "":
-            self._add_result_part_to_lst(self.__back_memory_bound.metrics(), 
-                self.__back_memory_bound.metrics_description(),"\n- " + self.back_memory_bound().name() + " RESULTS:", lst_output, True)
-        if self.__back_memory_bound.events_str() != "":
-                self._add_result_part_to_lst(self.__back_memory_bound.events(), 
-                self.__back_memory_bound.events_description(), "", lst_output, False)
-        if self._divergence.metrics_str() != "":
+                self._back_end.events_description(), lst_output, False)
+        
+        if (self._recolect_metrics and self._back_core_bound.metrics_str() != "" or 
+            self._recolect_events and self._back_core_bound.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._back_core_bound.name()))
+        if self._recolect_metrics and self._back_core_bound.metrics_str() != "":
+            self._add_result_part_to_lst(self._back_core_bound.metrics(), 
+                self._back_core_bound.metrics_description(), lst_output, True)
+        if self._recolect_events and self._back_core_bound.events_str() != "":
+                self._add_result_part_to_lst(self._back_core_bound.events(), 
+                self._back_core_bound.events_description(), lst_output, False) 
+        
+        if (self._recolect_metrics and self._back_memory_bound.metrics_str() != "" or 
+            self._recolect_events and self._back_memory_bound.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._back_memory_bound.name()))
+        if self._recolect_metrics and self._back_memory_bound.metrics_str() != "":
+            self._add_result_part_to_lst(self._back_memory_bound.metrics(), 
+                self._back_memory_bound.metrics_description(), lst_output, True)
+        if self._recolect_events and self._back_memory_bound.events_str() != "":
+                self._add_result_part_to_lst(self._back_memory_bound.events(), 
+                self._back_memory_bound.events_description(), lst_output, False)
+        
+        if (self._recolect_metrics and self._divergence.metrics_str() != "" or 
+            self._recolect_events and self._divergence.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._divergence.name()))
+        if self._recolect_metrics and self._divergence.metrics_str() != "":
             self._add_result_part_to_lst(self._divergence.metrics(), 
-                self._divergence.metrics_description(),"\n- " + self.divergence().name() + " RESULTS:", lst_output, True)
-        if self._divergence.events_str() != "":
+                self._divergence.metrics_description(), lst_output, True)
+        if self._recolect_events and self._divergence.events_str() != "":
                 self._add_result_part_to_lst(self._divergence.events(), 
-                self._divergence.events_description(), "", lst_output, False) 
-        if self._retire.metrics_str() != "":
+                self._divergence.events_description(),lst_output, False)
+        
+        if (self._recolect_metrics and self._retire.metrics_str() != "" or 
+            self._recolect_events and self._retire.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._retire.name()))
+        if self._recolect_metrics and  self._retire.metrics_str() != "":
                 self._add_result_part_to_lst(self._retire.metrics(), 
-                self._retire.metrics_description(),"\n- " + self.retire().name() + " RESULTS:", lst_output, True)
-        if self._retire.events_str() != "":
+                self._retire.metrics_description(), lst_output, True)
+        if self._recolect_events and self._retire.events_str() != "":
                 self._add_result_part_to_lst(self._retire.events(), 
-                self._retire.events_description(), "", lst_output, False)
-        if self._extra_measure.metrics_str() != "":
+                self._retire.events_description(), lst_output, False)
+
+        if (self._recolect_metrics and self._extra_measure.metrics_str() != "" or 
+            self._recolect_events and self._extra_measure.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._extra_measure.name()))
+        if self._recolect_metrics and self._extra_measure.metrics_str() != "":
             self._add_result_part_to_lst(self._extra_measure.metrics(), 
-                self._extra_measure.metrics_description(),"\n- " + self.extra_measure().name() + " RESULTS:", lst_output, True)
-        if self._extra_measure.events_str() != "":
+                self._extra_measure.metrics_description(), lst_output, True)
+        if self._recolect_events and self._extra_measure.events_str() != "":
                 self._add_result_part_to_lst(self._extra_measure.events(), 
-                self._extra_measure.events_description(), "", lst_output, False)
+                self._extra_measure.events_description(), lst_output, False)
         lst_output.append("\n")
         pass
 
-    def __set_memory_core_bandwith_dependency_results(self, results_launch : str):
+    def _set_memory_core_bandwith_dependency_results(self, results_launch : str):
         """
         Set results of the level two part (that are not level one).
         
@@ -274,14 +314,14 @@ class LevelTwo(LevelOne):
                     elif list_words[0] == '' and list_words[len(list_words) - 1][0].isnumeric():
                         event_name = list_words[2]
                         event_total_value = list_words[len(list_words) - 1]     
-                        core_bound_value_has_found = self.__back_core_bound.set_event_value(event_name, event_total_value)
-                        #core_bound_description_has_found = self.__back_core_bound.set_event_description(event_name, metric_description)
-                        memory_bound_value_has_found = self.__back_memory_bound.set_event_value(event_name, event_total_value)
-                        #memory_bound_description_has_found = self.__back_memory_bound.set_event_description(event_name, metric_description)
-                        front_band_width_value_has_found = self.__front_band_width.set_event_value(event_name, event_total_value)
-                        #front_band_width_description_has_found = self.__front_band_width.set_event_description(event_name, metric_description)
-                        front_dependency_value_has_found = self.__front_dependency.set_event_value(event_name, event_total_value)
-                        #front_dependency_description_has_found = self.__front_dependency.set_event_description(event_name, metric_description)
+                        core_bound_value_has_found = self._back_core_bound.set_event_value(event_name, event_total_value)
+                        #core_bound_description_has_found = self._back_core_bound.set_event_description(event_name, metric_description)
+                        memory_bound_value_has_found = self._back_memory_bound.set_event_value(event_name, event_total_value)
+                        #memory_bound_description_has_found = self._back_memory_bound.set_event_description(event_name, metric_description)
+                        front_band_width_value_has_found = self._front_band_width.set_event_value(event_name, event_total_value)
+                        #front_band_width_description_has_found = self._front_band_width.set_event_description(event_name, metric_description)
+                        front_dependency_value_has_found = self._front_dependency.set_event_value(event_name, event_total_value)
+                        #front_dependency_description_has_found = self._front_dependency.set_event_description(event_name, metric_description)
                         if not (core_bound_value_has_found or memory_bound_value_has_found or front_band_width_value_has_found
                             or front_dependency_value_has_found): #or 
                             #not(core_bound_description_has_found or memory_bound_description_has_found or front_band_width_description_has_found
@@ -302,14 +342,14 @@ class LevelTwo(LevelOne):
                     #if metric_avg_value != metric_max_value or metric_avg_value != metric_min_value:
                         # Do Something. NOT USED
                     
-                    core_bound_value_has_found = self.__back_core_bound.set_metric_value(metric_name, metric_avg_value)
-                    core_bound_description_has_found = self.__back_core_bound.set_metric_description(metric_name, metric_description)
-                    memory_bound_value_has_found = self.__back_memory_bound.set_metric_value(metric_name, metric_avg_value)
-                    memory_bound_description_has_found = self.__back_memory_bound.set_metric_description(metric_name, metric_description)
-                    front_band_width_value_has_found = self.__front_band_width.set_metric_value(metric_name, metric_avg_value)
-                    front_band_width_description_has_found = self.__front_band_width.set_metric_description(metric_name, metric_description)  
-                    front_dependency_value_has_found = self.__front_dependency.set_metric_value(metric_name, metric_avg_value)
-                    front_dependency_description_has_found = self.__front_dependency.set_metric_description(metric_name, metric_description)         
+                    core_bound_value_has_found = self._back_core_bound.set_metric_value(metric_name, metric_avg_value)
+                    core_bound_description_has_found = self._back_core_bound.set_metric_description(metric_name, metric_description)
+                    memory_bound_value_has_found = self._back_memory_bound.set_metric_value(metric_name, metric_avg_value)
+                    memory_bound_description_has_found = self._back_memory_bound.set_metric_description(metric_name, metric_description)
+                    front_band_width_value_has_found = self._front_band_width.set_metric_value(metric_name, metric_avg_value)
+                    front_band_width_description_has_found = self._front_band_width.set_metric_description(metric_name, metric_description)  
+                    front_dependency_value_has_found = self._front_dependency.set_metric_value(metric_name, metric_avg_value)
+                    front_dependency_description_has_found = self._front_dependency.set_metric_description(metric_name, metric_description)         
                     if (not (core_bound_value_has_found or memory_bound_value_has_found or front_band_width_value_has_found
                         or front_dependency_value_has_found) or not(core_bound_description_has_found or memory_bound_description_has_found 
                         or front_band_width_description_has_found or front_dependency_description_has_found)): 
@@ -320,9 +360,9 @@ class LevelTwo(LevelOne):
         """Run execution."""
         
         # compute results
-        output_command : str = self._launch(self._generate_command())
+        output_command : str = super()._launch(self._generate_command())
         super()._set_front_back_divergence_retire_results(output_command) # level one results
-        self.__set_memory_core_bandwith_dependency_results(output_command)
+        self._set_memory_core_bandwith_dependency_results(output_command)
         self._get_results(lst_output)
         pass
     
@@ -378,7 +418,7 @@ class LevelTwo(LevelOne):
             Float with percent of total stalls due to BackEnd.Memory_Bound
         """
 
-        return self._get_stalls_of_part(self.__back_memory_bound.metrics())
+        return self._get_stalls_of_part(self._back_memory_bound.metrics())
         pass
 
     def get_back_core_bound_stall(self) -> float:
@@ -389,7 +429,7 @@ class LevelTwo(LevelOne):
             Float with percent of total stalls due to BackEnd.Core_Bound
         """
 
-        return self._get_stalls_of_part(self.__back_core_bound.metrics())
+        return self._get_stalls_of_part(self._back_core_bound.metrics())
         pass
 
     def get_front_band_width_stall(self) -> float:
@@ -400,7 +440,7 @@ class LevelTwo(LevelOne):
             Float with percent of total stalls due to FrontEnd.Band_width part
         """
 
-        return self._get_stalls_of_part(self.__front_band_width.metrics())
+        return self._get_stalls_of_part(self._front_band_width.metrics())
         pass
 
     def get_front_dependency_stall(self) -> float:
@@ -411,7 +451,7 @@ class LevelTwo(LevelOne):
             Float with percent of total stalls due to FrontEnd.Dependency part
         """
 
-        return self._get_stalls_of_part(self.__front_dependency.metrics())
+        return self._get_stalls_of_part(self._front_dependency.metrics())
         pass
 
     def get_back_memory_bound_stall_on_back(self) -> float:

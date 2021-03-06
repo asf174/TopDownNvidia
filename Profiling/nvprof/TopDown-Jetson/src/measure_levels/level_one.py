@@ -6,6 +6,7 @@ Class that represents the level one of the execution
 @version:   1.0
 """
 
+import re
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -18,6 +19,7 @@ from measure_parts.front_end import FrontEnd
 from measure_parts.back_end import BackEnd
 from measure_parts.divergence import Divergence
 from measure_parts.retire import Retire
+from show_messages.message_format import MessageFormat
 
 class LevelOne(LevelExecution):
     """ 
@@ -30,12 +32,12 @@ class LevelOne(LevelExecution):
         _retire         : Retire        ; Retire part of the execution
     """
 
-    def __init__(self, program : str, output_file : str):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
         self._front_end : FrontEnd = FrontEnd()
         self._back_end  : BackEnd = BackEnd()
         self._divergence : Divergence = Divergence()
         self._retire : Retire = Retire()
-        super().__init__(program, output_file)
+        super().__init__(program, output_file, recoltect_metrics, recolect_events)
         pass
  
     def _generate_command(self) -> str:
@@ -62,38 +64,61 @@ class LevelOne(LevelExecution):
             lst_output              : list[str]     ; OUTPUT list with results
         """
 
+        converter : MessageFormat = MessageFormat()
         #  Keep Results
-        lst_output.append("\n\nList of counters/metrics measured according to the part.")
-        if self._front_end.metrics_str() != "":
+
+        if not self._recolect_metrics and not self._recolect_events:
+            return
+        
+        if (self._recolect_metrics and self._front_end.metrics_str() != "" or 
+            self._recolect_events and self._front_end.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._front_end.name()))
+        if self._recolect_metrics and self._front_end.metrics_str() != "":
             self._add_result_part_to_lst(self._front_end.metrics(), 
-                self._front_end.metrics_description(),"\n- FRONT-END RESULTS:", lst_output, True)
-        if self._front_end.events_str() != "":
+                self._front_end.metrics_description(), lst_output, True)
+        if self._recolect_events and self._front_end.events_str() != "":
                 self._add_result_part_to_lst(self._front_end.events(), 
                 self._front_end.events_description(), "", lst_output, False)
-        if self._back_end.metrics_str() != "":
+        
+        if (self._recolect_metrics and self._back_end.metrics_str() != "" or 
+            self._recolect_events and self._back_end.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._back_end.name()))
+        if self._recolect_metrics and self._back_end.metrics_str() != "":
             self._add_result_part_to_lst(self._back_end.metrics(), 
-                self._back_end.metrics_description(),"\n- BACK-END RESULTS:", lst_output, True)
-        if self._back_end.events_str() != "":
+                self._back_end.metrics_description(), lst_output, True)
+        if self._recolect_events and self._back_end.events_str() != "":
                 self._add_result_part_to_lst(self._back_end.events(), 
-                self._back_end.events_description(), "", lst_output, False)
-        if self._divergence.metrics_str() != "":
+                self._back_end.events_description(), lst_output, False)
+        
+        if (self._recolect_metrics and self._divergence.metrics_str() != "" or 
+            self._recolect_events and self._divergence.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._divergence.name()))
+        if self._recolect_metrics and self._divergence.metrics_str() != "":
             self._add_result_part_to_lst(self._divergence.metrics(), 
-                self._divergence.metrics_description(),"\n- DIVERGENCE RESULTS:", lst_output, True)
-        if self._divergence.events_str() != "":
+                self._divergence.metrics_description(), lst_output, True)
+        if self._recolect_events and self._divergence.events_str() != "":
                 self._add_result_part_to_lst(self._divergence.events(), 
-                self._divergence.events_description(), "", lst_output, False)
-        if self._retire.metrics_str() != "":
+                self._divergence.events_description(),lst_output, False)
+        
+        if (self._recolect_metrics and self._retire.metrics_str() != "" or 
+            self._recolect_events and self._retire.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._retire.name()))
+        if self._recolect_metrics and  self._retire.metrics_str() != "":
                 self._add_result_part_to_lst(self._retire.metrics(), 
-                self._retire.metrics_description(),"\n- RETIRE RESULTS:", lst_output, True)
-        if self._retire.events_str() != "":
+                self._retire.metrics_description(), lst_output, True)
+        if self._recolect_events and self._retire.events_str() != "":
                 self._add_result_part_to_lst(self._retire.events(), 
-                self._retire.events_description(), "", lst_output, False)
-        if self._extra_measure.metrics_str() != "":
+                self._retire.events_description(), lst_output, False)
+
+        if (self._recolect_metrics and self._extra_measure.metrics_str() != "" or 
+            self._recolect_events and self._extra_measure.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._extra_measure.name()))
+        if self._recolect_metrics and self._extra_measure.metrics_str() != "":
             self._add_result_part_to_lst(self._extra_measure.metrics(), 
-                self._extra_measure.metrics_description(),"\n- EXTRA-MEASURE RESULTS:", lst_output, True)
-        if self._extra_measure.events_str() != "":
+                self._extra_measure.metrics_description(), lst_output, True)
+        if self._recolect_events and self._extra_measure.events_str() != "":
                 self._add_result_part_to_lst(self._extra_measure.events(), 
-                self._extra_measure.events_description(), "", lst_output, False)
+                self._extra_measure.events_description(), lst_output, False)
         lst_output.append("\n")
         pass
 

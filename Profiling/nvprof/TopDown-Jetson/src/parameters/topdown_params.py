@@ -40,8 +40,19 @@ class TopDownParameters:
     C_SHOW_DESCRIPTION_LONG_OPTION      : str       = "--no-desc"
 
     C_MIN_LEVEL_EXECUTION               : int       = 1
-    C_MAX_LEVEL_EXECUTION               : int       = 2
+    C_MAX_LEVEL_EXECUTION               : int       = 3
 
+    # recolect metrics
+    C_METRICS_SHORT_OPTION              : str       = "-m"
+    C_METRICS_LONG_OPTION               : str       = "--metrics"
+
+    # recolect events
+    C_EVENTS_SHORT_OPTION               : str       = "-e"
+    C_EVENTS_LONG_OPTION                : str       = "--events"
+
+    # recolect all measures
+    C_ALL_MEASURES_SHORT_OPTION         : str       = "-am"
+    C_ALL_MEASURES_LONG_OPTION          : str       = "--all-measurements" # NOMBRE: C_ALL_MEASURES_ARGUMENT_LONG_OPTION TODO
 
     C_INTRO_MESSAGE_GENERAL_INFORMATION : str       = ("\n- Program Name:    topdown.py\n" + \
                                                         "- Author:          Alvaro Saiz (UC)\n" + \
