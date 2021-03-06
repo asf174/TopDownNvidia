@@ -4889,4 +4889,808 @@ MEMORY_BOUND.CONSTANT_MEMORY_BOUND: CMB description
 			local_store                                   -                                               0      
 			-------------------------------------------------------------------------------------------------------
 
+Analysis performed correctly!	̲	̲	̲	̲	̲ ̲T̲o̲p̲D̲o̲w̲n̲ ̲M̲e̲t̲h̲o̲l̲o̲d̲g̲y̲ ̲o̲v̲e̲r̲ ̲N̲V̲I̲D̲I̲A̲'̲s̲ ̲G̲P̲U̲s
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔═════════════════════════════════════════════════════════════════════════╗
+║ EXECUTION FEATURES                                                      ║
+║ ------------------                                                      ║
+║                                                                         ║
+║ - Execution Level:                  3                                   ║
+║ - Analyzed program:                 ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:                      ../results/file.log                 ║
+║ - Verbose:                          True                                ║
+║ - Delete output's file content:     False                               ║
+╚═════════════════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔════════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.569619 | MAXIMUM POSSIBLE IPC: 6.0 ║
+					╚════════════════════════════════════════════════════╝
+
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the
+number of warp planners per SM, as well as the number of Dispatch units of each SM.
+    As you can see, the IPC obtanied it is 1053.34% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+	̲	̲	̲	̲	̲ ̲D̲E̲S̲C̲R̲I̲P̲T̲I̲O̲N̲ ̲O̲F̲ ̲M̲E̲A̲S̲U̲R̲E̲ ̲P̲A̲R̲T̲S ̲L̲E̲V̲E̲L̲ ̲O̲N̲E̲ ̲R̲E̲S̲U̲L̲T̲S
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks,
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck,
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of
+the instructions, in which aspects such as limitations by functional units, memory limits, etc.
+
+
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where divergence causes a loss of performance.
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the
+cores will not be used.
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║ STALLS, on the total (%):  7.32%  ║  ║ STALLS, on the total (%):  92.68%  ║  ║ IPC DEGRADATION (%):  0.0%   ║  ║ PERFORMANCE IPC (%):  9.494% ║  
+║ IPC DEGRADATION      (%):  6.625% ║  ║ IPC DEGRADATION      (%):  83.881% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝   ̲L̲E̲V̲E̲L̲ ̲T̲W̲O̲ ̲R̲E̲S̲U̲L̲T̲S
+FRONT_END.BAND_WIDTH: BW description
+
+
+FRONT_END.DEPENDENCY: D description
+
+
+BACK_END.CORE_BOUND: In this part, the aspects related to CUDA cores that cause bottlenecks and thus performance losses are analyzed.
+Some aspects such as the use and availability of the functional units are analyzed.
+
+
+BACK_END.MEMORY_BOUND: It analyzes the parts of the GPU architecture where we have a loss of performance (IPC) due to
+memory bounds. This part takes into account aspects such as data dependencies, failures or access
+limits in caches
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔════════════════════════════════════╗
+║ FRONT_END.BAND_WIDTH               ║  ║ FRONT_END.DEPENDENCY               ║  ║ BACK_END.CORE_BOUND               ║  ║ BACK_END.MEMORY_BOUND              ║
+║ --------------------               ║  ║ --------------------               ║  ║ -------------------               ║  ║ ---------------------              ║
+║ STALLS, on the total (%):  4.7%    ║  ║ STALLS, on the total (%):  2.62%   ║  ║ STALLS, on the total (%):  0.09%  ║  ║ STALLS, on the total (%):  92.59%  ║  
+║ STALLS, on FrontEnd  (%):  64.208% ║  ║ STALLS, on FrontEnd  (%):  35.792% ║  ║ STALLS, on BackEnd   (%):  0.097% ║  ║ STALLS, on BackEnd   (%):  99.903% ║  
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ IPC DEGRADATION      (%):  4.254%  ║  ║ IPC DEGRADATION      (%):  2.371%  ║  ║ IPC DEGRADATION      (%):  0.09%  ║  ║ IPC DEGRADATION      (%):  83.8%   ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚════════════════════════════════════╝   ̲L̲E̲V̲E̲L̲ ̲T̲H̲R̲E̲E̲ ̲R̲E̲S̲U̲L̲T̲S
+MEMORY_BOUND.CONSTANT_MEMORY_BOUND: CMB description
+
+╔══════════════════════════════════════════════╗  ╔══╗  ╔══╗  ╔══╗
+║ MEMORY_BOUND.CONSTANT_MEMORY_BOUND           ║  ║  ║  ║  ║  ║  ║
+║ ----------------------------------           ║  ║  ║  ║  ║  ║  ║
+║ STALLS, on the total      (%):  0.04%        ║  ║  ║  ║  ║  ║  ║  
+║ STALLS, on BackEnd.MemoryBound  (%):  0.043% ║  ║  ║  ║  ║  ║  ║  
+║ STALLS, on MemoryBound         (%):  0.043%  ║  ║  ║  ║  ║  ║  ║  
+║                                              ║  ║  ║  ║  ║  ║  ║  
+║ IPC DEGRADATION             (%):  0.036%     ║  ║  ║  ║  ║  ║  ║  
+╚══════════════════════════════════════════════╝  ╚══╝  ╚══╝  ╚══╝  	̲	̲	̲	̲	̲ ̲L̲i̲s̲t̲ ̲o̲f̲ ̲m̲e̲a̲s̲u̲r̲e̲m̲e̲n̲t̲s̲ ̲c̲o̲m̲p̲u̲t̲e̲d̲ ̲b̲y̲ ̲N̲V̲I̲D̲I̲A̲ ̲s̲c̲a̲n̲ ̲t̲o̲o̲l ̲F̲R̲O̲N̲T̲-̲E̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.92%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.35%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.70%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.35%  
+			-------------------------------------------------------------------------------------------------------
+ ̲F̲R̲O̲N̲T̲_̲E̲N̲D̲.̲B̲A̲N̲D̲_̲W̲I̲D̲T̲H
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.35%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.35%  
+			-------------------------------------------------------------------------------------------------------
+ ̲F̲R̲O̲N̲T̲_̲E̲N̲D̲.̲D̲E̲P̲E̲N̲D̲E̲N̲C̲Y
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.92%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.70%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲-̲E̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.06% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.04%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.09%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲_̲E̲N̲D̲.̲C̲O̲R̲E̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.09%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲_̲E̲N̲D̲.̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.06% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.04%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+ ̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D̲.̲C̲O̲N̲S̲T̲A̲N̲T̲_̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.04%  
+			-------------------------------------------------------------------------------------------------------
+ ̲D̲I̲V̲E̲R̲G̲E̲N̲C̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        0.568929 
+			-------------------------------------------------------------------------------------------------------
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               765629 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+ ̲R̲E̲T̲I̲R̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      0.569619 
+			-------------------------------------------------------------------------------------------------------
+ ̲E̲X̲T̲R̲A̲_̲M̲E̲A̲S̲U̲R̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               8807293 
+			flop_dp_efficiency                            FLOP Efficiency(Peak Double)                      0.00%  
+			gst_transactions                              Global Store Transactions                         1531250 
+			shared_store_transactions                     Shared Store Transactions                         0      
+			local_store_transactions                      Local Store Transactions                          0      
+			l2_write_transactions                         L2 Write Transactions                             1531263 
+			gst_transactions_per_request                  Global Store Transactions Per Request             3.999995 
+			-------------------------------------------------------------------------------------------------------
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               15480480 
+			warps_launched                                -                                               382816 
+			local_store                                   -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+Analysis performed correctly!	̲	̲	̲	̲	̲ ̲T̲o̲p̲D̲o̲w̲n̲ ̲M̲e̲t̲h̲o̲l̲o̲d̲g̲y̲ ̲o̲v̲e̲r̲ ̲N̲V̲I̲D̲I̲A̲'̲s̲ ̲G̲P̲U̲s
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔═════════════════════════════════════════════════════════════════════════╗
+║ EXECUTION FEATURES                                                      ║
+║ ------------------                                                      ║
+║                                                                         ║
+║ - Execution Level:                  3                                   ║
+║ - Analyzed program:                 ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:                      ../results/file.log                 ║
+║ - Verbose:                          True                                ║
+║ - Delete output's file content:     False                               ║
+╚═════════════════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔════════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.561482 | MAXIMUM POSSIBLE IPC: 6.0 ║
+					╚════════════════════════════════════════════════════╝
+
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the
+number of warp planners per SM, as well as the number of Dispatch units of each SM.
+    As you can see, the IPC obtanied it is 1068.6% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+	̲	̲	̲	̲	̲ ̲D̲E̲S̲C̲R̲I̲P̲T̲I̲O̲N̲ ̲O̲F̲ ̲M̲E̲A̲S̲U̲R̲E̲ ̲P̲A̲R̲T̲S ̲L̲E̲V̲E̲L̲ ̲O̲N̲E̲ ̲R̲E̲S̲U̲L̲T̲S
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks,
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck,
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of
+the instructions, in which aspects such as limitations by functional units, memory limits, etc.
+
+
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where divergence causes a loss of performance.
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the
+cores will not be used.
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║ STALLS, on the total (%):  7.41%  ║  ║ STALLS, on the total (%):  92.59%  ║  ║ IPC DEGRADATION (%):  0.111% ║  ║ PERFORMANCE IPC (%):  9.358% ║  
+║ IPC DEGRADATION      (%):  6.708% ║  ║ IPC DEGRADATION      (%):  83.822% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝   ̲L̲E̲V̲E̲L̲ ̲T̲W̲O̲ ̲R̲E̲S̲U̲L̲T̲S
+FRONT_END.BAND_WIDTH: BW description
+
+
+FRONT_END.DEPENDENCY: D description
+
+
+BACK_END.CORE_BOUND: In this part, the aspects related to CUDA cores that cause bottlenecks and thus performance losses are analyzed.
+Some aspects such as the use and availability of the functional units are analyzed.
+
+
+BACK_END.MEMORY_BOUND: It analyzes the parts of the GPU architecture where we have a loss of performance (IPC) due to
+memory bounds. This part takes into account aspects such as data dependencies, failures or access
+limits in caches
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔════════════════════════════════════╗
+║ FRONT_END.BAND_WIDTH               ║  ║ FRONT_END.DEPENDENCY               ║  ║ BACK_END.CORE_BOUND               ║  ║ BACK_END.MEMORY_BOUND              ║
+║ --------------------               ║  ║ --------------------               ║  ║ -------------------               ║  ║ ---------------------              ║
+║ STALLS, on the total (%):  4.73%   ║  ║ STALLS, on the total (%):  2.68%   ║  ║ STALLS, on the total (%):  0.1%   ║  ║ STALLS, on the total (%):  92.49%  ║  
+║ STALLS, on FrontEnd  (%):  63.833% ║  ║ STALLS, on FrontEnd  (%):  36.167% ║  ║ STALLS, on BackEnd   (%):  0.108% ║  ║ STALLS, on BackEnd   (%):  99.892% ║  
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ IPC DEGRADATION      (%):  4.282%  ║  ║ IPC DEGRADATION      (%):  2.426%  ║  ║ IPC DEGRADATION      (%):  0.1%   ║  ║ IPC DEGRADATION      (%):  83.732% ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚════════════════════════════════════╝   ̲L̲E̲V̲E̲L̲ ̲T̲H̲R̲E̲E̲ ̲R̲E̲S̲U̲L̲T̲S
+MEMORY_BOUND.CONSTANT_MEMORY_BOUND: CMB description
+
+╔════════════════════════════════════════════════╗  ╔══╗  ╔══╗  ╔══╗
+║ MEMORY_BOUND.CONSTANT_MEMORY_BOUND             ║  ║  ║  ║  ║  ║  ║
+║ ----------------------------------             ║  ║  ║  ║  ║  ║  ║
+║ STALLS, on the total              (%):  0.04%  ║  ║  ║  ║  ║  ║  ║  
+║ STALLS, on BackEnd.MemoryBound  (%):  0.043%   ║  ║  ║  ║  ║  ║  ║  
+║ STALLS, on MemoryBound          (%):  0.043%   ║  ║  ║  ║  ║  ║  ║  
+║                                                ║  ║  ║  ║  ║  ║  ║  
+║ IPC DEGRADATION                 (%):  0.036%   ║  ║  ║  ║  ║  ║  ║  
+╚════════════════════════════════════════════════╝  ╚══╝  ╚══╝  ╚══╝  	̲	̲	̲	̲	̲ ̲L̲i̲s̲t̲ ̲o̲f̲ ̲m̲e̲a̲s̲u̲r̲e̲m̲e̲n̲t̲s̲ ̲c̲o̲m̲p̲u̲t̲e̲d̲ ̲b̲y̲ ̲N̲V̲I̲D̲I̲A̲ ̲s̲c̲a̲n̲ ̲t̲o̲o̲l ̲F̲R̲O̲N̲T̲-̲E̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.37%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.75%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.36%  
+			-------------------------------------------------------------------------------------------------------
+ ̲F̲R̲O̲N̲T̲_̲E̲N̲D̲.̲B̲A̲N̲D̲_̲W̲I̲D̲T̲H
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.37%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.36%  
+			-------------------------------------------------------------------------------------------------------
+ ̲F̲R̲O̲N̲T̲_̲E̲N̲D̲.̲D̲E̲P̲E̲N̲D̲E̲N̲C̲Y
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.75%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲-̲E̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                91.96% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.04%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲_̲E̲N̲D̲.̲C̲O̲R̲E̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲_̲E̲N̲D̲.̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                91.96% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.04%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+ ̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D̲.̲C̲O̲N̲S̲T̲A̲N̲T̲_̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.04%  
+			-------------------------------------------------------------------------------------------------------
+ ̲D̲I̲V̲E̲R̲G̲E̲N̲C̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        0.568155 
+			-------------------------------------------------------------------------------------------------------
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               765629 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+ ̲R̲E̲T̲I̲R̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      0.561482 
+			-------------------------------------------------------------------------------------------------------
+ ̲E̲X̲T̲R̲A̲_̲M̲E̲A̲S̲U̲R̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               8806790 
+			flop_dp_efficiency                            FLOP Efficiency(Peak Double)                      0.00%  
+			gst_transactions                              Global Store Transactions                         1531250 
+			shared_store_transactions                     Shared Store Transactions                         0      
+			local_store_transactions                      Local Store Transactions                          0      
+			l2_write_transactions                         L2 Write Transactions                             1531263 
+			gst_transactions_per_request                  Global Store Transactions Per Request             3.999995 
+			-------------------------------------------------------------------------------------------------------
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               15500695 
+			warps_launched                                -                                               382816 
+			local_store                                   -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+Analysis performed correctly!	̲	̲	̲	̲	̲ ̲T̲o̲p̲D̲o̲w̲n̲ ̲M̲e̲t̲h̲o̲l̲o̲d̲g̲y̲ ̲o̲v̲e̲r̲ ̲N̲V̲I̲D̲I̲A̲'̲s̲ ̲G̲P̲U̲s
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔═════════════════════════════════════════════════════════════════════════╗
+║ EXECUTION FEATURES                                                      ║
+║ ------------------                                                      ║
+║                                                                         ║
+║ - Execution Level:                  3                                   ║
+║ - Analyzed program:                 ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:                      ../results/file.log                 ║
+║ - Verbose:                          True                                ║
+║ - Delete output's file content:     False                               ║
+╚═════════════════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔════════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.571053 | MAXIMUM POSSIBLE IPC: 6.0 ║
+					╚════════════════════════════════════════════════════╝
+
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the
+number of warp planners per SM, as well as the number of Dispatch units of each SM.
+    As you can see, the IPC obtanied it is 1050.69% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+	̲	̲	̲	̲	̲ ̲D̲E̲S̲C̲R̲I̲P̲T̲I̲O̲N̲ ̲O̲F̲ ̲M̲E̲A̲S̲U̲R̲E̲ ̲P̲A̲R̲T̲S ̲L̲E̲V̲E̲L̲ ̲O̲N̲E̲ ̲R̲E̲S̲U̲L̲T̲S
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks,
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck,
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of
+the instructions, in which aspects such as limitations by functional units, memory limits, etc.
+
+
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where divergence causes a loss of performance.
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the
+cores will not be used.
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║ STALLS, on the total (%):  7.31%  ║  ║ STALLS, on the total (%):  92.69%  ║  ║ IPC DEGRADATION (%):  0.0%   ║  ║ PERFORMANCE IPC (%):  9.518% ║  
+║ IPC DEGRADATION      (%):  6.614% ║  ║ IPC DEGRADATION      (%):  83.868% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝   ̲L̲E̲V̲E̲L̲ ̲T̲W̲O̲ ̲R̲E̲S̲U̲L̲T̲S
+FRONT_END.BAND_WIDTH: BW description
+
+
+FRONT_END.DEPENDENCY: D description
+
+
+BACK_END.CORE_BOUND: In this part, the aspects related to CUDA cores that cause bottlenecks and thus performance losses are analyzed.
+Some aspects such as the use and availability of the functional units are analyzed.
+
+
+BACK_END.MEMORY_BOUND: It analyzes the parts of the GPU architecture where we have a loss of performance (IPC) due to
+memory bounds. This part takes into account aspects such as data dependencies, failures or access
+limits in caches
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔════════════════════════════════════╗
+║ FRONT_END.BAND_WIDTH               ║  ║ FRONT_END.DEPENDENCY               ║  ║ BACK_END.CORE_BOUND               ║  ║ BACK_END.MEMORY_BOUND              ║
+║ --------------------               ║  ║ --------------------               ║  ║ -------------------               ║  ║ ---------------------              ║
+║ STALLS, on the total (%):  4.72%   ║  ║ STALLS, on the total (%):  2.59%   ║  ║ STALLS, on the total (%):  0.1%   ║  ║ STALLS, on the total (%):  92.59%  ║  
+║ STALLS, on FrontEnd  (%):  64.569% ║  ║ STALLS, on FrontEnd  (%):  35.431% ║  ║ STALLS, on BackEnd   (%):  0.108% ║  ║ STALLS, on BackEnd   (%):  99.892% ║  
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ IPC DEGRADATION      (%):  4.271%  ║  ║ IPC DEGRADATION      (%):  2.343%  ║  ║ IPC DEGRADATION      (%):  0.1%   ║  ║ IPC DEGRADATION      (%):  83.778% ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚════════════════════════════════════╝   ̲L̲E̲V̲E̲L̲ ̲T̲H̲R̲E̲E̲ ̲R̲E̲S̲U̲L̲T̲S
+MEMORY_BOUND.CONSTANT_MEMORY_BOUND: CMB description
+
+╔═══════════════════════════════════════════════╗  ╔══╗  ╔══╗  ╔══╗
+║ MEMORY_BOUND.CONSTANT_MEMORY_BOUND            ║  ║  ║  ║  ║  ║  ║
+║ ----------------------------------            ║  ║  ║  ║  ║  ║  ║
+║ STALLS, on the total             (%):  0.04%  ║  ║  ║  ║  ║  ║  ║  
+║ STALLS, on BackEnd.MemoryBound  (%):  0.043%  ║  ║  ║  ║  ║  ║  ║  
+║ STALLS, on MemoryBound          (%):  0.043%  ║  ║  ║  ║  ║  ║  ║  
+║                                               ║  ║  ║  ║  ║  ║  ║  
+║ IPC DEGRADATION                 (%):  0.036%  ║  ║  ║  ║  ║  ║  ║  
+╚═══════════════════════════════════════════════╝  ╚══╝  ╚══╝  ╚══╝  	̲	̲	̲	̲	̲ ̲L̲i̲s̲t̲ ̲o̲f̲ ̲m̲e̲a̲s̲u̲r̲e̲m̲e̲n̲t̲s̲ ̲c̲o̲m̲p̲u̲t̲e̲d̲ ̲b̲y̲ ̲N̲V̲I̲D̲I̲A̲ ̲s̲c̲a̲n̲ ̲t̲o̲o̲l ̲F̲R̲O̲N̲T̲-̲E̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.38%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.66%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.34%  
+			-------------------------------------------------------------------------------------------------------
+ ̲F̲R̲O̲N̲T̲_̲E̲N̲D̲.̲B̲A̲N̲D̲_̲W̲I̲D̲T̲H
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.38%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.34%  
+			-------------------------------------------------------------------------------------------------------
+ ̲F̲R̲O̲N̲T̲_̲E̲N̲D̲.̲D̲E̲P̲E̲N̲D̲E̲N̲C̲Y
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.93%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.66%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲-̲E̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.06% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.04%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲_̲E̲N̲D̲.̲C̲O̲R̲E̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲_̲E̲N̲D̲.̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                92.06% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.04%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+ ̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D̲.̲C̲O̲N̲S̲T̲A̲N̲T̲_̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.04%  
+			-------------------------------------------------------------------------------------------------------
+ ̲D̲I̲V̲E̲R̲G̲E̲N̲C̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        0.567529 
+			-------------------------------------------------------------------------------------------------------
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               765629 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+ ̲R̲E̲T̲I̲R̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      0.571053 
+			-------------------------------------------------------------------------------------------------------
+ ̲E̲X̲T̲R̲A̲_̲M̲E̲A̲S̲U̲R̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               8807105 
+			flop_dp_efficiency                            FLOP Efficiency(Peak Double)                      0.00%  
+			gst_transactions                              Global Store Transactions                         1531250 
+			shared_store_transactions                     Shared Store Transactions                         0      
+			local_store_transactions                      Local Store Transactions                          0      
+			l2_write_transactions                         L2 Write Transactions                             1531263 
+			gst_transactions_per_request                  Global Store Transactions Per Request             3.999995 
+			-------------------------------------------------------------------------------------------------------
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               15418415 
+			warps_launched                                -                                               382816 
+			local_store                                   -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
+Analysis performed correctly!	̲	̲	̲	̲	̲ ̲T̲o̲p̲D̲o̲w̲n̲ ̲M̲e̲t̲h̲o̲l̲o̲d̲g̲y̲ ̲o̲v̲e̲r̲ ̲N̲V̲I̲D̲I̲A̲'̲s̲ ̲G̲P̲U̲s
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔═════════════════════════════════════════════════════════════════════════╗
+║ EXECUTION FEATURES                                                      ║
+║ ------------------                                                      ║
+║                                                                         ║
+║ - Execution Level:                  3                                   ║
+║ - Analyzed program:                 ../../../../CUDA/bin/add_two_matrix ║
+║ - Output File:                      ../results/file.log                 ║
+║ - Verbose:                          True                                ║
+║ - Delete output's file content:     False                               ║
+╚═════════════════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔════════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.565562 | MAXIMUM POSSIBLE IPC: 6.0 ║
+					╚════════════════════════════════════════════════════╝
+
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the
+number of warp planners per SM, as well as the number of Dispatch units of each SM.
+    As you can see, the IPC obtanied it is 1060.89% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+	̲	̲	̲	̲	̲ ̲D̲E̲S̲C̲R̲I̲P̲T̲I̲O̲N̲ ̲O̲F̲ ̲M̲E̲A̲S̲U̲R̲E̲ ̲P̲A̲R̲T̲S ̲L̲E̲V̲E̲L̲ ̲O̲N̲E̲ ̲R̲E̲S̲U̲L̲T̲S
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks,
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck,
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of
+the instructions, in which aspects such as limitations by functional units, memory limits, etc.
+
+
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where divergence causes a loss of performance.
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the
+cores will not be used.
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║ STALLS, on the total (%):  7.39%  ║  ║ STALLS, on the total (%):  92.61%  ║  ║ IPC DEGRADATION (%):  0.0%   ║  ║ PERFORMANCE IPC (%):  9.426% ║  
+║ IPC DEGRADATION      (%):  6.693% ║  ║ IPC DEGRADATION      (%):  83.881% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝   ̲L̲E̲V̲E̲L̲ ̲T̲W̲O̲ ̲R̲E̲S̲U̲L̲T̲S
+FRONT_END.BAND_WIDTH: BW description
+
+
+FRONT_END.DEPENDENCY: D description
+
+
+BACK_END.CORE_BOUND: In this part, the aspects related to CUDA cores that cause bottlenecks and thus performance losses are analyzed.
+Some aspects such as the use and availability of the functional units are analyzed.
+
+
+BACK_END.MEMORY_BOUND: It analyzes the parts of the GPU architecture where we have a loss of performance (IPC) due to
+memory bounds. This part takes into account aspects such as data dependencies, failures or access
+limits in caches
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔════════════════════════════════════╗
+║ FRONT_END.BAND_WIDTH               ║  ║ FRONT_END.DEPENDENCY               ║  ║ BACK_END.CORE_BOUND               ║  ║ BACK_END.MEMORY_BOUND              ║
+║ --------------------               ║  ║ --------------------               ║  ║ -------------------               ║  ║ ---------------------              ║
+║ STALLS, on the total (%):  4.75%   ║  ║ STALLS, on the total (%):  2.64%   ║  ║ STALLS, on the total (%):  0.1%   ║  ║ STALLS, on the total (%):  92.51%  ║  
+║ STALLS, on FrontEnd  (%):  64.276% ║  ║ STALLS, on FrontEnd  (%):  35.724% ║  ║ STALLS, on BackEnd   (%):  0.108% ║  ║ STALLS, on BackEnd   (%):  99.892% ║  
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ IPC DEGRADATION      (%):  4.302%  ║  ║ IPC DEGRADATION      (%):  2.391%  ║  ║ IPC DEGRADATION      (%):  0.1%   ║  ║ IPC DEGRADATION      (%):  83.79%  ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚════════════════════════════════════╝   ̲L̲E̲V̲E̲L̲ ̲T̲H̲R̲E̲E̲ ̲R̲E̲S̲U̲L̲T̲S
+MEMORY_BOUND.CONSTANT_MEMORY_BOUND: CMB description
+
+╔══════════════════════════════════════════════╗  ╔══╗  ╔══╗  ╔══╗
+║ MEMORY_BOUND.CONSTANT_MEMORY_BOUND           ║  ║  ║  ║  ║  ║  ║
+║ ----------------------------------           ║  ║  ║  ║  ║  ║  ║
+║ STALLS, on the total            (%):  0.04%  ║  ║  ║  ║  ║  ║  ║  
+║ STALLS, on BackEnd.MemoryBound  (%):  0.043% ║  ║  ║  ║  ║  ║  ║  
+║ STALLS, on MemoryBound          (%):  0.043% ║  ║  ║  ║  ║  ║  ║  
+║                                              ║  ║  ║  ║  ║  ║  ║  
+║ IPC DEGRADATION                 (%):  0.036% ║  ║  ║  ║  ║  ║  ║  
+╚══════════════════════════════════════════════╝  ╚══╝  ╚══╝  ╚══╝  	̲	̲	̲	̲	̲ ̲L̲i̲s̲t̲ ̲o̲f̲ ̲m̲e̲a̲s̲u̲r̲e̲m̲e̲n̲t̲s̲ ̲c̲o̲m̲p̲u̲t̲e̲d̲ ̲b̲y̲ ̲N̲V̲I̲D̲I̲A̲ ̲s̲c̲a̲n̲ ̲t̲o̲o̲l ̲F̲R̲O̲N̲T̲-̲E̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.90%  
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.39%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.74%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.36%  
+			-------------------------------------------------------------------------------------------------------
+ ̲F̲R̲O̲N̲T̲_̲E̲N̲D̲.̲B̲A̲N̲D̲_̲W̲I̲D̲T̲H
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_exec_dependency                         Issue Stall Reasons (Execution Dependency)        4.39%  
+			stall_not_selected                            Issue Stall Reasons (Not Selected)                0.36%  
+			-------------------------------------------------------------------------------------------------------
+ ̲F̲R̲O̲N̲T̲_̲E̲N̲D̲.̲D̲E̲P̲E̲N̲D̲E̲N̲C̲Y
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_inst_fetch                              Issue Stall Reasons (Instructions Fetch)          0.90%  
+			stall_sync                                    Issue Stall Reasons (Synchronization)             0.00%  
+			stall_other                                   Issue Stall Reasons (Other)                       1.74%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲-̲E̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                91.98% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.04%  
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲_̲E̲N̲D̲.̲C̲O̲R̲E̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_pipe_busy                               Issue Stall Reasons (Pipe Busy)                   0.10%  
+			-------------------------------------------------------------------------------------------------------
+ ̲B̲A̲C̲K̲_̲E̲N̲D̲.̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                91.98% 
+			stall_constant_memory_dependency              Issue Stall Reasons (Immediate constant)          0.04%  
+			stall_memory_throttle                         Issue Stall Reasons (Memory Throttle)             0.49%  
+			-------------------------------------------------------------------------------------------------------
+ ̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D̲.̲C̲O̲N̲S̲T̲A̲N̲T̲_̲M̲E̲M̲O̲R̲Y̲_̲B̲O̲U̲N̲D
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                       Issue Stall Reasons (Data Request)                0.04%  
+			-------------------------------------------------------------------------------------------------------
+ ̲D̲I̲V̲E̲R̲G̲E̲N̲C̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			branch_efficiency                             Branch Efficiency                                 100.00% 
+			warp_execution_efficiency                     Warp Execution Efficiency                         100.00% 
+			issued_ipc                                    Issued IPC                                        0.562520 
+			-------------------------------------------------------------------------------------------------------
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			branch                                        -                                               765629 
+			divergent_branch                              -                                               0      
+			-------------------------------------------------------------------------------------------------------
+ ̲R̲E̲T̲I̲R̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			ipc                                           Executed IPC                                      0.565562 
+			-------------------------------------------------------------------------------------------------------
+ ̲E̲X̲T̲R̲A̲_̲M̲E̲A̲S̲U̲R̲E
+			-------------------------------------------------------------------------------------------------------
+			Metric Name                                   Metric Description                                Value 
+			-------------------------------------------------------------------------------------------------------
+			inst_issued                                   Instructions Issued                               8807072 
+			flop_dp_efficiency                            FLOP Efficiency(Peak Double)                      0.00%  
+			gst_transactions                              Global Store Transactions                         1531250 
+			shared_store_transactions                     Shared Store Transactions                         0      
+			local_store_transactions                      Local Store Transactions                          0      
+			l2_write_transactions                         L2 Write Transactions                             1531263 
+			gst_transactions_per_request                  Global Store Transactions Per Request             3.999995 
+			-------------------------------------------------------------------------------------------------------
+			-------------------------------------------------------------------------------------------------------
+			Event Name                                    Event Description                               Value 
+			-------------------------------------------------------------------------------------------------------
+			active_cycles                                 -                                               15568111 
+			warps_launched                                -                                               382816 
+			local_store                                   -                                               0      
+			-------------------------------------------------------------------------------------------------------
+
 Analysis performed correctly!

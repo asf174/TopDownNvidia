@@ -462,16 +462,16 @@ class TopDown:
         pass
 
     def __show_level_three_results(self, level_execution : LevelThree):
-        stalls_constant_memory_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
+        stalls_constant_memory_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total            (%): ', # revisar formatos, quiza sobren TODO
             str(round(level_execution.get_constant_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         
         stalls_constant_memory_bound_on_memory_bound_message : str = ("{:<22} {:<6}".format('STALLS, on BackEnd.MemoryBound  (%): ', 
             str(round(level_execution.get_constant_memory_bound_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
        
-        stalls_constant_memory_bound_on_back_message : str = ("{:<22} {:<6}".format('STALLS, on MemoryBound  (%): ', 
+        stalls_constant_memory_bound_on_back_message : str = ("{:<22} {:<6}".format('STALLS, on MemoryBound          (%): ', 
             str(round(level_execution.get_constant_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
 
-        ipc_degradation_constant_memory_bound_width_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
+        ipc_degradation_constant_memory_bound_width_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION                 (%): ', 
             str(round(level_execution.constant_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
        
         messages : list[list[str]] = [[stalls_constant_memory_bound_on_total_message, "", "", ""],
