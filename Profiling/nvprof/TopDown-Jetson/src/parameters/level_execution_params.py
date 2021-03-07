@@ -13,3 +13,4 @@ class LevelExecutionParameters:
     C_WARP_EXECUTION_EFFICIENCY_NAME    : str       = "warp_execution_efficiency"
     C_ISSUE_IPC_NAME                    : str       = "issued_ipc"
     C_INFO_MESSAGE_EXECUTION_NVPROF     : str       = "Making analysis... Wait to results."
+    C_CYCLES_ELAPSED_NAME               : str       = "elapsed_cycles_sm"

@@ -6,6 +6,12 @@ and their subclasses
 @date:      Jan 2021
 @version:   1.0
 """
+import os, sys, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
+
+from parameters.level_execution_params import LevelExecutionParameters
 
 class MetricMeasureParameters:
 
@@ -41,7 +47,7 @@ class MetricMeasureParameters:
 
     # extra_measure.py
     C_EXTRA_MEASURE_METRICS             : str       = ("inst_issued,flop_dp_efficiency,flop_dp_efficiency,gst_transactions,shared_store_transactions,local_store_transactions,l2_write_transactions,gst_transactions_per_request")
-    C_EXTRA_MEASURE_EVENTS              : str       = ("active_cycles,warps_launched,local_store")
+    C_EXTRA_MEASURE_EVENTS              : str       = ("active_cycles,warps_launched,local_store," + LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)
     C_EXTRA_MEASURE_NAME                : str       = "EXTRA_MEASURE"
     C_EXTRA_MEASURE_DESCRIPTION         : str       = ("") # TODO preguntar separaciones, si anhadir el espacio
 

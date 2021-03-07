@@ -46,17 +46,13 @@ class MetricMeasure(ABC):
         key_events : str
         key_metrics_desc : str
         key_events_desc : str
-        for key_metrics, key_events, key_metrics_desc, key_events_desc in zip(self._metrics, self._events, 
-            self._metrics_desc, self._events_desc):
+        # TODO todo esto en un bucle for con 'zip'
+        for key_metrics in self._metrics:
             self._metrics[key_metrics] = list()
+        for key_events in self._events:
             self._events[key_events] = list()
-            self._metrics_desc[key_metrics_desc] = list()
-            self._events_desc[key_events_desc] = list()
-
         pass
-        
-
-        
+                
     def __init__(self, name : str, description : str, metrics : str, events : str, metrics_desc : str, events_desc : str):
         """
         Set attributtes with argument values.
@@ -95,7 +91,6 @@ class MetricMeasure(ABC):
         
         self._metrics_str : str = metrics
         self._events_str : str = events
-
         self._check_data_structures() # check dictionaries defined correctly
         self.__init_dictionaries()
         pass
@@ -157,69 +152,73 @@ class MetricMeasure(ABC):
         return True
         pass
     
-    def get_event_value(self, event_name : str) -> str:
+    def get_event_value(self, event_name : str) -> list[str]:
         """
-        Get the value associated with 'event_name'
+        Get the value/s associated with 'event_name'
 
         Params:
             event_name  : str   ; name of the event
 
         Returns:
-            Associated value to 'event_name' or 'None' if
+            List with associated value/s to 'event_name' or 'None' if
             'event_name' doesn't exist or it's not an event
 
         """
-        if self.is_metric() or not self.is_event():
+
+        if self.is_metric(event_name) or not self.is_event(event_name):
             return None
         return self._events.get(event_name)
         pass
 
-    def get_event_description(self, event_name : str) -> str:
+    def get_event_description(self, event_name : str) -> list[str]:
         """
-        Get the description associated with 'event_name'
+        Get the description/s associated with 'event_name'
 
         Params:
             event_name  : str   ; name of the event
 
         Returns:
-            Associated description to 'event_name' or 'None' if
+            List with associated description/s to 'event_name' or 'None' if
             'event_name' doesn't exist or it's not an event
 
         """
+
         if self.is_metric() or not self.is_event():
             return None
         return self._events_desc.get(event_name)
         pass
 
-    def get_metric_value(self, metric_name : str) -> str:
+    def get_metric_value(self, metric_name : str) -> list[str]:
         """
-        Get the value associated with 'metric_name'
+        Get the value/s associated with 'metric_name'
 
         Params:
             metric_name  : str   ; name of the metric
 
         Returns:
-            Associated value to 'metric_name' or 'None' if
+            List with associated value/s 'metric_name' or 'None' if
             'metric_name' doesn't exist or it's not a metric
 
         """
+
         if not self.is_metric(metric_name) or self.is_event(metric_name):
             return None
         return self._metrics.get(metric_name)
         pass
 
-    def get_metric_description(self, metric_name : str) -> str:
+    def get_metric_description(self, metric_name : str) -> list[str]:
         """
-        Get the description associated with 'metric_name'
+        Get the description/s associated with 'metric_name'
 
         Params:
             metric_name  : str   ; name of the metric
 
         Returns:
-            Associated description to 'metric_name' or 'None' if
+            List with associated description/s to 'metric_name' or 'None' if
             'metric_name' doesn't exist or it's not a metric
 
         """
+        
         if not self.is_metric(metric_name) or self.is_event(metric_name):
             return None
         return self._metrics_desc.get(metric_name)
@@ -240,14 +239,14 @@ class MetricMeasure(ABC):
 
         if not (metric_name in self._metrics):
             return False
-        self._metrics[metric_name] = new_value
+        
+        self._metrics[metric_name].append(new_value)
         return True
         pass
 
     def set_metric_description(self, metric_name : str, new_description : str) -> bool:
         """
         Update metric with key 'metric_name' with 'new_value' description if 'metric_name' exists.
-
         Params:
             metric_name         : str   ; name of the metric
             new_description     : str   ; new description to assign to 'metric_name' if name exists
@@ -278,14 +277,13 @@ class MetricMeasure(ABC):
 
         if not (event_name in self._events):
             return False
-        self._events[event_name] = new_value
+        self._events[event_name].append(new_value)
         return True
         pass
 
     def set_event_description(self, event_name : str, new_description : str) -> bool:
         """
         Update event with key 'event_name' with 'new_value' description if 'event_name' exists.
-
         Params:
             event_name     : str   ; name of the event
             new_value       : str   ; new description to assign to 'event_name' if name exists

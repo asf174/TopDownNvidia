@@ -150,7 +150,8 @@ class LevelExecution(ABC):
             EventNoDefined              ; raised in case you have added an event that is 
                                           not supported or does not exist in the NVIDIA analysis tool
         """
-        
+        # TODO forma recoger datos. Se podria anadir atributos asi se evita hacer la divison dos veces (una para el calculo
+        # y otra para pintarlo aki)
         #lst_to_add.append("\n")
         lst_to_add.append( "\t\t\t----------------------------------------------------"
             + "---------------------------------------------------")
@@ -158,12 +159,22 @@ class LevelExecution(ABC):
             lst_to_add.append("\t\t\t{:<45} {:<48}  {:<5} ".format('Metric Name','Metric Description', 'Value'))
             lst_to_add.append( "\t\t\t----------------------------------------------------"
             +"---------------------------------------------------")
-            for (metric_name, value), (metric_name, desc) in zip(dict_values.items(), 
-                dict_desc.items()):
-                if metric_name is None or desc is None or value is None:
-                    print(str(desc) + str(value) + str(isMetric))
-                    raise MetricNoDefined(metric_name)
-                lst_to_add.append("\t\t\t{:<45} {:<49} {:<6} ".format(metric_name, desc, value))
+            #for (metric_name, value), (metric_name, desc) in zip(dict_values.items(), 
+            #    dict_desc.items()):
+            #    if metric_name is None or desc is None or value is None:
+            #        print(str(desc) + str(value) + str(isMetric))
+             #       raise MetricNoDefined(metric_name)
+            total_value : float = 0.0
+            i : int = 0
+            value_str : str
+            value : float
+            is_percentage : bool = False
+            for key_value in dict_values:
+                total_value += self._get_total_value_of_list(dict_values[key_value])
+            if is_percentage:
+                value_str = str(total_value) + "%"
+            metric_name : str = list(dict_desc.keys())[0]
+            lst_to_add.append("\t\t\t{:<45} {:<49} {:<6} ".format(metric_name, dict_desc.get(metric_name), value_str))
         else:
             lst_to_add.append("\t\t\t{:<45} {:<46}  {:<5} ".format('Event Name','Event Description', 'Value'))
             lst_to_add.append( "\t\t\t----------------------------------------------------"
@@ -213,6 +224,56 @@ class LevelExecution(ABC):
         return max_key
         pass
 
+    def _get_percentage_time(self, kernel_number : int) -> float:
+        """ 
+        Get time percentage in each Kernel.
+        Each kernel measured is an index of dictionaries used by this program.
+
+        Params:
+            kernel_number   : int   ; number of kernel
+        """
+
+        value_lst : list[str] = self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)
+        value_str : str
+        total_value : float = 0.0
+        for value_str in value_lst:
+              total_value += float(value_str[0 : len(value_str) - 1])
+        return (float(value_str[kernel_number])/total_value)*100.0
+        pass
+
+    def _get_cycles_elaspsed_per_kernel(self, kernel_number : int):
+        """ 
+        Get cycles elapsed per kernel.
+
+        Params:
+            kernel_number   : int   ; number of kernel
+        """
+        ## mirar porque lo estoy comprobando cada vez que quiero el indice
+
+        if not LevelExecutionParameters.C_CYCLES_ELAPSED_NAME in self._extra_measure.events():
+            raise ElapsedCyclesError
+        return self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)[kernel_number]
+        pass
+
+    def _get_total_value_of_list(self, list_values : list[str]) -> float:
+        """
+        Get total value of list of metric/event
+    
+        Params:
+            list_values : list[str] ; list to be computed
+        """
+
+        i : int = 0
+        total_value : float = 0.0
+        for value in list_values:
+            if value[len(value) - 1] == "%":
+                total_value += float(value[0:len(value) - 1])*(self._get_percentage_time(i)/100.0)
+            else:
+                total_value += float(value)*(self._get_percentage_time(i)/100.0)
+            i += 1
+        return total_value
+        pass
+
     def _get_stalls_of_part(self, dict : dict) -> float:
         """
         Get percent of stalls of the dictionary indicated by argument.
@@ -225,11 +286,8 @@ class LevelExecution(ABC):
         """
 
         total_value : float = 0.0
-        value_str : str 
         for key in dict.keys():
-                value_str = dict.get(key)
-                if value_str[len(value_str) - 1] == "%":  # check percenttage
-                    total_value += float(value_str[0 : len(value_str) - 1])
+            total_value += self._get_total_value_of_list(dict.get(key))
         return total_value
         pass
 

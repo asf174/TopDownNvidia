@@ -139,11 +139,12 @@ class LevelOne(LevelExecution):
             computed by the NVIDIA scan tool.
         """
 
-        ipc : str = self._retire.get_metric_value(LevelExecutionParameters.C_IPC_METRIC_NAME)
-        warp_execution_efficiency : str = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
-        if ipc is None or warp_execution_efficiency is None:
-            raise IpcMetricNotDefined
-        return float(ipc)
+        ipc_list : list[str] = self._retire.get_metric_value(LevelExecutionParameters.C_IPC_METRIC_NAME)
+        if ipc_list is None:
+            raise IpcMetricNotDefined # revisar TODO
+        total_ipc : float = self._get_total_value_of_list(ipc_list)
+        print(ipc_list)
+        return total_ipc
         pass
 
     def retire_ipc(self) -> float:
@@ -151,14 +152,15 @@ class LevelOne(LevelExecution):
         Get "RETIRE" IPC of execution.
 
         Raises:
-            IpcMetricNotDefined ; raised if IPC cannot be obtanied because it was not 
+            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not 
             computed by the NVIDIA scan tool.
         """
 
-        warp_execution_efficiency : str = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
-        if warp_execution_efficiency is None:
+        warp_execution_efficiency_list : list[str] = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
+        if warp_execution_efficiency_list is None:
             raise RetireIpcMetricNotDefined
-        return self.ipc()*(float(warp_execution_efficiency[0: len(warp_execution_efficiency) - 1])/100)
+        total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list)
+        return self.ipc()*(total_warp_execution_efficiency/100.0)
         pass
 
     def front_end(self) -> FrontEnd:
@@ -353,18 +355,23 @@ class LevelOne(LevelExecution):
 
         Returns:
             Float with theDivergence's IPC degradation
+
+        Raises:
+            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not 
+            computed by the NVIDIA scan tool.
         """
 
         ipc : float = self.ipc() 
-        warp_execution_efficiency  : str = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
-        # revisar eleve de excepcion
-        issued_ipc : str = self._divergence.get_metric_value(LevelExecutionParameters.C_ISSUE_IPC_NAME)
-        if issued_ipc is None:
-            raise MetricDivergenceIpcDegradationNotDefined(LevelExecutionParameters.C_ISSUE_IPC_NAME)
-        ipc_diference : float = float(issued_ipc) - ipc
+        warp_execution_efficiency_list  : list[str] = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
+        if warp_execution_efficiency_list is None:
+            raise RetireIpcMetricNotDefined # revisar si crear otra excepcion (creo que si)
+        total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list)
+        issued_ipc_list : list[str] = self._divergence.get_metric_value(LevelExecutionParameters.C_ISSUE_IPC_NAME)
+        total_issued_ipc : float = self._get_total_value_of_list(issued_ipc_list)
+        ipc_diference : float = float(total_issued_ipc) - ipc
         if ipc_diference < 0.0:
             ipc_diference = 0.0
-        return ipc * (1.0 - (float(warp_execution_efficiency[0: len(warp_execution_efficiency) - 1])/100.0)) + ipc_diference
+        return ipc * (1.0 - (total_warp_execution_efficiency/100.0)) + ipc_diference
         pass
 
     def _stall_ipc(self) -> float:
