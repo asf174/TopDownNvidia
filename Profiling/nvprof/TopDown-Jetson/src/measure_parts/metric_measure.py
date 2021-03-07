@@ -39,6 +39,24 @@ class MetricMeasure(ABC):
         _events_str        : str   ;   string with the events
     """
 
+    def __init_dictionaries(self):
+        """ Initialize data structures in the correct way."""
+
+        key_metrics : str
+        key_events : str
+        key_metrics_desc : str
+        key_events_desc : str
+        for key_metrics, key_events, key_metrics_desc, key_events_desc in zip(self._metrics, self._events, 
+            self._metrics_desc, self._events_desc):
+            self._metrics[key_metrics] = list()
+            self._events[key_events] = list()
+            self._metrics_desc[key_metrics_desc] = list()
+            self._events_desc[key_events_desc] = list()
+
+        pass
+        
+
+        
     def __init__(self, name : str, description : str, metrics : str, events : str, metrics_desc : str, events_desc : str):
         """
         Set attributtes with argument values.
@@ -79,6 +97,7 @@ class MetricMeasure(ABC):
         self._events_str : str = events
 
         self._check_data_structures() # check dictionaries defined correctly
+        self.__init_dictionaries()
         pass
     
     def _check_data_structures(self): 
@@ -93,7 +112,7 @@ class MetricMeasure(ABC):
 
         event_name : str
         metric_name : str
-        for (event_name, value), (metric_name, value2) in zip(self._events.items(), self._metrics.items()): 
+        for (event_name, value), (metric_name, value) in zip(self._events.items(), self._metrics.items()): 
             if not event_name in self._events_desc:
                 raise DataStructuresOfEventError(event_name)
             if not metric_name in self._metrics_desc:
