@@ -13,7 +13,6 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(1, parentdir) 
 from measure_levels.level_execution import LevelExecution
 from parameters.level_execution_params import LevelExecutionParameters
-from shell.shell import Shell # launch shell arguments
 from errors.level_execution_errors import *
 from measure_parts.front_end import FrontEnd 
 from measure_parts.back_end import BackEnd
@@ -66,10 +65,8 @@ class LevelOne(LevelExecution):
 
         converter : MessageFormat = MessageFormat()
         #  Keep Results
-
         if not self._recolect_metrics and not self._recolect_events:
             return
-        
         if (self._recolect_metrics and self._front_end.metrics_str() != "" or 
             self._recolect_events and self._front_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_end.name()))
@@ -78,8 +75,7 @@ class LevelOne(LevelExecution):
                 self._front_end.metrics_description(), lst_output, True)
         if self._recolect_events and self._front_end.events_str() != "":
                 self._add_result_part_to_lst(self._front_end.events(), 
-                self._front_end.events_description(), "", lst_output, False)
-        
+                self._front_end.events_description(), "", lst_output, False) 
         if (self._recolect_metrics and self._back_end.metrics_str() != "" or 
             self._recolect_events and self._back_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_end.name()))
@@ -89,7 +85,6 @@ class LevelOne(LevelExecution):
         if self._recolect_events and self._back_end.events_str() != "":
                 self._add_result_part_to_lst(self._back_end.events(), 
                 self._back_end.events_description(), lst_output, False)
-        
         if (self._recolect_metrics and self._divergence.metrics_str() != "" or 
             self._recolect_events and self._divergence.events_str() != ""):
             lst_output.append(converter.underlined_str(self._divergence.name()))
@@ -99,7 +94,6 @@ class LevelOne(LevelExecution):
         if self._recolect_events and self._divergence.events_str() != "":
                 self._add_result_part_to_lst(self._divergence.events(), 
                 self._divergence.events_description(),lst_output, False)
-        
         if (self._recolect_metrics and self._retire.metrics_str() != "" or 
             self._recolect_events and self._retire.events_str() != ""):
             lst_output.append(converter.underlined_str(self._retire.name()))
@@ -109,7 +103,6 @@ class LevelOne(LevelExecution):
         if self._recolect_events and self._retire.events_str() != "":
                 self._add_result_part_to_lst(self._retire.events(), 
                 self._retire.events_description(), lst_output, False)
-
         if (self._recolect_metrics and self._extra_measure.metrics_str() != "" or 
             self._recolect_events and self._extra_measure.events_str() != ""):
             lst_output.append(converter.underlined_str(self._extra_measure.name()))

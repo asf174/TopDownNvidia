@@ -100,8 +100,7 @@ class LevelThree(LevelTwo):
                 self._front_end.metrics_description(), lst_output, True)
         if self._recolect_events and self._front_end.events_str() != "":
                 self._add_result_part_to_lst(self._front_end.events(), 
-                self._front_end.events_description(), "", lst_output, False)
-        
+                self._front_end.events_description(), "", lst_output, False)  
         if (self._recolect_metrics and self._front_band_width.metrics_str() != "" or 
             self._recolect_events and self._front_band_width.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_band_width.name()))
@@ -111,7 +110,6 @@ class LevelThree(LevelTwo):
         if self._recolect_events and self._front_band_width.events_str() != "":
                 self._add_result_part_to_lst(self._front_band_width.events(), 
                 self._front_band_width.events_description(), lst_output, False)
-        
         if (self._recolect_metrics and self._front_dependency.metrics_str() != "" or 
             self._recolect_events and self._front_dependency.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_dependency.name()))
@@ -121,7 +119,6 @@ class LevelThree(LevelTwo):
         if self._recolect_events and self._front_dependency.events_str() != "":
                 self._add_result_part_to_lst(self._front_dependency.events(), 
                 self._front_dependency.events_description(), lst_output, False)
-        
         if (self._recolect_metrics and self._back_end.metrics_str() != "" or 
             self._recolect_events and self._back_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_end.name()))
@@ -131,7 +128,6 @@ class LevelThree(LevelTwo):
         if self._recolect_events and self._back_end.events_str() != "":
                 self._add_result_part_to_lst(self._back_end.events(), 
                 self._back_end.events_description(), lst_output, False)
-        
         if (self._recolect_metrics and self._back_core_bound.metrics_str() != "" or 
             self._recolect_events and self._back_core_bound.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_core_bound.name()))
@@ -141,7 +137,6 @@ class LevelThree(LevelTwo):
         if self._recolect_events and self._back_core_bound.events_str() != "":
                 self._add_result_part_to_lst(self._back_core_bound.events(), 
                 self._back_core_bound.events_description(), lst_output, False) 
-        
         if (self._recolect_metrics and self._back_memory_bound.metrics_str() != "" or 
             self._recolect_events and self._back_memory_bound.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_memory_bound.name()))
@@ -151,7 +146,6 @@ class LevelThree(LevelTwo):
         if self._recolect_events and self._back_memory_bound.events_str() != "":
                 self._add_result_part_to_lst(self._back_memory_bound.events(), 
                 self._back_memory_bound.events_description(), lst_output, False)
-
         if (self._recolect_metrics and self.__constant_memory_bound.metrics_str() != "" or 
             self._recolect_events and self.__constant_memory_bound.events_str() != ""):
             lst_output.append(converter.underlined_str(self.__constant_memory_bound.name()))
@@ -161,7 +155,6 @@ class LevelThree(LevelTwo):
         if  self._recolect_events and self.__constant_memory_bound.events_str() != "":
                 self._add_result_part_to_lst(self.__constant_memory_bound.events(), 
                 self.__constant_memory_bound.events_description(), lst_output, False)
-        
         if (self._recolect_metrics and self._divergence.metrics_str() != "" or 
             self._recolect_events and self._divergence.events_str() != ""):
             lst_output.append(converter.underlined_str(self._divergence.name()))
@@ -171,7 +164,6 @@ class LevelThree(LevelTwo):
         if self._recolect_events and self._divergence.events_str() != "":
                 self._add_result_part_to_lst(self._divergence.events(), 
                 self._divergence.events_description(),lst_output, False)
-        
         if (self._recolect_metrics and self._retire.metrics_str() != "" or 
             self._recolect_events and self._retire.events_str() != ""):
             lst_output.append(converter.underlined_str(self._retire.name()))
@@ -181,7 +173,6 @@ class LevelThree(LevelTwo):
         if self._recolect_events and self._retire.events_str() != "":
                 self._add_result_part_to_lst(self._retire.events(), 
                 self._retire.events_description(), lst_output, False)
-
         if (self._recolect_metrics and self._extra_measure.metrics_str() != "" or 
             self._recolect_events and self._extra_measure.events_str() != ""):
             lst_output.append(converter.underlined_str(self._extra_measure.name()))

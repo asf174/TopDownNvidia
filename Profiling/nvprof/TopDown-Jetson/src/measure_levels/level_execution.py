@@ -7,7 +7,6 @@ Class that represents the levels of the execution.
 """
 
 from abc import ABC, abstractmethod # abstract class
-import re
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -201,27 +200,18 @@ class LevelExecution(ABC):
         return self._extra_measure
         pass
 
-    def __get__key_max_value(self, dictionary : dict) -> str:
+    def _get_cycles_elaspsed_per_kernel(self, kernel_number : int):
         """ 
-        Find key with highest value in dictionary.
+        Get cycles elapsed per kernel.
 
         Params:
-            dictionary : dict ; dictionary to check
-
-        Returns:
-            String with the key with the highest value
-            or 'None' if dictionary is empty
+            kernel_number   : int   ; number of kernel
         """
+        ## mirar porque lo estoy comprobando cada vez que quiero el indice TODO
 
-        max_key : str = None
-        max_value : float = float('-inf')
-        value : float
-        for key in dictionary.keys():
-            value = float(dictionary.get(key)[0 : len(dictionary.get(key)) - 1])
-            if value > max_value:
-                max_key = key
-                max_value = value
-        return max_key
+        if not LevelExecutionParameters.C_CYCLES_ELAPSED_NAME in self._extra_measure.events():
+            raise ElapsedCyclesError
+        return self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)[kernel_number]
         pass
 
     def _get_percentage_time(self, kernel_number : int) -> float:
@@ -239,20 +229,6 @@ class LevelExecution(ABC):
         for value_str in value_lst:
               total_value += float(value_str[0 : len(value_str) - 1])
         return (float(value_str[kernel_number])/total_value)*100.0
-        pass
-
-    def _get_cycles_elaspsed_per_kernel(self, kernel_number : int):
-        """ 
-        Get cycles elapsed per kernel.
-
-        Params:
-            kernel_number   : int   ; number of kernel
-        """
-        ## mirar porque lo estoy comprobando cada vez que quiero el indice
-
-        if not LevelExecutionParameters.C_CYCLES_ELAPSED_NAME in self._extra_measure.events():
-            raise ElapsedCyclesError
-        return self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)[kernel_number]
         pass
 
     def _get_total_value_of_list(self, list_values : list[str]) -> float:
