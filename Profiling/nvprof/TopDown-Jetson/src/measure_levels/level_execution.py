@@ -163,17 +163,20 @@ class LevelExecution(ABC):
             #    if metric_name is None or desc is None or value is None:
             #        print(str(desc) + str(value) + str(isMetric))
              #       raise MetricNoDefined(metric_name)
+            # TODO preguntar calcular ipc a mano
             total_value : float = 0.0
             i : int = 0
             value_str : str
             value : float
             is_percentage : bool = False
             for key_value in dict_values:
-                total_value += self._get_total_value_of_list(dict_values[key_value])
-            if is_percentage:
-                value_str = str(total_value) + "%"
-            metric_name : str = list(dict_desc.keys())[0]
-            lst_to_add.append("\t\t\t{:<45} {:<49} {:<6} ".format(metric_name, dict_desc.get(metric_name), value_str))
+                total_value = round(self._get_total_value_of_list(dict_values[key_value]), LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS)
+                value_str = str(total_value)
+                if is_percentage:
+                    value_str += "%"
+                metric_name : str = list(dict_desc.keys())[i]
+                lst_to_add.append("\t\t\t{:<45} {:<49} {:<6} ".format(metric_name, dict_desc.get(metric_name), value_str))
+                i += 1
         else:
             lst_to_add.append("\t\t\t{:<45} {:<46}  {:<5} ".format('Event Name','Event Description', 'Value'))
             lst_to_add.append( "\t\t\t----------------------------------------------------"
@@ -222,13 +225,13 @@ class LevelExecution(ABC):
         Params:
             kernel_number   : int   ; number of kernel
         """
-
+        #TODO lanzar excepcion
         value_lst : list[str] = self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)
         value_str : str
         total_value : float = 0.0
         for value_str in value_lst:
-              total_value += float(value_str[0 : len(value_str) - 1])
-        return (float(value_str[kernel_number])/total_value)*100.0
+            total_value += float(value_str)
+        return (float(value_lst[kernel_number])/total_value)*100.0
         pass
 
     def _get_total_value_of_list(self, list_values : list[str]) -> float:

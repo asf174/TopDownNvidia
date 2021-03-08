@@ -14,3 +14,4 @@ class LevelExecutionParameters:
     C_ISSUE_IPC_NAME                    : str       = "issued_ipc"
     C_INFO_MESSAGE_EXECUTION_NVPROF     : str       = "Making analysis... Wait to results."
     C_CYCLES_ELAPSED_NAME               : str       = "elapsed_cycles_sm"
+    C_MAX_NUM_RESULTS_DECIMALS          : int       = 3 # recommended be same with same value definided in TopDownParameters

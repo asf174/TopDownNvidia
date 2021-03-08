@@ -10,7 +10,7 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from parameters.metric_measure_params import MetricMeasureParameters # TODO IMPORT ONLY ATTRIBUTES
+from parameters.metric_measure_params import MetricMeasureParameters 
 from measure_parts.metric_measure import MetricMeasure
 
 
