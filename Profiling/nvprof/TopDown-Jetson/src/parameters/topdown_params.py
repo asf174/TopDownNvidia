@@ -66,3 +66,7 @@ class TopDownParameters:
     C_NUM_MAX_CHARACTERS_PER_LINE       : int       = 129
 
     C_MAX_NUM_RESULTS_DECIMALS          : int       = 3
+
+    # arch device
+    C_TESLA_DEVICE_SHORT_OPTION         : str       = "-t"
+    C_TESLA_DEVICE_LONG_OPTION          : str       = "--tesla"  

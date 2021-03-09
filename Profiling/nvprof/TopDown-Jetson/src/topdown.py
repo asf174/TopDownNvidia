@@ -36,6 +36,7 @@ class TopDown:
         __show_events                   : bool  ;   True if program has to show events computed by NVIDIA scan tool
         __show_all_measurementes        : bool  ;   True if program has to show all measures (metrics and events) 
                                                     computed by NVIDIA scan tool
+        __is_tesla_device               : bool  ;   True if device is a tesla model or False if not
     """
 
     def __init__(self):
@@ -62,7 +63,8 @@ class TopDown:
         self.__show_desc : bool = args.show_desc
         self.__show_metrics : bool = args.metrics
         self.__show_events : bool = args.events
-        self.__show_all_measurementes   : bool = args.all_measures
+        self.__show_all_measurementes : bool = args.all_measures
+        self.__is_tesla_device : bool = args.tesla
         pass
     
     def __add_show_desc_argument(self, parser : argparse.ArgumentParser):
@@ -84,7 +86,7 @@ class TopDown:
 
     def __add_metrics_argument(self, parser : argparse.ArgumentParser):
         """ 
-        Add metrics argument. 'C_METRICS_SHORT_OPTION' is the short option of argument
+        Add tesla argument. 'C_METRICS_SHORT_OPTION' is the short option of argument
         and 'C_METRICS_LONG_OPTION' is the long version of argument.
 
         Params:
@@ -97,6 +99,24 @@ class TopDown:
             help = 'show metrics computed by NVIDIA scan tool',
             action = 'store_true',
             dest = 'metrics')
+        pass
+
+
+    def __add_tesla_argument(self, parser : argparse.ArgumentParser):
+        """ 
+        Add tesla argument. 'C_TESLA_DEVICE_SHORT_OPTION' is the short option of argument
+        and 'C_TESLA_DEVICE_LONG_OPTION' is the long version of argument.
+
+        Params:
+            parser : argparse.ArgumentParser ; group of the argument.
+        """
+
+        parser.add_argument (
+            TopDownParameters.C_TESLA_DEVICE_SHORT_OPTION, 
+            TopDownParameters.C_TESLA_DEVICE_LONG_OPTION, 
+            help = 'set if device used is a tesla model',
+            action = 'store_true',
+            dest = 'tesla')
         pass
 
     def __add_all_measures_argument(self, parser : argparse.ArgumentParser):
@@ -252,6 +272,7 @@ class TopDown:
         self.__add_metrics_argument(parser)
         self.__add_events_argument(parser)
         self.__add_all_measures_argument(parser)
+        self.__add_tesla_argument(parser)
         pass
 
     def program(self) -> str:

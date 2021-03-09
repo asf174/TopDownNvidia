@@ -221,9 +221,9 @@ class MessageFormat:
     def print_desplazed_underlined_str(self, message : str, output_file : str, delete_content_file : bool):
         """ Print a desplazed string underlined. """
 
-        message = "\t\t\t\t\t " + message
         #message : str = '{:s}'.format('\u0332'.join(message))
-        message : str = '{:s}'.format('\u0332'.join(message))
+        message : str = '{:s}'.format('\u0332'.join(" " + message))
+        message = "\t\t\t\t\t" + message[1: len(message)]
         print(message)
         if not output_file is None:
             self.__write_str_in_file(message, output_file, delete_content_file)

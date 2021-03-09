@@ -33,10 +33,10 @@ class LevelExecution(ABC):
 
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
         self._extra_measure : ExtraMeasure = ExtraMeasure()
-        self._program = program
+        self._program : str = program
         self._output_file : str = output_file
-        self._recolect_metrics = recoltect_metrics
-        self._recolect_events = recolect_events
+        self._recolect_metrics : bool = recoltect_metrics
+        self._recolect_events : bool = recolect_events
         pass 
 
     @abstractmethod
@@ -149,26 +149,18 @@ class LevelExecution(ABC):
             EventNoDefined              ; raised in case you have added an event that is 
                                           not supported or does not exist in the NVIDIA analysis tool
         """
+        
         metrics_events_not_average : list[str] = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
-
-        # TODO forma recoger datos. Se podria anadir atributos asi se evita hacer la divison dos veces (una para el calculo
-        # y otra para pintarlo aki)
-        #lst_to_add.append("\n")
-        lst_to_add.append( "\t\t\t----------------------------------------------------"
-            + "---------------------------------------------------")
+        total_value : float = 0.0
+        i : int = 0
+        description : str 
+        line_lenght : int 
+        value_str : str
+        total_value_str : str = ""
         if isMetric:
-            lst_to_add.append("\t\t\t{:<45} {:<48}  {:<5} ".format('Metric Name','Metric Description', 'Value'))
-            lst_to_add.append( "\t\t\t----------------------------------------------------"
-            +"---------------------------------------------------")
-            #for (metric_name, value), (metric_name, desc) in zip(dict_values.items(), 
-            #    dict_desc.items()):
-            #    if metric_name is None or desc is None or value is None:
-            #        print(str(desc) + str(value) + str(isMetric))
-             #       raise MetricNoDefined(metric_name)
-            # TODO preguntar calcular ipc a mano
-            total_value : float = 0.0
-            i : int = 0
-            value_str : str
+            metric_name : str
+            description = "\t\t\t{:<45}{:<49} {:<5} ".format('Metric Name','Metric Description', 'Value')
+            line_lenght = len(description) - 2
             value : float
             is_percentage : bool = False
             is_computed_as_average : bool 
@@ -182,26 +174,45 @@ class LevelExecution(ABC):
                 is_computed_as_average = not (key_value in metrics_events_not_average)
                 total_value = round(self._get_total_value_of_list(dict_values[key_value], is_computed_as_average), 
                     LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS)
+                if total_value.is_integer():
+                    total_value = int(total_value)
                 value_str = str(total_value)
                 if is_percentage:
                     value_str += "%"
                     is_percentage = False
-                metric_name : str = list(dict_desc.keys())[i]
-                lst_to_add.append("\t\t\t{:<45} {:<49} {:<6} ".format(metric_name, dict_desc.get(metric_name), value_str))
+                metric_name = list(dict_desc.keys())[i]
+                value_str = "\t\t\t{:<45}{:<49} {:<6} ".format(metric_name, dict_desc.get(metric_name), value_str) 
+                if len(value_str) > line_lenght:
+                    line_lenght = len(value_str)
+                if i != len(dict_values) -1:
+                    value_str += "\n"
+                total_value_str += value_str
                 i += 1
         else:
-            lst_to_add.append("\t\t\t{:<45} {:<46}  {:<5} ".format('Event Name','Event Description', 'Value'))
-            lst_to_add.append( "\t\t\t----------------------------------------------------"
-            +"---------------------------------------------------")
-            value_event : str 
-            for event_name in dict_values:
-                value_event = dict_values.get(event_name)
-                if event_name is None or value_event is None:
-                    #print(str(event_name) + " " + str(value_event))
-                    raise EventNoDefined(event_name)
-                lst_to_add.append("\t\t\t{:<45} {:<47} {:<6} ".format(event_name, "-", value_event))
-        lst_to_add.append("\t\t\t----------------------------------------------------"
-            +"---------------------------------------------------")
+            event_name : str
+            description = "\t\t\t{:<45}{:<46} {:<5}".format('Event Name','Event Description', 'Value')
+            line_lenght = len(description)
+            for key_value in dict_values:
+                total_value = round(self._get_total_value_of_list(dict_values[key_value], False), 
+                    LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS) # TODO eventos con decimales?
+                if total_value.is_integer():
+                    total_value = int(total_value)
+                value_str = str(total_value)
+                event_name = list(dict_desc.keys())[i]
+                value_str = "\t\t\t{:<45}{:<47}{:<6} ".format(event_name, "-", value_str)
+                if len(value_str) > line_lenght:
+                    line_lenght = len(value_str)
+                if i != len(dict_values) -1:
+                    value_str += "\n"
+                total_value_str += value_str
+                i += 1
+        spaces_lenght : int = len("\t\t\t")
+        line_str : str = "\t\t\t" + f'{"-" * ((line_lenght - spaces_lenght)-1)}'
+        lst_to_add.append("\n" + line_str)
+        lst_to_add.append(description)
+        lst_to_add.append(line_str)
+        lst_to_add.append(total_value_str)
+        lst_to_add.append(line_str + "\n")
         pass
 
     def extra_measure(self) -> ExtraMeasure:
