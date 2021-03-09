@@ -366,7 +366,7 @@ class LevelTwo(LevelOne):
             Float with the percent of BackEnd.Core_Bound's IPC degradation
         """
         
-        return (((self._stall_ipc()*(self.get_back_core_bound_stall()/100.0))/(self.get_device_max_ipc()-self.ipc()))*100.0)
+        return (((self._stall_ipc()*(self.get_back_core_bound_stall()/100.0))/self.get_device_max_ipc())*100.0)
         pass
 
     def back_memory_bound_percentage_ipc_degradation(self) -> float:

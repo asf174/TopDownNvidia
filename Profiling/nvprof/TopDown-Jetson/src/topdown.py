@@ -496,7 +496,8 @@ class TopDown:
         printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
         delete_content_file = False)
         print()
-        message = "IPC OBTAINED: " + str(level_execution.ipc()) + " | MAXIMUM POSSIBLE IPC: " +  str(level_execution.get_device_max_ipc())
+        message = ("IPC OBTAINED: " + str(round(level_execution.ipc(),TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + " | MAXIMUM POSSIBLE IPC: " +  
+            str(level_execution.get_device_max_ipc()))
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = "", output_file = self.output_file(), width = None, delete_content_file = False)
         if self.show_desc():
             message = ("\n\n'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'\n" +
@@ -504,8 +505,9 @@ class TopDown:
                 "number of warp planners per SM, as well as the number of Dispatch units of each SM.")
             printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
             delete_content_file = False)
-            message = ("\n    As you can see, the IPC obtanied it " + "is " + str(round((level_execution.get_device_max_ipc()/level_execution.ipc())*100, 2)) + 
-                "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts of the architecture and DIVERGENCE problems. " +
+            message = ("\n    As you can see, the IPC obtanied it " + "is " + str(round((level_execution.get_device_max_ipc()/level_execution.ipc())*100, 
+                TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts " +
+                "of the architecture and DIVERGENCE problems. " +
                 "We analyze them based on the level of the TopDown:\n")
             printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
             delete_content_file = False)

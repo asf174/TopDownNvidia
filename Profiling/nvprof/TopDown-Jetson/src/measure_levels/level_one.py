@@ -136,8 +136,7 @@ class LevelOne(LevelExecution):
         ipc_list : list[str] = self._retire.get_metric_value(LevelExecutionParameters.C_IPC_METRIC_NAME)
         if ipc_list is None:
             raise IpcMetricNotDefined # revisar TODO
-        total_ipc : float = self._get_total_value_of_list(ipc_list)
-        print(ipc_list)
+        total_ipc : float = self._get_total_value_of_list(ipc_list, True)
         return total_ipc
         pass
 
@@ -153,7 +152,7 @@ class LevelOne(LevelExecution):
         warp_execution_efficiency_list : list[str] = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
         if warp_execution_efficiency_list is None:
             raise RetireIpcMetricNotDefined
-        total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list)
+        total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
         return self.ipc()*(total_warp_execution_efficiency/100.0)
         pass
 
@@ -359,9 +358,9 @@ class LevelOne(LevelExecution):
         warp_execution_efficiency_list  : list[str] = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
         if warp_execution_efficiency_list is None:
             raise RetireIpcMetricNotDefined # revisar si crear otra excepcion (creo que si)
-        total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list)
+        total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
         issued_ipc_list : list[str] = self._divergence.get_metric_value(LevelExecutionParameters.C_ISSUE_IPC_NAME)
-        total_issued_ipc : float = self._get_total_value_of_list(issued_ipc_list)
+        total_issued_ipc : float = self._get_total_value_of_list(issued_ipc_list, True)
         ipc_diference : float = float(total_issued_ipc) - ipc
         if ipc_diference < 0.0:
             ipc_diference = 0.0

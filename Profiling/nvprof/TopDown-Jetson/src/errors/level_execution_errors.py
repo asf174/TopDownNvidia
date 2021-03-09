@@ -128,3 +128,19 @@ class ElapsedCyclesError(Exception):
         
         super().__init__(self.C_ERROR_MESSAGE)
         pass
+
+class ComputedAsAverageError(Exception):
+    """Exception raised when a metric or event that is a percentage has been configured
+       to be computed as add of elements of each kernel. Must be defined as average
+    
+    Attributes:
+        metric_name    : str   ; name of the event that produced the error"""
+    
+    C_ERROR_MESSAGE     : str = ("Following metric/event cannot be computed as average in each kernel"
+     + " beacuse it's a percentage and must be computed as AVERAGE. Delete it from LevelExecutionParameters: ")
+
+    def __init__(self, metric_name : str):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE)
+        pass

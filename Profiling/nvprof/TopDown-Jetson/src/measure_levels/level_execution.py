@@ -149,6 +149,8 @@ class LevelExecution(ABC):
             EventNoDefined              ; raised in case you have added an event that is 
                                           not supported or does not exist in the NVIDIA analysis tool
         """
+        metrics_events_not_average : list[str] = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
+
         # TODO forma recoger datos. Se podria anadir atributos asi se evita hacer la divison dos veces (una para el calculo
         # y otra para pintarlo aki)
         #lst_to_add.append("\n")
@@ -169,11 +171,21 @@ class LevelExecution(ABC):
             value_str : str
             value : float
             is_percentage : bool = False
+            is_computed_as_average : bool 
             for key_value in dict_values:
-                total_value = round(self._get_total_value_of_list(dict_values[key_value]), LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS)
+                if dict_values[key_value][0][len(dict_values[key_value][0]) - 1] == "%":
+                    is_percentage = True
+                    # In NVIDIA scan tool, the percentages in each kernel are calculated on the total of 
+                    # each kernel and not on the total of the application
+                    if key_value in metrics_events_not_average:
+                        raise ComputedAsAverageError(key_value)
+                is_computed_as_average = not (key_value in metrics_events_not_average)
+                total_value = round(self._get_total_value_of_list(dict_values[key_value], is_computed_as_average), 
+                    LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS)
                 value_str = str(total_value)
                 if is_percentage:
                     value_str += "%"
+                    is_percentage = False
                 metric_name : str = list(dict_desc.keys())[i]
                 lst_to_add.append("\t\t\t{:<45} {:<49} {:<6} ".format(metric_name, dict_desc.get(metric_name), value_str))
                 i += 1
@@ -234,21 +246,34 @@ class LevelExecution(ABC):
         return (float(value_lst[kernel_number])/total_value)*100.0
         pass
 
-    def _get_total_value_of_list(self, list_values : list[str]) -> float:
+    def _get_total_value_of_list(self, list_values : list[str], computed_as_average : bool) -> float:
         """
         Get total value of list of metric/event
     
         Params:
-            list_values : list[str] ; list to be computed
+            list_values         : list[str] ; list to be computed
+            computed_as_average : bool      ; True if you want to obtain total value as average
+                                              as the average of the elements as a function of the 
+                                              time executed or False if it is the total value per 
+                                              increment
+        Returns:
+            Float with total value of the list
         """
-
+        # TODO mirar este metodo, repetir for para no hacer if en cada iteraccion o que
         i : int = 0
         total_value : float = 0.0
+        value : float = 0.0
         for value in list_values:
             if value[len(value) - 1] == "%":
-                total_value += float(value[0:len(value) - 1])*(self._get_percentage_time(i)/100.0)
+                value = float(value[0:len(value) - 1])
+                if computed_as_average:
+                    value *= (self._get_percentage_time(i)/100.0)
+                total_value += value
             else:
-                total_value += float(value)*(self._get_percentage_time(i)/100.0)
+                value = float(value)
+                if computed_as_average:
+                    value *= (self._get_percentage_time(i)/100.0)
+                total_value += value
             i += 1
         return total_value
         pass
@@ -266,7 +291,7 @@ class LevelExecution(ABC):
 
         total_value : float = 0.0
         for key in dict.keys():
-            total_value += self._get_total_value_of_list(dict.get(key))
+            total_value += self._get_total_value_of_list(dict.get(key), True)
         return total_value
         pass
 
