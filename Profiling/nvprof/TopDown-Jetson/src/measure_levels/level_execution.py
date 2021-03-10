@@ -29,14 +29,17 @@ class LevelExecution(ABC):
                                               or False in other case
         _recolect_events    : bool          ; True if the execution must recolted the events used by NVIDIA scan tool
                                               or False in other case
+
+        _is_tesla_device    : bool          ; True if device is a tesla model or False if not
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool, is_tesla_device : bool):
         self._extra_measure : ExtraMeasure = ExtraMeasure()
         self._program : str = program
         self._output_file : str = output_file
         self._recolect_metrics : bool = recoltect_metrics
         self._recolect_events : bool = recolect_events
+        self._is_tesla_device : bool = is_tesla_device_model
         pass 
 
     @abstractmethod

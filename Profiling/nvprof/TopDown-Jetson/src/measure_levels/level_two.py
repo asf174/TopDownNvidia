@@ -32,13 +32,13 @@ class LevelTwo(LevelOne):
         _front_dependency  : FrontDepdendency  ; front's dependency part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool, is_tesla_device : bool):
         
         self._back_core_bound : CoreBound = CoreBound()
         self._back_memory_bound : MemoryBound = MemoryBound()
         self._front_band_width : FrontBandWidth = FrontBandWidth()
         self._front_dependency : FrontDependency = FrontDependency()
-        super().__init__(program, output_file, recoltect_metrics, recolect_events)
+        super().__init__(program, output_file, recoltect_metrics, recolect_events, is_tesla_device)
         pass
 
     def back_core_bound(self) -> CoreBound:

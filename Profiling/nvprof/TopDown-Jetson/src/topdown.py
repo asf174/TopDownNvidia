@@ -101,7 +101,6 @@ class TopDown:
             dest = 'metrics')
         pass
 
-
     def __add_tesla_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add tesla argument. 'C_TESLA_DEVICE_SHORT_OPTION' is the short option of argument
@@ -352,6 +351,17 @@ class TopDown:
         """
 
         return self.__show_all_measurementes 
+        pass
+
+    def is_tesla_device_model(self) -> bool:
+        """
+        Check if all devices are tesla model
+
+        Returns:
+            True if devices are tesla model or False if not
+        """
+
+        return self.__is_tesla_device 
         pass
 
     def show_events(self) -> bool:
@@ -621,24 +631,23 @@ class TopDown:
             show_metrics = True
             show_events = True
         if self.level() == 1:
-           level : LevelOne = LevelOne(self.program(), self.output_file(), show_metrics, show_events)
+           level : LevelOne = LevelOne(self.program(), self.output_file(), show_metrics, show_events, self.is_tesla_device_model())
         elif self.level() == 2:
-            level : LevelTwo = LevelTwo(self.program(), self.output_file(), show_metrics, show_events) 
+            level : LevelTwo = LevelTwo(self.program(), self.output_file(), show_metrics, show_events, self.is_tesla_device_model()) 
         elif self.level() == 3:
-             level : LevelThree = LevelThree(self.program(), self.output_file(), show_metrics, show_events) 
+             level : LevelThree = LevelThree(self.program(), self.output_file(), show_metrics, show_events, self.is_tesla_device_model()) 
         lst_output : list[str] = list() # for extra information
         level.run(lst_output)
         self.__show_results(level)
-        if self.show_desc(): ### revisar este IF no deberia ir aqui
+     
+        if self.show_all_measures() or self.show_metrics() or self.show_events():
             # Write results in output-file if has been specified
-
             printer : MessageFormat = MessageFormat()
             print()
             message : str = "List of measurements computed by NVIDIA scan tool"
             printer.print_desplazed_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
             print()
             print()
-        if self.show_all_measures() or self.show_metrics() or self.show_events():
             if not self.output_file() is None:
                     printer.write_in_file_at_end(self.output_file(), lst_output)
             element : str

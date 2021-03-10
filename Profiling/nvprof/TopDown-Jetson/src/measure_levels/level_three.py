@@ -25,10 +25,10 @@ class LevelThree(LevelTwo):
         __constant_memory_bound     : ConstantMemoryBound   ; constant cache part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool, is_tesla_device : bool):
         
         self.__constant_memory_bound : ConstantMemoryBound = ConstantMemoryBound()
-        super().__init__(program, output_file, recoltect_metrics, recolect_events)
+        super().__init__(program, output_file, recoltect_metrics, recolect_events, is_tesla_device)
         pass
 
     def constant_memory_bound(self) -> str:
