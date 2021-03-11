@@ -39,7 +39,7 @@ class LevelExecution(ABC):
         self._output_file : str = output_file
         self._recolect_metrics : bool = recoltect_metrics
         self._recolect_events : bool = recolect_events
-        self._is_tesla_device : bool = is_tesla_device_model
+        self._is_tesla_device : bool = is_tesla_device
         pass 
 
     @abstractmethod
@@ -112,6 +112,10 @@ class LevelExecution(ABC):
         Parameters:
             lst_output              : list[str]     ; OUTPUT list with results
         """
+        pass
+
+    def is_tesla_device_model() -> bool:
+        return self._is_tesla_device
         pass
 
     def get_device_max_ipc(self) -> float:

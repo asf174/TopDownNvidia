@@ -441,8 +441,8 @@ class TopDown:
         ipc_degradation_back_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
             str(round(level_execution.back_end_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         
-        messages : list[list[str]] = [[stalls_front_message, stalls_back_message, ipc_degradation_divergence_message, ipc_retire_message],
-        [ipc_degradation_front_message, ipc_degradation_back_message, " ", " "]]
+        messages : list[list[str]] = [["","","",""], [stalls_front_message, stalls_back_message, ipc_degradation_divergence_message, 
+        ipc_retire_message], [ipc_degradation_front_message, ipc_degradation_back_message, " ", " "]]
 
         titles : list[str] = [level_execution.front_end().name(), level_execution.back_end().name(),
             level_execution.divergence().name(),level_execution.retire().name()]
@@ -479,11 +479,12 @@ class TopDown:
         ipc_degradation_back_memory_bound_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
             str(round(level_execution.back_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
        
-        messages : list[list[str]] = [[stalls_front_band_width_on_total_message, stalls_front_dependency_on_total_message, 
-            stalls_back_core_bound_on_total_message,stalls_back_memory_bound_on_total_message],
-            [stalls_front_band_width_on_front_message, stalls_front_dependency_on_front_message, 
-            stalls_back_core_bound_on_back_message, stalls_back_memory_bound_on_back_message],
-            ["", "", "", ""], [ipc_degradation_front_band_width_message, ipc_degradation_front_dependency_message,
+        messages : list[list[str]] = [["","","",""] , [stalls_front_band_width_on_total_message, 
+            stalls_front_dependency_on_total_message,  stalls_back_core_bound_on_total_message, 
+            stalls_back_memory_bound_on_total_message], [stalls_front_band_width_on_front_message, 
+            stalls_front_dependency_on_front_message, stalls_back_core_bound_on_back_message, 
+            stalls_back_memory_bound_on_back_message], ["", "", "", ""], 
+            [ipc_degradation_front_band_width_message, ipc_degradation_front_dependency_message,
             ipc_degradation_back_core_bound_message, ipc_degradation_back_memory_bound_message]]
 
         titles : list[str] = [level_execution.front_band_width().name(), level_execution.front_dependency().name(),
@@ -512,7 +513,11 @@ class TopDown:
 
         titles : list[str] = [level_execution.constant_memory_bound().name(), "", "", ""]
 
-        MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        messages : str = ("\n" + stalls_constant_memory_bound_on_total_message + "\n" + 
+            stalls_constant_memory_bound_on_memory_bound_message + "\n" + stalls_constant_memory_bound_on_back_message 
+            + "\n\n" + ipc_degradation_constant_memory_bound_width_message)
+        #MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        MessageFormat().print_msg_box(messages, 1, None, level_execution.constant_memory_bound().name(), self.output_file(), self.delete_output_file_content())
         pass
     
     def __show_results(self, level_execution):

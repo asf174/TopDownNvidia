@@ -31,12 +31,12 @@ class LevelOne(LevelExecution):
         _retire         : Retire        ; Retire part of the execution
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool, is_tesla_device : bool):
         self._front_end : FrontEnd = FrontEnd()
         self._back_end  : BackEnd = BackEnd()
         self._divergence : Divergence = Divergence()
         self._retire : Retire = Retire()
-        super().__init__(program, output_file, recoltect_metrics, recolect_events)
+        super().__init__(program, output_file, recoltect_metrics, recolect_events,is_tesla_device)
         pass
  
     def _generate_command(self) -> str:
