@@ -80,14 +80,15 @@ class MetricMeasure(ABC):
         self._metrics : dict = dict()
         self._metrics_desc : dict = dict()
         if metrics != "":
-            self._metrics  = dict.fromkeys(metrics.split(","))
-            self._metrics_desc = dict.fromkeys(metrics_desc.split(","))
+            print(metrics.replace(" ", "").split(","))
+            self._metrics  = dict.fromkeys(metrics.replace(" ", "").split(","))
+            self._metrics_desc = dict.fromkeys(metrics_desc.replace(" ", "").split(","))
         
         self._events : dict = dict()
         self._events_desc : dict = dict()
         if events != "":
-            self._events = dict.fromkeys(events.split(","))
-            self._events_desc = dict.fromkeys(events_desc.split(","))
+            self._events = dict.fromkeys(events.replace(" ", "").split(","))
+            self._events_desc = dict.fromkeys(events_desc.replace(" ", "").split(","))
         
         self._metrics_str : str = metrics
         self._events_str : str = events

@@ -22,6 +22,3 @@ class LevelExecutionParameters:
     # each kernel, and not as a function 
     # of the time executed
     C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED   : str       = "inst_issued"
-
-
-    C_NVPROF_ONE_TOTAL_MEASURE                  : str       = "--event-collection-mode" #TODO

@@ -257,6 +257,8 @@ class LevelExecution(ABC):
         """
         #TODO lanzar excepcion
         value_lst : list[str] = self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)
+        if value_lst is None:
+            raise ElapsedCyclesError
         value_str : str
         total_value : float = 0.0
         for value_str in value_lst:

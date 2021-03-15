@@ -48,7 +48,7 @@ class LevelThree(LevelTwo):
         Returns:
             String with command to be executed
         """
-         
+        
         command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," +
             self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," +
@@ -58,6 +58,7 @@ class LevelThree(LevelTwo):
             "," + self._retire.events_str() + "," + self._back_core_bound.events_str() + "," + 
             self._back_memory_bound.events_str() +  "," + self.__constant_memory_bound.events_str() + 
             " --unified-memory-profiling off --profile-from-start off " + self._program)
+        print(command)
         return command
         pass
 
