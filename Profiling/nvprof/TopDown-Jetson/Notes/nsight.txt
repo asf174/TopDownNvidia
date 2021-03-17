@@ -1,0 +1,100 @@
+target-processes
+----------------------------------------
+Select the processes you want to profile. Available modes are:
+
+    application-only Profile only the root application process.
+    
+    all Profile the application and all its child processes. ### COGEMOS ESTA
+
+This option is only available for Linux and Windows targets. 
+---------------------------------------------------------
+
+support-32bit
+---------------------------------------------------------
+ 	Support profiling processes launched from 32-bit applications. 
+    This option is only available on x86_64 Linux. On Windows, tracking 32-bit applications is enabled by default
+
+    Cogemos "yes"
+---------------------------------------------------------
+
+replay-mode 	
+---------------------------------------------------------
+Mechanism used for replaying a kernel launch multiple times to collect all requested profiling data:
+
+    kernel: Replay individual kernel launches "transparently" during the execution of the application.
+    application: Relaunch the entire application multiple times. Requires deterministic program execution.
+
+    DEFAULT: kernel. Cogemos kernel.
+---------------------------------------------------------
+
+app-replay-match NO ENTIENDO
+---------------------------------------------------------
+
+---------------------------------------------------------
+
+list-sets
+set
+list-section
+section
+
+profile-from-start 	Set if application should be profiled from its start. Allowed values:
+--------------------------------------------------------
+    on/off
+    yes/no
+
+    DEFAULT: yes, tenemos que coger YES
+--------------------------------------------------------
+
+
+
+disable-profiler-start-stop
+--------------------------------------------------------
+Disable profiler start/stop. When enabled, cu(da)ProfilerStart/Stop API calls are ignored. 
+--------------------------------------------------------
+
+
+cache-control 	
+--------------------------------------------------------
+Control the behavior of the GPU caches during profiling. Allowed values:
+
+    all: All GPU caches are flushed before each kernel replay iteration during profiling. 
+    While metric values in the execution environment of the application might be slightly different without 
+    invalidating the caches, this mode offers the most reproducible metric results across the replay passes and 
+    also across multiple runs of the target application.
+    none: No GPU caches are flushed during profiling. This can improve performance and better 
+    replicates the application behavior if only a single kernel replay pass is necessary for metric collection. 
+    However, some metric results will vary depending on prior GPU work, and between replay iterations. This can lead 
+    to inconsistent and out-of-bounds metric values.
+
+    DEFAULT: all, COGEMOS all
+--------------------------------------------------------
+
+
+clock-control
+--------------------------------------------------------
+ 	Control the behavior of the GPU clocks during profiling. Allowed values:
+
+    base: GPC and memory clocks are locked to their respective base frequency during profiling. 
+    This has no impact on thermal throttling. Note that actual clocks might still vary, depending on 
+    the level of driver support for this feature. As an alternative, use nvidia-smi to lock the clocks 
+    externally and set this option to none.
+    none: No GPC or memory frequencies are changed during profiling.
+
+    DEFAULT base; cogemos base creo
+
+--------------------------------------------------------
+
+sampling-interval 	
+--------------------------------------------------------
+    Set the sampling period in the range of [0..31]. The actual frequency is 2 ^ (5 + value) cycles. If set to 'auto', t
+    he profiler tries to automatically determine a high sampling frequency without skipping samples or 
+    overflowing the output buffer. 	
+
+    DEFAULT auto #TODO mirar cuando
+--------------------------------------------------------
+
+
+............................................................ FILE PART ................................................
+log-file: si no esta puesto, SE MUESTRAN POR CONSOLA
+o,export: 
+.......................................................................................................................
