@@ -1,0 +1,3 @@
+[submodule "build_manpages"]
+	path = Profiling/nvprof/TopDown-Jetson/pruebas/man/build_manpages
+	url = https://github.com/praiskup/build_manpages

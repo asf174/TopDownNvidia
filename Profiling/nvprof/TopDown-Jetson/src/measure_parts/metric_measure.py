@@ -80,7 +80,6 @@ class MetricMeasure(ABC):
         self._metrics : dict = dict()
         self._metrics_desc : dict = dict()
         if metrics != "":
-            print(metrics.replace(" ", "").split(","))
             self._metrics  = dict.fromkeys(metrics.replace(" ", "").split(","))
             self._metrics_desc = dict.fromkeys(metrics_desc.replace(" ", "").split(","))
         

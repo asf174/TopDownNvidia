@@ -197,82 +197,82 @@ class LevelTwo(LevelOne):
             self._recolect_events and self._front_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_end.name()))
         if self._recolect_metrics and self._front_end.metrics_str() != "":
-            self._add_result_part_to_lst(self._front_end.metrics(), 
+            super()._add_result_part_to_lst(self._front_end.metrics(), 
                 self._front_end.metrics_description(), lst_output, True)
         if self._recolect_events and self._front_end.events_str() != "":
-                self._add_result_part_to_lst(self._front_end.events(), 
+                super()._add_result_part_to_lst(self._front_end.events(), 
                 self._front_end.events_description(), "", lst_output, False)
         if (self._recolect_metrics and self._front_band_width.metrics_str() != "" or 
             self._recolect_events and self._front_band_width.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_band_width.name()))
         if  self._recolect_metrics and self._front_band_width.metrics_str() != "":
-            self._add_result_part_to_lst(self._front_band_width.metrics(), 
+            super()._add_result_part_to_lst(self._front_band_width.metrics(), 
                 self._front_band_width.metrics_description(), lst_output, True)
         if self._recolect_events and self._front_band_width.events_str() != "":
-                self._add_result_part_to_lst(self._front_band_width.events(), 
+                super()._add_result_part_to_lst(self._front_band_width.events(), 
                 self._front_band_width.events_description(), lst_output, False)
         if (self._recolect_metrics and self._front_dependency.metrics_str() != "" or 
             self._recolect_events and self._front_dependency.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_dependency.name()))
         if self._recolect_metrics and self._front_dependency.metrics_str() != "":
-            self._add_result_part_to_lst(self._front_dependency.metrics(), 
+            super()._add_result_part_to_lst(self._front_dependency.metrics(), 
                 self._front_dependency.metrics_description(), lst_output, True)
         if self._recolect_events and self._front_dependency.events_str() != "":
-                self._add_result_part_to_lst(self._front_dependency.events(), 
+                super()._add_result_part_to_lst(self._front_dependency.events(), 
                 self._front_dependency.events_description(), lst_output, False)
         if (self._recolect_metrics and self._back_end.metrics_str() != "" or 
             self._recolect_events and self._back_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_end.name()))
         if self._recolect_metrics and self._back_end.metrics_str() != "":
-            self._add_result_part_to_lst(self._back_end.metrics(), 
+            super()._add_result_part_to_lst(self._back_end.metrics(), 
                 self._back_end.metrics_description(), lst_output, True)
         if self._recolect_events and self._back_end.events_str() != "":
-                self._add_result_part_to_lst(self._back_end.events(), 
+                super()._add_result_part_to_lst(self._back_end.events(), 
                 self._back_end.events_description(), lst_output, False)
         if (self._recolect_metrics and self._back_core_bound.metrics_str() != "" or 
             self._recolect_events and self._back_core_bound.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_core_bound.name()))
         if self._recolect_metrics and self._back_core_bound.metrics_str() != "":
-            self._add_result_part_to_lst(self._back_core_bound.metrics(), 
+            super()._add_result_part_to_lst(self._back_core_bound.metrics(), 
                 self._back_core_bound.metrics_description(), lst_output, True)
         if self._recolect_events and self._back_core_bound.events_str() != "":
-                self._add_result_part_to_lst(self._back_core_bound.events(), 
+                super()._add_result_part_to_lst(self._back_core_bound.events(), 
                 self._back_core_bound.events_description(), lst_output, False) 
         if (self._recolect_metrics and self._back_memory_bound.metrics_str() != "" or 
             self._recolect_events and self._back_memory_bound.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_memory_bound.name()))
         if self._recolect_metrics and self._back_memory_bound.metrics_str() != "":
-            self._add_result_part_to_lst(self._back_memory_bound.metrics(), 
+            super()._add_result_part_to_lst(self._back_memory_bound.metrics(), 
                 self._back_memory_bound.metrics_description(), lst_output, True)
         if self._recolect_events and self._back_memory_bound.events_str() != "":
-                self._add_result_part_to_lst(self._back_memory_bound.events(), 
+                super()._add_result_part_to_lst(self._back_memory_bound.events(), 
                 self._back_memory_bound.events_description(), lst_output, False)
         if (self._recolect_metrics and self._divergence.metrics_str() != "" or 
             self._recolect_events and self._divergence.events_str() != ""):
             lst_output.append(converter.underlined_str(self._divergence.name()))
         if self._recolect_metrics and self._divergence.metrics_str() != "":
-            self._add_result_part_to_lst(self._divergence.metrics(), 
+            super()._add_result_part_to_lst(self._divergence.metrics(), 
                 self._divergence.metrics_description(), lst_output, True)
         if self._recolect_events and self._divergence.events_str() != "":
-                self._add_result_part_to_lst(self._divergence.events(), 
+                super()._add_result_part_to_lst(self._divergence.events(), 
                 self._divergence.events_description(),lst_output, False)
         if (self._recolect_metrics and self._retire.metrics_str() != "" or 
             self._recolect_events and self._retire.events_str() != ""):
             lst_output.append(converter.underlined_str(self._retire.name()))
         if self._recolect_metrics and  self._retire.metrics_str() != "":
-                self._add_result_part_to_lst(self._retire.metrics(), 
+                super()._add_result_part_to_lst(self._retire.metrics(), 
                 self._retire.metrics_description(), lst_output, True)
         if self._recolect_events and self._retire.events_str() != "":
-                self._add_result_part_to_lst(self._retire.events(), 
+                super()._add_result_part_to_lst(self._retire.events(), 
                 self._retire.events_description(), lst_output, False)
         if (self._recolect_metrics and self._extra_measure.metrics_str() != "" or 
             self._recolect_events and self._extra_measure.events_str() != ""):
             lst_output.append(converter.underlined_str(self._extra_measure.name()))
         if self._recolect_metrics and self._extra_measure.metrics_str() != "":
-            self._add_result_part_to_lst(self._extra_measure.metrics(), 
+            super()._add_result_part_to_lst(self._extra_measure.metrics(), 
                 self._extra_measure.metrics_description(), lst_output, True)
         if self._recolect_events and self._extra_measure.events_str() != "":
-                self._add_result_part_to_lst(self._extra_measure.events(), 
+                super()._add_result_part_to_lst(self._extra_measure.events(), 
                 self._extra_measure.events_description(), lst_output, False)
         lst_output.append("\n")
         pass

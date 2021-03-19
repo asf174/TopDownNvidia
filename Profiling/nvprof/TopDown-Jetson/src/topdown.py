@@ -22,21 +22,24 @@ class TopDown:
     Class that implements TopDown methodology over NVIDIA GPUs.
     
     Attributes:
-        __level                         : int   ;   level of the exection
-        __file_output                   : str   ;   path to log to show results or 'None' if option
-                                                    is not specified
-        __verbose                       : bool  ;   True to show long-descriptions of results or
-                                                    False in other case
-        __program                       : str   ;   path to program to be executed
-        __delete_output_file_content    : bool  ;   If '-o/--output' is set delete output's file contents before 
-                                                    write results
-        __show_desc                     : bool  ;   True to show descriptions of results or
-                                                    False in other case
-        __show_metrics                  : bool  ;   True if program has to show metrics computed by NVIDIA scan tool
-        __show_events                   : bool  ;   True if program has to show events computed by NVIDIA scan tool
-        __show_all_measurementes        : bool  ;   True if program has to show all measures (metrics and events) 
-                                                    computed by NVIDIA scan tool
-        __is_tesla_device               : bool  ;   True if device is a tesla model or False if not
+        __parser                        : argparse.ArgumentParse    ;   reference to arguments parser
+        __level                         : int                       ;   level of the exection
+        __file_output                   : str                       ;   path to log to show results or 'None' if option
+                                                                        is not specified
+        __verbose                       : bool                      ;   True to show long-descriptions of results or
+                                                                        False in other case
+        __program                       : str                       ;   path to program to be executed
+        __delete_output_file_content    : bool                      ;   If '-o/--output' is set delete output's file contents 
+                                                                        before write results
+        __show_desc                     : bool                      ;   True to show descriptions of results or
+                                                                        False in other case
+        __show_metrics                  : bool                      ;   True if program has to show metrics computed by NVIDIA 
+                                                                        scan tool
+        __show_events                   : bool                      ;   True if program has to show events computed by NVIDIA scan 
+                                                                        tool
+        __show_all_measurementes        : bool                      ;   True if program has to show all measures (metrics and events) 
+                                                                        computed by NVIDIA scan tool
+        __is_tesla_device               : bool                      ;   True if device is a tesla model or False if not
     """
 
     def __init__(self):
@@ -44,16 +47,16 @@ class TopDown:
         Init attributes depending of arguments.
         """
 
-        parser : argparse.ArgumentParse = argparse.ArgumentParser(#prog='[/path/to/PROGRAM]',
+        self.__parser : argparse.ArgumentParse = argparse.ArgumentParser(#prog='[/path/to/PROGRAM]',
             formatter_class = lambda prog: argparse.HelpFormatter(prog, max_help_position = 50),
             description = "TopDown methodology on NVIDIA's GPUs",
             epilog = "Check options to run program")
             #usage='%(prog)s [OPTIONS]') #exit_on_error=False)
-        parser._optionals.title = "Optional Arguments"
-        self.__add_arguments(parser)
+        self.__parser._optionals.title = "Optional Arguments"
+        self.__add_arguments(self.__parser)
 
         # Save values into attributes
-        args : argparse.Namespace = parser.parse_args()
+        args : argparse.Namespace = self.__parser.parse_args()
       
         self.__level : int = args.level[0]
         self.__file_output : str = args.file
@@ -65,6 +68,17 @@ class TopDown:
         self.__show_events : bool = args.events
         self.__show_all_measurementes : bool = args.all_measures
         self.__is_tesla_device : bool = args.tesla
+        pass
+    
+    def arg_parser(self) -> argparse :# TODO-> ArgumentParser:
+        """ 
+        Returns arg parser used by program
+
+        Returns:
+            Reference to arguments' parser 
+        """
+        
+        return self.__parser
         pass
     
     def __add_show_desc_argument(self, parser : argparse.ArgumentParser):

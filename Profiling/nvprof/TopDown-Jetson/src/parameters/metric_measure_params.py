@@ -47,8 +47,8 @@ class MetricMeasureParameters:
 
     # extra_measure.py
     C_EXTRA_MEASURE_METRICS             : str       = ("")
-    C_EXTRA_MEASURE_EVENTS              : str       = ("inst_issued,ins_executed,active_cycles," + LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)
-    C_EXTRA_MEASURE_NAME                : str       = "EXTRA_MEASURE"
+    C_EXTRA_MEASURE_EVENTS              : str       = ("active_cycles," + LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)
+    C_EXTRA_MEASURE_NAME                : str       = "EXTRA-MEASURE"
     C_EXTRA_MEASURE_DESCRIPTION         : str       = ("") # TODO preguntar separaciones, si anhadir el espacio
 
     # retire.py
@@ -60,7 +60,7 @@ class MetricMeasureParameters:
     # memory_bound.py
     C_MEMORY_BOUND_METRICS              : str       = ("stall_memory_dependency,stall_constant_memory_dependency,stall_memory_throttle")
     C_MEMORY_BOUND_EVENTS               : str       = ("")
-    C_MEMORY_BOUND_NAME                 : str       = "BACK_END.MEMORY_BOUND"
+    C_MEMORY_BOUND_NAME                 : str       = "BACK-END.MEMORY-BOUND"
     C_MEMORY_BOUND_DESCRIPTION          : str       = ("It analyzes the parts of the GPU architecture where we have a loss of performance (IPC) due to\n"
                                                           + "memory bounds. This part takes into account aspects such as data dependencies, failures or access\n"
                                                           + "limits in caches")
@@ -68,24 +68,24 @@ class MetricMeasureParameters:
     # core_bound.py
     C_CORE_BOUND_METRICS                : str       = ("stall_pipe_busy")
     C_CORE_BOUND_EVENTS                 : str       = ("")
-    C_CORE_BOUND_NAME                   : str       = "BACK_END.CORE_BOUND"
+    C_CORE_BOUND_NAME                   : str       = "BACK-END.CORE-BOUND"
     C_CORE_BOUND_DESCRIPTION            : str       = ("In this part, the aspects related to CUDA cores that cause bottlenecks and thus performance losses are analyzed.\n"
                                                         + "Some aspects such as the use and availability of the functional units are analyzed.")
 
     # front_band_width.py
     C_FRONT_BAND_WIDTH_METRICS          : str       = ("stall_exec_dependency,stall_not_selected")
     C_FRONT_BAND_WIDTH_EVENTS           : str       = ("")
-    C_FRONT_BAND_WIDTH_NAME             : str       = "FRONT_END.BAND_WIDTH"
+    C_FRONT_BAND_WIDTH_NAME             : str       = "FRONT-END.BAND-WIDTH"
     C_FRONT_BAND_WIDTH_DESCRIPTION      : str       = ("BW description")
 
     # front_dependency.py
     C_FRONT_DEPENDENCY_METRICS          : str       = ("stall_inst_fetch,stall_sync,stall_other")
     C_FRONT_DEPENDENCY_EVENTS           : str       = ("")
-    C_FRONT_DEPENDENCY_NAME             : str       = "FRONT_END.DEPENDENCY"
+    C_FRONT_DEPENDENCY_NAME             : str       = "FRONT-END.DEPENDENCY"
     C_FRONT_DEPENDENCY_DESCRIPTION      : str       = ("D description")
 
     # constant_memory_bound.py
     C_CONSTANT_MEMORY_BOUND_METRICS     : str       = ("stall_constant_memory_dependency")
     C_CONSTANT_MEMORY_BOUND_EVENTS      : str       = ("")
-    C_CONSTANT_MEMORY_BOUND_NAME        : str       = "MEMORY_BOUND.CONSTANT_MEMORY_BOUND"
+    C_CONSTANT_MEMORY_BOUND_NAME        : str       = "MEMORY-BOUND.CONSTANT-MEMORY-BOUND"
     C_CONSTANT_MEMORY_BOUND_DESCRIPTION : str       = ("CMB description")
