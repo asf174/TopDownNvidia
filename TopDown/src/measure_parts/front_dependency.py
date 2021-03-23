@@ -11,8 +11,9 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from parameters.metric_measure_params import MetricMeasureParameters 
 from measure_parts.front_end import FrontEnd
+from abc import ABC # abstract class
 
-class FrontDependency(FrontEnd):
+class FrontDependency(FrontEnd, ABC):
     """Class that defines the Front-End.Dependency part."""
 
     def __init__(self):

@@ -26,34 +26,59 @@ class MetricMeasure(ABC):
         _metrics           : dict  ;   dictionary with metric name as key, 
                                         and value of metric as value.
         
-        _events            : dict  ;   dictionary with metric name as key, 
-                                        and value of event as value.
-        
         _metrics_desc      : dict  ;   dictionary with metric name as key, 
                                         and description of metric as value.
-        
-        _events_desc       : dict  ;   dictionary with event name as key, 
-                                        and description of event as value.
 
         _metrics_str       : str   ;   string with the metrics
-        _events_str        : str   ;   string with the events
     """
 
-    def __init_dictionaries(self):
-        """ Initialize data structures in the correct way."""
+    def __init_dictionaries(self, name : str, description : str, metrics : str, metrics_desc : str):
+        """ 
+        Initialize data structures in the correct way.
+        
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+            
+            metrics_desc        : str   ;   string with metric name as key, 
+                                            and description of metric as value. 
+        """
+
+        self._metrics : dict = dict()
+        self._metrics_desc : dict = dict()
+        self._metrics_str : str = metrics
+        if metrics != "":
+            self._metrics  = dict.fromkeys(metrics.replace(" ", "").split(","))
+            self._metrics_desc = dict.fromkeys(metrics_desc.replace(" ", "").split(",")) 
 
         key_metrics : str
-        key_events : str
         key_metrics_desc : str
-        key_events_desc : str
+        
         # TODO todo esto en un bucle for con 'zip'
         for key_metrics in self._metrics:
             self._metrics[key_metrics] = list()
-        for key_events in self._events:
-            self._events[key_events] = list()
         pass
-                
-    def __init__(self, name : str, description : str, metrics : str, events : str, metrics_desc : str, events_desc : str):
+
+    def __check_data_structures(self): 
+        """
+        Check all data structures for events and metrics are consistent.
+        In case they are not, raise exception.
+
+        Raises:
+            DataStructuresOfMetricError  ; if metric is not defined in all data structures
+        """
+
+        metric_name : str
+        for metric_name in self._metrics.items(): 
+            if not metric_name in self._metrics_desc:
+                raise DataStructuresOfMetricError(metric_name)
+        pass
+
+    def __init__(self, name : str, description : str, metrics : str, metrics_desc : str):
         """
         Set attributtes with argument values.
         
@@ -64,73 +89,35 @@ class MetricMeasure(ABC):
             description         : str   ;   description with information.
         
             metrics             : str   ;   string with the metrics
-        
-            events              : str   ;   string with events
-        
+            
             metrics_desc        : str   ;   string with metric name as key, 
-                                            and description of metric as value.
-        
-            events_desc         : str   ;   dictionary with event name as key, 
-                                            and description of event as value.
+                                            and description of metric as value. 
         """
 
         self._name : str = name
         self._description : str = description
-
-        self._metrics : dict = dict()
-        self._metrics_desc : dict = dict()
-        if metrics != "":
-            self._metrics  = dict.fromkeys(metrics.replace(" ", "").split(","))
-            self._metrics_desc = dict.fromkeys(metrics_desc.replace(" ", "").split(","))
-        
-        self._events : dict = dict()
-        self._events_desc : dict = dict()
-        if events != "":
-            self._events = dict.fromkeys(events.replace(" ", "").split(","))
-            self._events_desc = dict.fromkeys(events_desc.replace(" ", "").split(","))
-        
-        self._metrics_str : str = metrics
-        self._events_str : str = events
-        self._check_data_structures() # check dictionaries defined correctly
         self.__init_dictionaries()
-        pass
-    
-    def _check_data_structures(self): 
-        """
-        Check all data structures for events and metrics are consistent.
-        In case they are not, raise exception.
-
-        Raises:
-            DataStructuresOfEventError  ; if event is not defined in all data structures
-            DataStructuresOfMetricError ; if metric is not defined in all data structures
-        """
-
-        event_name : str
-        metric_name : str
-        for (event_name, value), (metric_name, value) in zip(self._events.items(), self._metrics.items()): 
-            if not event_name in self._events_desc:
-                raise DataStructuresOfEventError(event_name)
-            if not metric_name in self._metrics_desc:
-                raise DataStructuresOfMetricError(metric_name)
+        self.__check_data_structures() # check dictionaries defined correctly
         pass
 
-    def is_event(self, event_name : str) -> bool:
+     def __init__(self, metrics : str, metrics_desc : str):
         """
-        Check if argument it's an event or not
-
-        Params:
-            event_name  : str   ; name of the event
-
-        Returns:
-            True if 'event_name' it's a correct event or False in other case
-        """
-
-        is_in_events : bool = event_name in self._events
-        is_in_events_desc : bool = event_name in self._events_desc
+        Set attributtes with argument values.
         
-        if not (is_in_events and is_in_events_desc):
-            return False
-        return True
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+            
+            metrics_desc        : str   ;   string with metric name as key, 
+                                            and description of metric as value. 
+        """
+
+        self.__init_dictionaries()
+        self.__check_data_structures() # check dictionaries defined correctly
         pass
 
     def is_metric(self, metric_name : str) -> bool:
@@ -138,10 +125,10 @@ class MetricMeasure(ABC):
         Check if argument it's a metric or not
 
         Params:
-            event_name  : str   ; name of the metric
+            metric_name  : str   ; name of the metric
 
         Returns:
-            True if 'event_name' it's a correct event or False in other case
+            True if 'metric_name' it's a correct metric or False in other case
         """
 
         is_in_metrics : bool = metric_name in self._metrics
@@ -152,42 +139,6 @@ class MetricMeasure(ABC):
         return True
         pass
     
-    def get_event_value(self, event_name : str) -> list[str]:
-        """
-        Get the value/s associated with 'event_name'
-
-        Params:
-            event_name  : str   ; name of the event
-
-        Returns:
-            List with associated value/s to 'event_name' or 'None' if
-            'event_name' doesn't exist or it's not an event
-
-        """
-
-        if self.is_metric(event_name) or not self.is_event(event_name):
-            return None
-        return self._events.get(event_name)
-        pass
-
-    def get_event_description(self, event_name : str) -> list[str]:
-        """
-        Get the description/s associated with 'event_name'
-
-        Params:
-            event_name  : str   ; name of the event
-
-        Returns:
-            List with associated description/s to 'event_name' or 'None' if
-            'event_name' doesn't exist or it's not an event
-
-        """
-
-        if self.is_metric() or not self.is_event():
-            return None
-        return self._events_desc.get(event_name)
-        pass
-
     def get_metric_value(self, metric_name : str) -> list[str]:
         """
         Get the value/s associated with 'metric_name'
@@ -262,43 +213,6 @@ class MetricMeasure(ABC):
         return True
         pass
 
-    def set_event_value(self, event_name : str, new_value : str) -> bool:
-        """
-        Update event with key 'event_name' with 'new_value' value if 'event_name' exists.
-
-        Params:
-            event_name     : str   ; name of the event
-            new_value       : str   ; new value to assign to 'event_name' if name exists
-        
-        Returns:
-            True if the operation was perfomed succesfully or False if not because 'event_name'
-            does not correspond to any event
-        """
-
-        if not (event_name in self._events):
-            return False
-        self._events[event_name].append(new_value)
-        return True
-        pass
-
-    def set_event_description(self, event_name : str, new_description : str) -> bool:
-        """
-        Update event with key 'event_name' with 'new_value' description if 'event_name' exists.
-        Params:
-            event_name     : str   ; name of the event
-            new_value       : str   ; new description to assign to 'event_name' if name exists
-        
-        Returns:
-            True if the operation was perfomed succesfully or False if not because 'event_name'
-            does not correspond to any event
-        """
-
-        if not (event_name in self._event):
-            return False
-        self._events_desc[event_name] = new_description
-        return True
-        pass
-
     def name(self) -> str:
         """ 
         Return measure name.
@@ -343,28 +257,6 @@ class MetricMeasure(ABC):
         return self._metrics_desc # mirar retornar copias
         pass
 
-    def events(self) -> dict: 
-        """ 
-        Return the events and their values.
-        
-        Returns:
-            Dictionary with the events and their values
-        """
-        
-        return self._events # mirar retornar copias
-        pass
-
-    def events_description(self) -> dict: 
-        """ 
-        Return the events and their descriptions.
-        
-        Returns:
-            Dictionary with the events and their descriptions
-        """
-
-        return self._events_desc # mirar retornar copias
-        pass
-
     def metrics_str(self) -> str:
         """ 
         Returns a string with the metrics
@@ -376,13 +268,3 @@ class MetricMeasure(ABC):
         return self._metrics_str
         pass
 
-    def events_str(self) -> str:
-        """ 
-        Returns a string with the events
-
-        Returns:
-            String with the events
-        """
-
-        return self._events_str
-        pass

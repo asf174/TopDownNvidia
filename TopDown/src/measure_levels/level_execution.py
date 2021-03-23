@@ -279,6 +279,7 @@ class LevelExecution(ABC):
         Returns:
             Float with total value of the list
         """
+        
         # TODO mirar este metodo, repetir for para no hacer if en cada iteraccion o que
         i : int = 0
         total_value : float = 0.0

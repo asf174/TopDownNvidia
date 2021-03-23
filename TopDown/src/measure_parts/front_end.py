@@ -11,15 +11,11 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from parameters.metric_measure_params import MetricMeasureParameters 
-from measure_parts.metric_measure import MetricMeasure
+from abc import ABC # abstract class
 
-class FrontEnd(MetricMeasure):
+class FrontEnd(MetricMeasure, ABC):
     """Class that defines the Front-End part."""
-
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
-        
-        super().__init__(MetricMeasureParameters.C_FRONT_END_NAME, MetricMeasureParameters.C_FRONT_END_DESCRIPTION,
-            MetricMeasureParameters.C_FRONT_END_METRICS, MetricMeasureParameters.C_FRONT_END_EVENTS, MetricMeasureParameters.C_FRONT_END_METRICS, 
-            MetricMeasureParameters.C_FRONT_END_EVENTS)
-        pass
+    
+    pass
+   
+# TODO revisar este constructor.

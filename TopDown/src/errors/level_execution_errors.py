@@ -117,7 +117,6 @@ class MetricDivergenceIpcDegradationNotDefined(Exception):
         super().__init__(self.C_ERROR_MESSAGE + metric_name)
         pass
 
-
 class ElapsedCyclesError(Exception):
     """Exception raised if cannot obtain the elapsed time in each kernel measured."""
     
