@@ -5,6 +5,7 @@ Measurements made by the TopDown methodology in constant memory part.
 @date:      Jan-2021
 @version:   1.0
 """
+
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -24,3 +25,4 @@ class ConstantMemoryBound(MemoryBound):
             MetricMeasureParameters.C_CONSTANT_MEMORY_BOUND_EVENTS, MetricMeasureParameters.C_CONSTANT_MEMORY_BOUND_METRICS, 
             MetricMeasureParameters.C_CONSTANT_MEMORY_BOUND_EVENTS)
         pass
+       

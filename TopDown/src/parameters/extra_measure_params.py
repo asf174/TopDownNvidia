@@ -23,4 +23,3 @@ class ExtraMeasureParameters:
 
     # extra_measure_nsight.py
     C_EXTRA_MEASURE_NSIGHT_METRICS          : str      = ("")
-    C_EXTRA_MEASURE_NSIGHT_EVENTS           : str      = ("")

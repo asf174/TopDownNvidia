@@ -22,4 +22,3 @@ class DivergenceEndParameters:
 
     # divergence_nsight.py
     C_DIVERGENCE_NSIGHT_METRICS          : str      = ("")
-    C_DIVERGENCE_NSIGHT_EVENTS           : str      = ("")

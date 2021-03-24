@@ -20,4 +20,3 @@ class FrontEndParameters:
 
     # frond_end_nsight.py
     C_FRONT_END_NSIGHT_METRICS          : str       = ("")
-    C_FRONT_END_NSIGHT_EVENTS           : str       = ("")

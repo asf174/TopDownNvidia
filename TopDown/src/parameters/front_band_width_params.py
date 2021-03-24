@@ -18,4 +18,3 @@ class FrontBandWidthParameters:
 
     # front_band_width_nsight.py
     C_FRONT_BAND_WIDTH_NSIGHT_METRICS          : str       = ("")
-    C_FRONT_BAND_WIDTH_NSIGHT_EVENTS           : str       = ("")
