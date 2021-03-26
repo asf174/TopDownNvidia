@@ -1,6 +1,22 @@
+import os
 import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.linear_model import Perceptron
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+# Where to save the figures
+PROJECT_ROOT_DIR = "."
+CHAPTER_ID = "ann"
+IMAGES_PATH = os.path.join(PROJECT_ROOT_DIR, "/home/alvaro/Documents/Facultad/TopDownNvidia/TopDown/tests", CHAPTER_ID)
+os.makedirs(IMAGES_PATH, exist_ok=True)
+
+def save_fig(fig_id, tight_layout=True, fig_extension="png", resolution=300):
+    path = os.path.join(IMAGES_PATH,fig_id + "." + fig_extension)
+    print("Saving figure", fig_id)
+    if tight_layout:
+        plt.tight_layout()
+    plt.savefig(path, format=fig_extension, dpi=resolution)
 
 iris = load_iris()
 X = iris.data[:, (2, 3)]  # petal length, petal width
