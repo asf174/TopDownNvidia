@@ -21,25 +21,17 @@ class LevelExecution(ABC):
     Class that represents the levels of the execution.
      
     Attributes:
-        _extra_measure      : ExtraMeasure  ; support measures
         _output_file        : str           ; path to output file with results. 'None' to don't use
                                           output file
         _program            : str           ; program of the execution
         _recolect_metrics   : bool          ; True if the execution must recolted the metrics used by NVIDIA scan tool
                                               or False in other case
-        _recolect_events    : bool          ; True if the execution must recolted the events used by NVIDIA scan tool
-                                              or False in other case
-
-        _is_tesla_device    : bool          ; True if device is a tesla model or False if not
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool, is_tesla_device : bool):
-        self._extra_measure : ExtraMeasure = ExtraMeasure()
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
         self._program : str = program
         self._output_file : str = output_file
-        self._recolect_metrics : bool = recoltect_metrics
-        self._recolect_events : bool = recolect_events
-        self._is_tesla_device : bool = is_tesla_device
+        self._recolect_metrics : bool = recolect_events
         pass 
 
     @abstractmethod
@@ -62,17 +54,6 @@ class LevelExecution(ABC):
             lst_output  : list[str] ; list with results
         """
         
-        pass
-
-    @abstractmethod
-    def _get_results(self, lst_output : list[str]):
-        """ 
-        Get results of the different parts.
-
-        Parameters:
-            lst_output              : list[str]     ; OUTPUT list with results
-        """
-
         pass
 
     def _launch(self, command : str) -> str:
@@ -112,10 +93,6 @@ class LevelExecution(ABC):
         Parameters:
             lst_output              : list[str]     ; OUTPUT list with results
         """
-        pass
-
-    def is_tesla_device_model() -> bool:
-        return self._is_tesla_device
         pass
 
     def get_device_max_ipc(self) -> float:
@@ -222,50 +199,6 @@ class LevelExecution(ABC):
         lst_to_add.append(line_str + "\n")
         pass
 
-    def extra_measure(self) -> ExtraMeasure:
-        """
-        Return ExtraMeasure part of the execution.
-
-        Returns:
-            reference to ExtraMeasure part of the execution
-        """
-        
-        return self._extra_measure
-        pass
-
-    def _get_cycles_elaspsed_per_kernel(self, kernel_number : int):
-        """ 
-        Get cycles elapsed per kernel.
-
-        Params:
-            kernel_number   : int   ; number of kernel
-        """
-        ## mirar porque lo estoy comprobando cada vez que quiero el indice TODO
-
-        if not LevelExecutionParameters.C_CYCLES_ELAPSED_NAME in self._extra_measure.events():
-            raise ElapsedCyclesError
-        return self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)[kernel_number]
-        pass
-
-    def _get_percentage_time(self, kernel_number : int) -> float:
-        """ 
-        Get time percentage in each Kernel.
-        Each kernel measured is an index of dictionaries used by this program.
-
-        Params:
-            kernel_number   : int   ; number of kernel
-        """
-        #TODO lanzar excepcion
-        value_lst : list[str] = self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)
-        if value_lst is None:
-            raise ElapsedCyclesError
-        value_str : str
-        total_value : float = 0.0
-        for value_str in value_lst:
-            total_value += float(value_str)
-        return (float(value_lst[kernel_number])/total_value)*100.0
-        pass
-
     def _get_total_value_of_list(self, list_values : list[str], computed_as_average : bool) -> float:
         """
         Get total value of list of metric/event
@@ -325,15 +258,4 @@ class LevelExecution(ABC):
         """
 
         return self._recolect_metrics
-        pass
-
-    def recolect_events(self) -> bool:
-        """
-        Check if execution must recolect NVIDIA's scan tool events.
-
-        Returns:
-            Boolean with True if it has to recolect events or False if not
-        """
-
-        return self._recolect_events
         pass

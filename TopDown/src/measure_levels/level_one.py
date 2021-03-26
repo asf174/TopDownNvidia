@@ -20,25 +20,9 @@ from measure_parts.divergence import Divergence
 from measure_parts.retire import Retire
 from show_messages.message_format import MessageFormat
 
-class LevelOne(LevelExecution):
-    """ 
-    Class thath represents the level one of the execution.
-
-    Attributes:
-        _front_end      : FrontEnd      ; FrontEnd part of the execution
-        _back_end       : BackEnd       ; BackEnd part of the execution
-        _divergence     : Divergence    ; Divergence part of the execution
-        _retire         : Retire        ; Retire part of the execution
-    """
-
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool, is_tesla_device : bool):
-        self._front_end : FrontEnd = FrontEnd()
-        self._back_end  : BackEnd = BackEnd()
-        self._divergence : Divergence = Divergence()
-        self._retire : Retire = Retire()
-        super().__init__(program, output_file, recoltect_metrics, recolect_events,is_tesla_device)
-        pass
+class LevelOne(LevelExecution, ABC):
  
+    @abstractmethod
     def _generate_command(self) -> str:
         """ 
         Generate command of execution with NVIDIA scan tool.
@@ -46,15 +30,10 @@ class LevelOne(LevelExecution):
         Returns:
             String with command to be executed
         """
-        
-        command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
-            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
-            + "," + self._retire.metrics_str() + "  --events " + self._front_end.events_str() + 
-            "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + self._extra_measure.events_str() +
-             "," + self._retire.events_str() + " --unified-memory-profiling off " + self._program)
-        return command
+
         pass
 
+    @abstractmethod
     def _get_results(self, lst_output : list[str]):
         """
         Get results of the different parts.
@@ -62,57 +41,7 @@ class LevelOne(LevelExecution):
         Parameters:
             lst_output              : list[str]     ; OUTPUT list with results
         """
-
-        converter : MessageFormat = MessageFormat()
-        #  Keep Results
-        if not self._recolect_metrics and not self._recolect_events:
-            return
-        if (self._recolect_metrics and self._front_end.metrics_str() != "" or 
-            self._recolect_events and self._front_end.events_str() != ""):
-            lst_output.append(converter.underlined_str(self._front_end.name()))
-        if self._recolect_metrics and self._front_end.metrics_str() != "":
-            super()._add_result_part_to_lst(self._front_end.metrics(), 
-                self._front_end.metrics_description(), lst_output, True)
-        if self._recolect_events and self._front_end.events_str() != "":
-                super()._add_result_part_to_lst(self._front_end.events(), 
-                self._front_end.events_description(), "", lst_output, False) 
-        if (self._recolect_metrics and self._back_end.metrics_str() != "" or 
-            self._recolect_events and self._back_end.events_str() != ""):
-            lst_output.append(converter.underlined_str(self._back_end.name()))
-        if self._recolect_metrics and self._back_end.metrics_str() != "":
-            super()._add_result_part_to_lst(self._back_end.metrics(), 
-                self._back_end.metrics_description(), lst_output, True)
-        if self._recolect_events and self._back_end.events_str() != "":
-                super()._add_result_part_to_lst(self._back_end.events(), 
-                self._back_end.events_description(), lst_output, False)
-        if (self._recolect_metrics and self._divergence.metrics_str() != "" or 
-            self._recolect_events and self._divergence.events_str() != ""):
-            lst_output.append(converter.underlined_str(self._divergence.name()))
-        if self._recolect_metrics and self._divergence.metrics_str() != "":
-            super()._add_result_part_to_lst(self._divergence.metrics(), 
-                self._divergence.metrics_description(), lst_output, True)
-        if self._recolect_events and self._divergence.events_str() != "":
-                super()._add_result_part_to_lst(self._divergence.events(), 
-                self._divergence.events_description(),lst_output, False)
-        if (self._recolect_metrics and self._retire.metrics_str() != "" or 
-            self._recolect_events and self._retire.events_str() != ""):
-            lst_output.append(converter.underlined_str(self._retire.name()))
-        if self._recolect_metrics and  self._retire.metrics_str() != "":
-                super()._add_result_part_to_lst(self._retire.metrics(), 
-                self._retire.metrics_description(), lst_output, True)
-        if self._recolect_events and self._retire.events_str() != "":
-                super()._add_result_part_to_lst(self._retire.events(), 
-                self._retire.events_description(), lst_output, False)
-        if (self._recolect_metrics and self._extra_measure.metrics_str() != "" or 
-            self._recolect_events and self._extra_measure.events_str() != ""):
-            lst_output.append(converter.underlined_str(self._extra_measure.name()))
-        if self._recolect_metrics and self._extra_measure.metrics_str() != "":
-            super()._add_result_part_to_lst(self._extra_measure.metrics(), 
-                self._extra_measure.metrics_description(), lst_output, True)
-        if self._recolect_events and self._extra_measure.events_str() != "":
-                super()._add_result_part_to_lst(self._extra_measure.events(), 
-                self._extra_measure.events_description(), lst_output, False)
-        lst_output.append("\n")
+        
         pass
 
     def run(self, lst_output : list[str]):
@@ -155,6 +84,7 @@ class LevelOne(LevelExecution):
         return self.ipc()*(total_warp_execution_efficiency/100.0)
         pass
 
+    @abstractmethod
     def front_end(self) -> FrontEnd:
         """
         Return FrontEnd part of the execution.
@@ -163,9 +93,9 @@ class LevelOne(LevelExecution):
             reference to FrontEnd part of the execution
         """
 
-        return self._front_end
         pass
     
+    @abstractmethod
     def back_end(self) -> BackEnd:
         """
         Return BackEnd part of the execution.
@@ -174,9 +104,9 @@ class LevelOne(LevelExecution):
             reference to BackEnd part of the execution
         """
 
-        return self._back_end
         pass
 
+    @abstractmethod
     def divergence(self) -> Divergence:
         """
         Return Divergence part of the execution.
@@ -185,9 +115,9 @@ class LevelOne(LevelExecution):
             reference to Divergence part of the execution
         """
 
-        return self._divergence
         pass
 
+    @abstractmethod
     def retire(self) -> Retire:
         """
         Return Retire part of the execution.
@@ -196,127 +126,6 @@ class LevelOne(LevelExecution):
             reference to Retire part of the execution
         """
 
-        return self._retire
-        pass
-
-    def get_highest_frond_end_metric(self) -> str:
-        """
-        Find the highest metric of the FrontEnd Part.
-
-        Returns:
-            String with the metric with the highest value
-            or 'None' if FrontEnd doesn't have metrics
-        """
-
-        if self._front_end.metrics_str() == "":
-            return None
-        else:
-            return self.__get__key_max_value(self._front_end.metrics())
-        pass
-
-    def get_highest_frond_end_event(self) -> str:
-        """
-        Find the highest event of the FrontEnd Part.
-
-        Returns:
-            String with the event with the highest value
-            or 'None' if FrontEnd doesn't have metrics
-        """
-
-        if self._front_end.metrics_str() == "":
-            return None
-        else:
-            return self.__get__key_max_value(self._front_end.metrics())
-        pass
-
-    def get_highest_back_end_metric(self) -> str:
-        """
-        Find the highest metric of the BackEnd Part.
-
-        Returns:
-            String with the metric with the highest value
-            or 'None' if BackEnd doesn't have metrics
-        """
-
-        if self._back_end.metrics_str() == "":
-            return None
-        else:
-            return self.__get__key_max_value(self._back_end.metrics())
-        pass
-
-    def get_highest_back_end_event(self) -> str:
-        """
-        Find the highest event of the BackEnd Part.
-
-        Returns:
-            String with the event with the highest value
-            or 'None' if BackEnd doesn't have metrics
-        """
-
-        if self._back_end.metrics_str() == "":
-            return None
-        else:
-            return self.__get__key_max_value(self._back_end.metrics())
-        pass
-    
-    def get_highest_divergence_metric(self) -> str:
-        """
-        Find the highest metric of the Divergence Part.
-
-        Returns:
-            String with the metric with the highest value
-            or 'None' if Divergence doesn't have metrics
-        """
-
-        if self._divergence.metrics_str() == "":
-            return None
-        else:
-            return self.__get__key_max_value(self._divergence.metrics())
-        pass
-
-    def get_highest_divergence_event(self) -> str:
-        """
-        Find the highest event of the Divergence Part.
-
-        Returns:
-            String with the event with the highest value
-            or 'None' if Divergence doesn't have metrics
-        """
-
-        if self._divergence.metrics_str() == "":
-            return None
-        else:
-            return self.__get__key_max_value(self._divergence.metrics())
-        pass
-    
-    def get_highest_retire_metric(self) -> str:
-        """
-        Find the highest metric of the Retire Part.
-
-        Returns:
-            String with the metric with the highest value
-            or 'None' if Retire doesn't have metrics
-        """
-
-        if self._retire.metrics_str() == "":
-            return None
-        else:
-            return self.__get__key_max_value(self._retire.metrics())
-        pass
-
-    def get_highest_retire_event(self) -> str:
-        """
-        Find the highest event of the Retire Part.
-
-        Returns:
-            String with the event with the highest value
-            or 'None' if Retire doesn't have metrics
-        """
-
-        if self._retire.metrics_str() == "":
-            return None
-        else:
-            return self.__get__key_max_value(self._retire.metrics())
         pass
 
     def get_front_end_stall(self) -> float:
@@ -341,12 +150,15 @@ class LevelOne(LevelExecution):
         return self._get_stalls_of_part(self._back_end.metrics())
         pass
 
-    def __divergence_ipc_degradation(self) -> float:
+    def _diver_ipc_degradation(self, warp_exec_efficiency_name  : str) -> float:
         """
-        Find IPC degradation due to Divergence part.
+        Find IPC degradation due to Divergence part based on the name of the required metric.
+
+        Params:
+            warp_exec_efficiency_name  : str   ; name of metric to obtain warp execution efficiency
 
         Returns:
-            Float with theDivergence's IPC degradation
+            Float with the Divergence's IPC degradation
 
         Raises:
             RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not 
@@ -354,7 +166,7 @@ class LevelOne(LevelExecution):
         """
 
         ipc : float = self.ipc() 
-        warp_execution_efficiency_list  : list[str] = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
+        warp_execution_efficiency_list  : list[str] = self._divergence.get_metric_value(warp_exec_efficiency_name)
         if warp_execution_efficiency_list is None:
             raise RetireIpcMetricNotDefined # revisar si crear otra excepcion (creo que si)
         total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
@@ -366,6 +178,18 @@ class LevelOne(LevelExecution):
         return ipc * (1.0 - (total_warp_execution_efficiency/100.0)) + ipc_diference
         pass
 
+    @abstractmethod
+    def __divergence_ipc_degradation(self) -> float:
+        """
+        Find IPC degradation due to Divergence part
+
+        Returns:
+            Float with theDivergence's IPC degradation
+
+        """
+
+        pass
+
     def _stall_ipc(self) -> float:
         """
         Find IPC due to STALLS
@@ -374,7 +198,7 @@ class LevelOne(LevelExecution):
             Float with STALLS' IPC degradation
         """
 
-        return self.get_device_max_ipc() - self.retire_ipc() - self.__divergence_ipc_degradation()
+        return super().get_device_max_ipc() - self.retire_ipc() - self.__divergence_ipc_degradation()
         pass
 
     def divergence_percentage_ipc_degradation(self) -> float:
@@ -385,7 +209,7 @@ class LevelOne(LevelExecution):
             Float with the percent of Divergence's IPC degradation
         """
 
-        return (self.__divergence_ipc_degradation()/self.get_device_max_ipc())*100.0
+        return (self.__divergence_ipc_degradation()/super().get_device_max_ipc())*100.0
         pass
 
     def front_end_percentage_ipc_degradation(self) -> float:
@@ -407,96 +231,7 @@ class LevelOne(LevelExecution):
             Float with the percent of BackEnd's IPC degradation
         """
         
-        return ((self._stall_ipc()*(self.get_back_end_stall()/100.0))/self.get_device_max_ipc())*100.0
-        pass
-
-    def _set_front_back_divergence_retire_results(self, results_launch : str):
-        """ Get Results from FrontEnd, BanckEnd, Divergence and Retire parts.
-        
-        Params:
-            results_launch  : str   ; results generated by NVIDIA scan tool
-            
-        Raises:
-            EventNotAsignedToPart       ; raised when an event has not been assigned to any analysis part 
-            MetricNotAsignedToPart      ; raised when a metric has not been assigned to any analysis part
-        """
-
-        event_name : str
-        event_total_value : str 
-        metric_name : str
-        metric_description : str = ""
-        metric_avg_value : str 
-        #metric_max_value : str 
-        #metric_min_value : str
-        has_read_all_events : bool = False
-        line : str
-        i : int
-        list_words : list[str]
-        front_end_value_has_found : bool
-        frond_end_description_has_found : bool
-        back_end_value_has_found : bool
-        back_end_description_has_found : bool
-        divergence_value_has_found : bool
-        divergence_description_has_found : bool
-        extra_measure_value_has_found : bool
-        extra_measure_description_has_found : bool
-        retire_value_has_found : bool 
-        retire_description_has_found : bool
-        for line in results_launch.splitlines():
-            line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
-            list_words = line.split(" ")
-            if not has_read_all_events:
-                # Check if it's line of interest:
-                # ['', 'X', 'event_name','Min', 'Max', 'Avg', 'Total'] event_name is str. Rest: numbers (less '', it's an space)
-                if len(list_words) > 1: 
-                    if list_words[1] == "Metric": # check end events
-                        has_read_all_events = True
-                    elif list_words[0] == '' and list_words[len(list_words) - 1][0].isnumeric():
-                        event_name = list_words[2]
-                        event_total_value = list_words[len(list_words) - 1]     
-                        front_end_value_has_found = self._front_end.set_event_value(event_name, event_total_value)
-                        #frond_end_description_has_found = front_end.set_event_description(event_name, metric_description)
-                        back_end_value_has_found = self._back_end.set_event_value(event_name, event_total_value)
-                        #back_end_description_has_found = back_end.set_event_description(event_name, metric_description)
-                        divergence_value_has_found = self._divergence.set_event_value(event_name, event_total_value)
-                        #divergence_description_has_found = divergence.set_event_description(event_name, metric_description)
-                        extra_measure_value_has_found = self._extra_measure.set_event_value(event_name, event_total_value)
-                        #extra_measure_description_has_found = extra_measure.set_event_description(event_name, metric_description)
-                        retire_value_has_found = self._retire.set_event_value(event_name, event_total_value)
-                        #retire_description_has_found = extra_measure.set_event_description(event_name, metric_description)
-                        if (not (front_end_value_has_found or back_end_value_has_found or divergence_value_has_found or 
-                            extra_measure_value_has_found or retire_value_has_found)): #or 
-                            #not(frond_end_description_has_found or back_end_description_has_found 
-                            #or divergence_description_has_found or extra_measure_description_has_found)):
-                            raise EventNotAsignedToPart(event_name)
-            else: # metrics
-                # Check if it's line of interest:
-                # ['', 'X', 'NAME_COUNTER', ... , 'Min', 'Max', 'Avg' (Y%)] where X (int number), Y (int/float number)
-                if len(list_words) > 1 and list_words[0] == '' and list_words[len(list_words) - 1][0].isnumeric():
-                    metric_name = list_words[2]
-                    metric_description = ""
-                    for i in range(3, len(list_words) - 3):
-                        metric_description += list_words[i] + " "     
-                    metric_avg_value = list_words[len(list_words) - 1]
-                    #metric_max_value = list_words[len(list_words) - 2]
-                    #metric_min_value = list_words[len(list_words) - 3]
-                    #if metric_avg_value != metric_max_value or metric_avg_value != metric_min_value:
-                        # Do Something. NOT USED
-                    front_end_value_has_found = self._front_end.set_metric_value(metric_name, metric_avg_value)
-                    frond_end_description_has_found = self._front_end.set_metric_description(metric_name, metric_description)
-                    back_end_value_has_found = self._back_end.set_metric_value(metric_name, metric_avg_value)
-                    back_end_description_has_found = self._back_end.set_metric_description(metric_name, metric_description)
-                    divergence_value_has_found = self._divergence.set_metric_value(metric_name, metric_avg_value)
-                    divergence_description_has_found = self._divergence.set_metric_description(metric_name, metric_description)
-                    extra_measure_value_has_found = self._extra_measure.set_metric_value(metric_name, metric_avg_value)
-                    extra_measure_description_has_found = self._extra_measure.set_metric_description(metric_name, metric_description)
-                    retire_value_has_found = self._retire.set_metric_value(metric_name, metric_avg_value)
-                    retire_description_has_found = self._retire.set_metric_description(metric_name, metric_description)
-                    if (not (front_end_value_has_found or back_end_value_has_found or divergence_value_has_found or 
-                        extra_measure_value_has_found or retire_value_has_found) or 
-                        not(frond_end_description_has_found or back_end_description_has_found or divergence_description_has_found 
-                        or extra_measure_description_has_found or retire_description_has_found)):
-                        raise MetricNotAsignedToPart(metric_name)
+        return ((self._stall_ipc()*(self.get_back_end_stall()/100.0))/super().get_device_max_ipc())*100.0
         pass
 
     def retire_ipc_percentage(self) -> float:
@@ -506,4 +241,4 @@ class LevelOne(LevelExecution):
         Returns:
             Float with percentage of TOTAL IPC due to RETIRE
         """
-        return (self.ipc()/self.get_device_max_ipc())*100.0
+        return (self.ipc()/super().get_device_max_ipc())*100.0

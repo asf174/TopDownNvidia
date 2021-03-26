@@ -637,6 +637,9 @@ class TopDown:
             print()
         pass
 
+    def __is_nvprof_mode(self) -> bool:
+
+        pass
     def launch(self):
         """ Launch execution."""
         
@@ -649,12 +652,21 @@ class TopDown:
         if self.show_all_measures():
             show_metrics = True
             show_events = True
-        if self.level() == 1:
-           level : LevelOne = LevelOne(self.program(), self.output_file(), show_metrics, show_events, self.is_tesla_device_model())
-        elif self.level() == 2:
-            level : LevelTwo = LevelTwo(self.program(), self.output_file(), show_metrics, show_events, self.is_tesla_device_model()) 
-        elif self.level() == 3:
-             level : LevelThree = LevelThree(self.program(), self.output_file(), show_metrics, show_events, self.is_tesla_device_model()) 
+        if self.__is_nvprof_mode():
+            if self.level() == 1:
+                level : LevelOneNvprof = LevelOneNvprof(self.program(), self.output_file(), show_metrics, show_events)
+            elif self.level() == 2:
+                level : LevelTwoNvprof = LevelTwoNvprof(self.program(), self.output_file(), show_metrics, show_events) 
+            elif self.level() == 3:
+                level : LevelThreeNvprof = LevelThreeNvprof(self.program(), self.output_file(), show_metrics, show_events) 
+        else:
+             if self.level() == 1:
+                level : LevelOneNsight = LevelOneNsight(self.program(), self.output_file(), show_metrics, show_events)
+            elif self.level() == 2:
+                level : LevelTwoNsight = LevelTwoNsight(self.program(), self.output_file(), show_metrics, show_events) 
+            elif self.level() == 3:
+                level : LevelThreeNsight = LevelThreeNsight(self.program(), self.output_file(), show_metrics, show_events) 
+
         lst_output : list[str] = list() # for extra information
         level.run(lst_output)
         self.__show_results(level)

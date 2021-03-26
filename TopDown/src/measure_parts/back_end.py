@@ -12,8 +12,31 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from measure_parts.metric_measure import MetricMeasure
 from abc import ABC # abstract class
+from parameters.back_end_params import BackEndParameters
 
 class BackEnd(MetricMeasure, ABC):
     """Class that defines the Back-End part."""
 
     pass
+
+class BackEndNvprof(MetricMeasureNvprof, BackEnd):
+    """Class that defines the Back-End part with nvprof scan tool."""
+
+    def __init__(self):
+        """Set attributes with DEFAULT values."""
+        
+        super().__init__(BackEndParameters.C_FRONT_END_NAME, BackEndParameters.C_FRONT_END_DESCRIPTION, 
+        BackEndParameters.C_FRONT_END_NVPROF_METRICS, BackEndParameters.C_FRONT_END_NVPROF_EVENTS, 
+        BackEndParameters.C_FRONT_END_NVPROF_METRICS, BackEndParameters.C_FRONT_END_NVPROF_EVENTS)
+        pass
+
+class BackEndNsight(MetricMeasureNvprof, BackEnd):
+    """Class that defines the Front-End part with nsight scan tool."""
+	
+	def __init__(self):
+        """Set attributes with DEFAULT values."""
+        
+        super().__init__(BackEndParameters.C_FRONT_END_NAME, BackEndParameters.C_FRONT_END_DESCRIPTION,
+        BackEndParameters.C_FRONT_END_NAME, BackEndParameters.C_FRONT_END_DESCRIPTION,
+        MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS, MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS)
+        pass
