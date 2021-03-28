@@ -1,0 +1,106 @@
+smsp__average_warp_latency_issue_stalled_barrier                            average # of warp cycles spent waiting for sibling warps at a CTA barrier                           
+smsp__average_warp_latency_issue_stalled_branch_resolving                   average # of warp cycles spent waiting for a branch target address to be computed, and the warp PC  
+                                                                            to be updated                                                                                       
+smsp__average_warp_latency_issue_stalled_dispatch_stall                     average # of warp cycles spent waiting on a dispatch stall                                          
+smsp__average_warp_latency_issue_stalled_drain                              average # of warp cycles spent waiting after EXIT for all memory instructions to complete so that   
+                                                                            warp resources can be freed                                                                         
+smsp__average_warp_latency_issue_stalled_imc_miss                           average # of warp cycles spent waiting for an immediate constant cache (IMC) miss                   
+smsp__average_warp_latency_issue_stalled_lg_throttle                        average # of warp cycles spent waiting for a free entry in the LSU instruction queue                
+smsp__average_warp_latency_issue_stalled_long_scoreboard                    average # of warp cycles spent waiting for a scoreboard dependency on L1TEX (local, global,         
+                                                                            surface, tex) operation                                                                             
+smsp__average_warp_latency_issue_stalled_math_pipe_throttle                 average # of warp cycles spent waiting for an execution pipe to be available                        
+smsp__average_warp_latency_issue_stalled_membar                             average # of warp cycles spent waiting on a memory barrier                                          
+smsp__average_warp_latency_issue_stalled_mio_throttle                       average # of warp cycles spent waiting for a free entry in the MIO instruction queue                
+smsp__average_warp_latency_issue_stalled_misc                               average # of warp cycles spent waiting on a miscellaneous hardware reason                           
+smsp__average_warp_latency_issue_stalled_no_instruction                     average # of warp cycles spent waiting to be selected for instruction fetch, or waiting on an       
+                                                                            instruction cache miss                                                                              
+smsp__average_warp_latency_issue_stalled_not_selected                       average # of warp cycles spent waiting for the microscheduler to select the warp to issue           
+smsp__average_warp_latency_issue_stalled_selected                           average # of warp cycles spent selected by the microscheduler to issue an instruction               
+smsp__average_warp_latency_issue_stalled_short_scoreboard                   average # of warp cycles spent waiting for a scoreboard dependency on MIO operation other than      
+                                                                            (local, global, surface, tex)                                                                       
+smsp__average_warp_latency_issue_stalled_sleeping                           average # of warp cycles spent waiting for a nanosleep to expire                                    
+smsp__average_warp_latency_issue_stalled_tex_throttle                       average # of warp cycles spent waiting for a free entry in the TEX instruction queue                
+smsp__average_warp_latency_issue_stalled_wait                               average # of warp cycles spent waiting on a fixed latency execution dependency                      
+smsp__average_warp_latency_per_inst_executed                                average # of cycles each warp was resident per instruction executed                                 
+smsp__average_warp_latency_per_inst_issued                                  average # of cycles each warp was resident per instruction issued                                   
+smsp__average_warps_active_per_inst_executed                                average # of cycles each warp was resident per instruction executed                                 
+smsp__average_warps_active_per_issue_active                                 average # of warps resident per issue cycle                                                         
+smsp__average_warps_issue_stalled_barrier_per_issue_active                  average # of warps resident per issue cycle, waiting for sibling warps at a CTA barrier             
+smsp__average_warps_issue_stalled_branch_resolving_per_issue_active         average # of warps resident per issue cycle, waiting for a branch target address to be computed,    
+                                                                            and the warp PC to be updated                                                                       
+smsp__average_warps_issue_stalled_dispatch_stall_per_issue_active           average # of warps resident per issue cycle, waiting on a dispatch stall                            
+smsp__average_warps_issue_stalled_drain_per_issue_active                    average # of warps resident per issue cycle, waiting after EXIT for all memory instructions to      
+                                                                            complete so that warp resources can be freed                                                        
+smsp__average_warps_issue_stalled_imc_miss_per_issue_active                 average # of warps resident per issue cycle, waiting for an immediate constant cache (IMC) miss     
+smsp__average_warps_issue_stalled_lg_throttle_per_issue_active              average # of warps resident per issue cycle, waiting for a free entry in the LSU instruction queue  
+smsp__average_warps_issue_stalled_long_scoreboard_per_issue_active          average # of warps resident per issue cycle, waiting for a scoreboard dependency on L1TEX (local,   
+                                                                            global, surface, tex) operation                                                                     
+smsp__average_warps_issue_stalled_math_pipe_throttle_per_issue_active       average # of warps resident per issue cycle, waiting for an execution pipe to be available          
+smsp__average_warps_issue_stalled_membar_per_issue_active                   average # of warps resident per issue cycle, waiting on a memory barrier                            
+smsp__average_warps_issue_stalled_mio_throttle_per_issue_active             average # of warps resident per issue cycle, waiting for a free entry in the MIO instruction queue  
+smsp__average_warps_issue_stalled_misc_per_issue_active                     average # of warps resident per issue cycle, waiting on a miscellaneous hardware reason             
+smsp__average_warps_issue_stalled_no_instruction_per_issue_active           average # of warps resident per issue cycle, waiting to be selected for instruction fetch, or       
+                                                                            waiting on an instruction cache miss                                                                
+smsp__average_warps_issue_stalled_not_selected_per_issue_active             average # of warps resident per issue cycle, waiting for the microscheduler to select the warp to   
+                                                                            issue                                                                                               
+smsp__average_warps_issue_stalled_selected_per_issue_active                 average # of warps resident per issue cycle, selected by the microscheduler to issue an instruction 
+smsp__average_warps_issue_stalled_short_scoreboard_per_issue_active         average # of warps resident per issue cycle, waiting for a scoreboard dependency on MIO operation   
+                                                                            other than (local, global, surface, tex)                                                            
+smsp__average_warps_issue_stalled_sleeping_per_issue_active                 average # of warps resident per issue cycle, waiting for a nanosleep to expire                      
+smsp__average_warps_issue_stalled_tex_throttle_per_issue_active             average # of warps resident per issue cycle, waiting for a free entry in the TEX instruction queue  
+smsp__average_warps_issue_stalled_wait_per_issue_active                     average # of warps resident per issue cycle, waiting on a fixed latency execution dependency        
+smsp__cycles_active                                                         # of cycles with at least one warp in flight                                                        
+smsp__cycles_elapsed                                                        # of cycles elapsed on SMSP
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+NIVEL 1:
+
+    - FRONT_END:
+        + stall_inst_fetch =  smsp__warp_issue_stalled_no_instruction_per_warp_active.pct
+        + stall_exec_dependency =  smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct + smsp__warp_issue_stalled_wait_per_warp_active.pct
+        + stall_sync = smsp__warp_issue_stalled_barrier_per_warp_active.pct + smsp__warp_issue_stalled_membar_per_warp_active.pct
+        + stall_other = smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct + smsp__warp_issue_stalled_misc_per_warp_active.pct
+        + stall_not_selected = smsp__warp_issue_stalled_not_selected_per_warp_active.pct
+
+    - BACK_END:
+        + stall_memory_dependency = smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct
+        + stall_constant_memory_dependency = smsp__warp_issue_stalled_imc_miss_per_warp_active.pct
+        + stall_pipe_busy = smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct + smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct
+        + stall_memory_throttle =  	smsp__warp_issue_stalled_drain_per_warp_active.pct + smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct
+
+    - DIVERGENCE:
+        + branch_efficiency = smsp__sass_average_branch_targets_threads_uniform.pct
+        + warp_execution_efficiency = smsp__thread_inst_executed_per_inst_executed.ratio
+        + issued_ipc =  smsp__inst_issued.avg.per_cycle_active
+
+    - RETIRE:
+        + ipc = smsp__inst_executed.avg.per_cycle_active
+
+    - EXTRA-MEASURE:
+        + active_cycles = sm__cycles_active.sum
+        + elapsed_cycles_sm =  	sm__cycles_elapsed.sum
+NIVEL 2:
+
+    - FRONT-END.BAND-WIDTH
+        + stall_exec_dependency =  smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct + smsp__warp_issue_stalled_wait_per_warp_active.pct
+        + stall_not_selected = smsp__warp_issue_stalled_not_selected_per_warp_active.pct
+
+    - FRONT-END.DEPENDENCY 
+        + stall_inst_fetch =  smsp__warp_issue_stalled_no_instruction_per_warp_active.pct
+        + stall_sync = smsp__warp_issue_stalled_barrier_per_warp_active.pct + smsp__warp_issue_stalled_membar_per_warp_active.pct
+        + stall_other = smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct + smsp__warp_issue_stalled_misc_per_warp_active.pct
+
+    - BACK-END.CORE-BOUND
+        + stall_pipe_busy = smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct + smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct
+
+    - BACK-END.MEMORY-BOUND
+        + stall_memory_dependency = smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct
+        + stall_constant_memory_dependency = smsp__warp_issue_stalled_imc_miss_per_warp_active.pct
+        + stall_memory_throttle =  	smsp__warp_issue_stalled_drain_per_warp_active.pct + smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct
+
+NIVEL 3:
+
+    - MEMORY-BOUND.CONSTANT-MEMORY-BOUND  
+        + stall_constant_memory_dependency = smsp__warp_issue_stalled_imc_miss_per_warp_active.pct
