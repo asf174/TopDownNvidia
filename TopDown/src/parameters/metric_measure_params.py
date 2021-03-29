@@ -55,7 +55,7 @@ class MetricMeasureParameters:
 
     # extra_measure.py
     C_EXTRA_MEASURE_METRICS             : str       = ("")
-    C_EXTRA_MEASURE_EVENTS              : str       = ("active_cycles," + LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)
+    C_EXTRA_MEASURE_EVENTS              : str       = ("active_cycles," + LevelExecutionParameters.C_CYCLES_ELAPSED_METRIC_NAME_NVPROF)
     C_EXTRA_MEASURE_NAME                : str       = "EXTRA-MEASURE"
     C_EXTRA_MEASURE_DESCRIPTION         : str       = ("") # TODO preguntar separaciones, si anhadir el espacio
 

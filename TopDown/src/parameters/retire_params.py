@@ -7,15 +7,19 @@ and their subclasses
 @version:   1.0
 """
 
+import os, sys, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
+from parameters.level_execution_params import LevelExecutionParameters
 
 class RetireParameters:
 
-    C_FRONT_END_NAME                    : str       = "RETIRE"
-    C_FRONT_END_DESCRIPTION             : str       = ("R Description")
+    C_RETIRE_NAME                    : str       = "RETIRE"
+    C_RETIRE_DESCRIPTION             : str       = ("R Description")
     # frond_end_nvprof.py
-    C_FRONT_END_NVPROF_METRICS          : str       = ("ipc")
-    C_FRONT_END_NVPROF_EVENTS           : str       = ("")
+    C_RETIRE_NVPROF_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
+    C_RETIRE_NVPROF_EVENTS           : str       = ("")
 
     # frond_end_nsight.py
-    C_FRONT_END_NSIGHT_METRICS          : str       = ("")
-    C_FRONT_END_NSIGHT_EVENTS           : str       = ("")
+    C_RETIRE_NSIGHT_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NSIGHT)

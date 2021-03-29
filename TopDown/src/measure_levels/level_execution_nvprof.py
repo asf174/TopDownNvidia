@@ -7,6 +7,8 @@ from measure_parts.extra_measure import ExtraMeasure
 from shell.shell import Shell # launch shell arguments
 from parameters.level_execution_params import LevelExecutionParameters # parameters of program
 from errors.level_execution_errors import *
+from measure_levels.level_execution import LevelExecution 
+from measure_parts.extra_measure import ExtraMeasureNvprof
 
 class LevelExecutionNvprof(LevelExecution, ABC):
     """ 
@@ -21,7 +23,7 @@ class LevelExecutionNvprof(LevelExecution, ABC):
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
         self._extra_measure : ExtraMeasureNvprof = ExtraMeasureNvprof()
         self._recolect_events = recolect_events
-        super().__init__(program, output_file, recoltect_metrics):
+        super().__init__(program, output_file, recoltect_metrics)
         pass
 
     def recolect_events(self) -> bool:
@@ -56,8 +58,7 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         """
         
         pass
-
-    
+  
     @abstractmethod
     def _generate_command(self) -> str:
         """ 
@@ -77,6 +78,7 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         Parameters:
             lst_output              : list[str]     ; OUTPUT list with results
         """
+
         pass
 
     def _get_cycles_elaspsed_per_kernel(self, kernel_number : int):
@@ -102,7 +104,7 @@ class LevelExecutionNvprof(LevelExecution, ABC):
             kernel_number   : int   ; number of kernel
         """
         #TODO lanzar excepcion
-        value_lst : list[str] = self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)
+        value_lst : list[str] = self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_EVENT_NAME_NVPROF)
         if value_lst is None:
             raise ElapsedCyclesError
         value_str : str

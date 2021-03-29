@@ -19,6 +19,7 @@ from measure_parts.back_end import BackEnd
 from measure_parts.divergence import Divergence
 from measure_parts.retire import Retire
 from show_messages.message_format import MessageFormat
+from abc import ABC, abstractmethod # abstract class
 
 class LevelOne(LevelExecution, ABC):
  
@@ -52,22 +53,59 @@ class LevelOne(LevelExecution, ABC):
         self._get_results(lst_output)
         pass
     
-    def ipc(self) -> float:
+    def _get_ipc(self, ipc_metric_name : str) -> float:
         """
-        Get IPC of execution.
+        Get IPC of execution based on metric name.
+
+        Params:
+            ipc_metric_name : str ; name of metric computed by NVIDIA scan tool
 
         Raises:
             IpcMetricNotDefined ; raised if IPC cannot be obtanied because it was not 
             computed by the NVIDIA scan tool.
+
+        Returns:
+            float with the IPC
         """
 
-        ipc_list : list[str] = self._retire.get_metric_value(LevelExecutionParameters.C_IPC_METRIC_NAME)
+        ipc_list : list[str] = self._retire.get_metric_value(ipc_metric_name)
         if ipc_list is None:
             raise IpcMetricNotDefined # revisar TODO
         total_ipc : float = self._get_total_value_of_list(ipc_list, True)
         return total_ipc
         pass
 
+    @abstractmethod
+    def ipc(self) -> float:
+        """
+        Get IPC of execution based on metric name.
+
+        Returns:
+            float with the IPC
+        """
+
+        pass
+
+    def _ret_ipc(self, warp_exec_efficiency_name : str) -> float:
+        """
+        Get "RETIRE" IPC of execution based on warp execution efficiency metric name
+
+        Params:
+            warp_exec_efficiency_name : str ; string with warp execution efficiency metricc name
+
+        Raises:
+            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not 
+            computed by the NVIDIA scan tool.
+        """
+
+        warp_execution_efficiency_list : list[str] = self._divergence.get_metric_value(warp_exec_efficiency_name) #TODO importante
+        if warp_execution_efficiency_list is None:
+            raise RetireIpcMetricNotDefined
+        total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
+        return self.ipc()*(total_warp_execution_efficiency/100.0)
+        pass
+
+    @abstractmethod
     def retire_ipc(self) -> float:
         """
         Get "RETIRE" IPC of execution.
@@ -77,11 +115,6 @@ class LevelOne(LevelExecution, ABC):
             computed by the NVIDIA scan tool.
         """
 
-        warp_execution_efficiency_list : list[str] = self._divergence.get_metric_value(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME)
-        if warp_execution_efficiency_list is None:
-            raise RetireIpcMetricNotDefined
-        total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
-        return self.ipc()*(total_warp_execution_efficiency/100.0)
         pass
 
     @abstractmethod
@@ -150,13 +183,13 @@ class LevelOne(LevelExecution, ABC):
         return self._get_stalls_of_part(self._back_end.metrics())
         pass
 
-    def _diver_ipc_degradation(self, warp_exec_efficiency_name  : str) -> float:
+    def _diver_ipc_degradation(self, warp_exec_efficiency_name  : str, issue_ipc_name : str) -> float:
         """
         Find IPC degradation due to Divergence part based on the name of the required metric.
 
         Params:
             warp_exec_efficiency_name  : str   ; name of metric to obtain warp execution efficiency
-
+            issue_ipc_name             : str   ; name of metric to bain issue ipc
         Returns:
             Float with the Divergence's IPC degradation
 
@@ -170,7 +203,7 @@ class LevelOne(LevelExecution, ABC):
         if warp_execution_efficiency_list is None:
             raise RetireIpcMetricNotDefined # revisar si crear otra excepcion (creo que si)
         total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
-        issued_ipc_list : list[str] = self._divergence.get_metric_value(LevelExecutionParameters.C_ISSUE_IPC_NAME)
+        issued_ipc_list : list[str] = self._divergence.get_metric_value(issue_ipc_name)
         total_issued_ipc : float = self._get_total_value_of_list(issued_ipc_list, True)
         ipc_diference : float = float(total_issued_ipc) - ipc
         if ipc_diference < 0.0:
@@ -179,7 +212,7 @@ class LevelOne(LevelExecution, ABC):
         pass
 
     @abstractmethod
-    def __divergence_ipc_degradation(self) -> float:
+    def _divergence_ipc_degradation(self) -> float:
         """
         Find IPC degradation due to Divergence part
 
@@ -198,7 +231,7 @@ class LevelOne(LevelExecution, ABC):
             Float with STALLS' IPC degradation
         """
 
-        return super().get_device_max_ipc() - self.retire_ipc() - self.__divergence_ipc_degradation()
+        return super().get_device_max_ipc() - self.retire_ipc() - self._divergence_ipc_degradation()
         pass
 
     def divergence_percentage_ipc_degradation(self) -> float:
@@ -209,7 +242,7 @@ class LevelOne(LevelExecution, ABC):
             Float with the percent of Divergence's IPC degradation
         """
 
-        return (self.__divergence_ipc_degradation()/super().get_device_max_ipc())*100.0
+        return (self._divergence_ipc_degradation()/super().get_device_max_ipc())*100.0
         pass
 
     def front_end_percentage_ipc_degradation(self) -> float:
@@ -242,3 +275,18 @@ class LevelOne(LevelExecution, ABC):
             Float with percentage of TOTAL IPC due to RETIRE
         """
         return (self.ipc()/super().get_device_max_ipc())*100.0
+
+    @abstractmethod
+    def _set_front_back_divergence_retire_results(self, results_launch : str):
+        """ Get Results from FrontEnd, BanckEnd, Divergence and Retire parts.
+        
+        Params:
+            results_launch  : str   ; results generated by NVIDIA scan tool
+            
+        Raises:
+            EventNotAsignedToPart       ; raised when an event has not been assigned to any analysis part * (NVPROF mode only)
+            MetricNotAsignedToPart      ; raised when a metric has not been assigned to any analysis part 
+        """
+        
+        pass
+

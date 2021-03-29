@@ -11,9 +11,14 @@ import sys
 #from tabulate import tabulate #TODO, pintar
 from errors.topdown_errors import *
 from parameters.topdown_params import TopDownParameters # parameters of program
+from measure_levels.level_one_nvprof import LevelOneNvprof
+from measure_levels.level_two_nvprof import LevelTwoNvprof
+from measure_levels.level_two_nsight import LevelTwoNsight
+from measure_levels.level_three_nsight import LevelThreeNsight
+from measure_levels.level_three_nvprof import LevelThreeNvprof
+from measure_levels.level_three import LevelThree
 from measure_levels.level_one import LevelOne
 from measure_levels.level_two import LevelTwo
-from measure_levels.level_three import LevelThree
 from show_messages.message_format import MessageFormat
 from args.unique_argument import DontRepeat
 
@@ -67,7 +72,6 @@ class TopDown:
         self.__show_metrics : bool = args.metrics
         self.__show_events : bool = args.events
         self.__show_all_measurementes : bool = args.all_measures
-        self.__is_tesla_device : bool = args.tesla
         pass
     
     def arg_parser(self) -> argparse :# TODO-> ArgumentParser:
@@ -113,23 +117,6 @@ class TopDown:
             help = 'show metrics computed by NVIDIA scan tool',
             action = 'store_true',
             dest = 'metrics')
-        pass
-
-    def __add_tesla_argument(self, parser : argparse.ArgumentParser):
-        """ 
-        Add tesla argument. 'C_TESLA_DEVICE_SHORT_OPTION' is the short option of argument
-        and 'C_TESLA_DEVICE_LONG_OPTION' is the long version of argument.
-
-        Params:
-            parser : argparse.ArgumentParser ; group of the argument.
-        """
-
-        parser.add_argument (
-            TopDownParameters.C_TESLA_DEVICE_SHORT_OPTION, 
-            TopDownParameters.C_TESLA_DEVICE_LONG_OPTION, 
-            help = 'set if device used is a tesla model',
-            action = 'store_true',
-            dest = 'tesla')
         pass
 
     def __add_all_measures_argument(self, parser : argparse.ArgumentParser):
@@ -285,7 +272,6 @@ class TopDown:
         self.__add_metrics_argument(parser)
         self.__add_events_argument(parser)
         self.__add_all_measures_argument(parser)
-        self.__add_tesla_argument(parser)
         pass
 
     def program(self) -> str:
@@ -365,17 +351,6 @@ class TopDown:
         """
 
         return self.__show_all_measurementes 
-        pass
-
-    def is_tesla_device_model(self) -> bool:
-        """
-        Check if all devices are tesla model
-
-        Returns:
-            True if devices are tesla model or False if not
-        """
-
-        return self.__is_tesla_device 
         pass
 
     def show_events(self) -> bool:
@@ -464,7 +439,7 @@ class TopDown:
         MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
 
-    def __show_level_two_results(self, level_execution : LevelTwo):
+    def __show_level_two_results(self, level_execution):
         stalls_front_band_width_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
             str(round(level_execution.get_front_band_width_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_front_dependency_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
@@ -507,7 +482,7 @@ class TopDown:
         MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
 
-    def __show_level_three_results(self, level_execution : LevelThree):
+    def __show_level_three_results(self, level_execution):
         stalls_constant_memory_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total            (%): ', # revisar formatos, quiza sobren TODO
             str(round(level_execution.get_constant_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         
@@ -525,13 +500,13 @@ class TopDown:
                 [stalls_constant_memory_bound_on_back_message, "", "", ""],
                 ["","","",""], [ipc_degradation_constant_memory_bound_width_message, "", "", ""]]
 
-        titles : list[str] = [level_execution.constant_memory_bound().name(), "", "", ""]
+        titles : list[str] = [level_execution.memory_constant_memory_bound().name(), "", "", ""]
 
         messages : str = ("\n" + stalls_constant_memory_bound_on_total_message + "\n" + 
             stalls_constant_memory_bound_on_memory_bound_message + "\n" + stalls_constant_memory_bound_on_back_message 
             + "\n\n" + ipc_degradation_constant_memory_bound_width_message)
         #MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
-        MessageFormat().print_msg_box(messages, 1, None, level_execution.constant_memory_bound().name(), self.output_file(), self.delete_output_file_content())
+        MessageFormat().print_msg_box(messages, 1, None, level_execution.memory_constant_memory_bound().name(), self.output_file(), self.delete_output_file_content())
         pass
     
     def __show_results(self, level_execution):
@@ -565,7 +540,8 @@ class TopDown:
         message = "DESCRIPTION OF MEASURE PARTS"
         printer.print_desplazed_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
         print()
-        if type(level_execution) is LevelTwo or type(level_execution) is LevelThree:
+        if (type(level_execution) is LevelTwoNsight or type(level_execution) is LevelTwoNvprof or type(level_execution) is LevelThreeNvprof or 
+            type(level_execution) is LevelThreeNsight):
             message = "LEVEL ONE RESULTS"
             printer.print_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
             print()
@@ -606,7 +582,7 @@ class TopDown:
                 print()
             self.__show_level_two_results(level_execution)
             print()
-            if type(level_execution) is LevelThree:
+            if type(level_execution) is LevelThreeNsight or type(level_execution) is LevelThreeNvprof:
                 message = "LEVEL THREE RESULTS"
                 printer.print_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
                 print()
@@ -638,7 +614,7 @@ class TopDown:
         pass
 
     def __is_nvprof_mode(self) -> bool:
-
+        return True
         pass
     def launch(self):
         """ Launch execution."""
@@ -660,7 +636,7 @@ class TopDown:
             elif self.level() == 3:
                 level : LevelThreeNvprof = LevelThreeNvprof(self.program(), self.output_file(), show_metrics, show_events) 
         else:
-             if self.level() == 1:
+            if self.level() == 1:
                 level : LevelOneNsight = LevelOneNsight(self.program(), self.output_file(), show_metrics, show_events)
             elif self.level() == 2:
                 level : LevelTwoNsight = LevelTwoNsight(self.program(), self.output_file(), show_metrics, show_events) 

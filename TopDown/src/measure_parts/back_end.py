@@ -10,7 +10,7 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from measure_parts.metric_measure import MetricMeasure
+from measure_parts.metric_measure import MetricMeasure, MetricMeasureNvprof, MetricMeasureNsight
 from abc import ABC # abstract class
 from parameters.back_end_params import BackEndParameters
 
@@ -25,18 +25,18 @@ class BackEndNvprof(MetricMeasureNvprof, BackEnd):
     def __init__(self):
         """Set attributes with DEFAULT values."""
         
-        super().__init__(BackEndParameters.C_FRONT_END_NAME, BackEndParameters.C_FRONT_END_DESCRIPTION, 
-        BackEndParameters.C_FRONT_END_NVPROF_METRICS, BackEndParameters.C_FRONT_END_NVPROF_EVENTS, 
-        BackEndParameters.C_FRONT_END_NVPROF_METRICS, BackEndParameters.C_FRONT_END_NVPROF_EVENTS)
+        super().__init__(BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION, 
+            BackEndParameters.C_BACK_END_NVPROF_METRICS, BackEndParameters.C_BACK_END_NVPROF_EVENTS, 
+            BackEndParameters.C_BACK_END_NVPROF_METRICS, BackEndParameters.C_BACK_END_NVPROF_EVENTS)
         pass
 
-class BackEndNsight(MetricMeasureNvprof, BackEnd):
-    """Class that defines the Front-End part with nsight scan tool."""
+class BackEndNsight(MetricMeasureNsight, BackEnd):
+    """Class that defines the BACK-End part with nsight scan tool."""
 	
-	def __init__(self):
+    def __init__(self):
         """Set attributes with DEFAULT values."""
         
-        super().__init__(BackEndParameters.C_FRONT_END_NAME, BackEndParameters.C_FRONT_END_DESCRIPTION,
-        BackEndParameters.C_FRONT_END_NAME, BackEndParameters.C_FRONT_END_DESCRIPTION,
-        MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS, MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS)
+        super().__init__(BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION,
+            BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION,
+            MetricMeasureParameters.C_BACK_END_NSIGHT_METRICS, MetricMeasureParameters.C_BACK_END_NSIGHT_METRICS)
         pass

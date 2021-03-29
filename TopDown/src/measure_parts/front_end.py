@@ -10,7 +10,8 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from parameters.metric_measure_params import MetricMeasureParameters 
+from parameters.front_end_params import FrontEndParameters 
+from measure_parts.metric_measure import MetricMeasure, MetricMeasureNsight, MetricMeasureNvprof
 from abc import ABC # abstract class
 from parameters.front_end_params import FrontEndParameters 
 
@@ -19,15 +20,14 @@ class FrontEnd(MetricMeasure, ABC):
     
     pass
  
-class FrontEndNsight(MetricMeasureNvprof, FrontEnd):
+class FrontEndNsight(MetricMeasureNsight, FrontEnd):
     """Class that defines the Front-End part with nsight scan tool."""
 
     def __init__(self):
         """Set attributes with DEFAULT values."""
             
-        super().__init__(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
-        FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
-        MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS, MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS)
+        super(MetricMeasureNsight, self).__init__(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
+            MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS, MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS)
         pass
                    
 class FrontEndNvprof(MetricMeasureNvprof, FrontEnd):
@@ -35,9 +35,9 @@ class FrontEndNvprof(MetricMeasureNvprof, FrontEnd):
 
     def __init__(self):
         """Set attributes with DEFAULT values."""
-    
-        super().__init__(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
-        FrontEndParameters.C_FRONT_END_NVPROF_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_EVENTS, 
-        FrontEndParameters.C_FRONT_END_NVPROF_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_EVENTS)
+        
+        super(FrontEndNvprof, self).__init__(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
+            FrontEndParameters.C_FRONT_END_NVPROF_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_EVENTS, 
+            FrontEndParameters.C_FRONT_END_NVPROF_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_EVENTS)
         pass
 

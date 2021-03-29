@@ -31,7 +31,7 @@ class LevelExecution(ABC):
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
         self._program : str = program
         self._output_file : str = output_file
-        self._recolect_metrics : bool = recolect_events
+        self._recolect_metrics : bool = recoltect_metrics
         pass 
 
     @abstractmethod
@@ -143,8 +143,8 @@ class LevelExecution(ABC):
         total_value_str : str = ""
         if isMetric:
             metric_name : str
-            description = "\t\t\t{:<45}{:<49} {:<5} ".format('Metric Name','Metric Description', 'Value')
-            line_lenght = len(description) - 2
+            description = "\t\t\t{:<45}{:<49}{:<5}".format('Metric Name','Metric Description', 'Value')
+            line_lenght = len(description)
             value : float
             is_percentage : bool = False
             is_computed_as_average : bool 
@@ -165,7 +165,7 @@ class LevelExecution(ABC):
                     value_str += "%"
                     is_percentage = False
                 metric_name = list(dict_desc.keys())[i]
-                value_str = "\t\t\t{:<45}{:<49} {:<6} ".format(metric_name, dict_desc.get(metric_name), value_str) 
+                value_str = "\t\t\t{:<45}{:<49}{:<6} ".format(metric_name, dict_desc.get(metric_name), value_str) 
                 if len(value_str) > line_lenght:
                     line_lenght = len(value_str)
                 if i != len(dict_values) -1:
@@ -174,7 +174,7 @@ class LevelExecution(ABC):
                 i += 1
         else:
             event_name : str
-            description = "\t\t\t{:<45}{:<46} {:<5}".format('Event Name','Event Description', 'Value')
+            description = "\t\t\t{:<45}{:<46} {:<3}".format('Event Name','Event Description', 'Value')
             line_lenght = len(description)
             for key_value in dict_values:
                 total_value = round(self._get_total_value_of_list(dict_values[key_value], False), 
@@ -191,7 +191,7 @@ class LevelExecution(ABC):
                 total_value_str += value_str
                 i += 1
         spaces_lenght : int = len("\t\t\t")
-        line_str : str = "\t\t\t" + f'{"-" * ((line_lenght - spaces_lenght)-1)}'
+        line_str : str = "\t\t\t" + f'{"-" * ((line_lenght - spaces_lenght) - 1)}'
         lst_to_add.append("\n" + line_str)
         lst_to_add.append(description)
         lst_to_add.append(line_str)

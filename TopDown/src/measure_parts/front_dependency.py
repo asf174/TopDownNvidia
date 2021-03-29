@@ -9,23 +9,16 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from parameters.metric_measure_params import MetricMeasureParameters 
+from parameters.front_dependency_params import FrontDependencyParameters 
 from measure_parts.front_end import FrontEnd
 from abc import ABC # abstract class
-from parameters.front_dependency_params import FrontDependency 
-from measure_parts.front_dependency import FrontDependency
+from measure_parts.metric_measure import MetricMeasureNsight, MetricMeasureNvprof
 
 
 class FrontDependency(FrontEnd, ABC):
     """Class that defines the Front-End.Dependency part."""
-
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
-        
-        super(FrontEnd, self).__init__(MetricMeasureParameters.C_FRONT_DEPENDENCY_NAME, MetricMeasureParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
-            MetricMeasureParameters.C_FRONT_DEPENDENCY_METRICS, MetricMeasureParameters.C_FRONT_DEPENDENCY_EVENTS, 
-            MetricMeasureParameters.C_FRONT_DEPENDENCY_METRICS, MetricMeasureParameters.C_FRONT_DEPENDENCY_EVENTS)
-        pass
+    
+    pass
 
 class FrontDependencyNsight(MetricMeasureNsight, FrontDependency):
     """Class that defines the Front-End.Dependency part with nsight scan tool."""
@@ -33,7 +26,7 @@ class FrontDependencyNsight(MetricMeasureNsight, FrontDependency):
     def __init__(self):
         """Set attributes with DEFAULT values."""
         
-        super(FrontEnd, self).__init__(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
+        super().__init__(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
             FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS, 
             FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS)
         pass
@@ -44,7 +37,7 @@ class FrontDependencyNvprof(MetricMeasureNvprof, FrontDependency):
     def __init__(self):
         """Set attributes with DEFAULT values."""
         
-        super(FrontEnd, self).__init__(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
+        super().__init__(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
             FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, 
             FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS)
         pass

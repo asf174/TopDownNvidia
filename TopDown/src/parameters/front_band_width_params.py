@@ -14,7 +14,7 @@ class FrontBandWidthParameters:
     
     # front_band_width_nvprof.py
     C_FRONT_BAND_WIDTH_NVPROF_METRICS          : str       = ("stall_exec_dependency,stall_not_selected")
-    C_FRONT_BAND_WIDTH_NVPROF_METRICS           : str       = ("")
+    C_FRONT_BAND_WIDTH_NVPROF_EVENTS           : str       = ("")
 
     # front_band_width_nsight.py
     C_FRONT_BAND_WIDTH_NSIGHT_METRICS          : str       = ("")

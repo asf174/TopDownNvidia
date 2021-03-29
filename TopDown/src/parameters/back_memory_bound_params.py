@@ -1,5 +1,5 @@
 """
-Class with all params of BackEnd-MemoryBound class
+Class with all params of BackMEMORY_BOUND-MemoryBound class
 and their subclasses
 
 @author:    Alvaro Saiz (UC)
@@ -9,12 +9,13 @@ and their subclasses
 
 class BackMemoryBoundParameters:
 
-    C_BACK_END_NAME                    : str        = "BACK-END.CORE-BOUND"
-    C_BACK_END_DESCRIPTION             : str        = ("In this part, the aspects related to CUDA cores that cause bottlenecks and thus performance losses are analyzed.\n"
-                                                        + "Some aspects such as the use and availability of the functional units are analyzed.")
-    # back_end_nvprof.py
-    C_BACK_END_NVPROF_METRICS          : str        = ("stall_pipe_busy")
-    C_BACK_END_NVPROF_EVENTS           : str        = ("")
+    C_BACK_MEMORY_BOUND_NAME                    : str        = "BACK-END.MEMORY-BOUND"
+    C_BACK_MEMORY_BOUND_DESCRIPTION             : str        = ("It analyzes the parts of the GPU architecture where we have a loss of performance (IPC) due to\n"
+                                                                + "memory bounds. This part takes into account aspects such as data dependencies, failures or access\n"
+                                                                + "limits in caches")
+    # back_MEMORY_BOUND_nvprof.py
+    C_BACK_MEMORY_BOUND_NVPROF_METRICS          : str        =  ("stall_memory_dependency,stall_constant_memory_dependency,stall_memory_throttle")
+    C_BACK_MEMORY_BOUND_NVPROF_EVENTS           : str        = ("")
 
-    # back_end_nsight.py
-    C_BACK_END_NSIGHT_METRICS          : str        = ("")
+    # back_MEMORY_BOUND_nsight.py
+    C_BACK_MEMORY_BOUND_NSIGHT_METRICS          : str        = ("")

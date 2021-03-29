@@ -10,10 +10,9 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from measure_parts.metric_measure import MetricMeasure
+from measure_parts.metric_measure import MetricMeasure, MetricMeasureNsight, MetricMeasureNvprof
 from abc import ABC # abstract class
-from parameters.extra_measure_end_params import ExtraMeasureParameters 
-from measure_parts.extra_measure import ExtraMeasure
+from parameters.extra_measure_params import ExtraMeasureParameters 
 
 class ExtraMeasure(MetricMeasure, ABC):
     """Class that defines the ExtraMeasure part."""

@@ -91,7 +91,7 @@ class MessageFormat:
             if width3 < len(msgs[i][2]):
                 width3 = len(msgs[i][2])
             if width4 < len(msgs[i][3]):
-                width4 = len(msgs[1][3])
+                width4 = len(msgs[i][3])
     
         space = " " * indent
         box = f'╔{"═" * (width1 + indent * 2)}╗  '  # upper_border

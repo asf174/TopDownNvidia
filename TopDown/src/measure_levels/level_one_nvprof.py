@@ -1,9 +1,17 @@
 from abc import ABC, abstractmethod # abstract class
-import os, sys, inspect
+import os, sys, inspect, re
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from measure_levels.level_one import LevelOne 
+from measure_levels.level_execution_nvprof import LevelExecutionNvprof
+from measure_levels.level_execution import LevelExecution 
+from measure_parts.front_end import FrontEndNvprof
+from measure_parts.back_end import BackEndNvprof
+from measure_parts.divergence import DivergenceNvprof
+from measure_parts.retire import RetireNvprof
+from show_messages.message_format import MessageFormat
+from parameters.level_execution_params import LevelExecutionParameters
 
 class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
 
@@ -23,7 +31,19 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         self._back_end  : BackEndNvprof = BackEndNvprof()
         self._divergence : DivergenceNvprof = DivergenceNvprof()
         self._retire : RetireNvprof = RetireNvprof()
-        super(LevelExecutionNvprof, self).__init__(program, output_file, recoltect_metrics, recolect_events)
+        super().__init__(program, output_file, recoltect_metrics, recolect_events)
+        pass
+
+    def retire_ipc(self) -> float:
+        """
+        Get "RETIRE" IPC of execution.
+
+        Raises:
+            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not 
+            computed by the NVIDIA scan tool.
+        """
+
+        return super()._ret_ipc(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF)
         pass
 
     def _generate_command(self) -> str:
@@ -87,7 +107,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
             list_words = line.split(" ")
             if not has_read_all_events:
                 # Check if it's line of interest:
-                # ['', 'X', 'event_name','Min', 'Max', 'Avg', 'Total'] event_name is str. Rest: numbers (less '', it's an space)
+                # ['', 'X', 'event_name','Min', 'Max', 'Avg', 'Total']
                 if len(list_words) > 1: 
                     if list_words[1] == "Metric": # check end events
                         has_read_all_events = True
@@ -139,7 +159,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
                         raise MetricNotAsignedToPart(metric_name)
         pass
 
-    def front_end(self) -> FrontEnd:
+    def front_end(self) -> FrontEndNvprof:
         """
         Return FrontEndNvprof part of the execution.
 
@@ -150,7 +170,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         return self._front_end
         pass
     
-    def back_end(self) -> BackEnd:
+    def back_end(self) -> BackEndNvprof:
         """
         Return BackEndNvprof part of the execution.
 
@@ -161,7 +181,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         return self._back_end
         pass
 
-    def divergence(self) -> Divergence:
+    def divergence(self) -> DivergenceNvprof:
         """
         Return DivergenceNvprof part of the execution.
 
@@ -172,7 +192,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         return self._divergence
         pass
 
-    def retire(self) -> Retire:
+    def retire(self) -> RetireNvprof:
         """
         Return RetireNvprof part of the execution.
 
@@ -182,10 +202,8 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
 
         return self._retire
         pass
-
-     @abstractmethod
     
-    def __divergence_ipc_degradation(self) -> float:
+    def _divergence_ipc_degradation(self) -> float:
         """
         Find IPC degradation due to Divergence part
 
@@ -193,7 +211,8 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
             Float with theDivergence's IPC degradation
 
         """
-        return super()._diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME_NVPROF)
+
+        return super()._diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF, LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
         pass
 
     def _get_results(self, lst_output : list[str]):
@@ -254,4 +273,15 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
                 super()._add_result_part_to_lst(self._extra_measure.events(), 
                 self._extra_measure.events_description(), lst_output, False)
         lst_output.append("\n")
+        pass
+
+    def ipc(self) -> float:
+        """
+        Get IPC of execution.
+
+        Returns:
+            float with the IPC
+        """
+
+        return super()._get_ipc(LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
         pass

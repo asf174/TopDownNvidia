@@ -73,7 +73,7 @@ class MetricMeasure(ABC):
         """
 
         metric_name : str
-        for metric_name in self._metrics.items(): 
+        for metric_name in self._metrics: 
             if not metric_name in self._metrics_desc:
                 raise DataStructuresOfMetricError(metric_name)
         pass
@@ -96,27 +96,7 @@ class MetricMeasure(ABC):
 
         self._name : str = name
         self._description : str = description
-        self.__init_dictionaries()
-        self.__check_data_structures() # check dictionaries defined correctly
-        pass
-
-     def __init__(self, metrics : str, metrics_desc : str):
-        """
-        Set attributtes with argument values.
-        
-        Params:
-            
-            name                : str   ;   measure name.
-        
-            description         : str   ;   description with information.
-        
-            metrics             : str   ;   string with the metrics
-            
-            metrics_desc        : str   ;   string with metric name as key, 
-                                            and description of metric as value. 
-        """
-
-        self.__init_dictionaries()
+        self.__init_dictionaries(name, description, metrics, metrics_desc)
         self.__check_data_structures() # check dictionaries defined correctly
         pass
 
@@ -275,7 +255,6 @@ class MetricMeasureNsight(MetricMeasure):
     with nvprof scan tool.
     """
 
-    @override
     def __init_dictionaries(self):
         """ Initialize data structures in the correct way."""
 
@@ -325,47 +304,6 @@ class MetricMeasureNvprof(MetricMeasure):
         __events_str        : str   ;   string with the events
     """
 
-    @override
-    def __init_dictionaries(self, events : str, events_desc : str):
-        """ 
-        Initialize data structures in the correct way.
-        
-        Params:
-
-            events              : str   ;   string with events
-
-            events_desc         : str   ;   dictionary with event name as key, 
-                                            and description of event as value.
-        """
-
-        if events != "":
-            self.__events = dict.fromkeys(events.replace(" ", "").split(","))
-            self.__events_desc = dict.fromkeys(events_desc.replace(" ", "").split(","))
-        
-        self.__events_str : str = events
-
-        key_events : str
-        key_events_desc : str
-        for key_events in self._events:
-            self._events[key_events] = list()
-        pass
-
-    @override
-    def __check_data_structures(self): 
-        """
-        Check all data structures for events and metrics are consistent.
-        In case they are not, raise exception.
-
-        Raises:
-            DataStructuresOfEventError  ; if event is not defined in all data structures
-        """
-
-        event_name : str
-        for event_name in self.__events.items(): 
-            if not metric_name in self.__events_desc:
-                raise DataStructuresOfEventError(metric_name)
-        pass
-                
     def __init__(self, name : str, description : str, metrics : str, events : str, metrics_desc : str, events_desc : str):
         """
         Set attributtes with argument values.
@@ -388,32 +326,46 @@ class MetricMeasureNvprof(MetricMeasure):
 
         """
         super().__init__(name, description, metrics, metrics_desc)
-
-        self.__init_dictionaries()
+        self.__events : dict = dict.fromkeys(events.replace(" ", "").split(","))
+        self.__events_desc = dict.fromkeys(events_desc.replace(" ", "").split(","))
+        self.__events_str : str = events
+        self.__init_dictionaries(events, events_desc)
         self.__check_data_structures() # check dictionaries defined correctly
         pass
     
-    def __init__(self, metrics : str, metrics_desc : str):
-        """
-        Set attributtes with argument values.
+    def __init_dictionaries(self, events : str, events_desc : str):
+        """ 
+        Initialize data structures in the correct way.
         
         Params:
-            
-            name                : str   ;   measure name.
-        
-            description         : str   ;   description with information.
-        
-            metrics             : str   ;   string with the metrics
-            
-            metrics_desc        : str   ;   string with metric name as key, 
-                                            and description of metric as value. 
+
+            events              : str   ;   string with events
+
+            events_desc         : str   ;   dictionary with event name as key, 
+                                            and description of event as value.
         """
 
-        super().__init__(metrics, metrics_desc)
-        self.__init_dictionaries()
-        self.__check_data_structures() # check dictionaries defined correctly
+        key_events : str
+        key_events_desc : str
+        for key_events in self.__events:
+            self.__events[key_events] = list()
         pass
 
+    def __check_data_structures(self): 
+        """
+        Check all data structures for events and metrics are consistent.
+        In case they are not, raise exception.
+
+        Raises:
+            DataStructuresOfEventError  ; if event is not defined in all data structures
+        """
+
+        event_name : str
+        for event_name in self.__events: 
+            if not event_name in self.__events_desc:
+                raise DataStructuresOfEventError(metric_name)
+        pass
+                
     def get_event_value(self, event_name : str) -> list[str]:
         """
         Get the value/s associated with 'event_name'
@@ -429,7 +381,7 @@ class MetricMeasureNvprof(MetricMeasure):
 
         if self.is_metric(event_name) or not self.is_event(event_name):
             return None
-        return self._events.get(event_name)
+        return self.__events.get(event_name)
         pass
 
     def get_event_description(self, event_name : str) -> list[str]:
@@ -461,8 +413,8 @@ class MetricMeasureNvprof(MetricMeasure):
             True if 'event_name' it's a correct event or False in other case
         """
 
-        is_in_events : bool = event_name in self._events
-        is_in_events_desc : bool = event_name in self._events_desc
+        is_in_events : bool = event_name in self.__events
+        is_in_events_desc : bool = event_name in self.__events_desc
         
         if not (is_in_events and is_in_events_desc):
             return False
@@ -482,9 +434,9 @@ class MetricMeasureNvprof(MetricMeasure):
             does not correspond to any event
         """
 
-        if not (event_name in self._events):
+        if not (event_name in self.__events):
             return False
-        self._events[event_name].append(new_value)
+        self.__events[event_name].append(new_value)
         return True
         pass
 
@@ -514,7 +466,7 @@ class MetricMeasureNvprof(MetricMeasure):
             Dictionary with the events and their values
         """
         
-        return self._events # mirar retornar copias
+        return self.__events # mirar retornar copias
         pass
 
     def events_description(self) -> dict: 
@@ -525,7 +477,7 @@ class MetricMeasureNvprof(MetricMeasure):
             Dictionary with the events and their descriptions
         """
 
-        return self._events_desc # mirar retornar copias
+        return self.__events_desc # mirar retornar copias
         pass
 
     def events_str(self) -> str:
@@ -536,5 +488,5 @@ class MetricMeasureNvprof(MetricMeasure):
             String with the events
         """
 
-        return self._events_str
+        return self.__events_str
         pass

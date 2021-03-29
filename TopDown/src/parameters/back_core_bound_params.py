@@ -9,7 +9,7 @@ and their subclasses
 
 class BackCoreBoundParameters:
 
-    C_BACK_CORE_BOUND_NAME                    : str        = "BACK-End.CORE-BOUND"
+    C_BACK_CORE_BOUND_NAME                    : str        = "BACK-END.CORE-BOUND"
     C_BACK_CORE_BOUND_DESCRIPTION             : str        = ("In this part, the aspects related to CUDA cores that cause bottlenecks and thus performance losses are analyzed.\n"
                                                             + "Some aspects such as the use and availability of the functional units are analyzed.")
     # back_CORE_BOUND_nvprof.py
