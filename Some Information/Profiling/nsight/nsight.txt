@@ -118,12 +118,16 @@ NIVEL 1:
         + stall_sync = smsp__warp_issue_stalled_barrier_per_warp_active.pct + smsp__warp_issue_stalled_membar_per_warp_active.pct
         + stall_other = smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct + smsp__warp_issue_stalled_misc_per_warp_active.pct
         + stall_not_selected = smsp__warp_issue_stalled_not_selected_per_warp_active.pct
+        + = smsp__warp_issue_stalled_branch_resolving_per_warp_active
+        + = smsp__warp_issue_stalled_selected_per_warp_active                                    
+        + = smsp__warp_issue_stalled_sleeping_per_warp_active #DUDA
 
     - BACK_END:
         + stall_memory_dependency = smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct
         + stall_constant_memory_dependency = smsp__warp_issue_stalled_imc_miss_per_warp_active.pct
         + stall_pipe_busy = smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct + smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct
         + stall_memory_throttle =  	smsp__warp_issue_stalled_drain_per_warp_active.pct + smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct
+        + = smsp__warp_issue_stalled_tex_throttle_per_warp_active #DUDA
 
     - DIVERGENCE:
         + branch_efficiency = smsp__sass_average_branch_targets_threads_uniform.pct
@@ -141,11 +145,13 @@ NIVEL 2:
     - FRONT-END.BAND-WIDTH
         + stall_exec_dependency =  smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct + smsp__warp_issue_stalled_wait_per_warp_active.pct
         + stall_not_selected = smsp__warp_issue_stalled_not_selected_per_warp_active.pct
-
+        + = smsp__warp_issue_stalled_branch_resolving_per_warp_active
+        + = smsp__warp_issue_stalled_sleeping_per_warp_active #DUDA
     - FRONT-END.DEPENDENCY 
         + stall_inst_fetch =  smsp__warp_issue_stalled_no_instruction_per_warp_active.pct
         + stall_sync = smsp__warp_issue_stalled_barrier_per_warp_active.pct + smsp__warp_issue_stalled_membar_per_warp_active.pct
         + stall_other = smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct + smsp__warp_issue_stalled_misc_per_warp_active.pct
+        + = smsp__warp_issue_stalled_selected_per_warp_active         
 
     - BACK-END.CORE-BOUND
         + stall_pipe_busy = smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct + smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct
@@ -154,7 +160,7 @@ NIVEL 2:
         + stall_memory_dependency = smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct
         + stall_constant_memory_dependency = smsp__warp_issue_stalled_imc_miss_per_warp_active.pct
         + stall_memory_throttle =  	smsp__warp_issue_stalled_drain_per_warp_active.pct + smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct
-
+        + = smsp__warp_issue_stalled_tex_throttle_per_warp_active #DUDA
 NIVEL 3:
 
     - MEMORY-BOUND.CONSTANT-MEMORY-BOUND  
