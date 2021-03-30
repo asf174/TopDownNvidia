@@ -37,6 +37,5 @@ class BackEndNsight(MetricMeasureNsight, BackEnd):
         """Set attributes with DEFAULT values."""
         
         super().__init__(BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION,
-            BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION,
-            MetricMeasureParameters.C_BACK_END_NSIGHT_METRICS, MetricMeasureParameters.C_BACK_END_NSIGHT_METRICS)
+            BackEndParameters.C_BACK_END_NSIGHT_METRICS, BackEndParameters.C_BACK_END_NSIGHT_METRICS)
         pass

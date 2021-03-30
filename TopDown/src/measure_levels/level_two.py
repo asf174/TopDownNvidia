@@ -160,12 +160,12 @@ class LevelTwo(LevelOne, ABC):
         pass
 
     @abstractmethod
-    def _get_results(self, lst_output : list[str]):
+    def _get_results(self, lst_output : list):
         """ 
         Get results of the different parts.
 
         Parameters:
-            lst_output              : list[str]     ; OUTPUT list with results
+            lst_output              : list     ; OUTPUT list with results
         """
         
         pass
@@ -246,7 +246,7 @@ class LevelTwo(LevelOne, ABC):
                         if not self.__metricExists(metric_name):
                             raise MetricNotAsignedToPart(metric_name)
 
-    def run(self, lst_output : list[str]):
+    def run(self, lst_output : list):
         """Run execution."""
         
         # compute results

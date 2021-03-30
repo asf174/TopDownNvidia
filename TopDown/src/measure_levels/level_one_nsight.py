@@ -1,9 +1,18 @@
+import re
 from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from measure_levels.level_one import LevelOne 
+from measure_levels.level_execution_nsight import LevelExecutionNsight
+from measure_parts.front_end import FrontEndNsight
+from measure_parts.back_end import BackEndNsight
+from measure_parts.divergence import DivergenceNsight
+from measure_parts.retire import RetireNsight
+from show_messages.message_format import MessageFormat
+from errors.level_execution_errors import *
+
 
 class LevelOneNsight(LevelOne, LevelExecutionNsight):
 
@@ -23,7 +32,7 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         self._back_end  : BackEndNsight = BackEndNsight()
         self._divergence : DivergenceNsight = DivergenceNsight()
         self._retire : RetireNsight = RetireNsight()
-        super(LevelExecutionNvprof, self).__init__(program, output_file, recoltect_metrics)
+        super().__init__(program, output_file, recoltect_metrics)
         pass
 
     def _generate_command(self) -> str:
@@ -34,13 +43,14 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
             String with command to be executed
         """
         
-        command : str = ("sudo $(which ncu) --page=raw --metrics " + self._front_end.metrics_str() + 
-            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
-            + "," + self._retire.metrics_str() + self._program)
+        command : str = ("sudo $(which ncu) --metrics " + self._front_end.metrics_str() + 
+            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + super().extra_measure().metrics_str() +
+            "," + self._retire.metrics_str() + " " +  self._program)
+        print(command)
         return command
         pass
 
-    def front_end(self) -> FrontEnd:
+    def front_end(self) -> FrontEndNsight:
         """
         Return FrontEndNsight part of the execution.
 
@@ -51,7 +61,7 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         return self._front_end
         pass
     
-    def back_end(self) -> BackEnd:
+    def back_end(self) -> BackEndNsight:
         """
         Return BackEndNsight part of the execution.
 
@@ -62,7 +72,7 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         return self._back_end
         pass
 
-    def divergence(self) -> Divergence:
+    def divergence(self) -> DivergenceNsight:
         """
         Return DivergenceNsight part of the execution.
 
@@ -73,7 +83,7 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         return self._divergence
         pass
 
-    def retire(self) -> Retire:
+    def retire(self) -> RetireNsight:
         """
         Return RetireNsight part of the execution.
 
@@ -84,7 +94,7 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         return self._retire
         pass
 
-    def __divergence_ipc_degradation(self) -> float:
+    def _divergence_ipc_degradation(self) -> float:
         """
         Find IPC degradation due to Divergence part
 
@@ -95,12 +105,12 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         return super()._diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME_NSIGHT)
         pass
 
-    def _get_results(self, lst_output : list[str]):
+    def _get_results(self, lst_output : list):
         """
         Get results of the different parts.
 
         Parameters:
-            lst_output              : list[str]     ; OUTPUT list with results
+            lst_output              : list     ; OUTPUT list with results
         """
 
         converter : MessageFormat = MessageFormat()
@@ -141,7 +151,7 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         return super()._get_ipc(LevelExecutionParameters.C_IPC_METRIC_NAME_NSIGHT)
         pass
 
-    @abstractmethod
+    
     def _set_front_back_divergence_retire_results(self, results_launch : str):
         """ Get Results from FrontEnd, BanckEnd, Divergence and Retire parts.
         
@@ -153,11 +163,12 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         """
         
         metric_name : str
+        print("AKi tambien")
         metric_unit : str 
         metric_value : str 
         line : str
         i : int
-        list_words : list[str]
+        list_words : list
         front_end_value_has_found : bool
         frond_end_unit_has_found : bool
         back_end_value_has_found : bool
@@ -168,29 +179,38 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         extra_measure_unit_has_found : bool
         retire_value_has_found : bool 
         retire_unit_has_found : bool
-        for line in results_launch.splitlines():
+        #print(results_launch.splitlines())
+        can_read_results : bool = False
+        for line in str(results_launch).splitlines():
+            print(line)
             line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
             list_words = line.split(" ")
             # Check if it's line of interest:
             # ['', 'metric_name','metric_unit', 'metric_value']
+            #print(list_word)
+            if not can_read_results:
+                if list_words[0] == "==PROF==" and list_words[1] == "Disconnected":
+                        can_read_results = True
+                continue
             if len(list_words) == 4 and list_words[1][0] != "-":
+                #print(list_words)
                 metric_name = list_words[1]
                 metric_unit = list_words[2]
                 metric_value = list_words[3]   
                 front_end_value_has_found = self._front_end.set_metric_value(metric_name, metric_value)
-                frond_end_unit_has_found = front_end.set_event_unit(metric_name, metric_unit)
+                frond_end_unit_has_found = self._front_end.set_metric_unit(metric_name, metric_unit)
                 back_end_value_has_found = self._back_end.set_metric_value(metric_name, metric_value)
-                back_end_unit_has_found = back_end.set_event_unit(metric_name, metric_unit)
+                back_end_unit_has_found = self._back_end.set_metric_unit(metric_name, metric_unit)
                 divergence_value_has_found = self._divergence.set_metric_value(metric_name, metric_value)
-                divergence_unit_has_found = divergence.set_event_unit(metric_name, metric_unit)
-                extra_measure_value_has_found = self._extra_measure.set_metric_value(metric_name, metric_value)
-                extra_measure_unit_has_found = extra_measure.set_event_unit(metric_name, metric_unit)
+                divergence_unit_has_found = self._divergence.set_metric_unit(metric_name, metric_unit)
+                extra_measure_value_has_found = self._extra_measure.set_metric_value(metric_name, metric_value) #TODO cambiar super
+                extra_measure_unit_has_found = self._extra_measure.set_metric_unit(metric_name, metric_unit)
                 retire_value_has_found = self._retire.set_metric_value(metric_name, metric_value)
-                retire_unit_has_found = extra_measure.set_event_unit(metric_name, metric_unit)
+                retire_unit_has_found = self._retire.set_metric_unit(metric_name, metric_unit)
                 if (not (front_end_value_has_found or back_end_value_has_found or divergence_value_has_found or 
-                    extra_measure_value_has_found or retire_value_has_found)) or 
+                    extra_measure_value_has_found or retire_value_has_found) or 
                     not(frond_end_unit_has_found or back_end_unit_has_found 
-                    or divergence_unit_has_found or extra_measure_unit_has_found)):
+                    or divergence_unit_has_found or extra_measure_unit_has_found or retire_unit_has_found)):
                     raise MetricNotAsignedToPart(metric_name)
         pass
 
@@ -205,3 +225,4 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
 
         super()._ret_ipc(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT)
         pass
+    

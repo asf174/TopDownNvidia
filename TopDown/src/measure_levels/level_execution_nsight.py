@@ -7,8 +7,10 @@ from measure_parts.extra_measure import ExtraMeasure
 from shell.shell import Shell # launch shell arguments
 from parameters.level_execution_params import LevelExecutionParameters # parameters of program
 from errors.level_execution_errors import *
+from measure_levels.level_execution import LevelExecution
+from measure_parts.extra_measure import ExtraMeasureNsight
 
-class LevelExecutionNvprof(LevelExecution, ABC):
+class LevelExecutionNsight(LevelExecution, ABC):
     """ 
     Class that represents the levels of the execution with nsight scan tool
      
@@ -19,8 +21,9 @@ class LevelExecutionNvprof(LevelExecution, ABC):
     """
 
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
+        print("AKI SI ENTRO")
         self._extra_measure : ExtraMeasureNsight = ExtraMeasureNsight()
-        super().__init__(program, output_file, recoltect_metrics):
+        super().__init__(program, output_file, recoltect_metrics)
         pass
 
     def extra_measure(self) -> ExtraMeasureNsight:
@@ -35,12 +38,12 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         pass
 
     @abstractmethod
-    def run(self, lst_output : list[str]):
+    def run(self, lst_output : list):
         """
         Makes execution.
         
         Parameters:
-            lst_output  : list[str] ; list with results
+            lst_output  : list ; list with results
         """
         
         pass
@@ -57,11 +60,23 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         pass
 
     @abstractmethod
-    def _get_results(self, lst_output : list[str]):
+    def _get_results(self, lst_output : list):
         """ 
         Get results of the different parts.
 
         Parameters:
-            lst_output              : list[str]     ; OUTPUT list with results
+            lst_output              : list     ; OUTPUT list with results
         """
         pass
+
+    def extra_measure(self) -> ExtraMeasureNsight:
+        """
+        Return ExtraMeasureNsight part of the execution.
+
+        Returns:
+            reference to ExtraMeasureNsight part of the execution
+        """
+
+        return self._extra_measure
+        pass
+

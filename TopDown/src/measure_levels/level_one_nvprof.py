@@ -62,7 +62,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         return command
         pass
 
-    def run(self, lst_output : list[str]):
+    def run(self, lst_output : list):
         """Run execution."""
         
         output_command : str = super()._launch(self._generate_command())
@@ -91,7 +91,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         has_read_all_events : bool = False
         line : str
         i : int
-        list_words : list[str]
+        list_words : list
         front_end_value_has_found : bool
         frond_end_description_has_found : bool
         back_end_value_has_found : bool
@@ -215,12 +215,12 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         return super()._diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF, LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
         pass
 
-    def _get_results(self, lst_output : list[str]):
+    def _get_results(self, lst_output : list):
         """
         Get results of the different parts.
 
         Parameters:
-            lst_output              : list[str]     ; OUTPUT list with results
+            lst_output              : list     ; OUTPUT list with results
         """
 
         converter : MessageFormat = MessageFormat()

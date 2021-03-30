@@ -27,8 +27,7 @@ class RetireNsight(MetricMeasureNsight, Retire):
         """Set attributes with DEFAULT values."""
         
         super().__init__(RetireParameters.C_RETIRE_NAME, RetireParameters.C_RETIRE_DESCRIPTION,
-        RetireParameters.C_RETIRE_NSIGHT_METRICS, RetireParameters.C_RETIRE_NSIGHT_EVENTS, 
-        RetireParameters.C_RETIRE_NSIGHT_METRICS, RetireParameters.C_RETIRE_NSIGHT_EVENTS)
+        RetireParameters.C_RETIRE_NSIGHT_METRICS, RetireParameters.C_RETIRE_NSIGHT_METRICS)
         pass
 
 class RetireNvprof(MetricMeasureNvprof, Retire):

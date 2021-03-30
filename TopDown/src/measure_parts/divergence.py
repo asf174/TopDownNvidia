@@ -27,8 +27,7 @@ class DivergenceNsight(MetricMeasureNsight, Divergence):
         """Set attributes with DEFAULT values."""
             
         super().__init__(DivergenceParameters.C_DIVERGENCE_NAME, DivergenceParameters.C_DIVERGENCE_DESCRIPTION,
-        DivergenceParameters.C_DIVERGENCE_NSIGHT_METRICS, DivergenceParameters.C_DIVERGENCE_NSIGHT_EVENTS, 
-        DivergenceParameters.C_DIVERGENCE_NSIGHT_METRICS, DivergenceParameters.C_DIVERGENCE_NSIGHT_EVENTS)
+        DivergenceParameters.C_DIVERGENCE_NSIGHT_METRICS, DivergenceParameters.C_DIVERGENCE_NSIGHT_METRICS)
         pass
 
 class DivergenceNvprof(MetricMeasureNvprof, Divergence):

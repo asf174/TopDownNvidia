@@ -28,5 +28,5 @@ class DivergenceParameters:
     C_DIVERGENCE_NVPROF_EVENTS           : str      = ("branch,divergent_branch")
 
     # divergence_nsight.py
-    C_DIVERGENCE_NSIGHT_METRICS          : str      = ("smsp__sass_average_branch_targets_threads_uniform.pct," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + 
+    C_DIVERGENCE_NSIGHT_METRICS          : str      = ("smsp__sass_average_branch_targets_threads_uniform.pct," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
                                                       "," + LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)

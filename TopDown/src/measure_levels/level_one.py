@@ -35,17 +35,17 @@ class LevelOne(LevelExecution, ABC):
         pass
 
     @abstractmethod
-    def _get_results(self, lst_output : list[str]):
+    def _get_results(self, lst_output : list):
         """
         Get results of the different parts.
 
         Parameters:
-            lst_output              : list[str]     ; OUTPUT list with results
+            lst_output              : list     ; OUTPUT list with results
         """
         
         pass
 
-    def run(self, lst_output : list[str]):
+    def run(self, lst_output : list):
         """Run execution."""
         
         output_command : str = super()._launch(self._generate_command())
@@ -68,7 +68,7 @@ class LevelOne(LevelExecution, ABC):
             float with the IPC
         """
 
-        ipc_list : list[str] = self._retire.get_metric_value(ipc_metric_name)
+        ipc_list : list = self._retire.get_metric_value(ipc_metric_name)
         if ipc_list is None:
             raise IpcMetricNotDefined # revisar TODO
         total_ipc : float = self._get_total_value_of_list(ipc_list, True)
@@ -98,7 +98,7 @@ class LevelOne(LevelExecution, ABC):
             computed by the NVIDIA scan tool.
         """
 
-        warp_execution_efficiency_list : list[str] = self._divergence.get_metric_value(warp_exec_efficiency_name) #TODO importante
+        warp_execution_efficiency_list : list = self._divergence.get_metric_value(warp_exec_efficiency_name) #TODO importante
         if warp_execution_efficiency_list is None:
             raise RetireIpcMetricNotDefined
         total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
@@ -199,11 +199,11 @@ class LevelOne(LevelExecution, ABC):
         """
 
         ipc : float = self.ipc() 
-        warp_execution_efficiency_list  : list[str] = self._divergence.get_metric_value(warp_exec_efficiency_name)
+        warp_execution_efficiency_list  : list = self._divergence.get_metric_value(warp_exec_efficiency_name)
         if warp_execution_efficiency_list is None:
             raise RetireIpcMetricNotDefined # revisar si crear otra excepcion (creo que si)
         total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
-        issued_ipc_list : list[str] = self._divergence.get_metric_value(issue_ipc_name)
+        issued_ipc_list : list = self._divergence.get_metric_value(issue_ipc_name)
         total_issued_ipc : float = self._get_total_value_of_list(issued_ipc_list, True)
         ipc_diference : float = float(total_issued_ipc) - ipc
         if ipc_diference < 0.0:

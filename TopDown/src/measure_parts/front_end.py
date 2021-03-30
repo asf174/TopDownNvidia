@@ -27,7 +27,7 @@ class FrontEndNsight(MetricMeasureNsight, FrontEnd):
         """Set attributes with DEFAULT values."""
             
         super(MetricMeasureNsight, self).__init__(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
-            MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS, MetricMeasureParameters.C_FRONT_END_NSIGHT_METRICS)
+            FrontEndParameters.C_FRONT_END_NSIGHT_METRICS, FrontEndParameters.C_FRONT_END_NSIGHT_METRICS)
         pass
                    
 class FrontEndNvprof(MetricMeasureNvprof, FrontEnd):

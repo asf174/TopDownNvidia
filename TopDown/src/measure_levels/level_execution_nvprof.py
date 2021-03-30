@@ -49,12 +49,12 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         pass
 
     @abstractmethod
-    def run(self, lst_output : list[str]):
+    def run(self, lst_output : list):
         """
         Makes execution.
         
         Parameters:
-            lst_output  : list[str] ; list with results
+            lst_output  : list ; list with results
         """
         
         pass
@@ -71,12 +71,12 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         pass
 
     @abstractmethod
-    def _get_results(self, lst_output : list[str]):
+    def _get_results(self, lst_output : list):
         """ 
         Get results of the different parts.
 
         Parameters:
-            lst_output              : list[str]     ; OUTPUT list with results
+            lst_output              : list     ; OUTPUT list with results
         """
 
         pass
@@ -103,8 +103,8 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         Params:
             kernel_number   : int   ; number of kernel
         """
-        #TODO lanzar excepcion
-        value_lst : list[str] = self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_EVENT_NAME_NVPROF)
+        
+        value_lst : list = self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_EVENT_NAME_NVPROF)
         if value_lst is None:
             raise ElapsedCyclesError
         value_str : str

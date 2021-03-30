@@ -139,7 +139,7 @@ class MessageFormat:
         self.__write_str_in_file(box, output_file, delete_content_file)
         pass
 
-    def print_n_per_line_msg_box(self, matrix : list[list[str]], titles, indent, width, output_file : str, delete_content_file : bool):
+    def print_n_per_line_msg_box(self, matrix : list, titles, indent, width, output_file : str, delete_content_file : bool):
         """Print message-box with optional title.""" # NOT USED. DONT USE
 
         lines = matrix[0][0].split('\n') # by default
@@ -186,13 +186,13 @@ class MessageFormat:
             self.__write_str_in_file(message, output_file, delete_content_file)
         pass
 
-    def write_in_file_at_end(self, file : str, message : list[str]):
+    def write_in_file_at_end(self, file : str, message : list):
         """
         Write 'message' at the end of file with path 'file'
 
         Params:
             file    : str           ; path to file to write.
-            message : list[str]     ; list of string with the information to be written (in order) to file.
+            message : list     ; list of string with the information to be written (in order) to file.
                                       Each element of the list corresponds to a line.
 
         Raises:

@@ -33,16 +33,12 @@ class Shell:
             if command:
                 if message:
                     print(message)
-                if hasToCheck:
-                    output : sh.CompletedProcess = sh.run(args = command, shell = True, check = True, 
-                        stdout = sh.PIPE, stderr = sh.STDOUT, text = True, executable = '/bin/bash') # text to use as string
-                else:
-                    output : sh.CompletedProcess = sh.run(args = command, shell = True, 
-                        stdout = sh.PIPE, stderr = sh.STDOUT, text = True, executable = '/bin/bash') # text to use as string
-                str_output = output.stdout
-        except:  
+                output : sh.CompletedProcess = sh.run(args = command, shell = True, check = hasToCheck, 
+                stdout = sh.PIPE, stderr = sh.STDOUT, executable = '/bin/bash') # text to use as string
+                str_output = output.stdout.decode('utf-8')
+        except : 
             pass # No need to do nothing, command was not executed succesfully
-        return str_output
+        return str(str_output)
         pass
     
     def launch_command(self, command: str, message : str) -> str:

@@ -27,8 +27,7 @@ class ExtraMeasureNsight(MetricMeasureNsight, ExtraMeasure):
         """Set attributes with DEFAULT values."""
         
         super().__init__(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
-        ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_EVENTS, 
-        ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_EVENTS)
+        ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_METRICS)
         pass
 
 class ExtraMeasureNvprof(MetricMeasureNvprof, ExtraMeasure):

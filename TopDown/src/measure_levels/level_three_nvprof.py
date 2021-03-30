@@ -61,12 +61,12 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         return command
         pass
 
-    def _get_results(self, lst_output : list[str]):
+    def _get_results(self, lst_output : list):
         """ 
         Get results of the different parts. TODO
 
         Parameters:
-            lst_output              : list[str]     ; OUTPUT list with results
+            lst_output              : list     ; OUTPUT list with results
         """
 
         # revisar en unos usa atributo y en otros la llamada al metodo TODO

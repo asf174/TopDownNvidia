@@ -55,12 +55,12 @@ class LevelThree(LevelTwo):
         return command
         pass
 
-    def run(self, lst_output : list[str]):
+    def run(self, lst_output : list):
         """ 
         Makes execution.
         
         Parameters:
-            lst_output  : list[str] ; list with results
+            lst_output  : list ; list with results
         """
 
         # compute results

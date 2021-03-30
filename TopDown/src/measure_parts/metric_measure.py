@@ -33,7 +33,7 @@ class MetricMeasure(ABC):
     """
 
     def __init_dictionaries(self, name : str, description : str, metrics : str, metrics_desc : str):
-        """ 
+        """ #TODO revisar, doble mismo argumento
         Initialize data structures in the correct way.
         
         Params:
@@ -119,7 +119,7 @@ class MetricMeasure(ABC):
         return True
         pass
     
-    def get_metric_value(self, metric_name : str) -> list[str]:
+    def get_metric_value(self, metric_name : str):# -> list[str]:
         """
         Get the value/s associated with 'metric_name'
 
@@ -137,23 +137,6 @@ class MetricMeasure(ABC):
         return self._metrics.get(metric_name)
         pass
 
-    def get_metric_description(self, metric_name : str) -> list[str]:
-        """
-        Get the description/s associated with 'metric_name'
-
-        Params:
-            metric_name  : str   ; name of the metric
-
-        Returns:
-            List with associated description/s to 'metric_name' or 'None' if
-            'metric_name' doesn't exist or it's not a metric
-
-        """
-        
-        if not self.is_metric(metric_name) or self.is_event(metric_name):
-            return None
-        return self._metrics_desc.get(metric_name)
-        pass
 
     def set_metric_value(self, metric_name : str, new_value : str) -> bool:
         """
@@ -175,23 +158,6 @@ class MetricMeasure(ABC):
         return True
         pass
 
-    def set_metric_description(self, metric_name : str, new_description : str) -> bool:
-        """
-        Update metric with key 'metric_name' with 'new_value' description if 'metric_name' exists.
-        Params:
-            metric_name         : str   ; name of the metric
-            new_description     : str   ; new description to assign to 'metric_name' if name exists
-        
-        Returns:
-            True if the operation was perfomed succesfully or False if not because 'metric_name'
-            does not correspond to any metric
-        """
-
-        if not metric_name in self._metrics:
-            return False
-        self._metrics_desc[metric_name] = new_description
-        return True
-        pass
 
     def name(self) -> str:
         """ 
@@ -288,6 +254,24 @@ class MetricMeasureNsight(MetricMeasure):
         super().__init__(name, description, metrics, metrics_desc)    
         pass
 
+    def set_metric_unit(self, metric_name : str, new_unit : str) -> bool:
+        """
+        Update metric with key 'metric_name' with 'new_value' description if 'metric_name' exists.
+        Params:
+            metric_name         : str   ; name of the metric
+            new_unit     	: str   ; unit to assign to 'metric_name' if name exists
+        
+        Returns:
+            True if the operation was perfomed succesfully or False if not because 'metric_name'
+            does not correspond to any metric
+        """
+
+        if not metric_name in self._metrics:
+            return False
+        self._metrics_desc[metric_name] = new_unit
+        return True
+        pass
+
 class MetricMeasureNvprof(MetricMeasure):
     """
     Class that implements the metrics and events used 
@@ -366,7 +350,7 @@ class MetricMeasureNvprof(MetricMeasure):
                 raise DataStructuresOfEventError(metric_name)
         pass
                 
-    def get_event_value(self, event_name : str) -> list[str]:
+    def get_event_value(self, event_name : str):# -> list[str]:
         """
         Get the value/s associated with 'event_name'
 
@@ -384,7 +368,7 @@ class MetricMeasureNvprof(MetricMeasure):
         return self.__events.get(event_name)
         pass
 
-    def get_event_description(self, event_name : str) -> list[str]:
+    def get_event_description(self, event_name : str):# -> list[str]:
         """
         Get the description/s associated with 'event_name'
 
@@ -400,6 +384,24 @@ class MetricMeasureNvprof(MetricMeasure):
         if self.is_metric() or not self.is_event():
             return None
         return self._events_desc.get(event_name)
+        pass
+
+    def set_metric_description(self, metric_name : str, new_description : str) -> bool:
+        """
+        Update metric with key 'metric_name' with 'new_value' description if 'metric_name' exists.
+        Params:
+            metric_name         : str   ; name of the metric
+            new_description     : str   ; new description to assign to 'metric_name' if name exists
+        
+        Returns:
+            True if the operation was perfomed succesfully or False if not because 'metric_name'
+            does not correspond to any metric
+        """
+
+        if not metric_name in self._metrics:
+            return False
+        super()._metrics_desc[metric_name] = new_description
+        return True
         pass
 
     def is_event(self, event_name : str) -> bool:

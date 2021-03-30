@@ -12,6 +12,7 @@ import sys
 from errors.topdown_errors import *
 from parameters.topdown_params import TopDownParameters # parameters of program
 from measure_levels.level_one_nvprof import LevelOneNvprof
+from measure_levels.level_one_nsight import LevelOneNsight
 from measure_levels.level_two_nvprof import LevelTwoNvprof
 from measure_levels.level_two_nsight import LevelTwoNsight
 from measure_levels.level_three_nsight import LevelThreeNsight
@@ -614,7 +615,7 @@ class TopDown:
         pass
 
     def __is_nvprof_mode(self) -> bool:
-        return True
+        return False
         pass
     def launch(self):
         """ Launch execution."""
@@ -637,11 +638,11 @@ class TopDown:
                 level : LevelThreeNvprof = LevelThreeNvprof(self.program(), self.output_file(), show_metrics, show_events) 
         else:
             if self.level() == 1:
-                level : LevelOneNsight = LevelOneNsight(self.program(), self.output_file(), show_metrics, show_events)
+                level : LevelOneNsight = LevelOneNsight(self.program(), self.output_file(), show_metrics)
             elif self.level() == 2:
-                level : LevelTwoNsight = LevelTwoNsight(self.program(), self.output_file(), show_metrics, show_events) 
+                level : LevelTwoNsight = LevelTwoNsight(self.program(), self.output_file(), show_metrics) 
             elif self.level() == 3:
-                level : LevelThreeNsight = LevelThreeNsight(self.program(), self.output_file(), show_metrics, show_events) 
+                level : LevelThreeNsight = LevelThreeNsight(self.program(), self.output_file(), show_metrics) 
 
         lst_output : list[str] = list() # for extra information
         level.run(lst_output)

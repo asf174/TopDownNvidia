@@ -46,12 +46,12 @@ class LevelExecution(ABC):
         pass
 
     @abstractmethod
-    def run(self, lst_output : list[str]):
+    def run(self, lst_output): #: list):
         """
         Makes execution.
         
         Parameters:
-            lst_output  : list[str] ; list with results
+            lst_output  : list ; list with results
         """
         
         pass
@@ -86,12 +86,12 @@ class LevelExecution(ABC):
         pass
     
     @abstractmethod
-    def _get_results(self, lst_output : list[str]):
+    def _get_results(self, lst_output): #: list):
         """ 
         Get results of the different parts.
 
         Parameters:
-            lst_output              : list[str]     ; OUTPUT list with results
+            lst_output              : list     ; OUTPUT list with results
         """
         pass
 
@@ -115,7 +115,7 @@ class LevelExecution(ABC):
         pass
     
     def _add_result_part_to_lst(self, dict_values : dict, dict_desc : dict, 
-        lst_to_add : list[str], isMetric : bool):
+        lst_to_add , isMetric : bool):
         """
         Add results of execution part (FrontEnd, BackEnd...) to list indicated by argument.
 
@@ -124,7 +124,7 @@ class LevelExecution(ABC):
                                           add to 'lst_to_add'
             dict_desc       : dict      ; diccionary with name_metric/event-description elements of the 
                                           part to add to 'lst_to_add'
-            lst_output      : list[str] ; list where to add all elements
+            lst_output      : list ; list where to add all elements
             isMetric        : bool      ; True if they are metrics or False if they are events
 
         Raises:
@@ -134,7 +134,9 @@ class LevelExecution(ABC):
                                           not supported or does not exist in the NVIDIA analysis tool
         """
         
-        metrics_events_not_average : list[str] = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
+       # metrics_events_not_average : list = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
+        print(dict_values)	
+        metrics_events_not_average  = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         total_value : float = 0.0
         i : int = 0
         description : str 
@@ -199,12 +201,12 @@ class LevelExecution(ABC):
         lst_to_add.append(line_str + "\n")
         pass
 
-    def _get_total_value_of_list(self, list_values : list[str], computed_as_average : bool) -> float:
+    def _get_total_value_of_list(self, list_values, computed_as_average : bool) -> float:
         """
         Get total value of list of metric/event
     
         Params:
-            list_values         : list[str] ; list to be computed
+            list_values         : list ; list to be computed
             computed_as_average : bool      ; True if you want to obtain total value as average
                                               as the average of the elements as a function of the 
                                               time executed or False if it is the total value per 
@@ -224,7 +226,7 @@ class LevelExecution(ABC):
                     value *= (self._get_percentage_time(i)/100.0)
                 total_value += value
             else:
-                value = float(value)
+                value = float(value.replace(",","."))
                 if computed_as_average:
                     value *= (self._get_percentage_time(i)/100.0)
                 total_value += value
