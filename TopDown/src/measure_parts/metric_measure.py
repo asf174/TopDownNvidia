@@ -132,7 +132,7 @@ class MetricMeasure(ABC):
 
         """
 
-        if not self.is_metric(metric_name) or self.is_event(metric_name):
+        if not self.is_metric(metric_name):
             return None
         return self._metrics.get(metric_name)
         pass

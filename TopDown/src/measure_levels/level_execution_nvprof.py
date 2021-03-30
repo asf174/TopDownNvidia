@@ -81,21 +81,8 @@ class LevelExecutionNvprof(LevelExecution, ABC):
 
         pass
 
-    def _get_cycles_elaspsed_per_kernel(self, kernel_number : int):
-        """ 
-        Get cycles elapsed per kernel.
 
-        Params:
-            kernel_number   : int   ; number of kernel
-        """
-        ## mirar porque lo estoy comprobando cada vez que quiero el indice TODO
-
-        if not LevelExecutionParameters.C_CYCLES_ELAPSED_NAME in self._extra_measure.events():
-            raise ElapsedCyclesError
-        return self._extra_measure.get_event_value(LevelExecutionParameters.C_CYCLES_ELAPSED_NAME)[kernel_number]
-        pass
-
-    def _get_percentage_time(self, kernel_number : int) -> float:
+    def _percentage_time_kernel(self, kernel_number : int) -> float:
         """ 
         Get time percentage in each Kernel.
         Each kernel measured is an index of dictionaries used by this program.
@@ -113,3 +100,4 @@ class LevelExecutionNvprof(LevelExecution, ABC):
             total_value += float(value_str)
         return (float(value_lst[kernel_number])/total_value)*100.0
         pass
+

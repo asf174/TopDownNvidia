@@ -12,7 +12,7 @@ from measure_parts.divergence import DivergenceNsight
 from measure_parts.retire import RetireNsight
 from show_messages.message_format import MessageFormat
 from errors.level_execution_errors import *
-
+from parameters.level_execution_params import LevelExecutionParameters
 
 class LevelOneNsight(LevelOne, LevelExecutionNsight):
 
@@ -102,7 +102,7 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
             Float with theDivergence's IPC degradation
 
         """
-        return super()._diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_NAME_NSIGHT)
+        return super()._diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT, LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
         pass
 
     def _get_results(self, lst_output : list):
@@ -163,7 +163,6 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         """
         
         metric_name : str
-        print("AKi tambien")
         metric_unit : str 
         metric_value : str 
         line : str
@@ -179,24 +178,26 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         extra_measure_unit_has_found : bool
         retire_value_has_found : bool 
         retire_unit_has_found : bool
-        #print(results_launch.splitlines())
         can_read_results : bool = False
         for line in str(results_launch).splitlines():
-            print(line)
             line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
             list_words = line.split(" ")
             # Check if it's line of interest:
             # ['', 'metric_name','metric_unit', 'metric_value']
-            #print(list_word)
             if not can_read_results:
                 if list_words[0] == "==PROF==" and list_words[1] == "Disconnected":
                         can_read_results = True
                 continue
-            if len(list_words) == 4 and list_words[1][0] != "-":
-                #print(list_words)
-                metric_name = list_words[1]
-                metric_unit = list_words[2]
-                metric_value = list_words[3]   
+            if (len(list_words) == 4 or len(list_words) == 3) and list_words[1][0] != "-":
+                if len(list_words) == 3: 
+                    metric_name = list_words[1]
+                    metric_unit = ""
+                    metric_value = list_words[2]   
+                else:
+                    metric_name = list_words[1]
+                    metric_unit = list_words[2]
+                    metric_value = list_words[3]
+   
                 front_end_value_has_found = self._front_end.set_metric_value(metric_name, metric_value)
                 frond_end_unit_has_found = self._front_end.set_metric_unit(metric_name, metric_unit)
                 back_end_value_has_found = self._back_end.set_metric_value(metric_name, metric_value)
@@ -223,6 +224,6 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
             computed by the NVIDIA scan tool.
         """
 
-        super()._ret_ipc(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT)
+        return super()._ret_ipc(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT)
         pass
     

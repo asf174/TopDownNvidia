@@ -6,6 +6,8 @@ Class that represents the levels of the execution.
 @version:   1.0
 """
 
+import locale
+locale.setlocale(locale.LC_ALL, 'es_ES.utf8')
 from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -135,7 +137,7 @@ class LevelExecution(ABC):
         """
         
        # metrics_events_not_average : list = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
-        print(dict_values)	
+        print(dict_values)  
         metrics_events_not_average  = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         total_value : float = 0.0
         i : int = 0
@@ -226,9 +228,9 @@ class LevelExecution(ABC):
                     value *= (self._get_percentage_time(i)/100.0)
                 total_value += value
             else:
-                value = float(value.replace(",","."))
+                value = locale.atof(value)
                 if computed_as_average:
-                    value *= (self._get_percentage_time(i)/100.0)
+                    value *= (self._percentage_time_kernel(i)/100.0)
                 total_value += value
             i += 1
         return total_value
@@ -261,3 +263,19 @@ class LevelExecution(ABC):
 
         return self._recolect_metrics
         pass
+    
+    @abstractmethod
+    def _percentage_time_kernel(self, kernel_number : int) -> float:
+        """ 
+        Get time percentage in each Kernel based on cycles elapsed metric/event name
+        Each kernel measured is an index of dictionaries used by this program.
+
+        Params:
+                kernel_number                   : int   ; number of kernel
+                cycles_elapsed_counter_name     : str   ; name of event/metric to obatin cycles elapsed in kernel
+        Raises:
+                ElapsedCyclesError      ; cycles elapsed in 'kernel_number' cannot be obtained
+        """
+        
+        pass
+    

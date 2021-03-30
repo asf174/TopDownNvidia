@@ -1,3 +1,5 @@
+import locale
+locale.setlocale(locale.LC_ALL, 'es_ES.utf8') # locale -a to check
 from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -21,7 +23,6 @@ class LevelExecutionNsight(LevelExecution, ABC):
     """
 
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
-        print("AKI SI ENTRO")
         self._extra_measure : ExtraMeasureNsight = ExtraMeasureNsight()
         super().__init__(program, output_file, recoltect_metrics)
         pass
@@ -80,3 +81,21 @@ class LevelExecutionNsight(LevelExecution, ABC):
         return self._extra_measure
         pass
 
+    def _percentage_time_kernel(self, kernel_number : int) -> float:
+        """ 
+        Get time percentage in each Kernel.
+        Each kernel measured is an index of dictionaries used by this program.
+
+        Params:
+            kernel_number   : int   ; number of kernel
+        """
+
+        value_lst : list = self._extra_measure.get_metric_value(LevelExecutionParameters.C_CYCLES_ELAPSED_METRIC_NAME_NSIGHT)
+        if value_lst is None:
+            raise ElapsedCyclesError
+        value_str : str
+        total_value : float = 0.0
+        for value_str in value_lst:
+            total_value += locale.atof(value_str)
+        return (locale.atof(value_lst[kernel_number])/total_value)*100.0
+        pass
