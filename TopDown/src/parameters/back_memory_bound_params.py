@@ -18,4 +18,6 @@ class BackMemoryBoundParameters:
     C_BACK_MEMORY_BOUND_NVPROF_EVENTS           : str        = ("")
 
     # back_MEMORY_BOUND_nsight.py
-    C_BACK_MEMORY_BOUND_NSIGHT_METRICS          : str        = ("")
+    C_BACK_MEMORY_BOUND_NSIGHT_METRICS          : str        = ("smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct," +
+                                                                "smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,"
+                                                                "smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct")

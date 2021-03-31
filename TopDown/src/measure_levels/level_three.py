@@ -47,10 +47,10 @@ class LevelThree(LevelTwo):
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," +
             self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," +
             self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
-            "," + self.__constant_memory_bound.metrics_str() + "  --events " + self._front_end.events_str() +
+            "," + self.__memory_constant_memory_bound.metrics_str() + "  --events " + self._front_end.events_str() +
             "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + self._extra_measure.events_str() +
             "," + self._retire.events_str() + "," + self._back_core_bound.events_str() + "," + 
-            self._back_memory_bound.events_str() +  "," + self.__constant_memory_bound.events_str() + 
+            self._back_memory_bound.events_str() +  "," + self.__memory_constant_memory_bound.events_str() + 
             " --unified-memory-profiling off --profile-from-start off " + self._program)
         return command
         pass
@@ -67,10 +67,11 @@ class LevelThree(LevelTwo):
         output_command : str = super()._launch(self._generate_command())
         super()._set_front_back_divergence_retire_results(output_command) # level one results
         super()._set_memory_core_bandwith_dependency_results(output_command) # level two
-        self._set_constant_memory_bound_results(output_command) # level three
+        self._set_memory_constant_memory_bound_results(output_command) # level three
         self._get_results(lst_output)
         pass
 
+    @abstractmethod
     def _metricExists(self, metric_name : str) -> bool:
         """
         Check if metric exists in some part of the execution (MemoryBound, CoreBound...). 
@@ -82,12 +83,13 @@ class LevelThree(LevelTwo):
             True if metric is defined in some part of the execution (MemoryBound, CoreBound...)
             or false in other case
         """
-        
-        return True
+
         pass
 
+
+
     @abstractmethod
-    def _set_constant_memory_bound_results(self, results_launch : str):
+    def _set_memory_constant_memory_bound_results(self, results_launch : str):
         """
         Set results of the level thre part (that are not level one or two).
         
@@ -97,7 +99,7 @@ class LevelThree(LevelTwo):
 
         pass 
 
-    def get_constant_memory_bound_stall(self) -> float:
+    def get_memory_constant_memory_bound_stall(self) -> float:
         """
         Returns percent of stalls due to BackEnd.MemoryBound.Constant_Memory_Bound part.
 
@@ -108,7 +110,7 @@ class LevelThree(LevelTwo):
         return self._get_stalls_of_part(self.memory_constant_memory_bound().metrics())
         pass
     
-    def get_constant_memory_bound_stall_on_back(self) -> float:
+    def get_memory_constant_memory_bound_stall_on_back(self) -> float:
         """ 
         Obtain the percentage of stalls due to BackEnd.MemoryBound.ConstantMemoryBound # repasar estos nombres en todo
         on the total BackEnd
@@ -118,9 +120,9 @@ class LevelThree(LevelTwo):
             on the total BackEnd
         """
 
-        return (self.get_constant_memory_bound_stall()/super().get_back_end_stall())*100.0
+        return (self.get_memory_constant_memory_bound_stall()/super().get_back_end_stall())*100.0
 
-    def get_constant_memory_bound_stall_on_memory_bound(self) -> float:
+    def get_memory_constant_memory_bound_stall_on_memory_bound(self) -> float:
         """ 
         Obtain the percentage of stalls due to BackEnd.MemoryBound.ConstantMemoryBound
         on the total BackEnd.MemoryBound
@@ -130,10 +132,10 @@ class LevelThree(LevelTwo):
             on the total BackEnd.MemoryBound
         """
 
-        return (self.get_constant_memory_bound_stall()/super().get_back_memory_bound_stall())*100.0
+        return (self.get_memory_constant_memory_bound_stall()/super().get_back_memory_bound_stall())*100.0
         pass
 
-    def constant_memory_bound_percentage_ipc_degradation(self) -> float: # repasar nombres... Incluyen superior TODO
+    def memory_constant_memory_bound_percentage_ipc_degradation(self) -> float: # repasar nombres... Incluyen superior TODO
         """
         Find percentage of IPC degradation due to FrontEnd.Dependency part.
 
@@ -141,5 +143,5 @@ class LevelThree(LevelTwo):
             Float with the percent of FrontEnd.Dependency's IPC degradation
         """
 
-        return (((self._stall_ipc()*(self.get_constant_memory_bound_stall()/100.0))/self.get_device_max_ipc())*100.0)
+        return (((self._stall_ipc()*(self.get_memory_constant_memory_bound_stall()/100.0))/self.get_device_max_ipc())*100.0)
         pass

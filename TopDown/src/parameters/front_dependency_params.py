@@ -17,4 +17,6 @@ class FrontDependencyParameters:
     C_FRONT_DEPENDENCY_NVPROF_EVENTS           : str       = ("")
 
     # frond_end_nsight.py
-    C_FRONT_DEPENDENCY_NSIGHT_METRICS          : str       = ("")
+    C_FRONT_DEPENDENCY_NSIGHT_METRICS          : str       = ("smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct," +
+                                                             "smsp__warp_issue_stalled_membar_per_warp_active.pct, smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct," +
+                                                             "smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct")

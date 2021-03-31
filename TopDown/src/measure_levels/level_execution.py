@@ -136,8 +136,7 @@ class LevelExecution(ABC):
                                           not supported or does not exist in the NVIDIA analysis tool
         """
         
-       # metrics_events_not_average : list = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
-        print(dict_values)  
+        # metrics_events_not_average : list = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         metrics_events_not_average  = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         total_value : float = 0.0
         i : int = 0

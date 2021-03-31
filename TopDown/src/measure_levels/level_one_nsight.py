@@ -44,7 +44,7 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         """
         
         command : str = ("sudo $(which ncu) --metrics " + self._front_end.metrics_str() + 
-            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + super().extra_measure().metrics_str() +
+            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str() +
             "," + self._retire.metrics_str() + " " +  self._program)
         print(command)
         return command

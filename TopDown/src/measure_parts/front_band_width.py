@@ -28,7 +28,6 @@ class FrontBandWidthNsight(MetricMeasureNsight, FrontBandWidth):
         """Set attributes with DEFAULT values."""
         
         super().__init__(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
-            FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_METRICS, 
             FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_METRICS)
         pass
 

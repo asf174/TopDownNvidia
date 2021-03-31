@@ -17,4 +17,6 @@ class FrontBandWidthParameters:
     C_FRONT_BAND_WIDTH_NVPROF_EVENTS           : str       = ("")
 
     # front_band_width_nsight.py
-    C_FRONT_BAND_WIDTH_NSIGHT_METRICS          : str       = ("")
+    C_FRONT_BAND_WIDTH_NSIGHT_METRICS          : str       = ("smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct," +
+                                                             "smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct," +
+                                                            "smsp__warp_issue_stalled_sleeping_per_warp_active.pct")

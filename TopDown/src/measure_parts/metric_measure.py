@@ -52,7 +52,7 @@ class MetricMeasure(ABC):
         self._metrics_desc : dict = dict()
         self._metrics_str : str = metrics
         if metrics != "":
-            self._metrics  = dict.fromkeys(metrics.replace(" ", "").split(","))
+            self._metrics = dict.fromkeys(metrics.replace(" ", "").split(","))
             self._metrics_desc = dict.fromkeys(metrics_desc.replace(" ", "").split(",")) 
 
         key_metrics : str
@@ -270,6 +270,24 @@ class MetricMeasureNsight(MetricMeasure):
             return False
         self._metrics_desc[metric_name] = new_unit
         return True
+        pass
+    
+    def get_metric_unit(self, metric_name : str) -> str:
+        """
+        Get the value/s associated with 'metric_name'
+
+        Params:
+            metric_name  : str   ; name of the metric
+
+        Returns:
+            List with associated value/s 'metric_name' or 'None' if
+            'metric_name' doesn't exist or it's not a metric
+
+        """
+
+        if not self.is_metric(metric_name):
+            return None
+        return self._metrics_desc.get(metric_name)
         pass
 
 class MetricMeasureNvprof(MetricMeasure):

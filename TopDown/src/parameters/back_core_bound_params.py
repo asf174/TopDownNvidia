@@ -17,4 +17,4 @@ class BackCoreBoundParameters:
     C_BACK_CORE_BOUND_NVPROF_EVENTS           : str        = ("")
 
     # back_CORE_BOUND_nsight.py
-    C_BACK_CORE_BOUND_NSIGHT_METRICS          : str        = ("")
+    C_BACK_CORE_BOUND_NSIGHT_METRICS          : str        = ("smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct")

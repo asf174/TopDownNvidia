@@ -27,8 +27,7 @@ class BackCoreBoundNsight(MetricMeasureNsight, BackCoreBound):
         """Set attributes with DEFAULT values."""
         
         super().__init__(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
-            BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_METRICS, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_METRICS, 
-            BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_METRICS, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_METRICS)
+            BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_METRICS, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_METRICS) 
         pass
 
 class BackCoreBoundNvprof(MetricMeasureNvprof, BackCoreBound):

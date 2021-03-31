@@ -27,7 +27,6 @@ class FrontDependencyNsight(MetricMeasureNsight, FrontDependency):
         """Set attributes with DEFAULT values."""
         
         super().__init__(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
-            FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS, 
             FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS)
         pass
 
