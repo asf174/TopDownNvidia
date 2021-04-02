@@ -37,7 +37,7 @@ class BackCoreBoundNvprof(MetricMeasureNvprof, BackCoreBound):
         """Set attributes with DEFAULT values."""
         
         super().__init__(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
-            BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_METRICS, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_METRICS, 
-            BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_METRICS, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_METRICS)
+            BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_METRICS, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_EVENTS, 
+            BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_METRICS, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_EVENTS)
         pass
    

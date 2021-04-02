@@ -327,6 +327,7 @@ class MetricMeasureNvprof(MetricMeasure):
                                             and description of event as value.
 
         """
+
         super().__init__(name, description, metrics, metrics_desc)
         self.__events : dict = dict.fromkeys(events.replace(" ", "").split(","))
         self.__events_desc = dict.fromkeys(events_desc.replace(" ", "").split(","))
@@ -399,10 +400,29 @@ class MetricMeasureNvprof(MetricMeasure):
 
         """
 
-        if self.is_metric() or not self.is_event():
+        if self.is_metric(event_name) or not self.is_event(event_name):
             return None
         return self._events_desc.get(event_name)
         pass
+
+    def get_metric_description(self, event_name : str):# -> list[str]:
+        """
+        Get the description/s associated with 'event_name'
+
+        Params:
+            event_name  : str   ; name of the event
+
+        Returns:
+            List with associated description/s to 'event_name' or 'None' if
+            'event_name' doesn't exist or it's not an event
+
+        """
+
+        if self.is_metric(event_name) or not self.is_event(event_name):
+            return None
+        return self._metrics_desc.get(event_name)
+        pass
+
 
     def set_metric_description(self, metric_name : str, new_description : str) -> bool:
         """
@@ -418,7 +438,7 @@ class MetricMeasureNvprof(MetricMeasure):
 
         if not metric_name in self._metrics:
             return False
-        super()._metrics_desc[metric_name] = new_description
+        self._metrics_desc[metric_name] = new_description
         return True
         pass
 

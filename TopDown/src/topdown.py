@@ -22,6 +22,7 @@ from measure_levels.level_one import LevelOne
 from measure_levels.level_two import LevelTwo
 from show_messages.message_format import MessageFormat
 from args.unique_argument import DontRepeat
+from shell.shell import Shell
 
 class TopDown:
     """
@@ -43,9 +44,8 @@ class TopDown:
                                                                         scan tool
         __show_events                   : bool                      ;   True if program has to show events computed by NVIDIA scan 
                                                                         tool
-        __show_all_measurementes        : bool                      ;   True if program has to show all measures (metrics and events) 
+        __show_all_measurementes        : bool                      ;   True if program has to show all measures 
                                                                         computed by NVIDIA scan tool
-        __is_tesla_device               : bool                      ;   True if device is a tesla model or False if not
     """
 
     def __init__(self):
@@ -132,7 +132,7 @@ class TopDown:
         parser.add_argument (
             TopDownParameters.C_ALL_MEASURES_SHORT_OPTION, 
             TopDownParameters.C_ALL_MEASURES_LONG_OPTION, 
-            help = 'show all measures (events and metrics) computed by NVIDIA scan tool',
+            help = 'show all measures computed by NVIDIA scan tool',
             action = 'store_true',
             dest = 'all_measures')
         pass
@@ -403,11 +403,27 @@ class TopDown:
         print()
         message = "\n\nIn accordance with what has been entered, the execution will be carried out following the following terms:\n"
         printer.print_max_line_length_message(message, TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
-        message = ("\n- Execution Level:                  " + str(self.level()) + "\n" + \
-                   "- Analyzed program:                 " + self.program() + "\n" + \
-                   "- Output File:                      " + str(self.output_file()) + "\n" + \
-                   "- Verbose:                          " + str(self.show_verbose()) + "\n" + \
+        message = ("\n- Execution Level:                  " + str(self.level()) + "\n" +
+                   "- Analyzed program:                 " + self.program() + "\n" +
+                   "- Output File:                      " + str(self.output_file()) + "\n" +
+                   "- Verbose:                          " + str(self.show_verbose()) + "\n" +
                    "- Delete output's file content:     " + str(self.delete_output_file_content()))
+        execute_with_nvprof : bool = self.__is_nvprof_mode()
+        show_metrics : bool = self.show_metrics()
+        show_events : bool = self.show_events()
+        show_all : bool = self.show_all_measures()
+        show_events_with_nsight : str = "\n"
+        if not execute_with_nvprof:
+            if show_events:
+                show_events_with_nsight =               (". You have introduce the option\n" + 
+                    "                                    to show events (-e, --events), but\n" +
+                    "                                    NSIGHT execution doesn't have EVENTS,\n" + 
+                    "                                    so this argument will not be taken into\n" + 
+                    "                                    account.\n")
+        message += ("\n- Show Metrics:                     " + str(self.show_metrics()) + "\n" + \
+                    "- Show Events:                      " + str(self.show_events())  + show_events_with_nsight + \
+                    "- Show All Measurements:            " + str(self.show_all_measures()) ) 
+                    
         printer.print_msg_box(msg = message, indent = 1, title = "EXECUTION FEATURES", output_file = self.output_file(), width = None,
             delete_content_file = False)
         print()
@@ -615,8 +631,27 @@ class TopDown:
         pass
 
     def __is_nvprof_mode(self) -> bool:
-        return False
+        """
+        Check if the execution must be done with NVPROF scan tool.
+
+        Returns:
+            True if the execution must be done with NVPROF scan tool, or false
+            if not (NSIGHT).
+        """
+        
+        shell : Shell = Shell()
+        compute_capability : str = shell.launch_command_show_all("nvcc ../src/measure_parts/compute_capability.cu --run", None)
+        shell.launch_command("rm -f ../src/measure_parts/a.out", None) # delte file
+        if not compute_capability:
+            raise ModeExecutionError
+        compute_capability_float : float = float(compute_capability)
+        if compute_capability_float < 0.0 or compute_capability_float  > TopDownParameters.C_COMPUTE_CAPABILITY_MAX_VALUE:
+            raise ComputeCabilityNumberError
+        if compute_capability_float > TopDownParameters.C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE:
+            return False
+        return True
         pass
+
     def launch(self):
         """ Launch execution."""
         

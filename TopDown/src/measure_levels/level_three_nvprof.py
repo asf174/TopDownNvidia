@@ -72,7 +72,6 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         # revisar en unos usa atributo y en otros la llamada al metodo TODO
         #  Keep Results
         converter : MessageFormat = MessageFormat()
-
         if not self._recolect_metrics and not self._recolect_events:
             return
         if (self._recolect_metrics and self._front_end.metrics_str() != "" or 

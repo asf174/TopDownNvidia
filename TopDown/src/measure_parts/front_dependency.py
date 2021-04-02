@@ -37,6 +37,6 @@ class FrontDependencyNvprof(MetricMeasureNvprof, FrontDependency):
         """Set attributes with DEFAULT values."""
         
         super().__init__(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
-            FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, 
-            FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS)
+            FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_EVENTS, 
+            FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_EVENTS)
         pass

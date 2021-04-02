@@ -38,7 +38,7 @@ class BackMemoryBoundNvprof(MetricMeasureNvprof, BackMemoryBound):
         """Set attributes with DEFAULT values."""
         
         super().__init__(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
-            BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_METRICS, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_METRICS, 
-            BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_METRICS, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_METRICS)
+            BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_METRICS, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_EVENTS, 
+            BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_METRICS, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_EVENTS)
         pass
    

@@ -38,6 +38,6 @@ class FrontBandWidthNvprof(MetricMeasureNvprof, FrontBandWidth):
         """Set attributes with DEFAULT values."""
         
         super().__init__(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
-            FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_METRICS, 
-            FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_METRICS)
+            FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_EVENTS, 
+            FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_EVENTS)
         pass  

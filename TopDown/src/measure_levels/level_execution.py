@@ -7,7 +7,6 @@ Class that represents the levels of the execution.
 """
 
 import locale
-locale.setlocale(locale.LC_ALL, 'es_ES.utf8')
 from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -17,23 +16,32 @@ from measure_parts.extra_measure import ExtraMeasure
 from shell.shell import Shell # launch shell arguments
 from parameters.level_execution_params import LevelExecutionParameters # parameters of program
 from errors.level_execution_errors import *
+from parameters.topdown_params import TopDownParameters 
 
 class LevelExecution(ABC):
     """ 
     Class that represents the levels of the execution.
      
     Attributes:
-        _output_file        : str           ; path to output file with results. 'None' to don't use
-                                          output file
-        _program            : str           ; program of the execution
-        _recolect_metrics   : bool          ; True if the execution must recolted the metrics used by NVIDIA scan tool
-                                              or False in other case
+        _output_file            : str           ; path to output file with results. 'None' to don't use
+                                                  output file
+        _program                : str           ; program of the execution
+        _recolect_metrics       : bool          ; True if the execution must recolted the metrics used by NVIDIA scan tool
+                                                  or False in other case
+        __compute_capability    : float         ; Compute Capbility of the execution
     """
 
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
         self._program : str = program
         self._output_file : str = output_file
         self._recolect_metrics : bool = recoltect_metrics
+        
+        shell : Shell = Shell()
+        compute_capability_str : str = shell.launch_command_show_all("nvcc ../src/measure_parts/compute_capability.cu --run", None)
+        shell.launch_command("rm -f ../src/measure_parts/a.out", None)
+        self.__compute_capability : float = float(compute_capability_str)
+        if self.__compute_capability > TopDownParameters.C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE:
+            locale.setlocale(locale.LC_ALL, 'es_ES.utf8')
         pass 
 
     @abstractmethod
@@ -219,15 +227,19 @@ class LevelExecution(ABC):
         # TODO mirar este metodo, repetir for para no hacer if en cada iteraccion o que
         i : int = 0
         total_value : float = 0.0
+        value_str : str = ""
         value : float = 0.0
-        for value in list_values:
-            if value[len(value) - 1] == "%":
-                value = float(value[0:len(value) - 1])
+        for value_str in list_values:
+            if value_str[len(value_str) - 1] == "%":
+                value = float(value_str[0:len(value_str) - 1])
                 if computed_as_average:
-                    value *= (self._get_percentage_time(i)/100.0)
+                    value *= (self._percentage_time_kernel(i)/100.0)
                 total_value += value
             else:
-                value = locale.atof(value)
+                if self.__compute_capability > TopDownParameters.C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE:
+                    value = locale.atof(value_str)
+                else:
+                    value = float(value_str)
                 if computed_as_average:
                     value *= (self._percentage_time_kernel(i)/100.0)
                 total_value += value

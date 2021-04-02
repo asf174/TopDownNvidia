@@ -258,7 +258,6 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
                     #metric_min_value = list_words[len(list_words) - 3]
                     #if metric_avg_value != metric_max_value or metric_avg_value != metric_min_value:
                         # Do Something. NOT USED
-                    
                     back_core_bound_value_has_found = self._back_core_bound.set_metric_value(metric_name, metric_avg_value)
                     back_core_bound_description_has_found = self._back_core_bound.set_metric_description(metric_name, metric_description)
                     back_memory_bound_value_has_found = self._back_memory_bound.set_metric_value(metric_name, metric_avg_value)
@@ -270,7 +269,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
                     if (not (back_core_bound_value_has_found or back_memory_bound_value_has_found or front_band_width_value_has_found
                         or front_dependency_value_has_found) or not(back_core_bound_description_has_found or back_memory_bound_description_has_found 
                         or front_band_width_description_has_found or front_dependency_description_has_found)): 
-                        if not self.__metricExists(metric_name):
+                        if not self._metricExists(metric_name):
                             raise MetricNotAsignedToPart(metric_name)
         pass
 
@@ -312,7 +311,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         return True
         pass
 
-    def _eventExists(self, event_name : str) -> bool:
+    def __eventExists(self, event_name : str) -> bool:
         """ #TODO se podria poner este metodo (en version abstracta) en otra clase aparte, para que el LevelTwoNsight compruebe si existe
         Check if event exists in some part of the execution (MemoryBound, CoreBound...). 
 
