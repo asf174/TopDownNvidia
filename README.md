@@ -29,7 +29,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo" width="220" height="220">
   </a>
 
   <h3 align="center">TopDown NVDIA'S GPUs</h3>
@@ -67,6 +67,7 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contact">Author</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -77,10 +78,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-
 The TopDown tool analyzes the bottlenecks of applications running on NVIDIA GPUs. The tool supports ANY TYPE of application running on your GPU.
 
 The objective of the application is to try to detect the parts of the architecture that have suffered the most during the execution of the application. In other words, it is intended to check the parts of the architecture that have been stalled during the execution of a given application. The objective is to verify that parts of your GPU architecture have caused a loss of IPC (Instructions per Cycle) compared to the ideal IPC of your GPU (that is, the maximum IPC that your GPU can achieve). For this, an exhaustive analysis of the different parts of the architecture will be carried out, to try to clarify the losses.
@@ -179,6 +176,8 @@ Contributions are what make the open source community such an amazing place to b
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+
+## Author
 
 
 <!-- LICENSE -->
