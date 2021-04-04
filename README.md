@@ -32,10 +32,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">TopDown NVDIA'S GPUs</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    A model for analyzing the weaknesses of your program!
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
@@ -105,7 +105,8 @@ This application is developed in Python, so it will be necessary to have a pytho
 
 The following summarizes the commands necessary to install a stable version of python3 for this application: 
 
-  ```bash
+* python3 (version 3.9)
+```bash
   # update repositories
   sudo apt update
 
@@ -119,21 +120,34 @@ The following summarizes the commands necessary to install a stable version of p
 
   # this command must return the version (3.9) without errors	
   python3.9 --version
-  ```
+```
+In the same way, remember that it is also necessary that you have the necessary CUDA toolkit to be able to do the analysis. The program automatically detects your GPU (Compute Capbility or CC) version and performs the analysis with the appropriate tool. You should only have the appropriate one installed for your GPU. The two analysis tools are as follows:
+<ul>
+<li>Nvprof (CC <= 6.3)</li>
+<li>Nsight Compute (CC > 6.3)</li>
+</ul> 
+
+The tool provided has the ability to determine the CC of your GPU. To do this, you must have a version of CUDA installed. If you do not have it installed, in section 3 of the following link, NVIDIA provides the necessary steps to perform this task:
+
+* install CUDA (NVDIA reference)
+```bash
+https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html
+```
+
+It is very important that you follow the steps in detail, without skipping any. In the same way, once the installation process has been carried out, you must carry out the "post-installation" process, through the following link (section 9)
+
+* post-installation CUDA (NVDIA reference)
+```
+https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions
+```
+
+Once you have completed the CUDA installation, you are ready to use the tool to check your CC. To do this, **it is recommended that you go to the next section and install the tool**.
 
 ### Installation
 
 1. Download the application
    ```bash
    git clone https://github.com/asf174/TopDownNvidia.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
    ```
 
 
