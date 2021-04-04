@@ -178,7 +178,12 @@ Contributions are what make the open source community such an amazing place to b
 
 
 ## Author
+Below are the people who have contributed to the development of the project
 
+* **Álvaro Saiz**         - *Author* -  Member of the University of Cantabria.
+* **Pablo Abad**          - *Advisor* - Researcher at the University of Cantabria.
+* **Pablo Prieto**        - *Advisor* - Researcher at the University of Cantabria.
+* **Jose Ángel Herrero**  - *Helper* - Researcher and Systems Administrator at the University of Cantabria.
 
 <!-- LICENSE -->
 ## License
@@ -190,9 +195,14 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+If you find a bug or something you would like to comment on, do not hesitate to contact the person in charge of the project. You can find us at the following addresses:
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+* **Álvaro Saiz**         - [E-Mail](mailto:asf174@alumnos.unican.es)
+* **Pablo Abad**          - [E-Mail](mailto:pablo.abad@unican.es)
+* **Pablo Prieto**        - [E-Mail](mailto:pablo.prieto@unican.es)
+* **Jose Ángel Herrero**  - [E-Mail](mailto:joseangel.herrero@unican.es)
+
+
 
 
 
