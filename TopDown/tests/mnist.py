@@ -39,7 +39,8 @@ model.compile(loss="sparse_categorical_crossentropy",
               optimizer="sgd",
               metrics=["accuracy"])
 
-history = model.fit(X_train, y_train, epochs=1,
+for i in range(1,16):
+    history = model.fit(X_train, y_train, epochs=1,
                     validation_data=(X_valid, y_valid))
 
 # model.evaluate(X_test, y_test)
