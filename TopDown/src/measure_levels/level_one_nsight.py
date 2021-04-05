@@ -119,23 +119,23 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         if self._recolect_metrics and self._front_end.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._front_end.name()))
             super()._add_result_part_to_lst(self._front_end.metrics(), 
-                self._front_end.metrics_description(), lst_output, True)           
+                self._front_end.metrics_description(), lst_output)           
         if self._recolect_metrics and self._back_end.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_end.name()))
             super()._add_result_part_to_lst(self._back_end.metrics(), 
-                self._back_end.metrics_description(), lst_output, True)  
+                self._back_end.metrics_description(), lst_output)  
         if self._recolect_metrics and self._divergence.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_end.name()))
             super()._add_result_part_to_lst(self._divergence.metrics(), 
-                self._divergence.metrics_description(), lst_output, True)
+                self._divergence.metrics_description(), lst_output)
         if self._recolect_metrics and self._retire.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._retire.name()))
             super()._add_result_part_to_lst(self._retire.metrics(), 
-                self._retire.metrics_description(), lst_output, True)
+                self._retire.metrics_description(), lst_output)
         if self._recolect_metrics and self._extra_measure.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._extra_measure.name()))
             super()._add_result_part_to_lst(self._extra_measure.metrics(), 
-                self._extra_measure.metrics_description(), lst_output, True)
+                self._extra_measure.metrics_description(), lst_output)
         lst_output.append("\n")
         pass
 
