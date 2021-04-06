@@ -104,19 +104,42 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         # metrics_events_not_average : list = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         metrics_events_not_average  = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         total_value : float = 0.0
-        i : int = 0
         description : str
         line_lenght : int
         value_str : str
         total_value_str : str = ""
+        value_measure_str : str
+
+        measure_name : str = "Event"
+        desc_name_title : str = measure_name + " Name"
+        desc_max_length : int = len(desc_name_title)
+        if isMetric:
+            measure_name = "Metric"
+            desc_name_title = measure_name + " Description"
+            desc_max_length = len(desc_name_title)
+            for key_desc in dict_desc:
+                if len(key_value[0]) > desc_max_length: #TODO este dict solo tiene que tener un valor
+                    desc_max_length = key_value[0]
+        
+        measure_name_title : str = measure_name + " Name"
+        desc_max_length : int = len(metric_desc_title)
+        measure_value_title : str = measure_name + " Value"
+        
+        for key_value in dict_values:
+            if len(key_value) > name_max_length:
+                name_max_length = len(key_value)
+                name_max_length : int = len(measure_name + " Name")
+        
+        description = ("\t\t\t%-*s" % (metric_name_length , "Metric Name"))
+        description += ("%-*s" % (metric_unit_length , metric_unit_title))
+        description += ("%-*s" % (metric_value_length, metric_value_title))
+
         if isMetric:
             metric_name : str
-            description = "\t\t\t{:<45}{:<49}{:<5}".format('Metric Name','Metric Description', 'Value')
-            line_lenght = len(description)
             value : float
             is_percentage : bool = False
             is_computed_as_average : bool
-            for key_value in dict_values:
+            for key_value,key_desc in zip(dict_values, dict_desc):
                 if dict_values[key_value][0][len(dict_values[key_value][0]) - 1] == "%":
                     is_percentage = True
                     # In NVIDIA scan tool, the percentages in each kernel are calculated on the total of
@@ -128,38 +151,37 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                     LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS)
                 if total_value.is_integer():
                     total_value = int(total_value)
-                value_str = str(total_value)
+                value_measure_str = str(total_value)
                 if is_percentage:
-                    value_str += "%"
+                    value_measure_str += "%"
                     is_percentage = False
-                metric_name = list(dict_desc.keys())[i]
-                value_str = "\t\t\t{:<45}{:<49}{:<6} ".format(metric_name, dict_desc.get(metric_name), value_str)
+                metric_name = key_value
+                metric_desc = dict_desc.get(key_desc)
+                value_str = ("\t\t\t%-*s" % (len(metric_name) + metric_name_length - len(metric_name) , metric_name))
+                value_str += ("%-*s" % (len(metric_desc) + metric_desc_length - len(metric_desc) , metric_desc))
+                value_str += ("%-*s" % (len(metric_value_title), value_measure_str))
                 if len(value_str) > line_lenght:
                     line_lenght = len(value_str)
-                if i != len(dict_values) -1:
-                    value_str += "\n"
                 total_value_str += value_str
-                i += 1
         else:
             event_name : str
-            description = "\t\t\t{:<45}{:<46} {:<3}".format('Event Name','Event Description', 'Value')
-            line_lenght = len(description)
             for key_value in dict_values:
                 total_value = round(self._get_total_value_of_list(dict_values[key_value], False),
                     LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS) # TODO eventos con decimales?
                 if total_value.is_integer():
                     total_value = int(total_value)
-                value_str = str(total_value)
-                event_name = list(dict_desc.keys())[i]
-                value_str = "\t\t\t{:<45}{:<47}{:<6} ".format(event_name, "-", value_str)
+                value_measure_str = str(total_value)
+                event_name = key_value
+                value_str = ("\t\t\t%-*s" % (len(event_name) + metric_name_length - len(event_name) , event_name))
+                value_str += ("%-*s" % (len("-") + metric_desc_length - len(metric_desc) , "-"))
+                value_str += ("%-*s" % (len(metric_value_title), value_measure_str))
                 if len(value_str) > line_lenght:
                     line_lenght = len(value_str)
-                if i != len(dict_values) -1:
-                    value_str += "\n"
                 total_value_str += value_str
-                i += 1
+            
+        total_value_str += "\n" 
         spaces_lenght : int = len("\t\t\t")
-        line_str : str = "\t\t\t" + f'{"-" * ((line_lenght - spaces_lenght) - 1)}'
+        line_str : str = "\t\t\t" + f'{"-" * (line_lenght - spaces_lenght)}'
         lst_to_add.append("\n" + line_str)
         lst_to_add.append(description)
         lst_to_add.append(line_str)
@@ -167,6 +189,51 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         lst_to_add.append(line_str + "\n")
         pass    
 
+    """  metric_name_length : int = name_max_length + 10
+        metric_unit_length : int = unit_max_length + 10
+        metric_value_length : int = len(metric_value_title)
+        
+        description = ("\t\t\t%-*s" % (metric_name_length , "Metric Name"))
+        description += ("%-*s" % (metric_unit_length , metric_unit_title))
+        description += ("%-*s" % (metric_value_length, metric_value_title))
+                   
+
+        
+        line_lenght = len(description) 
+        for key_value, key_unit in zip(dict_values, dict_desc):
+            total_value = round(self._get_total_value_of_list(dict_values[key_value], False),
+             LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS) # TODO eventos con decimales? 
+            if total_value.is_integer():
+                total_value = int(total_value)
+            value_metric_str = str(total_value)
+            metric_name = key_value
+            metric_unit = dict_desc.get(key_unit)
+            if not metric_unit:
+                metric_unit = "-"
+            elif metric_unit == "%":
+                # In NVIDIA scan tool, the percentages in each kernel are calculated on the total of
+                # each kernel and not on the total of the application
+                if key_value in metrics_events_not_average:
+                    raise ComputedAsAverageError(key_unit)
+
+            value_str = ("\t\t\t%-*s" % (len(metric_name) + metric_name_length - len(metric_name) , metric_name))
+            value_str += ("%-*s" % (len(metric_unit) + metric_unit_length - len(metric_unit) , metric_unit))
+            value_str += ("%-*s" % (len(metric_value_title), value_metric_str))
+        
+            if len(value_str) > line_lenght:
+                line_lenght = len(value_str)
+            if i != len(dict_values) -1:
+                value_str += "\n"
+            total_value_str += value_str
+            i += 1
+        spaces_lenght : int = len("\t\t\t")
+        line_str : str = "\t\t\t" + f'{"-" * ((line_lenght - spaces_lenght))}'
+        lst_to_add.append("\n" + line_str)
+        lst_to_add.append(description)
+        lst_to_add.append(line_str)
+        lst_to_add.append(total_value_str)
+        lst_to_add.append(line_str + "\n")
+    """
     def _percentage_time_kernel(self, kernel_number : int) -> float:
         """ 
         Get time percentage in each Kernel.

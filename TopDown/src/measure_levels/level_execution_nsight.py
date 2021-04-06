@@ -115,10 +115,9 @@ class LevelExecutionNsight(LevelExecution, ABC):
         unit_max_length : int = len(metric_unit_title)
         metric_value_title : str = "Metric Value"
 
-        for key_value in dict_values:
+        for key_value,key_unit in zip(dict_values, dict_desc):
             if len(key_value) > name_max_length:
                 name_max_length = len(key_value)
-        for key_value in dict_desc:
             if len(key_value[0]) > unit_max_length: #TODO este dict solo tiene que tener un valor
                 unit_max_length = key_value[0]
              
@@ -161,7 +160,7 @@ class LevelExecutionNsight(LevelExecution, ABC):
             total_value_str += value_str
             i += 1
         spaces_lenght : int = len("\t\t\t")
-        line_str : str = "\t\t\t" + f'{"-" * ((line_lenght - spaces_lenght))}'
+        line_str : str = "\t\t\t" + f'{"-" * (line_lenght - spaces_lenght)}'
         lst_to_add.append("\n" + line_str)
         lst_to_add.append(description)
         lst_to_add.append(line_str)
