@@ -101,39 +101,36 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                                           not supported or does not exist in the NVIDIA analysis tool
         """
 
-        # metrics_events_not_average : list = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
+        measure_name : str = "Event"
+        measure_desc_title  : str = measure_name + " Description"
+        measure_desc_title_max_length : int = len(measure_name_title)
+        if isMetric:
+            measure_name = "Metric"
+            measure_desc_title = measure_name + " Description"
+            measure_desc_title_max_length = len(measure_desc_title)
+            for key_desc in dict_desc:
+                if len(key_value[0]) > desc_max_length: #TODO este dict solo tiene que tener un valor
+                    measure_desc_title_max_length = key_value[0]
+        
+        measure_name_title : str = measure_name + " Name"
+        measure_name_title_max_length : int = len(measure_name_title)
+        measure_value_title : str = measure_name + " Value"
+        measure_value_title_max_length : int = len(measure_value_title) 
+        for key_value in dict_values:
+            if len(key_value) > measure_name_title_max_length:
+                 measure_name_title_max_lenght = len(key_value)
+        
+        description = "\t\t\t%-*s" % (measure_name_title_max_length , measure_name_title)
+        description += "%-*s" % (measure_desc_title_max_length, measure_desc_title)
+        description += "%-*s" % (measure_value_title_max_length, measure_value_title)
+
         metrics_events_not_average  = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         total_value : float = 0.0
         description : str
         line_lenght : int
         value_str : str
         total_value_str : str = ""
-        value_measure_str : str
-
-        measure_name : str = "Event"
-        desc_name_title : str = measure_name + " Name"
-        desc_max_length : int = len(desc_name_title)
-        if isMetric:
-            measure_name = "Metric"
-            desc_name_title = measure_name + " Description"
-            desc_max_length = len(desc_name_title)
-            for key_desc in dict_desc:
-                if len(key_value[0]) > desc_max_length: #TODO este dict solo tiene que tener un valor
-                    desc_max_length = key_value[0]
-        
-        measure_name_title : str = measure_name + " Name"
-        desc_max_length : int = len(metric_desc_title)
-        measure_value_title : str = measure_name + " Value"
-        
-        for key_value in dict_values:
-            if len(key_value) > name_max_length:
-                name_max_length = len(key_value)
-                name_max_length : int = len(measure_name + " Name")
-        
-        description = ("\t\t\t%-*s" % (metric_name_length , "Metric Name"))
-        description += ("%-*s" % (metric_unit_length , metric_unit_title))
-        description += ("%-*s" % (metric_value_length, metric_value_title))
-
+        value_measure_str : str 
         if isMetric:
             metric_name : str
             value : float
@@ -157,11 +154,13 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                     is_percentage = False
                 metric_name = key_value
                 metric_desc = dict_desc.get(key_desc)
-                value_str = ("\t\t\t%-*s" % (len(metric_name) + metric_name_length - len(metric_name) , metric_name))
-                value_str += ("%-*s" % (len(metric_desc) + metric_desc_length - len(metric_desc) , metric_desc))
-                value_str += ("%-*s" % (len(metric_value_title), value_measure_str))
+                value_str = "\t\t\t%-*s" % (measure_name_title_max_length , metric_name)
+                value_str += "%-*s" % (measure_desc_title_max_length , metric_desc)
+                value_str += "%-*s" % (len(metric_value_title), value_measure_str)
                 if len(value_str) > line_lenght:
                     line_lenght = len(value_str)
+                if i != len(dict_values) - 1:
+                    value_str += "\n"
                 total_value_str += value_str
         else:
             event_name : str
@@ -172,14 +171,15 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                     total_value = int(total_value)
                 value_measure_str = str(total_value)
                 event_name = key_value
-                value_str = ("\t\t\t%-*s" % (len(event_name) + metric_name_length - len(event_name) , event_name))
-                value_str += ("%-*s" % (len("-") + metric_desc_length - len(metric_desc) , "-"))
-                value_str += ("%-*s" % (len(metric_value_title), value_measure_str))
+                value_str = "\t\t\t%-*s" % (measure_name_title_max_length , event_name)
+                value_str += "%-*s" % (measure_desc_title_max_length , "-")
+                value_str += "%-*s" % (len(metric_value_title), value_measure_str)
                 if len(value_str) > line_lenght:
                     line_lenght = len(value_str)
+                if i != len(dict_values) - 1:
+                    value_str += "\n"
                 total_value_str += value_str
-            
-        total_value_str += "\n" 
+                i += 1     
         spaces_lenght : int = len("\t\t\t")
         line_str : str = "\t\t\t" + f'{"-" * (line_lenght - spaces_lenght)}'
         lst_to_add.append("\n" + line_str)
@@ -189,51 +189,6 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         lst_to_add.append(line_str + "\n")
         pass    
 
-    """  metric_name_length : int = name_max_length + 10
-        metric_unit_length : int = unit_max_length + 10
-        metric_value_length : int = len(metric_value_title)
-        
-        description = ("\t\t\t%-*s" % (metric_name_length , "Metric Name"))
-        description += ("%-*s" % (metric_unit_length , metric_unit_title))
-        description += ("%-*s" % (metric_value_length, metric_value_title))
-                   
-
-        
-        line_lenght = len(description) 
-        for key_value, key_unit in zip(dict_values, dict_desc):
-            total_value = round(self._get_total_value_of_list(dict_values[key_value], False),
-             LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS) # TODO eventos con decimales? 
-            if total_value.is_integer():
-                total_value = int(total_value)
-            value_metric_str = str(total_value)
-            metric_name = key_value
-            metric_unit = dict_desc.get(key_unit)
-            if not metric_unit:
-                metric_unit = "-"
-            elif metric_unit == "%":
-                # In NVIDIA scan tool, the percentages in each kernel are calculated on the total of
-                # each kernel and not on the total of the application
-                if key_value in metrics_events_not_average:
-                    raise ComputedAsAverageError(key_unit)
-
-            value_str = ("\t\t\t%-*s" % (len(metric_name) + metric_name_length - len(metric_name) , metric_name))
-            value_str += ("%-*s" % (len(metric_unit) + metric_unit_length - len(metric_unit) , metric_unit))
-            value_str += ("%-*s" % (len(metric_value_title), value_metric_str))
-        
-            if len(value_str) > line_lenght:
-                line_lenght = len(value_str)
-            if i != len(dict_values) -1:
-                value_str += "\n"
-            total_value_str += value_str
-            i += 1
-        spaces_lenght : int = len("\t\t\t")
-        line_str : str = "\t\t\t" + f'{"-" * ((line_lenght - spaces_lenght))}'
-        lst_to_add.append("\n" + line_str)
-        lst_to_add.append(description)
-        lst_to_add.append(line_str)
-        lst_to_add.append(total_value_str)
-        lst_to_add.append(line_str + "\n")
-    """
     def _percentage_time_kernel(self, kernel_number : int) -> float:
         """ 
         Get time percentage in each Kernel.
