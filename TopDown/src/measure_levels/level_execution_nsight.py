@@ -1,5 +1,4 @@
 import locale
-locale.setlocale(locale.LC_ALL, 'es_ES.utf8') # locale -a to check
 from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -23,6 +22,7 @@ class LevelExecutionNsight(LevelExecution, ABC):
     """
 
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
+        locale.setlocale(locale.LC_ALL, 'es_ES.utf8') # locale -a to check
         self._extra_measure : ExtraMeasureNsight = ExtraMeasureNsight()
         super().__init__(program, output_file, recoltect_metrics)
         pass

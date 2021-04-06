@@ -103,40 +103,44 @@ class LevelExecutionNvprof(LevelExecution, ABC):
 
         measure_name : str = "Event"
         measure_desc_title  : str = measure_name + " Description"
-        measure_desc_title_max_length : int = len(measure_name_title)
+        measure_desc_title_max_length : int = len(measure_desc_title)
         if isMetric:
             measure_name = "Metric"
             measure_desc_title = measure_name + " Description"
             measure_desc_title_max_length = len(measure_desc_title)
             for key_desc in dict_desc:
-                if len(key_value[0]) > desc_max_length: #TODO este dict solo tiene que tener un valor
-                    measure_desc_title_max_length = key_value[0]
+                print(len(dict_desc.get(key_desc)))
+                if len(dict_desc.get(key_desc)) > measure_desc_title_max_length: #TODO este dict solo tiene que tener un valor
+                    measure_desc_title_max_length = len(dict_desc.get(key_desc))
         
         measure_name_title : str = measure_name + " Name"
         measure_name_title_max_length : int = len(measure_name_title)
         measure_value_title : str = measure_name + " Value"
         measure_value_title_max_length : int = len(measure_value_title) 
         for key_value in dict_values:
+            print(key_value)
             if len(key_value) > measure_name_title_max_length:
                  measure_name_title_max_lenght = len(key_value)
-        
+        measure_name_title_max_length = measure_name_title_max_length + 10
+        measure_desc_title_max_length += 10
         description = "\t\t\t%-*s" % (measure_name_title_max_length , measure_name_title)
         description += "%-*s" % (measure_desc_title_max_length, measure_desc_title)
         description += "%-*s" % (measure_value_title_max_length, measure_value_title)
-
+        line_length : int = len(description)
+        
         metrics_events_not_average  = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         total_value : float = 0.0
         description : str
-        line_lenght : int
         value_str : str
         total_value_str : str = ""
-        value_measure_str : str 
+        value_measure_str : str
+        i : int = 0
         if isMetric:
             metric_name : str
-            value : float
             is_percentage : bool = False
             is_computed_as_average : bool
-            for key_value,key_desc in zip(dict_values, dict_desc):
+            total_value_str : str
+            for key_value in dict_values:
                 if dict_values[key_value][0][len(dict_values[key_value][0]) - 1] == "%":
                     is_percentage = True
                     # In NVIDIA scan tool, the percentages in each kernel are calculated on the total of
@@ -148,20 +152,23 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                     LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS)
                 if total_value.is_integer():
                     total_value = int(total_value)
+                total_value_str = str(total_value)
                 value_measure_str = str(total_value)
                 if is_percentage:
                     value_measure_str += "%"
                     is_percentage = False
                 metric_name = key_value
-                metric_desc = dict_desc.get(key_desc)
+                metric_desc = dict_desc.get(key_value)
                 value_str = "\t\t\t%-*s" % (measure_name_title_max_length , metric_name)
                 value_str += "%-*s" % (measure_desc_title_max_length , metric_desc)
-                value_str += "%-*s" % (len(metric_value_title), value_measure_str)
-                if len(value_str) > line_lenght:
+                value_str += "%-*s" % (len(total_value_str), total_value_str)
+                if len(value_str) > line_length:
+                    print("ENTRO AKI")
                     line_lenght = len(value_str)
                 if i != len(dict_values) - 1:
                     value_str += "\n"
                 total_value_str += value_str
+                i += 1
         else:
             event_name : str
             for key_value in dict_values:
@@ -173,15 +180,15 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                 event_name = key_value
                 value_str = "\t\t\t%-*s" % (measure_name_title_max_length , event_name)
                 value_str += "%-*s" % (measure_desc_title_max_length , "-")
-                value_str += "%-*s" % (len(metric_value_title), value_measure_str)
-                if len(value_str) > line_lenght:
+                value_str += "%-*s" % (len(value_measure_str), value_measure_str)
+                if len(value_str) > line_length:
                     line_lenght = len(value_str)
                 if i != len(dict_values) - 1:
                     value_str += "\n"
                 total_value_str += value_str
                 i += 1     
-        spaces_lenght : int = len("\t\t\t")
-        line_str : str = "\t\t\t" + f'{"-" * (line_lenght - spaces_lenght)}'
+        spaces_length : int = len("\t\t\t")
+        line_str : str = "\t\t\t" + f'{"-" * (line_length - spaces_length)}'
         lst_to_add.append("\n" + line_str)
         lst_to_add.append(description)
         lst_to_add.append(line_str)
