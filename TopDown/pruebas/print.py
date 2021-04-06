@@ -6,8 +6,11 @@ def printf(format, *args):
 i = 7
 pi = 3.14159265359
 #printf("hi there, i=%d, pi=%.2f", i, pi)
-print("%10s"% ("Hola"))
+#print("%10s"% ("Hola"))
 l = []
-length=15.0
-l.append(("%"+str(length)+"s"% ("Hola")))
+#length=str(15)
+#l.append(("%"+ length + "s"% ("Hola")))
+#print(l[0])
+text = "hola hola pe"
+l.append("<%-*s>" % (len(text)+40,text))
 print(l[0])

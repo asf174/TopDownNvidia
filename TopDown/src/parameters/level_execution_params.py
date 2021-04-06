@@ -26,7 +26,6 @@ class LevelExecutionParameters:
 
     C_INFO_MESSAGE_EXECUTION_NVPROF                     : str       = "Making analysis... Wait to results."
 
-    # If your GPU is not Tesla model,
     # add here the events and metrics 
     # that will be computed by adding in 
     # each kernel, and not as a function 
