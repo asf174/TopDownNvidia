@@ -102,41 +102,37 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         """
 
         measure_name : str = "Event"
-        measure_desc_title  : str = measure_name + " Description"
+        measure_desc_title : str = measure_name + " Description"
         measure_desc_title_max_length : int = len(measure_desc_title)
         if isMetric:
             measure_name = "Metric"
             measure_desc_title = measure_name + " Description"
             measure_desc_title_max_length = len(measure_desc_title)
             for key_desc in dict_desc:
-                print(len(dict_desc.get(key_desc)))
                 if len(dict_desc.get(key_desc)) > measure_desc_title_max_length: #TODO este dict solo tiene que tener un valor
                     measure_desc_title_max_length = len(dict_desc.get(key_desc))
-        
         measure_name_title : str = measure_name + " Name"
         measure_name_title_max_length : int = len(measure_name_title)
         measure_value_title : str = measure_name + " Value"
         measure_value_title_max_length : int = len(measure_value_title) 
         for key_value in dict_values:
-            print(key_value)
             if len(key_value) > measure_name_title_max_length:
-                 measure_name_title_max_lenght = len(key_value)
-        measure_name_title_max_length = measure_name_title_max_length + 10
+                measure_name_title_max_length = len(key_value)
+        measure_name_title_max_length += 10
         measure_desc_title_max_length += 10
         description = "\t\t\t%-*s" % (measure_name_title_max_length , measure_name_title)
         description += "%-*s" % (measure_desc_title_max_length, measure_desc_title)
         description += "%-*s" % (measure_value_title_max_length, measure_value_title)
-        line_length : int = len(description)
-        
+        line_length : int = len(description) 
         metrics_events_not_average  = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         total_value : float = 0.0
-        description : str
         value_str : str
         total_value_str : str = ""
         value_measure_str : str
         i : int = 0
         if isMetric:
             metric_name : str
+            metric_desc : str
             is_percentage : bool = False
             is_computed_as_average : bool
             total_value_str : str
@@ -152,7 +148,6 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                     LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS)
                 if total_value.is_integer():
                     total_value = int(total_value)
-                total_value_str = str(total_value)
                 value_measure_str = str(total_value)
                 if is_percentage:
                     value_measure_str += "%"
@@ -161,10 +156,9 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                 metric_desc = dict_desc.get(key_value)
                 value_str = "\t\t\t%-*s" % (measure_name_title_max_length , metric_name)
                 value_str += "%-*s" % (measure_desc_title_max_length , metric_desc)
-                value_str += "%-*s" % (len(total_value_str), total_value_str)
+                value_str += "%-*s" % (len(value_measure_str), value_measure_str)
                 if len(value_str) > line_length:
-                    print("ENTRO AKI")
-                    line_lenght = len(value_str)
+                    line_length = len(value_str)
                 if i != len(dict_values) - 1:
                     value_str += "\n"
                 total_value_str += value_str
@@ -178,11 +172,11 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                     total_value = int(total_value)
                 value_measure_str = str(total_value)
                 event_name = key_value
-                value_str = "\t\t\t%-*s" % (measure_name_title_max_length , event_name)
-                value_str += "%-*s" % (measure_desc_title_max_length , "-")
-                value_str += "%-*s" % (len(value_measure_str), value_measure_str)
+                value_str = "\t\t\t%-*s>" % (measure_name_title_max_length , event_name)
+                value_str += "%-*s>" % (measure_desc_title_max_length , "-")
+                value_str += "%-*s>" % (len(value_measure_str), value_measure_str)
                 if len(value_str) > line_length:
-                    line_lenght = len(value_str)
+                    line_length = len(value_str)
                 if i != len(dict_values) - 1:
                     value_str += "\n"
                 total_value_str += value_str

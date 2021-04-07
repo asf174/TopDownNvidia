@@ -114,7 +114,7 @@ class LevelExecutionNsight(LevelExecution, ABC):
         description : str  = ("\t\t\t%-*s" % (metric_name_length , "Metric Name"))
         description += ("%-*s" % (metric_unit_length , metric_unit_title))
         description += ("%-*s" % (metric_value_length, metric_value_title))
-        line_lenght : int = len(description) 
+        line_length : int = len(description) 
         
         metrics_events_not_average : list  = LevelExecutionParameters.C_METRICS_AND_EVENTS_NOT_AVERAGE_COMPUTED.split(",")
         total_value : float = 0.0
@@ -141,14 +141,14 @@ class LevelExecutionNsight(LevelExecution, ABC):
             value_str = "\t\t\t%-*s" % (metric_name_length, metric_name)
             value_str += "%-*s" % (metric_unit_length, metric_unit)
             value_str += "%-*s" % (len(metric_value_title), value_metric_str) 
-            if len(value_str) > line_lenght:
-                line_lenght = len(value_str)
+            if len(value_str) > line_length:
+                line_length = len(value_str)
             if i != len(dict_values) - 1:
                 value_str += "\n"
             total_value_str += value_str
             i += 1
-        spaces_lenght : int = len("\t\t\t")
-        line_str : str = "\t\t\t" + f'{"-" * (line_lenght - spaces_lenght)}'
+        spaces_length : int = len("\t\t\t")
+        line_str : str = "\t\t\t" + f'{"-" * (line_length - spaces_length)}'
         lst_to_add.append("\n" + line_str)
         lst_to_add.append(description)
         lst_to_add.append(line_str)
