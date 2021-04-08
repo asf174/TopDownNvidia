@@ -36,7 +36,7 @@
 
   <p align="center">
     A model for analyzing the weaknesses of your program!
-    <br />
+    <!-- <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
@@ -44,7 +44,7 @@
     ·
     <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>-->
   </p>
 </p>
 
@@ -200,7 +200,7 @@ If you find a bug or something you would like to comment on, do not hesitate to 
 * **Álvaro Saiz**         - [E-Mail](mailto:asf174@alumnos.unican.es)
 * **Pablo Abad**          - [E-Mail](mailto:pablo.abad@unican.es)
 * **Pablo Prieto**        - [E-Mail](mailto:pablo.prieto@unican.es)
-* **Jose Ángel Herrero**  - [E-Mail](mailto:joseangel.herrero@unican.es)
+* **José Ángel Herrero**  - [E-Mail](mailto:joseangel.herrero@unican.es)
 
 
 
@@ -208,18 +208,11 @@ If you find a bug or something you would like to comment on, do not hesitate to 
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Img Shields](https://shields.io)
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Pages](https://pages.github.com)
-* [Animate.css](https://daneden.github.io/animate.css)
-* [Loaders.css](https://connoratherton.com/loaders)
-* [Slick Carousel](https://kenwheeler.github.io/slick)
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-* [Sticky Kit](http://leafo.net/sticky-kit)
-* [JVectorMap](http://jvectormap.com)
-* [Font Awesome](https://fontawesome.com)
-
+* [Pablo Abad](https://www.ce.unican.es/member/abadp/)
+* [Pablo Prieto](https://www.ce.unican.es/member/prietop/)
+* [José Ángel Herrero](https://www.ce.unican.es/member/herreroja/)
+* [Computer Engineering Group - University of Cantabria](https://www.ce.unican.es/)
+* [University Of Cantabria](https://web.unican.es/)
 
 
 
