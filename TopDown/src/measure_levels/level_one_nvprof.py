@@ -285,3 +285,14 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
 
         return super()._get_ipc(LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
         pass
+
+    def printGraph(labels : lst, sizes : lst, explode : lst):
+        """
+        Print graph to show results."""
+
+        graph : PieChart = PieChart() # pie chart graph
+        labels : list = [self._front_end.name(), self._back_end.name(), self._divergence.name(), self._retire.name()]
+        sizes : list = [super().front_end_percentage_ipc_degradation(), super().back_end_percentage_ipc_degradation(), super().divergence_percentage_ipc_degradation(), super().retire_ipc()]
+        explode : list = [0,0,0,0]
+        graph.print(labels, sizes, explode)
+        pass

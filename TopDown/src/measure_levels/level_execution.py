@@ -203,4 +203,17 @@ class LevelExecution(ABC):
         """
         
         pass
-    
+   
+    @abstractmethod
+    def printGraph(labels : lst, sizes : lst, explode : lst):
+        """
+        Print graph to show results.
+
+        Params:
+            labels  : lst   ; list with the titles of each element
+            sizes   : lst   ; list with values of each element
+            explode : lst   ; list with separation of each element
+        """
+        
+        pass
+         
