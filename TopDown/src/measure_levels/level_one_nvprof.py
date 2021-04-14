@@ -12,6 +12,7 @@ from measure_parts.divergence import DivergenceNvprof
 from measure_parts.retire import RetireNvprof
 from show_messages.message_format import MessageFormat
 from parameters.level_execution_params import LevelExecutionParameters
+from graph.pie_chart import PieChart
 
 class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
 
@@ -68,6 +69,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         output_command : str = super()._launch(self._generate_command())
         self._set_front_back_divergence_retire_results(output_command)
         self._get_results(lst_output)
+        self.printGraph()
         pass
 
     def _set_front_back_divergence_retire_results(self, results_launch : str):
@@ -286,7 +288,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         return super()._get_ipc(LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
         pass
 
-    def printGraph(labels : lst, sizes : lst, explode : lst):
+    def printGraph(self):
         """
         Print graph to show results."""
 
