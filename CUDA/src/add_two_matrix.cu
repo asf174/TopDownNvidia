@@ -4,7 +4,7 @@
 #include <cuda_profiler_api.h>
 
 #ifndef N 
-	#define N 3500
+	#define N 15000
 #endif
 
 #ifndef numThreadsPerBlock
@@ -15,6 +15,16 @@
 	#define numBlock (ceil( (float) N*N/numThreadsPerBlock))
 #endif
 
+using clock_value_t = long long;
+
+__device__ void sleep(clock_value_t sleep_cycles)
+{
+    clock_value_t start = clock64();
+    clock_value_t cycles_elapsed;
+    do { cycles_elapsed = clock64() - start; } 
+    while (cycles_elapsed < sleep_cycles);
+}
+
 __global__ void addMatrix(int* a, int* b, int* result, int size)
 {
 	int idx = blockDim.x*blockIdx.x + threadIdx.x;	
@@ -24,6 +34,7 @@ __global__ void addMatrix(int* a, int* b, int* result, int size)
 		result[idx*result[idx] % size] = a[idx*result[idx] % size] + b[idx*result[idx] % size];
 	else
 		result[idx*result[idx] % size] = a[idx*result[idx] % size];*/
+    //sleep((clock_value_t) 1000000^25);
 }
 
 __global__ void addMatrix2(int* a, int* b, int* result, int size)
@@ -62,7 +73,9 @@ double time() {
 int
 main(int argc, char* argv[])
 {
-
+    int i = 0;
+top:
+    i++;
 	// create events to measure time
 	cudaEvent_t start, stop;
 	cudaEventCreate(&start);
@@ -84,7 +97,6 @@ main(int argc, char* argv[])
 			matrixB[i] = 10;
 	}
 	
-
 	// allocate memory in device
 	int *matrixA_d, *matrixB_d, *matrixResult_d;
 
@@ -128,4 +140,6 @@ main(int argc, char* argv[])
 	//printf("Time elapsed in DEVICE (%d,%d) N = %d : %g milliseconds / %g seconds\n", numBlock,numThreadsPerBlock,N,
 	//endtime - initime,(endtime - initime)/1000);
 	//printf("%g %d\n",endtime - initime,numThreadsPerBlock);
+    if (i < 3)
+     goto top;
 }
