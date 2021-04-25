@@ -63,15 +63,6 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         return command
         pass
 
-    def run(self, lst_output : list):
-        """Run execution."""
-        
-        output_command : str = super()._launch(self._generate_command())
-        self._set_front_back_divergence_retire_results(output_command)
-        self._get_results(lst_output)
-        self.printGraph()
-        pass
-
     def _set_front_back_divergence_retire_results(self, results_launch : str):
         """ Get Results from FrontEnd, BanckEnd, Divergence and Retire parts.
         

@@ -20,7 +20,7 @@ from measure_parts.front_dependency import FrontDependency
 from measure_levels.level_one import LevelOne
 from show_messages.message_format import MessageFormat
 from abc import ABC, abstractmethod # abstract class
-
+from graph.pie_chart import PieChart 
 
 
 class LevelTwo(LevelOne, ABC):
@@ -143,7 +143,7 @@ class LevelTwo(LevelOne, ABC):
         Returns:
             Float with the percent of BackEnd.Core_Bound's IPC degradation
         """
-        return (((self._stall_ipc()*(self.get_back_core_bound_stall()/100.0))/super().get_device_max_ipc())*100.0)
+        return (((self._stall_ipc()*(self.back_core_bound_stall()/100.0))/super().get_device_max_ipc())*100.0)
         pass
 
     def back_memory_bound_percentage_ipc_degradation(self) -> float:
@@ -154,7 +154,7 @@ class LevelTwo(LevelOne, ABC):
             Float with the percent of BackEnd.Memory_Bound's IPC degradation
         """
 
-        return (((self._stall_ipc()*(self.get_back_memory_bound_stall()/100.0))/super().get_device_max_ipc())*100.0)
+        return (((self._stall_ipc()*(self.back_memory_bound_stall()/100.0))/super().get_device_max_ipc())*100.0)
         pass
 
     def front_band_width_percentage_ipc_degradation(self) -> float:
@@ -165,7 +165,7 @@ class LevelTwo(LevelOne, ABC):
             Float with the percent of FrontEnd.BandWidth's IPC degradation
         """
 
-        return (((self._stall_ipc()*(self.get_front_band_width_stall()/100.0))/super().get_device_max_ipc())*100.0)
+        return (((self._stall_ipc()*(self.front_band_width_stall()/100.0))/super().get_device_max_ipc())*100.0)
         pass
 
     def front_dependency_percentage_ipc_degradation(self) -> float:
@@ -176,10 +176,10 @@ class LevelTwo(LevelOne, ABC):
             Float with the percent of FrontEnd.Dependency's IPC degradation
         """
 
-        return (((self._stall_ipc()*(self.get_front_dependency_stall()/100.0))/super().get_device_max_ipc())*100.0)
+        return (((self._stall_ipc()*(self.front_dependency_stall()/100.0))/super().get_device_max_ipc())*100.0)
         pass
 
-    def get_back_memory_bound_stall(self) -> float:
+    def back_memory_bound_stall(self) -> float:
         """
         Returns percent of stalls due to BackEnd.Memory_Bound part.
 
@@ -190,7 +190,7 @@ class LevelTwo(LevelOne, ABC):
         return self._get_stalls_of_part(self._back_memory_bound.metrics())
         pass
 
-    def get_back_core_bound_stall(self) -> float:
+    def back_core_bound_stall(self) -> float:
         """
         Returns percent of stalls due to BackEnd.Core_Bound part.
 
@@ -201,7 +201,7 @@ class LevelTwo(LevelOne, ABC):
         return self._get_stalls_of_part(self._back_core_bound.metrics())
         pass
 
-    def get_front_band_width_stall(self) -> float:
+    def front_band_width_stall(self) -> float:
         """
         Returns percent of stalls due to FrontEnd.Band_width part.
 
@@ -212,7 +212,7 @@ class LevelTwo(LevelOne, ABC):
         return self._get_stalls_of_part(self._front_band_width.metrics())
         pass
 
-    def get_front_dependency_stall(self) -> float:
+    def front_dependency_stall(self) -> float:
         """
         Returns percent of stalls due to FrontEnd.Dependency part.
 
@@ -223,7 +223,7 @@ class LevelTwo(LevelOne, ABC):
         return self._get_stalls_of_part(self._front_dependency.metrics())
         pass
 
-    def get_back_memory_bound_stall_on_back(self) -> float:
+    def back_memory_bound_stall_on_back(self) -> float:
         """ 
         Obtain the percentage of stalls due to BackEnd.Memory_Bound
         on the total BackEnd
@@ -233,9 +233,9 @@ class LevelTwo(LevelOne, ABC):
             on the total BackEnd
         """
 
-        return (self.get_back_memory_bound_stall()/super().get_back_end_stall())*100.0 
+        return (self.back_memory_bound_stall()/super().back_end_stall())*100.0 
 
-    def get_back_core_bound_stall_on_back(self) -> float:
+    def back_core_bound_stall_on_back(self) -> float:
         """ 
         Obtain the percentage of stalls due to BackEnd.Core_Bound
         on the total BackEnd
@@ -245,9 +245,9 @@ class LevelTwo(LevelOne, ABC):
             on the total BackEnd
         """
 
-        return (self.get_back_core_bound_stall()/super().get_back_end_stall())*100.0 
+        return (self.back_core_bound_stall()/super().back_end_stall())*100.0 
 
-    def get_front_band_width_stall_on_front(self) -> float:
+    def front_band_width_stall_on_front(self) -> float:
         """ 
         Obtain the percentage of stalls due to FrontEnd.Band_width
         on the total FrontEnd
@@ -257,10 +257,10 @@ class LevelTwo(LevelOne, ABC):
             on the total FrontEnd
         """
 
-        return (self.get_front_band_width_stall()/super().get_front_end_stall())*100.0 
+        return (self.front_band_width_stall()/super().front_end_stall())*100.0 
         pass
 
-    def get_front_dependency_stall_on_front(self) -> float:
+    def front_dependency_stall_on_front(self) -> float:
         """ 
         Obtain the percentage of stalls due to FrontEnd.Dependency
         on the total FrontEnd
@@ -270,5 +270,41 @@ class LevelTwo(LevelOne, ABC):
             on the total FrontEnd
         """
 
-        return (self.get_front_dependency_stall()/super().get_front_end_stall())*100.0 
+        return (self.front_dependency_stall()/super().front_end_stall())*100.0 
+        pass
+
+    def printGraph(self):
+        """ Print graph to show results."""
+
+        titles_graphs : list = (["IPC Degradation LEVEL ONE", "STALLS on TOTAL (LEVEL ONE)", "IPC Degradation on TOTAL (LEVEL TWO)", "STALLS on TOTAL (LEVEL TWO)", 
+            "STALLS on " + self._front_end.name() + " (LEVEL TWO)", "STALLS on " + self._back_end.name() + " (LEVEL TWO)"])
+        graph : PieChart = PieChart(3, 2, "Description of Results", titles_graphs) # pie chart graph
+         
+        labels : list = [self._front_end.name(), self._front_band_width.name(), self._front_dependency.name(), self._back_end.name(), 
+        self._back_core_bound.name(), self._back_memory_bound.name(), self._divergence.name(), self._retire.name()]
+        
+        # Level One
+        values : list = [super().front_end_percentage_ipc_degradation(), None, None, super().back_end_percentage_ipc_degradation(), None, 
+            super().divergence_percentage_ipc_degradation(), super().retire_ipc()]
+        
+        graph.add_graph(labels, values, titles_graphs[0], "1")
+        values = [self.front_end_stall(), None, None, self.back_end_stall(), None, None, None, None]
+        graph.add_graph(labels, values, titles_graphs[1], "1")
+        
+
+        # Level TWO
+        values = [None, self.front_dependency_percentage_ipc_degradation(), self.front_band_width_percentage_ipc_degradation(), None, self.back_core_bound_percentage_ipc_degradation(), 
+            self.back_memory_bound_percentage_ipc_degradation(), super().divergence_percentage_ipc_degradation(), super().retire_ipc()] # IPC Degradation
+        graph.add_graph(labels, values, titles_graphs[2], "1")
+        
+        values = [None, self.front_band_width_stall(), self.front_dependency_stall(), None, self.back_core_bound_stall(), self.back_memory_bound_stall(), None, None] # Stalls total
+        graph.add_graph(labels, values, titles_graphs[3], "1")
+        
+        values = [None, self.front_band_width_stall_on_front(), self.front_dependency_stall_on_front(), None, None, None, None, None] # Stalls on FrontEnd
+        graph.add_graph(labels, values, titles_graphs[4], "1")
+        
+        values = [None, None, None, None, self.back_core_bound_stall_on_back(), self.back_memory_bound_stall_on_back(), None, None] # Stalls on BackEnd
+        graph.add_graph(labels, values, titles_graphs[5], "1")
+        
+        graph.print()
         pass

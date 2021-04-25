@@ -44,8 +44,9 @@ class TopDown:
                                                                         scan tool
         __show_events                   : bool                      ;   True if program has to show events computed by NVIDIA scan 
                                                                         tool
-        __show_all_measurementes        : bool                      ;   True if program has to show all measures 
+        __show_all_measurements         : bool                      ;   True if program has to show all measures 
                                                                         computed by NVIDIA scan tool
+        __show_graph                    : bool                      ;   True if program has to show graphs or False if not
     """
 
     def __init__(self):
@@ -72,7 +73,8 @@ class TopDown:
         self.__show_desc : bool = args.show_desc
         self.__show_metrics : bool = args.metrics
         self.__show_events : bool = args.events
-        self.__show_all_measurementes : bool = args.all_measures
+        self.__show_all_measurements : bool = args.all_measures
+        self.__show_graph : bool = args.show_graph
         pass
     
     def arg_parser(self) -> argparse :# TODO-> ArgumentParser:
@@ -88,86 +90,103 @@ class TopDown:
     
     def __add_show_desc_argument(self, parser : argparse.ArgumentParser):
         """ 
-        Add show-description argument. 'C_LONG_DESCRIPTION_SHORT_OPTION' is the short 
-        option of argument and 'C_LONG_DESCRIPTION_LONG_OPTION' is the long version of argument.
+        Add show-description argument. 'C_LONG_DESCRIPTION_ARGUMENT_SHORT_OPTION' is the short 
+        option of argument and 'C_LONG_DESCRIPTION_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
         parser.add_argument (
-            TopDownParameters.C_SHOW_DESCRIPTION_SHORT_OPTION, 
-            TopDownParameters.C_SHOW_DESCRIPTION_LONG_OPTION, 
-            help = "don't show description of results.",
+            TopDownParameters.C_SHOW_DESCRIPTION_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_SHOW_DESCRIPTION_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_SHOW_DESCRIPTION_ARGUMENT_DESCRIPTION, 
             action = 'store_false',
             dest = 'show_desc')
         pass
 
     def __add_metrics_argument(self, parser : argparse.ArgumentParser):
         """ 
-        Add tesla argument. 'C_METRICS_SHORT_OPTION' is the short option of argument
-        and 'C_METRICS_LONG_OPTION' is the long version of argument.
+        Add metrics argument. 'C_METRICS_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_METRICS_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
         parser.add_argument (
-            TopDownParameters.C_METRICS_SHORT_OPTION, 
-            TopDownParameters.C_METRICS_LONG_OPTION, 
-            help = 'show metrics computed by NVIDIA scan tool',
+            TopDownParameters.C_METRICS_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_METRICS_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_METRICS_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'metrics')
         pass
-
-    def __add_all_measures_argument(self, parser : argparse.ArgumentParser):
+    
+    def __add_graph_argument(self, parser : argparse.ArgumentParser):
         """ 
-        Add all measures argument. 'C_ALL_MEASURES_SHORT_OPTION' is the short option of argument
-        and 'C_ALL_MEASURES_LONG_OPTION' is the long version of argument.
+        Add graph argument. 'C_GRAPH_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_GRAPH_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
         parser.add_argument (
-            TopDownParameters.C_ALL_MEASURES_SHORT_OPTION, 
-            TopDownParameters.C_ALL_MEASURES_LONG_OPTION, 
-            help = 'show all measures computed by NVIDIA scan tool',
+            TopDownParameters.C_GRAPH_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_GRAPH_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_GRAPH_ARGUMENT_DESCRIPTION,
+            action = 'store_true',
+            dest = 'show_graph')
+        pass
+    
+    def __add_all_measures_argument(self, parser : argparse.ArgumentParser):
+        """ 
+        Add all measures argument. 'C_ALL_MEASURES_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_ALL_MEASURES_ARGUMENT_LONG_OPTION' is the long version of argument.
+
+        Params:
+            parser : argparse.ArgumentParser ; group of the argument.
+        """
+
+        parser.add_argument (
+            TopDownParameters.C_ALL_MEASURES_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_ALL_MEASURES_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_ALL_MEASURES_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'all_measures')
         pass
 
     def __add_events_argument(self, parser : argparse.ArgumentParser):
         """ 
-        Add events argument. 'C_EVENTS_SHORT_OPTION' is the short option of argument
-        and 'C_EVENTS_LONG_OPTION' is the long version of argument.
+        Add events argument. 'C_EVENTS_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_EVENTS_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
         parser.add_argument (
-            TopDownParameters.C_EVENTS_SHORT_OPTION, 
-            TopDownParameters.C_EVENTS_LONG_OPTION, 
-            help = 'show events computed by NVIDIA scan tool',
+            TopDownParameters.C_EVENTS_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_EVENTS_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_EVENTS_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'events')
         pass
         
     def __add_program_argument(self, group : argparse._ArgumentGroup) :
         """ 
-        Add program argument. 'C_FILE_SHORT_OPTION' is the short option of argument
-        and 'C_FILE_LONG_OPTION' is the long version of argument.
+        Add program argument. 'C_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
             group : argparse._ArgumentGroup ; group of the argument.
         """
 
         group.add_argument(
-            TopDownParameters.C_FILE_SHORT_OPTION, 
-            TopDownParameters.C_FILE_LONG_OPTION, 
+            TopDownParameters.C_FILE_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_FILE_ARGUMENT_LONG_OPTION, 
             required = True,
-            help = 'run file. Path to file.',
+            help = TopDownParameters.C_FILE_ARGUMENT_DESCRIPTION,
             default = None,
             nargs = '?', 
             action = DontRepeat,
@@ -178,39 +197,39 @@ class TopDown:
 
     def __add_level_argument(self, group : argparse._ArgumentGroup):
         """ 
-        Add level argument. 'C_LEVEL_SHORT_OPTION' is the short option of argument
-        and 'C_LEVEL_LONG_OPTION' is the long version of argument.
+        Add level argument. 'C_LEVEL_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_LEVEL_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
             group : argparse._ArgumentGroup ; group of the argument.
         """
         
         group.add_argument (
-            TopDownParameters.C_LEVEL_SHORT_OPTION, TopDownParameters.C_LEVEL_LONG_OPTION,
+            TopDownParameters.C_LEVEL_ARGUMENT_SHORT_OPTION, TopDownParameters.C_LEVEL_ARGUMENT_LONG_OPTION,
             required = True,
-            help = 'level of execution.',
+            help = TopDownParameters.C_LEVEL_ARGUMENT_DESCRIPTION,
             type = int,
             action = DontRepeat,
             nargs = 1,
             default = -1,
-            choices = range(TopDownParameters.C_MIN_LEVEL_EXECUTION, TopDownParameters.C_MAX_LEVEL_EXECUTION + 1), # range [1,2], produces error, no if needed
+            choices = range(TopDownParameters.C_MIN_LEVEL_EXECUTION, TopDownParameters.C_MAX_LEVEL_EXECUTION + 1), # range [1,3], produces error, no if needed
             metavar = '[NUM]',
             dest = 'level')
         pass
 
     def __add_ouput_file_argument(self, parser : argparse.ArgumentParser):
         """ 
-        Add ouput-file argument. 'C_OUTPUT_FILE_SHORT_OPTION' is the short option of argument
-        and 'C_OUTPUT_FILE_LONG_OPTION' is the long version of argument.
+        Add ouput-file argument. 'C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_OUTPUT_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
             parser : argparse.ArgumentParser ; group of the argument.
         """
         
         parser.add_argument (
-            TopDownParameters.C_OUTPUT_FILE_SHORT_OPTION, 
-            TopDownParameters.C_OUTPUT_FILE_LONG_OPTION, 
-            help = 'output file. Path to file.',
+            TopDownParameters.C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_OUTPUT_FILE_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_OUTPUT_FILE_ARGUMENT_DESCRIPTION,
             default = None,
             action = DontRepeat, # preguntar TODO
             nargs = '?', 
@@ -221,34 +240,34 @@ class TopDown:
 
     def __add_verbose_argument(self, parser : argparse.ArgumentParser):
         """ 
-        Add verbose argument. 'C_VERBOSE_SHORT_OPTION' is the short 
-        option of argument and 'C_VERBOSE_LONG_OPTION' is the long version of argument.
+        Add verbose argument. 'C_VERBOSE_ARGUMENT_SHORT_OPTION' is the short 
+        option of argument and 'C_VERBOSE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
         parser.add_argument (
-            TopDownParameters.C_VERBOSE_SHORT_OPTION, 
-            TopDownParameters.C_VERBOSE_LONG_OPTION, 
-            help = 'long description of results.',
+            TopDownParameters.C_VERBOSE_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_VERBOSE_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_VERBOSE_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'verbose')
         pass
     
     def __add_delete_output_file_content(self, parser : argparse.ArgumentParser):
         """ 
-        Add output's file delete content argument. 'C_DELETE_CONTENT_SHORT_OPTION' is the short 
-        option of argument and 'C_DELETE_CONTENT_LONG_OPTION' is the long version of argument.
+        Add output's file delete content argument. 'C_DELETE_CONTENT_ARGUMENT_SHORT_OPTION' is the short 
+        option of argument and 'C_DELETE_CONTENT_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
         parser.add_argument (
-            TopDownParameters.C_DELETE_CONTENT_SHORT_OPTION, 
-            TopDownParameters.C_DELETE_CONTENT_LONG_OPTION, 
-            help = "If '-o/--output' is set delete output's file contents before write results",
+            TopDownParameters.C_DELETE_CONTENT_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_DELETE_CONTENT_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_DELETE_CONTENT_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'delete_output_file_content')
         pass
@@ -273,6 +292,7 @@ class TopDown:
         self.__add_metrics_argument(parser)
         self.__add_events_argument(parser)
         self.__add_all_measures_argument(parser)
+        self.__add_graph_argument(parser)
         pass
 
     def program(self) -> str:
@@ -351,7 +371,7 @@ class TopDown:
             False if not.
         """
 
-        return self.__show_all_measurementes 
+        return self.__show_all_measurements 
         pass
 
     def show_events(self) -> bool:
@@ -375,6 +395,17 @@ class TopDown:
         """
 
         return self.__delete_output_file_content
+        pass
+
+    def show_graph(self) -> bool:
+        """ 
+        Check if program has to show graph with description of results.
+
+        Returns:
+            True if program has to show graph or False if not
+        """
+        
+        return self.__show_graph
         pass
 
     def __intro_message(self): 
@@ -434,9 +465,9 @@ class TopDown:
       
     def __show_level_one_results(self, level_execution : LevelOne):
         stalls_front_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(round(level_execution.get_front_end_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.front_end_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(round(level_execution.get_back_end_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.back_end_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         ipc_degradation_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
             str(round(level_execution.divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
         ipc_retire_message : str = ("{:<21} {:<4}".format('PERFORMANCE IPC (%):', 
@@ -458,22 +489,22 @@ class TopDown:
 
     def __show_level_two_results(self, level_execution):
         stalls_front_band_width_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(round(level_execution.get_front_band_width_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.front_band_width_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_front_dependency_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(round(level_execution.get_front_dependency_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.front_dependency_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_core_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(round(level_execution.get_back_core_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.back_core_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_memory_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(round(level_execution.get_back_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.back_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
 
         stalls_front_band_width_on_front_message : str = ("{:<22} {:<6}".format('STALLS, on FrontEnd  (%): ', 
-            str(round(level_execution.get_front_band_width_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.front_band_width_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_front_dependency_on_front_message : str = ("{:<20} {:<6}".format('STALLS, on FrontEnd  (%): ', 
-            str(round(level_execution.get_front_dependency_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.front_dependency_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_core_bound_on_back_message : str = ("{:<20} {:<6}".format('STALLS, on BackEnd   (%): ', 
-            str(round(level_execution.get_back_core_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.back_core_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_memory_bound_on_back_message : str = ("{:<20} {:<6}".format('STALLS, on BackEnd   (%): ', 
-            str(round(level_execution.get_back_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+            str(round(level_execution.back_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
 
 
         ipc_degradation_front_band_width_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
@@ -696,7 +727,9 @@ class TopDown:
             element : str
             for element in lst_output:
                 print(element)
-    
+        if self.show_graph():
+            level.printGraph()
+    pass   
 if __name__ == '__main__':
     td = TopDown()
     td.launch()

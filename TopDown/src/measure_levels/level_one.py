@@ -162,7 +162,7 @@ class LevelOne(LevelExecution, ABC):
 
         pass
 
-    def get_front_end_stall(self) -> float:
+    def front_end_stall(self) -> float:
         """
         Returns percent of stalls due to FrontEnd part.
 
@@ -173,7 +173,7 @@ class LevelOne(LevelExecution, ABC):
         return self._get_stalls_of_part(self._front_end.metrics())
         pass
     
-    def get_back_end_stall(self) -> float:
+    def back_end_stall(self) -> float:
         """
         Returns percent of stalls due to BackEnd part.
 
@@ -254,7 +254,7 @@ class LevelOne(LevelExecution, ABC):
             Float with the percent of FrontEnd's IPC degradation
         """
         
-        return ((self._stall_ipc()*(self.get_front_end_stall()/100.0))/self.get_device_max_ipc())*100.0
+        return ((self._stall_ipc()*(self.front_end_stall()/100.0))/self.get_device_max_ipc())*100.0
         pass
 
     def back_end_percentage_ipc_degradation(self) -> float:
@@ -265,7 +265,7 @@ class LevelOne(LevelExecution, ABC):
             Float with the percent of BackEnd's IPC degradation
         """
         
-        return ((self._stall_ipc()*(self.get_back_end_stall()/100.0))/super().get_device_max_ipc())*100.0
+        return ((self._stall_ipc()*(self.back_end_stall()/100.0))/super().get_device_max_ipc())*100.0
         pass
 
     def retire_ipc_percentage(self) -> float:
@@ -299,7 +299,7 @@ class LevelOne(LevelExecution, ABC):
         labels : list = [self._front_end.name(), self._back_end.name(), self._divergence.name(), self._retire.name()]
         values : list = [self.front_end_percentage_ipc_degradation(), self.back_end_percentage_ipc_degradation(), self.divergence_percentage_ipc_degradation(), self.retire_ipc()]
         graph.add_graph(labels, values, titles_graphs[0], "1")
-        values = [self.get_front_end_stall(), self.get_back_end_stall()]
+        values = [self.front_end_stall(), self.back_end_stall()]
         graph.add_graph(labels, values, titles_graphs[1], "1")
         graph.print()
         pass

@@ -172,9 +172,9 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                     total_value = int(total_value)
                 value_measure_str = str(total_value)
                 event_name = key_value
-                value_str = "\t\t\t%-*s>" % (measure_name_title_max_length , event_name)
-                value_str += "%-*s>" % (measure_desc_title_max_length , "-")
-                value_str += "%-*s>" % (len(value_measure_str), value_measure_str)
+                value_str = "\t\t\t%-*s" % (measure_name_title_max_length , event_name)
+                value_str += "%-*s" % (measure_desc_title_max_length , "-")
+                value_str += "%-*s" % (len(value_measure_str), value_measure_str)
                 if len(value_str) > line_length:
                     line_length = len(value_str)
                 if i != len(dict_values) - 1:

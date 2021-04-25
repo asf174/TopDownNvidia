@@ -20,6 +20,7 @@ class PieChart:
         specs_l : list[list] = list(list())
         specs_sl : list = list()
         for i in range (0, rows):
+            specs_sl = list()
             for j in range(0, cols):
                 specs_sl.append({'type' : 'domain'})
             specs_l.append(specs_sl)
@@ -50,8 +51,6 @@ class PieChart:
             self.__num_rows += 1
             if self.__num_rows > self.__max_rows:
                 return False
-        print(self.__num_rows)
-        print(self.__num_cols)
         self.__fig.add_trace(go.Pie(labels = labels, values = values, name = name, showlegend = True, legendgroup = legend_group), row = self.__num_rows, col = self.__num_cols)
         self.__fig.update_yaxes(title_text = name, row = self.__num_rows, col = self.__num_rows)
         return True
@@ -59,7 +58,9 @@ class PieChart:
     
     def print(self):
         plt.tight_layout()
-        self.__fig.update_layout(title = {'text' : self.__title, 'x' : 0.5, 'xanchor': 'center'}, legend = dict(yanchor = "top", y = 0.99, xanchor = "left", x = 0.01), legend_title = "Legend", font = dict(size = 12, color = "Black"))
+        self.__fig.update_layout(title = {'text' : self.__title, 'x' : 0.5, 'xanchor': 'center'}, #legend = dict(yanchor = "top", 
+            #y = 0.9, xanchor = "right", x = 0.01), 
+            legend_title = "Legend", font = dict(size = 12, color = "Black"), legend_traceorder="grouped")
         self.__fig.show()
         pass
         
