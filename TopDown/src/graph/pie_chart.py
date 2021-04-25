@@ -15,10 +15,15 @@ class PieChart:
         __title     : str   ; title name of diagram
     """
 
-    def __init__(self, rows : int, cols : int, title : str):
+    def __init__(self, rows : int, cols : int, title : str, titles_sub_graphs : list):
         """Set attributes as arguments."""
-
-        self.__fig = make_subplots(rows = rows, cols = cols, specs = [[{'type' : 'domain'}]])
+        specs_l : list[list] = list(list())
+        specs_sl : list = list()
+        for i in range (0, rows):
+            for j in range(0, cols):
+                specs_sl.append({'type' : 'domain'})
+            specs_l.append(specs_sl)
+        self.__fig = make_subplots(rows = rows, cols = cols, specs = specs_l, subplot_titles = titles_sub_graphs)
         self.__max_rows : int = rows
         self.__max_cols : int = cols
         self.__num_cols : int = 0
@@ -45,12 +50,16 @@ class PieChart:
             self.__num_rows += 1
             if self.__num_rows > self.__max_rows:
                 return False
-        self.__fig.add_trace(go.Pie(labels = labels, values = values, name = name, showlegend = True, legendgroup = legend_group), row = self.__num_cols, col = self.__num_rows)
+        print(self.__num_rows)
+        print(self.__num_cols)
+        self.__fig.add_trace(go.Pie(labels = labels, values = values, name = name, showlegend = True, legendgroup = legend_group), row = self.__num_rows, col = self.__num_cols)
+        self.__fig.update_yaxes(title_text = name, row = self.__num_rows, col = self.__num_rows)
         return True
         pass
     
-    def print(self): 
-        self.__fig.update_layout(title = {'text' : self.__title, 'x' : 0.5, 'xanchor': 'center'}, legend = dict(yanchor = "top", y = 0.99, xanchor = "left", x = 0.01))
+    def print(self):
+        plt.tight_layout()
+        self.__fig.update_layout(title = {'text' : self.__title, 'x' : 0.5, 'xanchor': 'center'}, legend = dict(yanchor = "top", y = 0.99, xanchor = "left", x = 0.01), legend_title = "Legend", font = dict(size = 12, color = "Black"))
         self.__fig.show()
         pass
         

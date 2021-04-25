@@ -20,6 +20,7 @@ from measure_parts.divergence import Divergence
 from measure_parts.retire import Retire
 from show_messages.message_format import MessageFormat
 from abc import ABC, abstractmethod # abstract class
+from graph.pie_chart import PieChart
 
 class LevelOne(LevelExecution, ABC):
  
@@ -290,10 +291,17 @@ class LevelOne(LevelExecution, ABC):
         
         pass
      
-    @abstractmethod
     def printGraph(self):
-        """
-        Print graph to show results."""
-
+        """Print graph to show results."""
+  
+        titles_graphs : list = ["IPC Degradation", "STALLS on TOTAL"]
+        graph : PieChart = PieChart(1,2, "Description of Results", titles_graphs) # pie chart graph
+        labels : list = [self._front_end.name(), self._back_end.name(), self._divergence.name(), self._retire.name()]
+        values : list = [self.front_end_percentage_ipc_degradation(), self.back_end_percentage_ipc_degradation(), self.divergence_percentage_ipc_degradation(), self.retire_ipc()]
+        graph.add_graph(labels, values, titles_graphs[0], "1")
+        values = [self.get_front_end_stall(), self.get_back_end_stall()]
+        graph.add_graph(labels, values, titles_graphs[1], "1")
+        graph.print()
         pass
+
 
