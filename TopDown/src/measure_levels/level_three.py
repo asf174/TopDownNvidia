@@ -99,7 +99,7 @@ class LevelThree(LevelTwo):
 
         pass 
 
-    def get_memory_constant_memory_bound_stall(self) -> float:
+    def memory_constant_memory_bound_stall(self) -> float:
         """
         Returns percent of stalls due to BackEnd.MemoryBound.Constant_Memory_Bound part.
 
@@ -110,7 +110,7 @@ class LevelThree(LevelTwo):
         return self._get_stalls_of_part(self.memory_constant_memory_bound().metrics())
         pass
     
-    def get_memory_constant_memory_bound_stall_on_back(self) -> float:
+    def memory_constant_memory_bound_stall_on_back(self) -> float:
         """ 
         Obtain the percentage of stalls due to BackEnd.MemoryBound.ConstantMemoryBound # repasar estos nombres en todo
         on the total BackEnd
@@ -120,9 +120,9 @@ class LevelThree(LevelTwo):
             on the total BackEnd
         """
 
-        return (self.get_memory_constant_memory_bound_stall()/super().get_back_end_stall())*100.0
+        return (self.memory_constant_memory_bound_stall()/super().back_end_stall())*100.0
 
-    def get_memory_constant_memory_bound_stall_on_memory_bound(self) -> float:
+    def memory_constant_memory_bound_stall_on_memory_bound(self) -> float:
         """ 
         Obtain the percentage of stalls due to BackEnd.MemoryBound.ConstantMemoryBound
         on the total BackEnd.MemoryBound
@@ -132,7 +132,7 @@ class LevelThree(LevelTwo):
             on the total BackEnd.MemoryBound
         """
 
-        return (self.get_memory_constant_memory_bound_stall()/super().get_back_memory_bound_stall())*100.0
+        return (self.memory_constant_memory_bound_stall()/super().back_memory_bound_stall())*100.0
         pass
 
     def memory_constant_memory_bound_percentage_ipc_degradation(self) -> float: # repasar nombres... Incluyen superior TODO
@@ -143,5 +143,5 @@ class LevelThree(LevelTwo):
             Float with the percent of FrontEnd.Dependency's IPC degradation
         """
 
-        return (((self._stall_ipc()*(self.get_memory_constant_memory_bound_stall()/100.0))/self.get_device_max_ipc())*100.0)
+        return (((self._stall_ipc()*(self.memory_constant_memory_bound_stall()/100.0))/self.get_device_max_ipc())*100.0)
         pass

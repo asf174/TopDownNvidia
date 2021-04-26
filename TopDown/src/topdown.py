@@ -417,9 +417,7 @@ class TopDown:
         #        width = None, delete_content_file = self.delete_output_file_content())
         printer.print_desplazed_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
         print()
-        print()
-        print()
-        message  = "\n\n\nWelcome to the " + sys.argv[0] + " program where you can check the bottlenecks of your\n" + \
+        message  = "\n\nWelcome to the " + sys.argv[0] + " program where you can check the bottlenecks of your\n" + \
             "CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural\n" + \
             "aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your\n" + \
             "program, which cause the IPC (Instructions per Cycle) to be drastically reduced."
@@ -532,13 +530,13 @@ class TopDown:
 
     def __show_level_three_results(self, level_execution):
         stalls_constant_memory_bound_on_total_message : str = ("STALLS, on the total            (%): " +  # revisar formatos, quiza sobren TODO
-            str(round(level_execution.get_memory_constant_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            str(round(level_execution.memory_constant_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
         
         stalls_constant_memory_bound_on_memory_bound_message : str = ("STALLS, on BackEnd.MemoryBound  (%): " +  
-            str(round(level_execution.get_memory_constant_memory_bound_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            str(round(level_execution.memory_constant_memory_bound_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
        
         stalls_constant_memory_bound_on_back_message : str = ("STALLS, on MemoryBound          (%): " +
-            str(round(level_execution.get_memory_constant_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            str(round(level_execution.memory_constant_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
 
         ipc_degradation_constant_memory_bound_width_message : str = ("IPC DEGRADATION                 (%): " +  
             str(round(level_execution.memory_constant_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
@@ -585,14 +583,16 @@ class TopDown:
             printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
             delete_content_file = False)
             print()
+            
+        printer.print_max_line_length_message("\n", TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
         message = "DESCRIPTION OF MEASURE PARTS"
         printer.print_desplazed_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
         print()
         if (type(level_execution) is LevelTwoNsight or type(level_execution) is LevelTwoNvprof or type(level_execution) is LevelThreeNvprof or 
             type(level_execution) is LevelThreeNsight):
-            message = "LEVEL ONE RESULTS"
+            message = "\nLEVEL ONE RESULTS"
             printer.print_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
-            print()
+            printer.print_max_line_length_message("\n", TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False) 
             if self.show_desc():
                 message = "\n" + level_execution.front_end().name() + ": " + level_execution.front_end().description() + "\n\n"
                 printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
@@ -608,9 +608,9 @@ class TopDown:
                 print()
             self.__show_level_one_results(level_execution)
             print()
-            message = "LEVEL TWO RESULTS"
+            message = "\n\nLEVEL TWO RESULTS"
             printer.print_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
-            print()
+            printer.print_max_line_length_message("\n", TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
             if self.show_desc():
                 message = "\n" + level_execution.front_band_width().name() + ": " + level_execution.front_band_width().description() + "\n\n"
                 printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
@@ -631,8 +631,9 @@ class TopDown:
             self.__show_level_two_results(level_execution)
             print()
             if type(level_execution) is LevelThreeNsight or type(level_execution) is LevelThreeNvprof:
-                message = "LEVEL THREE RESULTS"
+                message = "\n\nLEVEL THREE RESULTS"
                 printer.print_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
+                printer.print_max_line_length_message("\n", TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
                 print()
                 if self.show_desc():
                     message = "\n" + level_execution.constant_memory_bound().name() + ": " + level_execution.constant_memory_bound().description() + "\n\n"
@@ -717,11 +718,9 @@ class TopDown:
         if self.show_all_measures() or self.show_metrics() or self.show_events():
             # Write results in output-file if has been specified
             printer : MessageFormat = MessageFormat()
-            print()
+            printer.print_max_line_length_message("\n\n", TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
             message : str = "List of measurements computed by NVIDIA scan tool"
             printer.print_desplazed_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
-            print()
-            print()
             if not self.output_file() is None:
                     printer.write_in_file_at_end(self.output_file(), lst_output)
             element : str
@@ -733,5 +732,5 @@ class TopDown:
 if __name__ == '__main__':
     td = TopDown()
     td.launch()
-    MessageFormat().print_max_line_length_message(message = "Analysis performed correctly!", 
+    MessageFormat().print_max_line_length_message(message = "Analysis performed correctly!\n", 
     max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = td.output_file(), delete_content_file = False)

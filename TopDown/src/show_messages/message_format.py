@@ -212,9 +212,10 @@ class MessageFormat:
 
     def print_underlined_str(self, message : str, output_file : str, delete_content_file : bool):
         """ Print a string underlined. """
-        print(self.underlined_str(message))
+        message_underlined : str = self.underlined_str(message)
+        print(message_underlined)
         if not output_file is None:
-            self.__write_str_in_file(message, output_file, delete_content_file)
+            self.__write_str_in_file(message_underlined, output_file, delete_content_file)
         pass
 
     def print_desplazed_underlined_str(self, message : str, output_file : str, delete_content_file : bool):
@@ -227,7 +228,7 @@ class MessageFormat:
         
         leng : int = len(message)
         message = "\t\t\t\t\t" + message
-        message  += "\n\t\t\t\t\t" + f'{"-" * (leng)}'
+        message  += "\n\t\t\t\t\t" + f'{"-" * (leng)}\n'
         print(message)
 
         if not output_file is None:
@@ -238,6 +239,6 @@ class MessageFormat:
         """ Returns a string underlined. """
         #return '{:s}'.format('\u0332'.join(" " + message))
         leng : int = len(message)
-        message  += "\n" + f'{"-" * (leng)}' # REVISAR TIPO DE DATO 'F'. POR AHI HAY BYTE
+        message  += "\n" + f'{"-" * (leng)}\n' # REVISAR TIPO DE DATO 'F'. POR AHI HAY BYTE
         return message 
         pass
