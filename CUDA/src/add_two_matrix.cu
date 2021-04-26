@@ -2,6 +2,7 @@
 #include <sys/time.h>
 #include <cuda_runtime.h>
 #include <cuda_profiler_api.h>
+#include <time.h>
 
 #ifndef N 
 	#define N 15000
@@ -17,7 +18,7 @@
 
 using clock_value_t = long long;
 
-__device__ void sleep(clock_value_t sleep_cycles)
+__device__ void sleep2(clock_value_t sleep_cycles)
 {
     clock_value_t start = clock64();
     clock_value_t cycles_elapsed;
@@ -34,7 +35,7 @@ __global__ void addMatrix(int* a, int* b, int* result, int size)
 		result[idx*result[idx] % size] = a[idx*result[idx] % size] + b[idx*result[idx] % size];
 	else
 		result[idx*result[idx] % size] = a[idx*result[idx] % size];*/
-    //sleep((clock_value_t) 1000000^25);
+    sleep2((clock_value_t) 1000000^25);
 }
 
 __global__ void addMatrix2(int* a, int* b, int* result, int size)
@@ -111,9 +112,11 @@ top:
 	
 	cudaProfilerStart();
 	
-	
-	addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
-	addMatrix2<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+	for (int i = 0; i < 10000000; i++) {
+	    addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+	    addMatrix2<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+        //sleep(60);
+    }
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
     // any errors encountered during the launch.
 	cudaDeviceSynchronize();
