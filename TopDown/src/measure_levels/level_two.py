@@ -295,7 +295,7 @@ class LevelTwo(LevelOne, ABC):
         """
         
   	    labels : list = [self._front_end.name(), self._front_band_width.name(), self._front_dependency.name(), self._back_end.name(), 
-            self._back_core_bound.name(), self._back_memory_bound.name(), self._divergence.name(), self._retire.name()]
+        self._back_core_bound.name(), self._back_memory_bound.name(), self._divergence.name(), self._retire.name()]
         
         # Level One
         values : list = [super().front_end_percentage_ipc_degradation(), None, None, super().back_end_percentage_ipc_degradation(), None, 
@@ -305,7 +305,6 @@ class LevelTwo(LevelOne, ABC):
         values = [self.front_end_stall(), None, None, self.back_end_stall(), None, None, None, None]
         graph.add_graph(labels, values, titles_graphs[1], "1")
         
-
         # Level TWO
         values = [None, self.front_dependency_percentage_ipc_degradation(), self.front_band_width_percentage_ipc_degradation(), None, self.back_core_bound_percentage_ipc_degradation(), 
             self.back_memory_bound_percentage_ipc_degradation(), super().divergence_percentage_ipc_degradation(), super().retire_ipc()] # IPC Degradation
