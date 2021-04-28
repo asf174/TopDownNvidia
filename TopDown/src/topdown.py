@@ -31,7 +31,7 @@ class TopDown:
     Attributes:
         __parser                        : argparse.ArgumentParse    ;   reference to arguments parser
         __level                         : int                       ;   level of the exection
-        __file_output                   : str                       ;   path to log to show results or 'None' if option
+        __output_file                   : str                       ;   path to log to show results or 'None' if option
                                                                         is not specified
         __verbose                       : bool                      ;   True to show long-descriptions of results or
                                                                         False in other case
@@ -47,6 +47,8 @@ class TopDown:
         __show_all_measurements         : bool                      ;   True if program has to show all measures 
                                                                         computed by NVIDIA scan tool
         __show_graph                    : bool                      ;   True if program has to show graphs or False if not
+        __output_graph_file             : str                       ;   path to graph file or 'None' if option is not specified
+
     """
 
     def __init__(self):
@@ -66,7 +68,7 @@ class TopDown:
         args : argparse.Namespace = self.__parser.parse_args()
       
         self.__level : int = args.level[0]
-        self.__file_output : str = args.file
+        self.__output_file : str = args.file
         self.__verbose : bool = args.verbose
         self.__program : str = args.program
         self.__delete_output_file_content : bool = args.delete_output_file_content
@@ -75,6 +77,7 @@ class TopDown:
         self.__show_events : bool = args.events
         self.__show_all_measurements : bool = args.all_measures
         self.__show_graph : bool = args.show_graph
+        self.__output_graph_file : str = args.graph_file
         pass
     
     def arg_parser(self) -> argparse :# TODO-> ArgumentParser:
@@ -122,7 +125,7 @@ class TopDown:
             dest = 'metrics')
         pass
     
-    def __add_graph_argument(self, parser : argparse.ArgumentParser):
+    def __add_show_graph_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add graph argument. 'C_GRAPH_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_GRAPH_ARGUMENT_LONG_OPTION' is the long version of argument.
@@ -219,7 +222,7 @@ class TopDown:
 
     def __add_ouput_file_argument(self, parser : argparse.ArgumentParser):
         """ 
-        Add ouput-file argument. 'C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
+        Add output-file argument. 'C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_OUTPUT_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
         Params:
@@ -272,6 +275,48 @@ class TopDown:
             dest = 'delete_output_file_content')
         pass
 
+    def __add_ouput_graph_file_argument(self, parser : argparse.ArgumentParser):
+        """ 
+        Add output graph file argument. 'C_OUTPUT_GRAPH_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_OUTPUT_GRAPH_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
+
+        Params:
+            parser : argparse.ArgumentParser ; group of the argument.
+        """
+        
+        parser.add_argument (
+            TopDownParameters.C_OUTPUT_GRAPH_FILE_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_OUTPUT_GRAPH_FILE_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_OUTPUT_GRAPH_FILE_ARGUMENT_DESCRIPTION,
+            default = None,
+            action = DontRepeat, # preguntar TODO
+            nargs = '?', 
+            type = str, 
+            #metavar='/path/to/file',
+            dest = 'graph_file')
+        pass
+
+    def __add_ouput_file_argument(self, parser : argparse.ArgumentParser):
+        """ 
+        Add ouput-file argument. 'C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_OUTPUT_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
+
+        Params:
+            parser : argparse.ArgumentParser ; group of the argument.
+        """
+        
+        parser.add_argument (
+            TopDownParameters.C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_OUTPUT_FILE_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_OUTPUT_FILE_ARGUMENT_DESCRIPTION,
+            default = None,
+            action = DontRepeat, # preguntar TODO
+            nargs = '?', 
+            type = str, 
+            #metavar='/path/to/file',
+            dest = 'file')
+        pass
+    
     def __add_arguments(self, parser : argparse.ArgumentParser):
         """ 
         Add arguments of the pogram.
@@ -292,7 +337,8 @@ class TopDown:
         self.__add_metrics_argument(parser)
         self.__add_events_argument(parser)
         self.__add_all_measures_argument(parser)
-        self.__add_graph_argument(parser)
+        self.__add_show_graph_argument(parser)
+        self.__add_ouput_graph_file_argument(parser)
         pass
 
     def program(self) -> str:
@@ -325,9 +371,22 @@ class TopDown:
             option '-o' or '--output' has not been indicated
         """
 
-        return self.__file_output # descriptor to file or None
+        return self.__output_file # descriptor to file or None
         pass
-    
+
+    def output_graph_file(self) -> str:
+        """
+        Find path to output graph file.
+
+        Returns:
+            path to graph file to write, or None if 
+            option '-o' or '--output' has not been indicated
+        """
+
+        return self.__output_graph_file # descriptor to file or None
+        pass
+
+
     def show_verbose(self) -> bool:
         """
         Check if program has to show verbose.
@@ -727,7 +786,9 @@ class TopDown:
             for element in lst_output:
                 print(element)
         if self.show_graph():
-            level.printGraph()
+            level.showGraph()
+        if not self.output_graph_file() is None:
+            level.saveGraph()
     pass   
 if __name__ == '__main__':
     td = TopDown()

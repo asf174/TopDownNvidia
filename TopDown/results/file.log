@@ -227,3 +227,514 @@ EXTRA-MEASURE
 
 
 Analysis performed correctly!
+					TopDown Metholodgy over NVIDIA's GPUs
+					-------------------------------------
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔═══════════════════════════════════════════════════════════════════╗
+║ EXECUTION FEATURES                                                ║
+║ ------------------                                                ║
+║                                                                   ║
+║ - Execution Level:                  3                             ║
+║ - Analyzed program:                 ../../CUDA/bin/add_two_matrix ║
+║ - Output File:                      ../results/file.log           ║
+║ - Verbose:                          True                          ║
+║ - Delete output's file content:     False                         ║
+║ - Show Metrics:                     False                         ║
+║ - Show Events:                      True                          ║
+║ - Show All Measurements:            True                          ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.446 | MAXIMUM POSSIBLE IPC: 6.0 ║
+					╚═════════════════════════════════════════════════╝
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+LEVEL ONE RESULTS
+------------------
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  5.755% ║  ║ STALLS, on the total (%):  94.25%  ║  ║ IPC DEGRADATION (%):  0.042% ║  ║ PERFORMANCE IPC (%):  7.431% ║  
+║ IPC DEGRADATION      (%):  5.325% ║  ║ IPC DEGRADATION      (%):  87.206% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+LEVEL TWO RESULTS
+-------------------
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔════════════════════════════════════╗
+║ FRONT-END.BANDWITH                 ║  ║ FRONT-END.DEPENDENCY               ║  ║ BACK-END.CORE-BOUND               ║  ║ BACK-END.MEMORY-BOUND              ║
+║ ------------------                 ║  ║ --------------------               ║  ║ -------------------               ║  ║ ---------------------              ║
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ STALLS, on the total (%):  3.665%  ║  ║ STALLS, on the total (%):  2.09%   ║  ║ STALLS, on the total (%):  0.075% ║  ║ STALLS, on the total (%):  94.175% ║  
+║ STALLS, on FrontEnd  (%):  63.683% ║  ║ STALLS, on FrontEnd  (%):  36.317% ║  ║ STALLS, on BackEnd   (%):  0.08%  ║  ║ STALLS, on BackEnd   (%):  99.92%  ║  
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ IPC DEGRADATION      (%):  3.391%  ║  ║ IPC DEGRADATION      (%):  1.934%  ║  ║ IPC DEGRADATION      (%):  0.069% ║  ║ IPC DEGRADATION      (%):  87.137% ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  
+
+LEVEL THREE RESULTS
+---------------------
+
+╔═════════════════════════════════════════════╗
+║ BACK-END.MEMORY-BOUND.CONSTANT-MEMORY-BOUND ║
+║ ------------------------------------------- ║
+║                                             ║
+║ STALLS, on the total            (%): 0.005% ║
+║ STALLS, on BackEnd.MemoryBound  (%): 0.005% ║
+║ STALLS, on MemoryBound          (%): 0.005% ║
+║                                             ║
+║ IPC DEGRADATION                 (%): 0.005% ║
+╚═════════════════════════════════════════════╝
+
+					List of measurements computed by NVIDIA scan tool
+					-------------------------------------------------
+FRONT-END
+---------
+
+
+			------------------------------------------------------------------------------------------------
+			Metric Name                    Metric Description                                   Metric Value
+			------------------------------------------------------------------------------------------------
+			stall_inst_fetch               Issue Stall Reasons (Instructions Fetch)             0.72%
+			stall_exec_dependency          Issue Stall Reasons (Execution Dependency)           3.385%
+			stall_sync                     Issue Stall Reasons (Synchronization)                0%
+			stall_other                    Issue Stall Reasons (Other)                          1.37%
+			stall_not_selected             Issue Stall Reasons (Not Selected)                   0.28%
+			------------------------------------------------------------------------------------------------
+
+FRONT-END.BANDWITH
+------------------
+
+
+			------------------------------------------------------------------------------------------------
+			Metric Name                    Metric Description                                   Metric Value
+			------------------------------------------------------------------------------------------------
+			stall_exec_dependency          Issue Stall Reasons (Execution Dependency)           3.385%
+			stall_not_selected             Issue Stall Reasons (Not Selected)                   0.28%
+			------------------------------------------------------------------------------------------------
+
+FRONT-END.DEPENDENCY
+--------------------
+
+
+			-----------------------------------------------------------------------------------------
+			Metric Name               Metric Description                                 Metric Value
+			-----------------------------------------------------------------------------------------
+			stall_inst_fetch          Issue Stall Reasons (Instructions Fetch)           0.72%
+			stall_sync                Issue Stall Reasons (Synchronization)              0%
+			stall_other               Issue Stall Reasons (Other)                        1.37%
+			-----------------------------------------------------------------------------------------
+
+BACK-END
+--------
+
+
+			---------------------------------------------------------------------------------------------------------
+			Metric Name                               Metric Description                                 Metric Value
+			---------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                   Issue Stall Reasons (Data Request)                 93.795%
+			stall_constant_memory_dependency          Issue Stall Reasons (Immediate constant)           0.005%
+			stall_pipe_busy                           Issue Stall Reasons (Pipe Busy)                    0.075%
+			stall_memory_throttle                     Issue Stall Reasons (Memory Throttle)              0.375%
+			---------------------------------------------------------------------------------------------------------
+
+BACK-END.CORE-BOUND
+-------------------
+
+
+			-------------------------------------------------------------------------------
+			Metric Name              Metric Description                        Metric Value
+			-------------------------------------------------------------------------------
+			stall_pipe_busy          Issue Stall Reasons (Pipe Busy)           0.075%
+			-------------------------------------------------------------------------------
+
+BACK-END.MEMORY-BOUND
+---------------------
+
+
+			---------------------------------------------------------------------------------------------------------
+			Metric Name                               Metric Description                                 Metric Value
+			---------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                   Issue Stall Reasons (Data Request)                 93.795%
+			stall_constant_memory_dependency          Issue Stall Reasons (Immediate constant)           0.005%
+			stall_memory_throttle                     Issue Stall Reasons (Memory Throttle)              0.375%
+			---------------------------------------------------------------------------------------------------------
+
+BACK-END.MEMORY-BOUND.CONSTANT-MEMORY-BOUND
+-------------------------------------------
+
+
+			---------------------------------------------------------------------------------------------------------
+			Metric Name                               Metric Description                                 Metric Value
+			---------------------------------------------------------------------------------------------------------
+			stall_constant_memory_dependency          Issue Stall Reasons (Immediate constant)           0.005%
+			---------------------------------------------------------------------------------------------------------
+
+DIVERGENCE
+----------
+
+
+			-----------------------------------------------------------------------------------
+			Metric Name                        Metric Description                  Metric Value
+			-----------------------------------------------------------------------------------
+			branch_efficiency                  Branch Efficiency                   100%
+			warp_execution_efficiency          Warp Execution Efficiency           100%
+			issued_ipc                         Issued IPC                          0.448
+			-----------------------------------------------------------------------------------
+
+
+			----------------------------------------------------------------
+			Event Name                Event Description          Event Value
+			----------------------------------------------------------------
+			branch                    -                          28125012
+			divergent_branch          -                          0
+			----------------------------------------------------------------
+
+RETIRE
+------
+
+
+			-------------------------------------------------------------
+			Metric Name          Metric Description          Metric Value
+			-------------------------------------------------------------
+			ipc                  Executed IPC                0.446
+			-------------------------------------------------------------
+
+EXTRA-MEASURE
+-------------
+
+
+			-----------------------------------------------------------------
+			Event Name                 Event Description          Event Value
+			-----------------------------------------------------------------
+			active_cycles              -                          721344832
+			elapsed_cycles_sm          -                          720419772
+			-----------------------------------------------------------------
+
+
+Analysis performed correctly!
+					TopDown Metholodgy over NVIDIA's GPUs
+					-------------------------------------
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔═══════════════════════════════════════════════════════════════════╗
+║ EXECUTION FEATURES                                                ║
+║ ------------------                                                ║
+║                                                                   ║
+║ - Execution Level:                  3                             ║
+║ - Analyzed program:                 ../../CUDA/bin/add_two_matrix ║
+║ - Output File:                      ../results/file.log           ║
+║ - Verbose:                          True                          ║
+║ - Delete output's file content:     False                         ║
+║ - Show Metrics:                     False                         ║
+║ - Show Events:                      False                         ║
+║ - Show All Measurements:            True                          ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+					TopDown Metholodgy over NVIDIA's GPUs
+					-------------------------------------
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔═══════════════════════════════════════════════════════════════════╗
+║ EXECUTION FEATURES                                                ║
+║ ------------------                                                ║
+║                                                                   ║
+║ - Execution Level:                  3                             ║
+║ - Analyzed program:                 ../../CUDA/bin/add_two_matrix ║
+║ - Output File:                      ../results/file.log           ║
+║ - Verbose:                          True                          ║
+║ - Delete output's file content:     False                         ║
+║ - Show Metrics:                     False                         ║
+║ - Show Events:                      False                         ║
+║ - Show All Measurements:            True                          ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.451 | MAXIMUM POSSIBLE IPC: 6.0 ║
+					╚═════════════════════════════════════════════════╝
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+LEVEL ONE RESULTS
+------------------
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  5.755% ║  ║ STALLS, on the total (%):  94.24%  ║  ║ IPC DEGRADATION (%):  0.0%   ║  ║ PERFORMANCE IPC (%):  7.512% ║  
+║ IPC DEGRADATION      (%):  5.323% ║  ║ IPC DEGRADATION      (%):  87.161% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+LEVEL TWO RESULTS
+-------------------
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔════════════════════════════════════╗
+║ FRONT-END.BANDWITH                 ║  ║ FRONT-END.DEPENDENCY               ║  ║ BACK-END.CORE-BOUND               ║  ║ BACK-END.MEMORY-BOUND              ║
+║ ------------------                 ║  ║ --------------------               ║  ║ -------------------               ║  ║ ---------------------              ║
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ STALLS, on the total (%):  3.67%   ║  ║ STALLS, on the total (%):  2.085%  ║  ║ STALLS, on the total (%):  0.07%  ║  ║ STALLS, on the total (%):  94.17%  ║  
+║ STALLS, on FrontEnd  (%):  63.771% ║  ║ STALLS, on FrontEnd  (%):  36.229% ║  ║ STALLS, on BackEnd   (%):  0.074% ║  ║ STALLS, on BackEnd   (%):  99.926% ║  
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ IPC DEGRADATION      (%):  3.394%  ║  ║ IPC DEGRADATION      (%):  1.928%  ║  ║ IPC DEGRADATION      (%):  0.065% ║  ║ IPC DEGRADATION      (%):  87.096% ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  
+
+LEVEL THREE RESULTS
+---------------------
+
+╔═══════════════════════════════════════════╗
+║ BACK-END.MEMORY-BOUND.CONSTANT-MEMORY-BOUND ║
+║ ------------------------------------------- ║
+║                                           ║
+║ STALLS, on the total            (%): 0.0% ║
+║ STALLS, on BackEnd.MemoryBound  (%): 0.0% ║
+║ STALLS, on MemoryBound          (%): 0.0% ║
+║                                           ║
+║ IPC DEGRADATION                 (%): 0.0% ║
+╚═══════════════════════════════════════════╝
+
+					List of measurements computed by NVIDIA scan tool
+					-------------------------------------------------
+FRONT-END
+---------
+
+
+			------------------------------------------------------------------------------------------------
+			Metric Name                    Metric Description                                   Metric Value
+			------------------------------------------------------------------------------------------------
+			stall_inst_fetch               Issue Stall Reasons (Instructions Fetch)             0.72%
+			stall_exec_dependency          Issue Stall Reasons (Execution Dependency)           3.39%
+			stall_sync                     Issue Stall Reasons (Synchronization)                0%
+			stall_other                    Issue Stall Reasons (Other)                          1.365%
+			stall_not_selected             Issue Stall Reasons (Not Selected)                   0.28%
+			------------------------------------------------------------------------------------------------
+
+FRONT-END.BANDWITH
+------------------
+
+
+			------------------------------------------------------------------------------------------------
+			Metric Name                    Metric Description                                   Metric Value
+			------------------------------------------------------------------------------------------------
+			stall_exec_dependency          Issue Stall Reasons (Execution Dependency)           3.39%
+			stall_not_selected             Issue Stall Reasons (Not Selected)                   0.28%
+			------------------------------------------------------------------------------------------------
+
+FRONT-END.DEPENDENCY
+--------------------
+
+
+			-----------------------------------------------------------------------------------------
+			Metric Name               Metric Description                                 Metric Value
+			-----------------------------------------------------------------------------------------
+			stall_inst_fetch          Issue Stall Reasons (Instructions Fetch)           0.72%
+			stall_sync                Issue Stall Reasons (Synchronization)              0%
+			stall_other               Issue Stall Reasons (Other)                        1.365%
+			-----------------------------------------------------------------------------------------
+
+BACK-END
+--------
+
+
+			---------------------------------------------------------------------------------------------------------
+			Metric Name                               Metric Description                                 Metric Value
+			---------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                   Issue Stall Reasons (Data Request)                 93.8%
+			stall_constant_memory_dependency          Issue Stall Reasons (Immediate constant)           0%
+			stall_pipe_busy                           Issue Stall Reasons (Pipe Busy)                    0.07%
+			stall_memory_throttle                     Issue Stall Reasons (Memory Throttle)              0.37%
+			---------------------------------------------------------------------------------------------------------
+
+BACK-END.CORE-BOUND
+-------------------
+
+
+			-------------------------------------------------------------------------------
+			Metric Name              Metric Description                        Metric Value
+			-------------------------------------------------------------------------------
+			stall_pipe_busy          Issue Stall Reasons (Pipe Busy)           0.07%
+			-------------------------------------------------------------------------------
+
+BACK-END.MEMORY-BOUND
+---------------------
+
+
+			---------------------------------------------------------------------------------------------------------
+			Metric Name                               Metric Description                                 Metric Value
+			---------------------------------------------------------------------------------------------------------
+			stall_memory_dependency                   Issue Stall Reasons (Data Request)                 93.8%
+			stall_constant_memory_dependency          Issue Stall Reasons (Immediate constant)           0%
+			stall_memory_throttle                     Issue Stall Reasons (Memory Throttle)              0.37%
+			---------------------------------------------------------------------------------------------------------
+
+BACK-END.MEMORY-BOUND.CONSTANT-MEMORY-BOUND
+-------------------------------------------
+
+
+			---------------------------------------------------------------------------------------------------------
+			Metric Name                               Metric Description                                 Metric Value
+			---------------------------------------------------------------------------------------------------------
+			stall_constant_memory_dependency          Issue Stall Reasons (Immediate constant)           0%
+			---------------------------------------------------------------------------------------------------------
+
+DIVERGENCE
+----------
+
+
+			-----------------------------------------------------------------------------------
+			Metric Name                        Metric Description                  Metric Value
+			-----------------------------------------------------------------------------------
+			branch_efficiency                  Branch Efficiency                   100%
+			warp_execution_efficiency          Warp Execution Efficiency           100%
+			issued_ipc                         Issued IPC                          0.449
+			-----------------------------------------------------------------------------------
+
+
+			----------------------------------------------------------------
+			Event Name                Event Description          Event Value
+			----------------------------------------------------------------
+			branch                    -                          28125012
+			divergent_branch          -                          0
+			----------------------------------------------------------------
+
+RETIRE
+------
+
+
+			-------------------------------------------------------------
+			Metric Name          Metric Description          Metric Value
+			-------------------------------------------------------------
+			ipc                  Executed IPC                0.451
+			-------------------------------------------------------------
+
+EXTRA-MEASURE
+-------------
+
+
+			-----------------------------------------------------------------
+			Event Name                 Event Description          Event Value
+			-----------------------------------------------------------------
+			active_cycles              -                          717715044
+			elapsed_cycles_sm          -                          719740740
+			-----------------------------------------------------------------
+
+
+					TopDown Metholodgy over NVIDIA's GPUs
+					-------------------------------------
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔═══════════════════════════════════════════════════════════════════╗
+║ EXECUTION FEATURES                                                ║
+║ ------------------                                                ║
+║                                                                   ║
+║ - Execution Level:                  1                             ║
+║ - Analyzed program:                 ../../CUDA/bin/add_two_matrix ║
+║ - Output File:                      ../results/file.log           ║
+║ - Verbose:                          True                          ║
+║ - Delete output's file content:     False                         ║
+║ - Show Metrics:                     False                         ║
+║ - Show Events:                      False                         ║
+║ - Show All Measurements:            True                          ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.

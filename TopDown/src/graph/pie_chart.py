@@ -55,12 +55,29 @@ class PieChart:
         self.__fig.update_yaxes(title_text = name, row = self.__num_rows, col = self.__num_rows)
         return True
         pass
-    
-    def print(self):
+    def __set_features():
+        """ Set some features."""
+        
         plt.tight_layout()
         self.__fig.update_layout(title = {'text' : self.__title, 'x' : 0.5, 'xanchor': 'center'}, #legend = dict(yanchor = "top", 
             #y = 0.9, xanchor = "right", x = 0.01), 
             legend_title = "Legend", font = dict(size = 12, color = "Black"), legend_traceorder="grouped")
-        self.__fig.show()
         pass
         
+    def show(self):
+        """ Show Graph."""
+
+        self.__set_features()
+        self.__fig.show()
+        pass
+
+    def save(file : str):
+        """ Save figure in file indicated as argument.
+
+        Params:
+            file    : str   ; path to file where save figure
+        """
+        
+        self.__set_features()
+        self.__fig.write_html(file)
+        pass

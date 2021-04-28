@@ -29,6 +29,12 @@ class TopDownParameters:
     C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION                     : str       = "-o"
     C_OUTPUT_FILE_ARGUMENT_LONG_OPTION                      : str       = "--output"
     C_OUTPUT_FILE_ARGUMENT_DESCRIPTION                      : str       = "output file. Path to file."
+    
+    # Output file
+    C_OUTPUT_GRAPH_FILE_ARGUMENT_SHORT_OPTION               : str       = "-og"
+    C_OUTPUT_GRAPH_FILE_ARGUMENT_LONG_OPTION                : str       = "--output-graph"
+    C_OUTPUT_GRAPH_FILE_ARGUMENT_DESCRIPTION                : str       = "output graph file. Path to file."
+
 
     # Program file
     C_FILE_ARGUMENT_SHORT_OPTION                            : str       = "-f"

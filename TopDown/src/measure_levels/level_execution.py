@@ -17,6 +17,7 @@ from shell.shell import Shell # launch shell arguments
 from parameters.level_execution_params import LevelExecutionParameters # parameters of program
 from errors.level_execution_errors import *
 from parameters.topdown_params import TopDownParameters 
+from graph.pie_chart import PieChart
 
 class LevelExecution(ABC):
     """ 
@@ -205,9 +206,41 @@ class LevelExecution(ABC):
         pass
    
     @abstractmethod
-    def printGraph(self):
+    def __create_graph() -> PieChart:
+        """ 
+        Create a graph where figures are going to be saved.
+
+        Returns:
+            Referente to PieChart with graph
         """
-        Print graph to show results."""
+
+        pass
+   
+    @abstractmethod
+    def __add_graph_data(self, graph : PieChart):
+        """ 
+        Add data to graph.
+
+        Params:
+            graph   : PieChart  ; reference to PieChart where save figures        
+        """
         
         pass
-         
+       
+    @abstractmethod    
+    def showGraph(self):
+        """Show graph to see results."""
+        
+        pass
+    
+    @abstractmethod    
+    def saveGraph(self, file : str):
+        """ 
+        Save graph in file indicated as argument.
+        
+        Params:
+            file    : str   ; path to output file where save fig
+        """
+        
+        pass
+
