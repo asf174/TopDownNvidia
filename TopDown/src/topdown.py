@@ -788,7 +788,7 @@ class TopDown:
         if self.show_graph():
             level.showGraph()
         if not self.output_graph_file() is None:
-            level.saveGraph()
+            level.saveGraph(self.output_graph_file())
     pass   
 if __name__ == '__main__':
     td = TopDown()

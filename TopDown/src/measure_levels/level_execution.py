@@ -206,7 +206,7 @@ class LevelExecution(ABC):
         pass
    
     @abstractmethod
-    def __create_graph() -> PieChart:
+    def _create_graph(self) -> PieChart:
         """ 
         Create a graph where figures are going to be saved.
 
@@ -217,7 +217,7 @@ class LevelExecution(ABC):
         pass
    
     @abstractmethod
-    def __add_graph_data(self, graph : PieChart):
+    def _add_graph_data(self, graph : PieChart):
         """ 
         Add data to graph.
 
@@ -226,21 +226,23 @@ class LevelExecution(ABC):
         """
         
         pass
-       
-    @abstractmethod    
+        
     def showGraph(self):
-        """Show graph to see results."""
+        """Show graph to show results."""
         
-        pass
-    
-    @abstractmethod    
-    def saveGraph(self, file : str):
-        """ 
-        Save graph in file indicated as argument.
-        
-        Params:
-            file    : str   ; path to output file where save fig
-        """
-        
+        graph : PieChart = self._create_graph()
+        self._add_graph_data(graph)
+        graph.show()
         pass
 
+    def saveGraph(self, file_str : str):
+        """ 
+        Save graph in file indicated as argument.
+
+        Params:
+            file_str    : str   ; path to output file where save fig
+        """
+        
+        graph : PieChart = self._create_graph()
+        self._add_graph_data(graph)
+        graph.save(file_str)

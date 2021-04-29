@@ -21,7 +21,7 @@ from measure_levels.level_one import LevelOne
 from show_messages.message_format import MessageFormat
 from abc import ABC, abstractmethod # abstract class
 from graph.pie_chart import PieChart 
-
+from parameters.level_execution_params import LevelExecutionParameters
 
 class LevelTwo(LevelOne, ABC):
     """
@@ -273,20 +273,21 @@ class LevelTwo(LevelOne, ABC):
         return (self.front_dependency_stall()/super().front_end_stall())*100.0 
         pass
 
-    def __create_graph() -> PieChart:
+    def _create_graph(self) -> PieChart:
         """ 
         Create a graph where figures are going to be saved.
 
         Returns:
             Referente to PieChart with graph
         """
-
-        titles_graphs : list = (["IPC Degradation LEVEL ONE", "STALLS on TOTAL (LEVEL ONE)", "IPC Degradation on TOTAL (LEVEL TWO)", "STALLS on TOTAL (LEVEL TWO)", 
-            "STALLS on " + self._front_end.name() + " (LEVEL TWO)", "STALLS on " + self._back_end.name() + " (LEVEL TWO)"])
+        
+        titles_graphs : list = LevelExecutionParameters.level_two_graphs_titles(self._front_end.name(), self._back_end.name())
+        if len(titles_graphs) < 6:
+            raise TitleSizeError
         return PieChart(3, 2, "Description of Results", titles_graphs) # pie chart graph
         pass
-   
-    def __add_graph_data(self, graph : PieChart):
+
+    def _add_graph_data(self, graph : PieChart):
         """ 
         Add data to graph.
 
@@ -294,50 +295,28 @@ class LevelTwo(LevelOne, ABC):
             graph   : PieChart  ; reference to PieChart where save figures        
         """
         
-  	    labels : list = [self._front_end.name(), self._front_band_width.name(), self._front_dependency.name(), self._back_end.name(), 
-        self._back_core_bound.name(), self._back_memory_bound.name(), self._divergence.name(), self._retire.name()]
+        labels : list = [self._front_end.name(), self._front_band_width.name(), self._front_dependency.name(), self._back_end.name(), self._back_core_bound.name(), 
+            self._back_memory_bound.name(), self._divergence.name(), self._retire.name()]
         
         # Level One
         values : list = [super().front_end_percentage_ipc_degradation(), None, None, super().back_end_percentage_ipc_degradation(), None, 
             super().divergence_percentage_ipc_degradation(), super().retire_ipc()]
         
-        graph.add_graph(labels, values, titles_graphs[0], "1")
+        graph.add_graph(labels, values, "1")
         values = [self.front_end_stall(), None, None, self.back_end_stall(), None, None, None, None]
-        graph.add_graph(labels, values, titles_graphs[1], "1")
+        graph.add_graph(labels, values, "1")
         
         # Level TWO
         values = [None, self.front_dependency_percentage_ipc_degradation(), self.front_band_width_percentage_ipc_degradation(), None, self.back_core_bound_percentage_ipc_degradation(), 
             self.back_memory_bound_percentage_ipc_degradation(), super().divergence_percentage_ipc_degradation(), super().retire_ipc()] # IPC Degradation
-        graph.add_graph(labels, values, titles_graphs[2], "1")
+        graph.add_graph(labels, values, "1")
         
         values = [None, self.front_band_width_stall(), self.front_dependency_stall(), None, self.back_core_bound_stall(), self.back_memory_bound_stall(), None, None] # Stalls total
-        graph.add_graph(labels, values, titles_graphs[3], "1")
+        graph.add_graph(labels, values, "1")
         
         values = [None, self.front_band_width_stall_on_front(), self.front_dependency_stall_on_front(), None, None, None, None, None] # Stalls on FrontEnd
-        graph.add_graph(labels, values, titles_graphs[4], "1")
+        graph.add_graph(labels, values, "1")
         
         values = [None, None, None, None, self.back_core_bound_stall_on_back(), self.back_memory_bound_stall_on_back(), None, None] # Stalls on BackEnd
-        graph.add_graph(labels, values, titles_graphs[5], "1")
-        
-        pass
-       
-    def showGraph(self):
-        """Show graph to show results."""
-        
-        graph : PieChart = self.__create_graph()
-        self.__add_graph_data(graph)
-        graph.show()
-        pass
-
-    def saveGraph(self, file : str):
-        """ 
-        Save graph in file indicated as argument.
-
-        Params:
-            file    : str   ; path to output file where save fig
-        """
-        
-        graph : PieChart = self.__create_graph()
-        self.__add_graph_data(graph)
-        graph.save(file)
+        graph.add_graph(labels, values, "1")
         pass

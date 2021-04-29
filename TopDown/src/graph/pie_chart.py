@@ -7,12 +7,14 @@ class PieChart:
     Class which defines a PieChart graph.
 
     Attributes:
-        __fig       : fig   ; reference to diagram (which contains all graphs)
-        __max_rows  : int   ; max number of rows
-        __max_cols  : int   ; max number of cols
-        __numCols   : int   ; current number of cols added to diagram
-        __numRows   : int   ; current numer of rows added to diagram
-        __title     : str   ; title name of diagram
+        __fig                   : fig   ; reference to diagram (which contains all graphs)
+        __max_rows              : int   ; max number of rows
+        __max_cols              : int   ; max number of cols
+        __numCols               : int   ; current number of cols added to diagram
+        __numRows               : int   ; current numer of rows added to diagram
+        __title                 : str   ; title name of diagram
+        __current_title_index   : str   ; current value of index of title's list
+        __titles                : list  ; list of titles of each graph
     """
 
     def __init__(self, rows : int, cols : int, title : str, titles_sub_graphs : list):
@@ -30,6 +32,8 @@ class PieChart:
         self.__num_cols : int = 0
         self.__num_rows : int = 1
         self.__title : str = title
+        self.__titles : list = titles_sub_graphs
+        self.__current_title_index : int = 0
         pass
 
 
@@ -42,8 +46,8 @@ class PieChart:
         plt.savefig('books_read.png')
         pass
 
-    def add_graph(self, labels : list, values : list, name : str, legend_group : str) -> bool:
-        if self.__num_cols > self.__max_cols or self.__num_rows > self.__max_rows:
+    def add_graph(self, labels : list, values : list, legend_group : str) -> bool:
+        if self.__num_cols > self.__max_cols or self.__num_rows > self.__max_rows or self.__current_title_index >= len(self.__titles) :
             return False
         self.__num_cols += 1
         if self.__num_cols > self.__max_cols:
@@ -51,11 +55,12 @@ class PieChart:
             self.__num_rows += 1
             if self.__num_rows > self.__max_rows:
                 return False
-        self.__fig.add_trace(go.Pie(labels = labels, values = values, name = name, showlegend = True, legendgroup = legend_group), row = self.__num_rows, col = self.__num_cols)
-        self.__fig.update_yaxes(title_text = name, row = self.__num_rows, col = self.__num_rows)
+        self.__fig.add_trace(go.Pie(labels = labels, values = values, showlegend = True, legendgroup = legend_group), row = self.__num_rows, col = self.__num_cols)
+        self.__fig.update_yaxes(title_text = self.__titles[self.__current_title_index], row = self.__num_rows, col = self.__num_rows)
+        self.__current_title_index += 1
         return True
         pass
-    def __set_features():
+    def __set_features(self):
         """ Set some features."""
         
         plt.tight_layout()
@@ -71,13 +76,13 @@ class PieChart:
         self.__fig.show()
         pass
 
-    def save(file : str):
+    def save(self, file_str : str):
         """ Save figure in file indicated as argument.
 
         Params:
-            file    : str   ; path to file where save figure
+            file_str    : str   ; path to file where save figure
         """
         
         self.__set_features()
-        self.__fig.write_html(file)
+        self.__fig.write_html(file_str)
         pass

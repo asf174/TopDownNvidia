@@ -291,7 +291,7 @@ class LevelOne(LevelExecution, ABC):
         
         pass
 
-    def __create_graph() -> PieChart:
+    def _create_graph(self) -> PieChart:
         """ 
         Create a graph where figures are going to be saved.
 
@@ -299,44 +299,25 @@ class LevelOne(LevelExecution, ABC):
             Referente to PieChart with graph
         """
 
-        titles_graphs : list = ["IPC Degradation", "STALLS on TOTAL"]
+        titles_graphs : list = LevelExecutionParameters.C_LEVEL_ONE_GRAPHS_TITLES
+        if len(titles_graphs) < 2:
+            raise GraphsTitleSizeError
         return PieChart(1,2, "Description of Results", titles_graphs) # pie chart graph
         pass
    
-    def __add_graph_data(self, graph : PieChart):
+    def _add_graph_data(self, graph : PieChart):
         """ 
         Add data to graph.
 
         Params:
-            graph   : PieChart  ; reference to PieChart where save figures        
+            graph   : PieChart  ; reference to PieChart where save figures
+            title   : str       ; title of graph to be added        
         """
 
         labels : list = [self._front_end.name(), self._back_end.name(), self._divergence.name(), self._retire.name()]
         values : list = [self.front_end_percentage_ipc_degradation(), self.back_end_percentage_ipc_degradation(), self.divergence_percentage_ipc_degradation(), self.retire_ipc()]
-        graph.add_graph(labels, values, titles_graphs[0], "1")
+        graph.add_graph(labels, values, "1")
         values = [self.front_end_stall(), self.back_end_stall()]
-        graph.add_graph(labels, values, titles_graphs[1], "1")
+        graph.add_graph(labels, values, "1")
         
         pass
-       
-    def showGraph(self):
-        """Show graph to show results."""
-        
-        graph : PieChart = self.__create_graph()
-        self.__add_graph_data(graph)
-        graph.show()
-        pass
-
-    def saveGraph(self, file : str):
-        """ 
-        Save graph in file indicated as argument.
-
-        Params:
-            file    : str   ; path to output file where save fig
-        """
-        
-        graph : PieChart = self.__create_graph()
-        self.__add_graph_data(graph)
-        graph.save(file)
-        pass
-

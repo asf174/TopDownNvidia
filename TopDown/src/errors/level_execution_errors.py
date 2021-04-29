@@ -143,3 +143,20 @@ class ComputedAsAverageError(Exception):
         
         super().__init__(self.C_ERROR_MESSAGE)
         pass
+
+class TitleSizeError(Exception):
+    """Exception raised if size of graph's title list is less than minimum"""
+
+    C_ERROR_MESSAGE     : str = "Size of graph's title list is too low. Minimum Number: "
+
+    def __init__(self, minimum_graph_num : int):
+        """
+        Show error message.
+        
+        Params:
+            minimum_graph_num : int ; minimum number of graphs
+        """
+
+        super().__init__(self.C_ERROR_MESSAGE + str(minimum_graph_num))
+        pass
+
