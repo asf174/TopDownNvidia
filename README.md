@@ -197,10 +197,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 If you find a bug or something you would like to comment on, do not hesitate to contact the person in charge of the project. You can find us at the following addresses:
 
-* **Álvaro Saiz**         - [E-Mail](mailto:asf174@alumnos.unican.es)
-* **Pablo Abad**          - [E-Mail](mailto:pablo.abad@unican.es)
-* **Pablo Prieto**        - [E-Mail](mailto:pablo.prieto@unican.es)
-* **José Ángel Herrero**  - [E-Mail](mailto:joseangel.herrero@unican.es)
+* **Álvaro Saiz**         - [e-mail](mailto:asf174@alumnos.unican.es)
+* **Pablo Abad**          - [e-mail](mailto:pablo.abad@unican.es)
+* **Pablo Prieto**        - [e-mail](mailto:pablo.prieto@unican.es)
+* **José Ángel Herrero**  - [e-mail](mailto:joseangel.herrero@unican.es)
 
 
 
