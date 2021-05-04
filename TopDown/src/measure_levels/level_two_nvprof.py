@@ -30,7 +30,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
 
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
         front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
-        extra_measure : ExtraMeasureNvprof,front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
         back_core_bound : BackCoreBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):
         
         self._back_core_bound : BackCoreBoundNvprof = back_core_bound
@@ -94,10 +94,12 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
 
         command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
-            + "," + self._retire.metrics_str() + "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() + 
-            "  --events " + self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  
-            "," + self._extra_measure.events_str() + "," + self._retire.events_str() + "," + self._back_core_bound.events_str() + 
-            "," + self._back_memory_bound.events_str() +" --unified-memory-profiling off --profile-from-start off " + self._program)
+            + "," + self._retire.metrics_str() + "," + self._frond_band_width.metrics_str() + "," + self._front_dependency.metrics_str() + 
+            "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() + "  --events " + 
+            self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + 
+            self._extra_measure.events_str() + "," + self._retire.events_str() + "," +  self._front_band_width.events_str() + 
+            "," + self._front_dependency.events_str() + self._back_core_bound.events_str() + "," + self._back_memory_bound.events_str() + 
+            " --unified-memory-profiling off " + self._program)
         return command
         pass
 

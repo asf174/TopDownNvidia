@@ -25,16 +25,15 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         _front_dependency       : FrontDependencyNsight     ; front's dependency part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
-        front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, extra_measure : ExtraMeasureNsight,
-        front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight, back_core_bound : BackCoreBoundNsight,
-        back_memory_bound : BackMemoryBoundNsight):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, front_end : FrontEndNsight, back_end : BackEndNsight, 
+        divergence : DivergenceNsight, retire : RetireNsight, extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, 
+        front_dependency : FrontDependencyNsight, back_core_bound : BackCoreBoundNsight, back_memory_bound : BackMemoryBoundNsight):
     
         self._back_core_bound : BackCoreBoundNsight = back_core_bound
         self._back_memory_bound : BackMemoryBoundNsight = back_memory_bound
         self._front_band_width : FrontBandWidthNsight = front_band_width
         self._front_dependency : FrontDependencyNsight = front_dependency
-        super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire, extra_measure)
+        super().__init__(program, output_file, recoltect_metrics, front_end, back_end, divergence, retire, extra_measure)
         pass
 
     def back_core_bound(self) -> BackCoreBoundNsight:
@@ -90,9 +89,9 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         """
         
         command : str = ("sudo $(which ncu) --metrics " + self._front_end.metrics_str() +
-            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
-            + "," + self._retire.metrics_str() + "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
-            " " + self._program)
+            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str() +
+            "," + self._retire.metrics_str() + "," + self._front_band_width.metrics_str() + "," + self._front_dependency.metrics_str() + 
+            "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() + " " + self._program)
 
         return command
         pass

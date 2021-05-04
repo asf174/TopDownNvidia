@@ -38,7 +38,7 @@ class FrontDependencyNsight(MetricMeasureNsight, FrontDependency):
          
         """
 
-        super().__init__(name, description, metrics)    
+        super(FrontDependency, self).__init__(name, description, metrics)    
         pass
                 
 class FrontDependencyNvprof(MetricMeasureNvprof, FrontDependency):

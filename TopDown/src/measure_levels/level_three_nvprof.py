@@ -14,6 +14,15 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(1, parentdir) 
 from measure_levels.level_two_nvprof import LevelTwoNvprof
 from measure_parts.memory_constant_memory_bound import MemoryConstantMemoryBoundNvprof
+from measure_parts.back_core_bound import BackCoreBoundNvprof
+from measure_parts.back_memory_bound import BackMemoryBoundNvprof
+from measure_parts.front_band_width import FrontBandWidthNvprof
+from measure_parts.front_dependency import FrontDependencyNvprof
+from measure_parts.front_end import FrontEndNvprof
+from measure_parts.back_end import BackEndNvprof
+from measure_parts.divergence import DivergenceNvprof
+from measure_parts.retire import RetireNvprof
+from measure_parts.extra_measure import ExtraMeasureNvprof
 from measure_levels.level_three import LevelThree
 from show_messages.message_format import MessageFormat
 
@@ -25,10 +34,17 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         __memory_constant_memory_bound     : MemoryConstantMemoryBoundNvprof   ; constant cache part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
+        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+        back_core_bound : MemoryConstantMemoryBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
         
-        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof = MemoryConstantMemoryBoundNvprof()
-        super().__init__(program, output_file, recoltect_metrics, recolect_events)
+        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof = MemoryConstantMemoryBoundNvprof(
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_L3_METRICS,
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_L3_EVENTS)
+        super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire,
+            extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
         pass
 
     def memory_constant_memory_bound(self) -> MemoryConstantMemoryBoundNvprof:
@@ -50,14 +66,15 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         """
         
         command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
-            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," +
-            self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," +
-            self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
-            "," + self.__memory_constant_memory_bound.metrics_str() + "  --events " + self._front_end.events_str() +
-            "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + self._extra_measure.events_str() +
-            "," + self._retire.events_str() + "," + self._back_core_bound.events_str() + "," + 
+            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
+            + "," + self._retire.metrics_str() + "," + self._frond_band_width.metrics_str() + "," + 
+            self._front_dependency.metrics_str() + "," + self._back_core_bound.metrics_str() + "," + 
+            self._back_memory_bound.metrics_str() + "," + self.__memory_constant_memory_bound.metrics_str() + "  --events " + 
+            self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + 
+            self._extra_measure.events_str() + "," + self._retire.events_str() + "," +  self._front_band_width.events_str() + 
+            "," + self._front_dependency.events_str() + self._back_core_bound.events_str() + "," + 
             self._back_memory_bound.events_str() +  "," + self.__memory_constant_memory_bound.events_str() + 
-            " --unified-memory-profiling off --profile-from-start off " + self._program)
+            " --unified-memory-profiling off " + self._program)
         return command
         pass
 

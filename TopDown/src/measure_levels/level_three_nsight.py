@@ -15,7 +15,17 @@ sys.path.insert(1, parentdir)
 from measure_levels.level_two_nsight import LevelTwoNsight
 from measure_parts.memory_constant_memory_bound import MemoryConstantMemoryBoundNsight
 from measure_levels.level_three import LevelThree
+from measure_parts.back_core_bound import BackCoreBoundNsight
+from measure_parts.back_memory_bound import BackMemoryBoundNsight
+from measure_parts.front_band_width import FrontBandWidthNsight
+from measure_parts.front_dependency import FrontDependencyNsight
+from measure_parts.front_end import FrontEndNsight
+from measure_parts.back_end import BackEndNsight
+from measure_parts.divergence import DivergenceNsight
+from measure_parts.retire import RetireNsight
+from measure_parts.extra_measure import ExtraMeasureNsight
 from show_messages.message_format import MessageFormat
+from parameters.memory_constant_memory_bound_params import MemoryConstantMemoryBoundParameters
 
 class LevelThreeNsight(LevelThree, LevelTwoNsight):
     """
@@ -25,10 +35,16 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
         __memory_constant_memory_bound     : ConstantMemoryBoundNsight   ; constant cache part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
-        
-        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNsight = MemoryConstantMemoryBoundNsight()
-        super().__init__(program, output_file, recoltect_metrics)
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, front_end : FrontEndNsight, 
+        back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, extra_measure : ExtraMeasureNsight, 
+        front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight, 
+        back_core_bound : MemoryConstantMemoryBoundNsight, back_memory_bound : BackMemoryBoundNsight):  
+    
+        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNsight = MemoryConstantMemoryBoundNsight(
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_METRICS)
+        super().__init__(program, output_file, recoltect_metrics, front_end, back_end, divergence, retire,
+            extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
         pass
 
     def memory_constant_memory_bound(self) -> MemoryConstantMemoryBoundNsight:
@@ -49,11 +65,13 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
             String with command to be executed
         """
 
+        print(type(self._front_band))
         command : str = ("sudo $(which ncu) --metrics " + self._front_end.metrics_str() +
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," +
-            self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," +
-            self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
-            " " + self._program)
+            self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," + 
+            self._front_band_width.metrics_str() + "," + self._front_dependency.metrics_str() + 
+            "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
+            self.__memory_constant_memory_bound.metrics_str() + " " + self._program)
         return command
         pass
 
