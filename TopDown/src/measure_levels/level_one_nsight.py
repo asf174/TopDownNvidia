@@ -10,6 +10,7 @@ from measure_parts.front_end import FrontEndNsight
 from measure_parts.back_end import BackEndNsight
 from measure_parts.divergence import DivergenceNsight
 from measure_parts.retire import RetireNsight
+from measure_parts.extra_measure import ExtraMeasureNsight
 from show_messages.message_format import MessageFormat
 from errors.level_execution_errors import *
 from parameters.level_execution_params import LevelExecutionParameters
@@ -27,12 +28,15 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         _retire         : Retire        ; Retire part of the execution
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
-        self._front_end : FrontEndNsight = FrontEndNsight()
-        self._back_end  : BackEndNsight = BackEndNsight()
-        self._divergence : DivergenceNsight = DivergenceNsight()
-        self._retire : RetireNsight = RetireNsight()
-        super().__init__(program, output_file, recoltect_metrics)
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, front_end : FrontEndNsight, 
+        back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, 
+        extra_measure : ExtraMeasureNsight):
+
+        self._front_end : FrontEndNsight = front_end
+        self._back_end  : BackEndNsight = back_end
+        self._divergence : DivergenceNsight = divergence
+        self._retire : RetireNsight = retire
+        super().__init__(program, output_file, recoltect_metrics, extra_measure)
         pass
 
     def _generate_command(self) -> str:
@@ -45,7 +49,7 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         
         command : str = ("ncu --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str() +
-            "," + self._retire.metrics_str() + " python3 " +  self._program)
+            "," + self._retire.metrics_str() + " "+  self._program)
         return command
         pass
 

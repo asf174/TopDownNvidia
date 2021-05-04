@@ -21,9 +21,9 @@ class LevelExecutionNsight(LevelExecution, ABC):
                                               or False in other case
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, extra_measure : ExtraMeasureNsight):
         locale.setlocale(locale.LC_ALL, 'es_ES.utf8') # locale -a to check
-        self._extra_measure : ExtraMeasureNsight = ExtraMeasureNsight()
+        self._extra_measure : ExtraMeasureNsight = extra_measure
         super().__init__(program, output_file, recoltect_metrics)
         pass
 

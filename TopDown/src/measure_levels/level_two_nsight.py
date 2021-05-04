@@ -5,6 +5,11 @@ from measure_parts.back_core_bound import BackCoreBoundNsight
 from measure_parts.back_memory_bound import BackMemoryBoundNsight
 from measure_parts.front_band_width import FrontBandWidthNsight
 from measure_parts.front_dependency import FrontDependencyNsight
+from measure_parts.front_end import FrontEndNsight
+from measure_parts.back_end import BackEndNsight
+from measure_parts.divergence import DivergenceNsight
+from measure_parts.retire import RetireNsight
+from measure_parts.extra_measure import ExtraMeasureNsight
 from show_messages.message_format import MessageFormat
 from errors.level_execution_errors import *
 
@@ -20,13 +25,16 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         _front_dependency       : FrontDependencyNsight     ; front's dependency part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
-        
-        self._back_core_bound : BackCoreBoundNsight = BackCoreBoundNsight()
-        self._back_memory_bound : BackMemoryBoundNsight = BackMemoryBoundNsight()
-        self._front_band_width : FrontBandWidthNsight = FrontBandWidthNsight()
-        self._front_dependency : FrontDependencyNsight = FrontDependencyNsight()
-        super().__init__(program, output_file, recoltect_metrics)
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, extra_measure : ExtraMeasureNsight,
+        front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight, back_core_bound : BackCoreBoundNsight,
+        back_memory_bound : BackMemoryBoundNsight):
+    
+        self._back_core_bound : BackCoreBoundNsight = back_core_bound
+        self._back_memory_bound : BackMemoryBoundNsight = back_memory_bound
+        self._front_band_width : FrontBandWidthNsight = front_band_width
+        self._front_dependency : FrontDependencyNsight = front_dependency
+        super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire, extra_measure)
         pass
 
     def back_core_bound(self) -> BackCoreBoundNsight:

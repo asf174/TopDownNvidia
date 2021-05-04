@@ -22,23 +22,41 @@ class ExtraMeasure(MetricMeasure, ABC):
 class ExtraMeasureNsight(MetricMeasureNsight, ExtraMeasure):
     """Class that defines the ExtraMeasure part with nsight scan tool."""
 
-    pass
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str):
+        """
+        Set attributtes with argument values.
         
-        super().__init__(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
-        ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_METRICS)
-        pass
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+         
+        """
 
+        super().__init__(name, description, metrics)    
+        pass
+                
 class ExtraMeasureNvprof(MetricMeasureNvprof, ExtraMeasure):
     """Class that defines the ExtraMeasure part with nvprof scan tool."""
 
-    pass
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str, events : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
-        ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_EVENTS, 
-        ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_EVENTS)
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+        
+            events              : str   ;   string with events
+        """
+
+        super().__init__(name, description, metrics, events)
         pass
-   
+

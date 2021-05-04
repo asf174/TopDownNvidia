@@ -1,5 +1,5 @@
 """
-Measurements made by the TopDown methodology in FrontEnd's dependency limit part.
+Measurements made by the TopDown methodology in FrontDependency's dependency limit part.
 
 @author:    Alvaro Saiz (UC)
 @date:      Jan-2021
@@ -20,23 +20,45 @@ class FrontDependency(FrontEnd, ABC):
     
     pass
 
+
 class FrontDependencyNsight(MetricMeasureNsight, FrontDependency):
     """Class that defines the Front-End.Dependency part with nsight scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str):
+        """
+        Set attributtes with argument values.
         
-        super().__init__(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
-            FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_METRICS)
-        pass
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+         
+        """
 
+        super().__init__(name, description, metrics)    
+        pass
+                
 class FrontDependencyNvprof(MetricMeasureNvprof, FrontDependency):
     """Class that defines the Front-End.Dependency part with nvprof scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str, events : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
-            FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_EVENTS, 
-            FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_EVENTS)
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+        
+            events              : str   ;   string with events
+        """
+
+        super().__init__(name, description, metrics, events)
         pass
+

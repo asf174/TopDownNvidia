@@ -24,20 +24,42 @@ class FrontBandWidth(FrontEnd, ABC):
 class FrontBandWidthNsight(MetricMeasureNsight, FrontBandWidth):
     """Class that defines the Front-End.BandWidth part with nsight scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str):
+        """
+        Set attributtes with argument values.
         
-        super().__init__(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
-            FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_METRICS)
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+         
+        """
+
+        super().__init__(name, description, metrics)
         pass
 
 class FrontBandWidthNvprof(MetricMeasureNvprof, FrontBandWidth):
     """Class that defines the Front-End.BandWidth part with nvprof scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str, events : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
-            FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_EVENTS, 
-            FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_EVENTS)
-        pass  
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+        
+            events              : str   ;   string with events
+        """
+
+        super().__init__(name, description, metrics, events)
+        pass
+
+

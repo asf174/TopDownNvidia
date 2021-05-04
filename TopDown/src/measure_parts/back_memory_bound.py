@@ -24,21 +24,42 @@ class BackMemoryBound(BackEnd, ABC):
 class BackMemoryBoundNsight(MetricMeasureNsight, BackMemoryBound):
     """Class that defines the Back-End.MemoryBound part with nsight scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
-            BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_METRICS, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_METRICS) 
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+         
+        """
+
+        super().__init__(name, description, metrics)
         pass
 
 class BackMemoryBoundNvprof(MetricMeasureNvprof, BackMemoryBound):
     """Class that defines the Back-End.MemoryBound part with nvprof scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str, events : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
-            BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_METRICS, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_EVENTS, 
-            BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_METRICS, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_EVENTS)
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+        
+            events              : str   ;   string with events
+        """
+
+        super().__init__(name, description, metrics, events)
         pass
-   
+
+

@@ -22,22 +22,44 @@ class MemoryConstantMemoryBound(BackMemoryBound):
     pass
  
 class MemoryConstantMemoryBoundNsight(MetricMeasureNsight, MemoryConstantMemoryBound):
-    """Class that defines the Back-End.MemoryCound.Constant-Memory-Bound part with nsight scan tool."""
+    """Class that defines the Core-Bound.ConstantMemoryBound part with nsight scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_METRICS, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_METRICS)
-        pass   
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+         
+        """
+
+        super().__init__(name, description, metrics)
+        pass
 
 class MemoryConstantMemoryBoundNvprof(MetricMeasureNvprof, MemoryConstantMemoryBound):
-    """Class that defines the Back-End.CoreBound part with nvprof scan tool."""
+    """Class that defines the Core-Bound.ConstantMemoryBound part with nvprof scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str, events : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_METRICS, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_EVENTS, 
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_METRICS, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_EVENTS)
-        pass       
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+        
+            events              : str   ;   string with events
+        """
+
+        super().__init__(name, description, metrics, events)
+        pass
+
+  

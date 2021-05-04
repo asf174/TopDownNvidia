@@ -10,6 +10,7 @@ from measure_parts.front_end import FrontEndNvprof
 from measure_parts.back_end import BackEndNvprof
 from measure_parts.divergence import DivergenceNvprof
 from measure_parts.retire import RetireNvprof
+from measure_parts.extra_measure import ExtraMeasureNvprof
 from show_messages.message_format import MessageFormat
 from parameters.level_execution_params import LevelExecutionParameters
 from graph.pie_chart import PieChart
@@ -27,11 +28,14 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         _retire         : Retire        ; Retire part of the execution
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
-        self._front_end : FrontEndNvprof = FrontEndNvprof()
-        self._back_end  : BackEndNvprof = BackEndNvprof()
-        self._divergence : DivergenceNvprof = DivergenceNvprof()
-        self._retire : RetireNvprof = RetireNvprof()
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
+        extra_measure : ExtraMeasureNvprof):
+
+        self._front_end : FrontEndNvprof = front_end
+        self._back_end  : BackEndNvprof = back_end
+        self._divergence : DivergenceNvprof = divergence
+        self._retire : RetireNvprof = retire
         super().__init__(program, output_file, recoltect_metrics, recolect_events)
         pass
 

@@ -20,23 +20,43 @@ class Divergence(MetricMeasure, ABC):
     pass
 
 class DivergenceNsight(MetricMeasureNsight, Divergence):
-    """Class that defines the Divergence part with NSIGHT scan tool."""
+    """Class that defines the Divergence part with nsight scan tool."""
 
-    pass
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str):
+        """
+        Set attributtes with argument values.
+        
+        Params:
             
-        super().__init__(DivergenceParameters.C_DIVERGENCE_NAME, DivergenceParameters.C_DIVERGENCE_DESCRIPTION,
-        DivergenceParameters.C_DIVERGENCE_NSIGHT_METRICS, DivergenceParameters.C_DIVERGENCE_NSIGHT_METRICS)
-        pass
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+         
+        """
 
+        super().__init__(name, description, metrics)    
+        pass
+                
 class DivergenceNvprof(MetricMeasureNvprof, Divergence):
     """Class that defines the Divergence part with nvprof scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str, events : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(DivergenceParameters.C_DIVERGENCE_NAME, DivergenceParameters.C_DIVERGENCE_DESCRIPTION,
-        DivergenceParameters.C_DIVERGENCE_NVPROF_METRICS, DivergenceParameters.C_DIVERGENCE_NVPROF_EVENTS, 
-        DivergenceParameters.C_DIVERGENCE_NVPROF_METRICS, DivergenceParameters.C_DIVERGENCE_NVPROF_EVENTS)
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+        
+            events              : str   ;   string with events
+        """
+
+        super().__init__(name, description, metrics, events)
         pass
+

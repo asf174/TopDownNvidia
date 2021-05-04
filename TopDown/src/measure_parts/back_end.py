@@ -19,23 +19,44 @@ class BackEnd(MetricMeasure, ABC):
 
     pass
 
-class BackEndNvprof(MetricMeasureNvprof, BackEnd):
-    """Class that defines the Back-End part with nvprof scan tool."""
-
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
-        
-        super().__init__(BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION, 
-            BackEndParameters.C_BACK_END_NVPROF_METRICS, BackEndParameters.C_BACK_END_NVPROF_EVENTS, 
-            BackEndParameters.C_BACK_END_NVPROF_METRICS, BackEndParameters.C_BACK_END_NVPROF_EVENTS)
-        pass
-
 class BackEndNsight(MetricMeasureNsight, BackEnd):
-    """Class that defines the BACK-End part with nsight scan tool."""
-	
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    """Class that defines the BackEnd part with nsight scan tool."""
+
+    def __init__(self, name : str, description : str, metrics : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION,
-            BackEndParameters.C_BACK_END_NSIGHT_METRICS, BackEndParameters.C_BACK_END_NSIGHT_METRICS)
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+         
+        """
+
+        super().__init__(name, description, metrics)        
         pass
+                    
+class BackEndNvprof(MetricMeasureNvprof, BackEnd):
+    """Class that defines the BackEnd part with nvprof scan tool."""
+
+    def __init__(self, name : str, description : str, metrics : str, events : str):
+        """ 
+        Set attributtes with argument values.
+        
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+        
+            events              : str   ;   string with events
+        """
+
+        super().__init__(name, description, metrics, events)
+        pass
+

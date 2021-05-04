@@ -17,9 +17,19 @@ class RetireParameters:
 
     C_RETIRE_NAME                    : str       = "RETIRE"
     C_RETIRE_DESCRIPTION             : str       = ("R Description")
-    # frond_end_nvprof.py
-    C_RETIRE_NVPROF_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
-    C_RETIRE_NVPROF_EVENTS           : str       = ("")
+    
+    # NVPROF metrics/arguments
+    C_RETIRE_NVPROF_L1_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
+    C_RETIRE_NVPROF_L1_EVENTS           : str       = ("")
+    
+    C_RETIRE_NVPROF_L2_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
+    C_RETIRE_NVPROF_L2_EVENTS           : str       = ("")
+    
+    C_RETIRE_NVPROF_L3_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
+    C_RETIRE_NVPROF_L3_EVENTS           : str       = ("")
 
-    # frond_end_nsight.py
-    C_RETIRE_NSIGHT_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NSIGHT)
+    # NSIGHT metrics
+    C_RETIRE_NSIGHT_L1_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NSIGHT)
+    C_RETIRE_NSIGHT_L2_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NSIGHT)
+    C_RETIRE_NSIGHT_L3_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NSIGHT)
+

@@ -8,6 +8,11 @@ from measure_parts.back_core_bound import BackCoreBoundNvprof
 from measure_parts.back_memory_bound import BackMemoryBoundNvprof
 from measure_parts.front_band_width import FrontBandWidthNvprof
 from measure_parts.front_dependency import FrontDependencyNvprof
+from measure_parts.front_end import FrontEndNvprof
+from measure_parts.back_end import BackEndNvprof
+from measure_parts.divergence import DivergenceNvprof
+from measure_parts.retire import RetireNvprof
+from measure_parts.extra_measure import ExtraMeasureNvprof
 from measure_levels.level_two import LevelTwo
 from show_messages.message_format import MessageFormat
 from errors.level_execution_errors import *
@@ -23,13 +28,16 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         _front_dependency       : FrontDependencyNvprof     ; front's dependency part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool):
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
+        extra_measure : ExtraMeasureNvprof,front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+        back_core_bound : BackCoreBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):
         
-        self._back_core_bound : BackCoreBoundNvprof = BackCoreBoundNvprof()
-        self._back_memory_bound : BackMemoryBoundNvprof = BackMemoryBoundNvprof()
-        self._front_band_width : FrontBandWidthNvprof = FrontBandWidthNvprof()
-        self._front_dependency : FrontDependencyNvprof = FrontDependencyNvprof()
-        super().__init__(program, output_file, recoltect_metrics, recolect_events)
+        self._back_core_bound : BackCoreBoundNvprof = back_core_bound
+        self._back_memory_bound : BackMemoryBoundNvprof = back_memory_bound
+        self._front_band_width : FrontBandWidthNvprof = front_band_width
+        self._front_dependency : FrontDependencyNvprof = front_dependency
+        super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire, extra_measure)
         pass
 
     def back_core_bound(self) -> BackCoreBoundNvprof:

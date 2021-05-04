@@ -146,7 +146,22 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
    ```bash
    git clone https://github.com/asf174/TopDownNvidia.git
    ```
+2. Check Compute Capability [OPTIONAL]
+    ```bash
+    cd TopDownNvidia
 
+    cd TopDown/src/measure_parts
+
+    # run program. It returns the CC
+    # Otherwise, error. CORRECT ERROR
+    # in order to use the tool
+    nvcc compute_capability.cu --run
+    ```
+3. Add program to PATH
+    ```bash
+    # <PATH_TO_TOPDOWN>: path to TopDownNividia
+    echo "PATH=<PATH_TO_TOPDOWN>/TopDownNvidia/TopDown/src:$PATH" >> $HOME/.bashrc
+    ```
 
 
 <!-- USAGE EXAMPLES -->

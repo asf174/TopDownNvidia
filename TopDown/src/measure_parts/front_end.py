@@ -19,25 +19,45 @@ class FrontEnd(MetricMeasure, ABC):
     """Class that defines the Front-End part."""
     
     pass
- 
+
 class FrontEndNsight(MetricMeasureNsight, FrontEnd):
-    """Class that defines the Front-End part with nsight scan tool."""
+    """Class that defines the FrontEnd part with nsight scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
-            
-        super(MetricMeasureNsight, self).__init__(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
-            FrontEndParameters.C_FRONT_END_NSIGHT_METRICS, FrontEndParameters.C_FRONT_END_NSIGHT_METRICS)
-        pass
-                   
-class FrontEndNvprof(MetricMeasureNvprof, FrontEnd):
-    """Class that defines the Front-End part with nvprof scan tool."""
-
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str):
+        """ 
+        Set attributtes with argument values.
         
-        super(FrontEndNvprof, self).__init__(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
-            FrontEndParameters.C_FRONT_END_NVPROF_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_EVENTS, 
-            FrontEndParameters.C_FRONT_END_NVPROF_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_EVENTS)
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+         
+        """
+
+        super().__init__(name, description, metrics)        
+        pass
+                    
+class FrontEndNvprof(MetricMeasureNvprof, FrontEnd):
+    """Class that defines the FrontEnd part with nvprof scan tool."""
+
+    def __init__(self, name : str, description : str, metrics : str, events : str):
+        """ 
+        Set attributtes with argument values.
+        
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+        
+            events              : str   ;   string with events
+        """
+
+        super().__init__(name, description, metrics, events)
         pass
 

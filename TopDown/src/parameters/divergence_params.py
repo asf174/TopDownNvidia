@@ -22,11 +22,24 @@ class DivergenceParameters:
                                                         "that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and\n" + 
                                                         "others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the\n" +  
                                                         "cores will not be used.") # TODO preguntar separaciones, si anhadir el espacio
-    # divergence_nvprof.py
-    C_DIVERGENCE_NVPROF_METRICS          : str      = ("branch_efficiency," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
-                                                      LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
-    C_DIVERGENCE_NVPROF_EVENTS           : str      = ("branch,divergent_branch")
+    # NVPROF metrics/arguments
+    C_DIVERGENCE_NVPROF_L1_METRICS          : str      = ("branch_efficiency," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
+                                                        LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
+    C_DIVERGENCE_NVPROF_L1_EVENTS           : str      = ("branch,divergent_branch")
+    
+    C_DIVERGENCE_NVPROF_L2_METRICS          : str      = ("branch_efficiency," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
+                                                        LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
+    C_DIVERGENCE_NVPROF_L2_EVENTS           : str      = ("branch,divergent_branch")
 
-    # divergence_nsight.py
-    C_DIVERGENCE_NSIGHT_METRICS          : str      = ("smsp__sass_average_branch_targets_threads_uniform.pct," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
+    C_DIVERGENCE_NVPROF_L3_METRICS          : str      = ("branch_efficiency," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
+                                                        LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
+    C_DIVERGENCE_NVPROF_L3_EVENTS           : str      = ("branch,divergent_branch")
+
+    # NSIGHT metrics
+    C_DIVERGENCE_NSIGHT_L1_METRICS          : str      = ("smsp__sass_average_branch_targets_threads_uniform.pct," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
                                                       "," + LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
+    C_DIVERGENCE_NSIGHT_L2_METRICS          : str      = ("smsp__sass_average_branch_targets_threads_uniform.pct," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
+                                                      "," + LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
+    C_DIVERGENCE_NSIGHT_L3_METRICS          : str      = ("smsp__sass_average_branch_targets_threads_uniform.pct," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
+                                                      "," + LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
+

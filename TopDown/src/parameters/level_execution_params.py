@@ -1,5 +1,5 @@
 """
-Class with all params of LevelExecution file
+Class with parameters used by LevelExecution file
 and their subclasses of the hierachy
 
 @author:    Alvaro Saiz (UC)
@@ -37,7 +37,7 @@ class LevelExecutionParameters:
     
     # level_two.py graph's description
     #C_LEVEL_TWO_GRAPHS_TITLES                           : list
-                                                                 
+    
     @staticmethod
     def level_two_graphs_titles(front_end_name : str, back_end_name : str) -> str:
         """
@@ -49,4 +49,5 @@ class LevelExecutionParameters:
         """
         return (["IPC Degradation (LEVEL ONE)", "STALLS on TOTAL (LEVEL ONE)", "IPC Degradation on TOTAL (LEVEL TWO)", "STALLS on TOTAL (LEVEL TWO)",
                                                                     "STALLS on " + front_end_name + " (LEVEL TWO)", "STALLS on " + back_end_name  + " (LEVEL TWO)"])
+        pass
 

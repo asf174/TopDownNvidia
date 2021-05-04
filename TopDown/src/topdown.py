@@ -17,12 +17,31 @@ from measure_levels.level_two_nvprof import LevelTwoNvprof
 from measure_levels.level_two_nsight import LevelTwoNsight
 from measure_levels.level_three_nsight import LevelThreeNsight
 from measure_levels.level_three_nvprof import LevelThreeNvprof
+from measure_parts.front_end import FrontEndNsight
+from measure_parts.back_end import BackEndNsight
+from measure_parts.divergence import DivergenceNsight
+from measure_parts.retire import RetireNsight
+from measure_parts.extra_measure import ExtraMeasureNsight
+from measure_parts.front_end import FrontEndNvprof
+from measure_parts.back_end import BackEndNvprof
+from measure_parts.divergence import DivergenceNvprof
+from measure_parts.retire import RetireNvprof
+from measure_parts.extra_measure import ExtraMeasureNvprof
 from measure_levels.level_three import LevelThree
 from measure_levels.level_one import LevelOne
 from measure_levels.level_two import LevelTwo
 from show_messages.message_format import MessageFormat
 from args.unique_argument import DontRepeat
 from shell.shell import Shell
+from parameters.front_end_params import FrontEndParameters
+from parameters.back_end_params import BackEndParameters
+from parameters.divergence_params import DivergenceParameters
+from parameters.retire_params import RetireParameters
+from parameters.extra_measure_params import ExtraMeasureParameters
+from parameters.front_dependency_params import FrontDependencyParameters
+from parameters.front_band_width_params import FrontBandWidthParameters
+from parameters.back_memory_bound_params import BackMemoryBoundParameters
+from parameters.back_core_bound_params import BackCoreBoundParameters
 
 class TopDown:
     """
@@ -756,17 +775,90 @@ class TopDown:
             show_metrics = True
             show_events = True
         if self.__is_nvprof_mode():
+            front_end : FrontEndNvprof
+            back_end : BackEndNvprof
+            divergence : DivergenceNvprof
+            retire : RetireNvprof
+            extra_measure : ExtraMeasureNvprof
             if self.level() == 1:
-                level : LevelOneNvprof = LevelOneNvprof(self.program(), self.output_file(), show_metrics, show_events)
+                front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
+                    FrontEndParameters.C_FRONT_END_NVPROF_L1_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_L1_EVENTS)
+                back_end = BackEndNvprof(BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION, 
+                    BackEndParameters.C_BACK_END_NVPROF_L1_METRICS, BackEndParameters.C_BACK_END_NVPROF_L1_EVENTS)
+                divergence = DivergenceNvprof(DivergenceParameters.C_DIVERGENCE_NAME, DivergenceParameters.C_DIVERGENCE_DESCRIPTION,
+                    DivergenceParameters.C_DIVERGENCE_NVPROF_L1_METRICS, DivergenceParameters.C_DIVERGENCE_NVPROF_L1_EVENTS)
+                retire = RetireNvprof(RetireParameters.C_RETIRE_NAME, RetireParameters.C_RETIRE_DESCRIPTION,
+                    RetireParameters.C_RETIRE_NVPROF_L1_METRICS, RetireParameters.C_RETIRE_NVPROF_L1_EVENTS)
+                extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
+                    ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_EVENTS)
+                level : LevelOneNvprof = LevelOneNvprof(self.program(), self.output_file(), show_metrics, show_events, front_end,
+                    back_end, divergence, retire, extra_measure)
             elif self.level() == 2:
-                level : LevelTwoNvprof = LevelTwoNvprof(self.program(), self.output_file(), show_metrics, show_events) 
+                front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
+                    FrontEndParameters.C_FRONT_END_NVPROF_L2_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_L2_EVENTS)
+                back_end = BackEndNvprof(BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION, 
+                    BackEndParameters.C_BACK_END_NVPROF_L2_METRICS, BackEndParameters.C_BACK_END_NVPROF_L2_EVENTS)
+                divergence = DivergenceNvprof(DivergenceParameters.C_DIVERGENCE_NAME, DivergenceParameters.C_DIVERGENCE_DESCRIPTION,
+                    DivergenceParameters.C_DIVERGENCE_NVPROF_L2_METRICS, DivergenceParameters.C_DIVERGENCE_NVPROF_L2_EVENTS)
+                retire = RetireNvprof(RetireParameters.C_RETIRE_NAME, RetireParameters.C_RETIRE_DESCRIPTION,
+                    RetireParameters.C_RETIRE_NVPROF_L2_METRICS, RetireParameters.C_RETIRE_NVPROF_L2_EVENTS)
+                extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
+                    ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L2_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L2_EVENTS)
+                front_band_width : FrontBandWidthNvprof = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
+                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_L2_METRICS, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_L2_EVENTS)
+                front_dependency : FrontDependencyNvprof = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
+                    FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_L2_METRICS, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_L2_EVENTS)
+                back_memory_bound : BackMemoryBoundNvprof = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
+                    BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_L2_METRICS, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_L2_EVENTS)
+                back_core_bound : BackCoreBoundNvprof = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
+                    BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_METRICS, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_EVENTS)
+                level : LevelTwoNvprof = LevelTwoNvprof(self.program(), self.output_file(), show_metrics, show_events, front_end, back_end,
+                    divergence, retire, extra_meausre, front_dependency, front_band_width, back_core_bound, back_memory_bound) 
             elif self.level() == 3:
+                front_end = FrontEndNvprof()
+                back_end = BackEndNvprof()
+                divergence = DivergenceNvprof()
+                retire = RetireNvprof()
                 level : LevelThreeNvprof = LevelThreeNvprof(self.program(), self.output_file(), show_metrics, show_events) 
         else:
+            front_end : FrontEndNsight
+            back_end : BackEndNsight
+            divergence : DivergenceNsight
+            retire : RetireNsight
+            extra_measure : ExtraMeasureNsight
             if self.level() == 1:
-                level : LevelOneNsight = LevelOneNsight(self.program(), self.output_file(), show_metrics)
+                front_end = FrontEndNsight(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
+                    FrontEndParameters.C_FRONT_END_NSIGHT_L1_METRICS)
+                back_end = BackEndNsight(BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION,
+                    BackEndParameters.C_BACK_END_NSIGHT_L1_METRICS)
+                divergence = DivergenceNsight(DivergenceParameters.C_DIVERGENCE_NAME, DivergenceParameters.C_DIVERGENCE_DESCRIPTION,
+                    DivergenceParameters.C_DIVERGENCE_NSIGHT_L1_METRICS)
+                retire = RetireNsight(RetireParameters.C_RETIRE_NAME, RetireParameters.C_RETIRE_DESCRIPTION,
+                    RetireParameters.C_RETIRE_NSIGHT_L1_METRICS)
+                extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
+                    ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L1_METRICS)
+                level : LevelOneNsight = LevelOneNsight(self.program(), self.output_file(), show_metrics, front_end, back_end, divergence, retire, extra_measure)
             elif self.level() == 2:
-                level : LevelTwoNsight = LevelTwoNsight(self.program(), self.output_file(), show_metrics) 
+                front_end = FrontEndNsight(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
+                    FrontEndParameters.C_FRONT_END_NSIGHT_L2_METRICS)
+                back_end = BackEndNsight(BackEndParameters.C_BACK_END_NAME, BackEndParameters.C_BACK_END_DESCRIPTION,
+                    BackEndParameters.C_BACK_END_NSIGHT_L2_METRICS)
+                divergence = DivergenceNsight(DivergenceParameters.C_DIVERGENCE_NAME, DivergenceParameters.C_DIVERGENCE_DESCRIPTION,
+                    DivergenceParameters.C_DIVERGENCE_NSIGHT_L2_METRICS)
+                retire = RetireNsight(RetireParameters.C_RETIRE_NAME, RetireParameters.C_RETIRE_DESCRIPTION,
+                    RetireParameters.C_RETIRE_NSIGHT_L2_METRICS)
+                extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_RETIRE_NAME, ExtraMeasureParameters.C_RETIRE_DESCRIPTION,
+                    ExtraMeasureParameters.C_RETIRE_NSIGHT_L2_METRICS)
+                front_band_width : FrontBandWidthNsight = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
+                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L2_METRICS)
+                front_dependency : FrontDependencyNsight = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
+                    FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L2_METRICS)
+                back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
+                    BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS)
+                back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
+                    BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L2_METRICS) 
+                level : LevelTwoNsight = LevelTwoNsight(self.program(), self.output_file(), show_metrics, front_end, back_end, divergence, retire, front_band_width,
+                                        front_dependency, back_core_bound, back_memory_bound) 
             elif self.level() == 3:
                 level : LevelThreeNsight = LevelThreeNsight(self.program(), self.output_file(), show_metrics) 
 

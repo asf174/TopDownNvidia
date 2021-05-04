@@ -32,8 +32,8 @@ class MetricMeasure(ABC):
         _metrics_str       : str   ;   string with the metrics
     """
 
-    def __init_dictionaries(self, name : str, description : str, metrics : str, metrics_desc : str):
-        """ #TODO revisar, doble mismo argumento
+    def __init_dictionaries(self, name : str, description : str, metrics : str):
+        """
         Initialize data structures in the correct way.
         
         Params:
@@ -42,10 +42,7 @@ class MetricMeasure(ABC):
         
             description         : str   ;   description with information.
         
-            metrics             : str   ;   string with the metrics
-            
-            metrics_desc        : str   ;   string with metric name as key, 
-                                            and description of metric as value. 
+            metrics             : str   ;   string with the metrics   
         """
 
         self._metrics : dict = dict()
@@ -53,7 +50,7 @@ class MetricMeasure(ABC):
         self._metrics_str : str = metrics
         if metrics != "":
             self._metrics = dict.fromkeys(metrics.replace(" ", "").split(","))
-            self._metrics_desc = dict.fromkeys(metrics_desc.replace(" ", "").split(",")) 
+            self._metrics_desc = dict.fromkeys(metrics.replace(" ", "").split(",")) 
 
         key_metrics : str
         key_metrics_desc : str
@@ -78,7 +75,7 @@ class MetricMeasure(ABC):
                 raise DataStructuresOfMetricError(metric_name)
         pass
 
-    def __init__(self, name : str, description : str, metrics : str, metrics_desc : str):
+    def __init__(self, name : str, description : str, metrics : str):
         """
         Set attributtes with argument values.
         
@@ -88,15 +85,12 @@ class MetricMeasure(ABC):
         
             description         : str   ;   description with information.
         
-            metrics             : str   ;   string with the metrics
-            
-            metrics_desc        : str   ;   string with metric name as key, 
-                                            and description of metric as value. 
+            metrics             : str   ;   string with the metrics   
         """
 
         self._name : str = name
         self._description : str = description
-        self.__init_dictionaries(name, description, metrics, metrics_desc)
+        self.__init_dictionaries(name, description, metrics)
         self.__check_data_structures() # check dictionaries defined correctly
         pass
 
@@ -235,7 +229,7 @@ class MetricMeasureNsight(MetricMeasure):
             self._events[key_events] = list()
         pass
                 
-    def __init__(self, name : str, description : str, metrics : str, metrics_desc : str):
+    def __init__(self, name : str, description : str, metrics : str):
         """
         Set attributtes with argument values.
         
@@ -247,11 +241,9 @@ class MetricMeasureNsight(MetricMeasure):
         
             metrics             : str   ;   string with the metrics
          
-            metrics_desc        : str   ;   string with metric name as key, 
-                                            and description of metric as value.
         """
         
-        super().__init__(name, description, metrics, metrics_desc)    
+        super().__init__(name, description, metrics)    
         pass
 
     def set_metric_unit(self, metric_name : str, new_unit : str) -> bool:
@@ -306,7 +298,7 @@ class MetricMeasureNvprof(MetricMeasure):
         __events_str        : str   ;   string with the events
     """
 
-    def __init__(self, name : str, description : str, metrics : str, events : str, metrics_desc : str, events_desc : str):
+    def __init__(self, name : str, description : str, metrics : str, events : str):
         """
         Set attributtes with argument values.
         
@@ -319,24 +311,17 @@ class MetricMeasureNvprof(MetricMeasure):
             metrics             : str   ;   string with the metrics
         
             events              : str   ;   string with events
-        
-            metrics_desc        : str   ;   string with metric name as key, 
-                                            and description of metric as value.
-        
-            events_desc         : str   ;   dictionary with event name as key, 
-                                            and description of event as value.
-
         """
 
-        super().__init__(name, description, metrics, metrics_desc)
+        super().__init__(name, description, metrics)
         self.__events : dict = dict.fromkeys(events.replace(" ", "").split(","))
-        self.__events_desc = dict.fromkeys(events_desc.replace(" ", "").split(","))
+        self.__events_desc = dict.fromkeys(events.replace(" ", "").split(","))
         self.__events_str : str = events
-        self.__init_dictionaries(events, events_desc)
+        self.__init_dictionaries(events)
         self.__check_data_structures() # check dictionaries defined correctly
         pass
     
-    def __init_dictionaries(self, events : str, events_desc : str):
+    def __init_dictionaries(self, events : str):
         """ 
         Initialize data structures in the correct way.
         
@@ -344,8 +329,6 @@ class MetricMeasureNvprof(MetricMeasure):
 
             events              : str   ;   string with events
 
-            events_desc         : str   ;   dictionary with event name as key, 
-                                            and description of event as value.
         """
 
         key_events : str

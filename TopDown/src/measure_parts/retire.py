@@ -23,21 +23,41 @@ class Retire(MetricMeasure, ABC):
 class RetireNsight(MetricMeasureNsight, Retire):
     """Class that defines the Retire part with nsight scan tool."""
 
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    def __init__(self, name : str, description : str, metrics : str):
+        """
+        Set attributtes with argument values.
         
-        super().__init__(RetireParameters.C_RETIRE_NAME, RetireParameters.C_RETIRE_DESCRIPTION,
-        RetireParameters.C_RETIRE_NSIGHT_METRICS, RetireParameters.C_RETIRE_NSIGHT_METRICS)
-        pass
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+         
+        """
 
+        super().__init__(name, description, metrics)    
+        pass
+                
 class RetireNvprof(MetricMeasureNvprof, Retire):
-    """Class that defines the Retire part with NVPROF scan tool."""
-  
-    def __init__(self):
-        """Set attributes with DEFAULT values."""
+    """Class that defines the Retire part with nvprof scan tool."""
+
+    def __init__(self, name : str, description : str, metrics : str, events : str):
+        """ 
+        Set attributtes with argument values.
         
-        super().__init__(RetireParameters.C_RETIRE_NAME, RetireParameters.C_RETIRE_DESCRIPTION,
-        RetireParameters.C_RETIRE_NVPROF_METRICS, RetireParameters.C_RETIRE_NVPROF_EVENTS, 
-        RetireParameters.C_RETIRE_NVPROF_METRICS, RetireParameters.C_RETIRE_NVPROF_EVENTS)
+        Params:
+            
+            name                : str   ;   measure name.
+        
+            description         : str   ;   description with information.
+        
+            metrics             : str   ;   string with the metrics
+        
+            events              : str   ;   string with events
+        """
+
+        super().__init__(name, description, metrics, events)
         pass
 
