@@ -36,7 +36,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         self._back_end  : BackEndNvprof = back_end
         self._divergence : DivergenceNvprof = divergence
         self._retire : RetireNvprof = retire
-        super().__init__(program, output_file, recoltect_metrics, recolect_events)
+        super().__init__(program, output_file, recoltect_metrics, recolect_events, extra_measure)
         pass
 
     def retire_ipc(self) -> float:
