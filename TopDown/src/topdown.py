@@ -879,6 +879,7 @@ class TopDown:
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L2_METRICS)
 
+<<<<<<< HEAD
                 front_band_width : FrontBandWidthNsight = FrontBandWidthNsight(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
                     FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L2_METRICS)
                 
@@ -889,6 +890,18 @@ class TopDown:
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS)
                 
                 back_core_bound : BackCoreBoundNsight = BackCoreBoundNsight(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
+=======
+                front_band_width : FrontBandWidthNsight = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
+                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L2_METRICS)
+                
+                front_dependency : FrontDependencyNsight = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
+                    FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L2_METRICS)
+                
+                back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
+                    BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS)
+                
+                back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
+>>>>>>> 0ed2ae26adf73336fa0c423f817b9367ddb09daf
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L2_METRICS) 
                 level : LevelTwoNsight = LevelTwoNsight(program, self.output_file(), show_metrics, front_end, back_end, divergence, retire, extra_measure, front_band_width,
                     front_dependency, back_core_bound, back_memory_bound) 
