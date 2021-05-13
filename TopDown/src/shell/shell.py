@@ -7,12 +7,13 @@ Program that launch Shell commands.
 """
 
 import subprocess as sh # To Launch Shell commands.
+import os
 
 class Shell:
     """
     Class that launch shell commands with information.
     """
-    
+     
     def __launch_shell_and_message(self, command: str, message : str, hasToCheck : bool) -> str:
         """
         Launch Shell command.
@@ -34,7 +35,7 @@ class Shell:
                 if message:
                     print(message)
                 output : sh.CompletedProcess = sh.run(args = command, shell = True, check = hasToCheck, 
-                stdout = sh.PIPE, stderr = sh.STDOUT, executable = '/bin/bash') # text to use as string
+                stdout = sh.PIPE, stderr = sh.STDOUT, executable = '/bin/bash', env = dict(os.environ)) # text to use as string
                 str_output = output.stdout.decode('utf-8')
         except : 
             pass # No need to do nothing, command was not executed succesfully

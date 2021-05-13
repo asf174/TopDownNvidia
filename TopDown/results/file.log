@@ -4046,3 +4046,185 @@ EXTRA-MEASURE
 
 
 Analysis performed correctly!
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.0 | MAXIMUM POSSIBLE IPC: 4 ║
+					╚═════════════════════════════════════════════╝
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+RESULTS
+-------
+╔═══════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔══════════════════════════════╗  ╔════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                          ║  ║ DIVERGENCE                   ║  ║ RETIRE                     ║
+║ ---------                         ║  ║ --------                          ║  ║ ----------                   ║  ║ ------                     ║
+║                                   ║  ║                                   ║  ║                              ║  ║                            ║  
+║ STALLS, on the total (%):  0.0%   ║  ║ STALLS, on the total (%):  0.0%   ║  ║ IPC DEGRADATION (%):  0.0%   ║  ║ PERFORMANCE IPC (%):  0.0% ║  
+║ IPC DEGRADATION      (%):  0.0%   ║  ║ IPC DEGRADATION      (%):  0.0%   ║  ║                              ║  ║                            ║  
+╚═══════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚══════════════════════════════╝  ╚════════════════════════════╝  
+
+					List of measurements computed by NVIDIA scan tool
+					-------------------------------------------------
+FRONT-END
+---------
+
+
+			--------------------------------------------------------------------------------------------------------
+			Metric Name                                                            Metric Unit          Metric Value
+			--------------------------------------------------------------------------------------------------------
+			smsp__warp_issue_stalled_no_instruction_per_warp_active.pct            -                    0           
+			smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct          -                    0           
+			smsp__warp_issue_stalled_wait_per_warp_active.pct                      -                    0           
+			smsp__warp_issue_stalled_barrier_per_warp_active.pct                   -                    0           
+			smsp__warp_issue_stalled_membar_per_warp_active.pct                    -                    0           
+			smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct            -                    0           
+			smsp__warp_issue_stalled_misc_per_warp_active.pct                      -                    0           
+			smsp__warp_issue_stalled_not_selected_per_warp_active.pct              -                    0           
+			smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct          -                    0           
+			smsp__warp_issue_stalled_selected_per_warp_active.pct                  -                    0           
+			smsp__warp_issue_stalled_sleeping_per_warp_active.pct                  -                    0           
+			--------------------------------------------------------------------------------------------------------
+
+BACK-END
+--------
+
+
+			----------------------------------------------------------------------------------------------------------
+			Metric Name                                                              Metric Unit          Metric Value
+			----------------------------------------------------------------------------------------------------------
+			smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct             -                    0           
+			smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                    -                    0           
+			smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct          -                    0           
+			smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                -                    0           
+			smsp__warp_issue_stalled_drain_per_warp_active.pct                       -                    0           
+			smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                 -                    0           
+			smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                -                    0           
+			----------------------------------------------------------------------------------------------------------
+
+BACK-END
+--------
+
+
+			------------------------------------------------------------------------------------------------
+			Metric Name                                                    Metric Unit          Metric Value
+			------------------------------------------------------------------------------------------------
+			smsp__sass_average_branch_targets_threads_uniform.pct          -                    0           
+			smsp__thread_inst_executed_per_inst_executed.ratio             -                    0           
+			smsp__inst_issued.avg.per_cycle_active                         -                    0           
+			------------------------------------------------------------------------------------------------
+
+RETIRE
+------
+
+
+			-----------------------------------------------------------------------------------
+			Metric Name                                       Metric Unit          Metric Value
+			-----------------------------------------------------------------------------------
+			smsp__inst_executed.avg.per_cycle_active          -                    0           
+			-----------------------------------------------------------------------------------
+
+EXTRA-MEASURE
+-------------
+
+
+			-----------------------------------------------------------------
+			Metric Name                     Metric Unit          Metric Value
+			-----------------------------------------------------------------
+			sm__cycles_active.sum           -                    0           
+			sm__cycles_elapsed.sum          -                    0           
+			-----------------------------------------------------------------
+
+
+Analysis performed correctly!
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.0 | MAXIMUM POSSIBLE IPC: 4 ║
+					╚═════════════════════════════════════════════╝
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+RESULTS
+-------
+╔═══════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔══════════════════════════════╗  ╔════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                          ║  ║ DIVERGENCE                   ║  ║ RETIRE                     ║
+║ ---------                         ║  ║ --------                          ║  ║ ----------                   ║  ║ ------                     ║
+║                                   ║  ║                                   ║  ║                              ║  ║                            ║  
+║ STALLS, on the total (%):  0.0%   ║  ║ STALLS, on the total (%):  0.0%   ║  ║ IPC DEGRADATION (%):  0.0%   ║  ║ PERFORMANCE IPC (%):  0.0% ║  
+║ IPC DEGRADATION      (%):  0.0%   ║  ║ IPC DEGRADATION      (%):  0.0%   ║  ║                              ║  ║                            ║  
+╚═══════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚══════════════════════════════╝  ╚════════════════════════════╝  
+
+					List of measurements computed by NVIDIA scan tool
+					-------------------------------------------------
+FRONT-END
+---------
+
+
+			--------------------------------------------------------------------------------------------------------
+			Metric Name                                                            Metric Unit          Metric Value
+			--------------------------------------------------------------------------------------------------------
+			smsp__warp_issue_stalled_no_instruction_per_warp_active.pct            -                    0           
+			smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct          -                    0           
+			smsp__warp_issue_stalled_wait_per_warp_active.pct                      -                    0           
+			smsp__warp_issue_stalled_barrier_per_warp_active.pct                   -                    0           
+			smsp__warp_issue_stalled_membar_per_warp_active.pct                    -                    0           
+			smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct            -                    0           
+			smsp__warp_issue_stalled_misc_per_warp_active.pct                      -                    0           
+			smsp__warp_issue_stalled_not_selected_per_warp_active.pct              -                    0           
+			smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct          -                    0           
+			smsp__warp_issue_stalled_selected_per_warp_active.pct                  -                    0           
+			smsp__warp_issue_stalled_sleeping_per_warp_active.pct                  -                    0           
+			--------------------------------------------------------------------------------------------------------
+
+BACK-END
+--------
+
+
+			----------------------------------------------------------------------------------------------------------
+			Metric Name                                                              Metric Unit          Metric Value
+			----------------------------------------------------------------------------------------------------------
+			smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct             -                    0           
+			smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                    -                    0           
+			smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct          -                    0           
+			smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                -                    0           
+			smsp__warp_issue_stalled_drain_per_warp_active.pct                       -                    0           
+			smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                 -                    0           
+			smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                -                    0           
+			----------------------------------------------------------------------------------------------------------
+
+BACK-END
+--------
+
+
+			------------------------------------------------------------------------------------------------
+			Metric Name                                                    Metric Unit          Metric Value
+			------------------------------------------------------------------------------------------------
+			smsp__sass_average_branch_targets_threads_uniform.pct          -                    0           
+			smsp__thread_inst_executed_per_inst_executed.ratio             -                    0           
+			smsp__inst_issued.avg.per_cycle_active                         -                    0           
+			------------------------------------------------------------------------------------------------
+
+RETIRE
+------
+
+
+			-----------------------------------------------------------------------------------
+			Metric Name                                       Metric Unit          Metric Value
+			-----------------------------------------------------------------------------------
+			smsp__inst_executed.avg.per_cycle_active          -                    0           
+			-----------------------------------------------------------------------------------
+
+EXTRA-MEASURE
+-------------
+
+
+			-----------------------------------------------------------------
+			Metric Name                     Metric Unit          Metric Value
+			-----------------------------------------------------------------
+			sm__cycles_active.sum           -                    0           
+			sm__cycles_elapsed.sum          -                    0           
+			-----------------------------------------------------------------
+
+
+Analysis performed correctly!

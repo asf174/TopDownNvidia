@@ -91,15 +91,15 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         Returns:
             String with command to be executed
         """
-
-        command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
-            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
-            + "," + self._retire.metrics_str() + "," + self._frond_band_width.metrics_str() + "," + self._front_dependency.metrics_str() + 
-            "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() + "  --events " + 
+        command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + "," + self._back_end.metrics_str() + 
+            "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + 
+            "," + self._front_band_width.metrics_str() + "," + self._front_dependency.metrics_str() + "," + 
+            self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() + "  --events " + 
             self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + 
             self._extra_measure.events_str() + "," + self._retire.events_str() + "," +  self._front_band_width.events_str() + 
-            "," + self._front_dependency.events_str() + self._back_core_bound.events_str() + "," + self._back_memory_bound.events_str() + 
+            "," + self._front_dependency.events_str() + "," + self._back_core_bound.events_str() + "," + self._back_memory_bound.events_str() + 
             " --unified-memory-profiling off " + self._program)
+        print(command)
         return command
         pass
 
