@@ -28,16 +28,31 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         _front_dependency       : FrontDependencyNvprof     ; front's dependency part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
-        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
-        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+    def __set_measure_parts_attributes(front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
         back_core_bound : BackCoreBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):
         
         self._back_core_bound : BackCoreBoundNvprof = back_core_bound
         self._back_memory_bound : BackMemoryBoundNvprof = back_memory_bound
         self._front_band_width : FrontBandWidthNvprof = front_band_width
         self._front_dependency : FrontDependencyNvprof = front_dependency
+        pass
+
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
+        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+        back_core_bound : BackCoreBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):
+        
+        self.__set_measure_parts_attributes(front_band_width, front_dependency, back_core_bounnd, back_memory_bound)
         super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire, extra_measure)
+        pass
+
+    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
+        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+        back_core_bound : BackCoreBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):
+        
+        self.__set_measure_parts_attributes(front_band_width, front_dependency, back_core_bounnd, back_memory_bound)
+        super().__init__(program, input_file, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire, extra_measure)
         pass
 
     def back_core_bound(self) -> BackCoreBoundNvprof:

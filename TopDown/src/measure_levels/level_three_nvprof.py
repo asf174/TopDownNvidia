@@ -33,17 +33,33 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
     Atributes:
         __memory_constant_memory_bound     : MemoryConstantMemoryBoundNvprof   ; constant cache part
     """
+    
+    def __create_measure_part(self, memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof):
+        memory_constant_memory_bound = MemoryConstantMemoryBoundNvprof(
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_L3_METRICS,
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_L3_EVENTS)
+        pass
 
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
         front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
         extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
         back_core_bound : MemoryConstantMemoryBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
         
-        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof = MemoryConstantMemoryBoundNvprof(
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_L3_METRICS,
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_L3_EVENTS)
+        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof
+        self.__create_measure_part(self.__memory_constant_memory_bound)
         super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire,
+            extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
+        pass
+
+    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
+        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+        back_core_bound : MemoryConstantMemoryBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
+        
+        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof
+        self.__create_measure_part(self.__memory_constant_memory_bound)
+        super().__init__(program, input_file, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire,
             extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
         pass
 

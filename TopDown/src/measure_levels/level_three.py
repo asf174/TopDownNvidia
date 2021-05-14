@@ -55,6 +55,20 @@ class LevelThree(LevelTwo):
         return command
         pass
 
+
+    def set_results(output_command : str):
+        """
+        Set results of execution ALREADY DONE. Results are in the argument.
+
+        Params:
+            output_command : str    ; str with results of execution.
+        """
+
+        super()._set_front_back_divergence_retire_results(output_command) # level one results
+        super()._set_memory_core_bandwith_dependency_results(output_command) # level two
+        self._set_memory_constant_memory_bound_results(output_command) # level three
+        pass
+
     def run(self, lst_output : list):
         """ 
         Makes execution.
@@ -65,9 +79,7 @@ class LevelThree(LevelTwo):
 
         # compute results
         output_command : str = super()._launch(self._generate_command())
-        super()._set_front_back_divergence_retire_results(output_command) # level one results
-        super()._set_memory_core_bandwith_dependency_results(output_command) # level two
-        self._set_memory_constant_memory_bound_results(output_command) # level three
+        self.set_results(output_command)
         self._get_results(lst_output)
         pass
 

@@ -24,6 +24,7 @@ class LevelExecution(ABC):
     Class that represents the levels of the execution.
      
     Attributes:
+        _input_file             : str           ; path to input file with results. 'None' if we must do the analysis
         _output_file            : str           ; path to output file with results. 'None' to don't use
                                                   output file
         _program                : str           ; program of the execution
@@ -31,19 +32,20 @@ class LevelExecution(ABC):
                                                   or False in other case
         __compute_capability    : float         ; Compute Capbility of the execution
     """
-
+    
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
         self._program : str = program
         self._output_file : str = output_file
         self._recolect_metrics : bool = recoltect_metrics
-        
-        shell : Shell = Shell()
-        compute_capability_str : str = shell.launch_command_show_all("nvcc ../src/measure_parts/compute_capability.cu --run", None)
-        shell.launch_command("rm -f ../src/measure_parts/a.out", None)
-        self.__compute_capability : float = float(compute_capability_str)
-        if self.__compute_capability > TopDownParameters.C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE:
-            locale.setlocale(locale.LC_ALL, 'es_ES.utf8')
+        self._input_file : str = None
         pass 
+    
+    def __init__(self, program : str, input_file : str, output_file : str, recolect_metrics : bool):
+        self._program : str = program
+        self._output_file : str = output_file
+        self._recolect_metrics : bool = recoltect_metrics
+        self._input_file : str = input_file
+        pass
 
     @abstractmethod
     def _generate_command(self) -> str:
@@ -52,6 +54,17 @@ class LevelExecution(ABC):
 
         Returns:
             String with command to be executed
+        """
+
+        pass
+
+    @abstractmethod
+    def set_results(output_command : str): 
+        """
+        Set results of execution ALREADY DONE. Results are in the argument.
+        
+        Params:
+            output_command : str    ; str with results of execution.
         """
 
         pass
@@ -189,7 +202,17 @@ class LevelExecution(ABC):
 
         return self._recolect_metrics
         pass
-    
+
+    def input_file(self) -> str:
+        """ 
+        Returns path to input file.
+        
+        Returns: 
+            Path to input file or 'None' if it hasn't been specified.
+        """
+        
+        return self._input_file
+  
     @abstractmethod
     def _percentage_time_kernel(self, kernel_number : int) -> float:
         """ 

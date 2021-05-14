@@ -27,8 +27,24 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         _divergence     : Divergence    ; Divergence part of the execution
         _retire         : Retire        ; Retire part of the execution
     """
+    def __set_measure_parts_attributes(front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, 
+        retire : RetireNvprof, extra_measure : ExtraMeasureNvprof):
+        
+        self._front_end : FrontEndNvprof = front_end
+        self._back_end  : BackEndNvprof = back_end
+        self._divergence : DivergenceNvprof = divergence
+        self._retire : RetireNvprof = retire
+        pass
 
     def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
+        extra_measure : ExtraMeasureNvprof):
+        
+        self.__set_measure_parts_attributes(front_end, back_end, divergence, retire, extra_measure)
+        super().__init__(program, output_file, recoltect_metrics, recolect_events, extra_measure)
+        pass
+
+    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
         front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
         extra_measure : ExtraMeasureNvprof):
 
@@ -36,7 +52,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         self._back_end  : BackEndNvprof = back_end
         self._divergence : DivergenceNvprof = divergence
         self._retire : RetireNvprof = retire
-        super().__init__(program, output_file, recoltect_metrics, recolect_events, extra_measure)
+        super().__init__(program, input_file, output_file, recoltect_metrics, recolect_events, extra_measure)
         pass
 
     def retire_ipc(self) -> float:

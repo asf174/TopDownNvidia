@@ -35,17 +35,34 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
         __memory_constant_memory_bound     : ConstantMemoryBoundNsight   ; constant cache part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, front_end : FrontEndNsight, 
-        back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, extra_measure : ExtraMeasureNsight, 
-        front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight, 
-        back_core_bound : MemoryConstantMemoryBoundNsight, back_memory_bound : BackMemoryBoundNsight):  
-    
-        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNsight = MemoryConstantMemoryBoundNsight(
+      def __create_measure_part(self, memory_constant_memory_bound : MemoryConstantMemoryBoundNsight):
+        memory_constant_memory_bound = MemoryConstantMemoryBoundNsight(
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_METRICS)
-        super().__init__(program, output_file, recoltect_metrics, front_end, back_end, divergence, retire,
-            extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_L3_METRICS)
         pass
+
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight,
+        extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight,
+        back_core_bound : MemoryConstantMemoryBoundNsight, back_memory_bound : BackMemoryBoundNsight):
+
+        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNsight
+        self.__create_measure_part(self.__memory_constant_memory_bound)
+        super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire,
+            extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
+        pass  
+
+
+    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+        front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight,
+        extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight,
+        back_core_bound : MemoryConstantMemoryBoundNsight, back_memory_bound : BackMemoryBoundNsight):
+
+        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNsight
+        self.__create_measure_part(self.__memory_constant_memory_bound)
+        super().__init__(program, input_file, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire,
+            extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
+        pass  
 
     def memory_constant_memory_bound(self) -> MemoryConstantMemoryBoundNsight:
         """

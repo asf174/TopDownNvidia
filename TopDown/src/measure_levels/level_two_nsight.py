@@ -25,18 +25,34 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         _front_dependency       : FrontDependencyNsight     ; front's dependency part
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, front_end : FrontEndNsight, back_end : BackEndNsight, 
-        divergence : DivergenceNsight, retire : RetireNsight, extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, 
-        front_dependency : FrontDependencyNsight, back_core_bound : BackCoreBoundNsight, back_memory_bound : BackMemoryBoundNsight):
-    
-        self._back_core_bound : BackCoreBoundNsight = back_core_bound
-        self._back_memory_bound : BackMemoryBoundNsight = back_memory_bound
-        self._front_band_width : FrontBandWidthNsight = front_band_width
-        self._front_dependency : FrontDependencyNsight = front_dependency
-        super().__init__(program, output_file, recoltect_metrics, front_end, back_end, divergence, retire, extra_measure)
-        pass
+    def __set_measure_parts_attributes(front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight,
+          back_core_bound : BackCoreBoundNsight, back_memory_bound : BackMemoryBoundNsight):
+ 
+         self._back_core_bound : BackCoreBoundNsight = back_core_bound
+          self._back_memory_bound : BackMemoryBoundNsight = back_memory_bound
+          self._front_band_width : FrontBandWidthNsight = front_band_width
+          self._front_dependency : FrontDependencyNsight = front_dependency
+          pass
+ 
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+          front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight,
+          extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight,
+          back_core_bound : BackCoreBoundNsight, back_memory_bound : BackMemoryBoundNsight):
+ 
+          self.__set_measure_parts_attributes(front_band_width, front_dependency, back_core_bounnd, back_memory_bound)
+          super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire, extra_measure)
+          pass
 
-    def back_core_bound(self) -> BackCoreBoundNsight:
+    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+          front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight,
+          extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight,
+          back_core_bound : BackCoreBoundNsight, back_memory_bound : BackMemoryBoundNsight):
+ 
+          self.__set_measure_parts_attributes(front_band_width, front_dependency, back_core_bounnd, back_memory_bound)
+          super().__init__(program, input_Ãfile, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire, extra_measure)
+          pass
+
+   def back_core_bound(self) -> BackCoreBoundNsight:
         """
         Return CoreBound part of the execution.
 

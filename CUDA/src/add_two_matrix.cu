@@ -126,7 +126,9 @@ top:
 	//for (int i = 0; i < 10000000; i++) {
 	    addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
         addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N, 5);
-        //addMatrix2<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+        addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+
+         //addMatrix2<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
         //sleep(60);
     //}
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
