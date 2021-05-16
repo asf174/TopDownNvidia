@@ -55,10 +55,13 @@ int
 main( int argc, char** argv) 
 {
 
+    double initTime = gettime();
   printf("WG size of kernel = %d \n", BLOCK_SIZE);
 
     runTest( argc, argv);
 
+    double endTime = gettime();
+    printf("TOTAL time: %g seconds\n", endTime - initTime);
     return EXIT_SUCCESS;
 }
 
@@ -150,9 +153,12 @@ void runTest( int argc, char** argv)
 
 	printf("Processing top-left matrix\n");
 	//process top-left matrix
+    double initKernelTime = 0.0, endKernelTime = 0.0;
 	for( int i = 1 ; i <= block_width ; i++){
 		dimGrid.x = i;
 		dimGrid.y = 1;
+        if (i == 1)
+            initKernelTime = gettime();
 		needle_cuda_shared_1<<<dimGrid, dimBlock>>>(referrence_cuda, matrix_cuda
 		                                      ,max_cols, penalty, i, block_width); 
 	}
@@ -163,10 +169,14 @@ void runTest( int argc, char** argv)
 		dimGrid.y = 1;
 		needle_cuda_shared_2<<<dimGrid, dimBlock>>>(referrence_cuda, matrix_cuda
 		                                      ,max_cols, penalty, i, block_width); 
+        if (i == 1) {
+            cudaThreadSynchronize();
+            endKernelTime = gettime();
+        }
+
 	}
-
-
-    cudaMemcpy(output_itemsets, matrix_cuda, sizeof(int) * size, cudaMemcpyDeviceToHost);
+    printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
+   cudaMemcpy(output_itemsets, matrix_cuda, sizeof(int) * size, cudaMemcpyDeviceToHost);
 	
 //#define TRACEBACK
 #ifdef TRACEBACK

@@ -13,7 +13,7 @@
 #define THREADS_PER_BLOCK THREADS_PER_DIM*THREADS_PER_DIM
 
 #include "kmeans_cuda_kernel.cu"
-
+#include "../../time/time.c" // measure time
 
 //#define BLOCK_DELTA_REDUCE
 //#define BLOCK_CENTER_REDUCE
@@ -125,10 +125,13 @@ void deallocateMemory()
 int
 main( int argc, char** argv) 
 {
+    double initTime = time();
 	// make sure we're running on the big card
     cudaSetDevice(1);
 	// as done in the CUDA start/help document provided
-	setup(argc, argv);    
+	setup(argc, argv);
+    double endTime = time();
+    printf("TOTAL time: %g seconds\n", endTime - initTime);
 }
 
 //																			  //
@@ -194,6 +197,7 @@ kmeansCuda(float  **feature,				/* in: [npoints][nfeatures] */
     dim3  grid( num_blocks_perdim, num_blocks_perdim );
     dim3  threads( num_threads_perdim*num_threads_perdim );
     
+    double initKernelTime = time();
 	/* execute the kernel */
     kmeansPoint<<< grid, threads >>>( feature_d,
                                       nfeatures,
@@ -205,6 +209,8 @@ kmeansCuda(float  **feature,				/* in: [npoints][nfeatures] */
 									  block_deltas_d);
 
 	cudaThreadSynchronize();
+    double endKernelTime = time();
+    printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 
 	/* copy back membership (device to host) */
 	cudaMemcpy(membership_new, membership_d, npoints*sizeof(int), cudaMemcpyDeviceToHost);	

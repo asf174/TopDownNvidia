@@ -39,6 +39,7 @@ void run(int argc, char** argv);
 #define pin_stats_dump(cycles)    printf("timer: %Lu\n", cycles)
 
 
+#include "../../time/time.c"
 
 void 
 fatal(char *s)
@@ -240,13 +241,22 @@ int compute_tran_temp(float *MatrixPower,float *MatrixTemp[2], int col, int row,
 
         int src = 1, dst = 0;
 	
+    double initKernelTime = 0.0, endKernelTime = 0.0;
 	for (t = 0; t < total_iterations; t+=num_iterations) {
             int temp = src;
             src = dst;
             dst = temp;
+            if (t == 0)
+                initKernelTime = time();
             calculate_temp<<<dimGrid, dimBlock>>>(MIN(num_iterations, total_iterations-t), MatrixPower,MatrixTemp[src],MatrixTemp[dst],\
 		col,row,borderCols, borderRows, Cap,Rx,Ry,Rz,step,time_elapsed);
+            if (t == total_iterations - 1) {
+                cudaThreadSynchronize();
+                endKernelTime = time();
+            }
+
 	}
+        printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
         return dst;
 }
 
@@ -264,9 +274,12 @@ void usage(int argc, char **argv)
 
 int main(int argc, char** argv)
 {
+    double initTime = time();
   printf("WG size of kernel = %d X %d\n", BLOCK_SIZE, BLOCK_SIZE);
 
     run(argc,argv);
+    double endTime = time();
+    printf("TOTAL time: %g seconds\n", endTime - initTime);
 
     return EXIT_SUCCESS;
 }
