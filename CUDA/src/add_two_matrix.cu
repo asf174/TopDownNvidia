@@ -31,6 +31,7 @@ __global__ void addMatrix(int* a, int* b, int* result, int size)
 	int idx = blockDim.x*blockIdx.x + threadIdx.x;	
 	if (idx < size)
 		result[idx] = a[idx] + b[idx];
+    printf("Hola");
 	/*if (result[idx] == 4)
 		result[idx*result[idx] % size] = a[idx*result[idx] % size] + b[idx*result[idx] % size];
 	else
@@ -124,9 +125,9 @@ top:
 	cudaProfilerStart();
 	
 	//for (int i = 0; i < 10000000; i++) {
-	    addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
-        addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N, 5);
-        addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+	addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+    //addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N, 5);
+    //addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
 
          //addMatrix2<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
         //sleep(60);

@@ -118,6 +118,11 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         for line in results_launch.splitlines():
             line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
             list_words = line.split(" ")
+            
+            # check if it's kernel line
+            # line type: ['', 'Kernel:', "KERNEL_NAME"]
+            if len(list_words) == 3 and list_words[0] == '' and list_words[1] == "Kernel:":
+                super().add_kernel(list_words[2])
             if not has_read_all_events:
                 # Check if it's line of interest:
                 # ['', 'X', 'event_name','Min', 'Max', 'Avg', 'Total']

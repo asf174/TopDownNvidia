@@ -31,20 +31,24 @@ class LevelExecution(ABC):
         _recolect_metrics       : bool          ; True if the execution must recolted the metrics used by NVIDIA scan tool
                                                   or False in other case
         __compute_capability    : float         ; Compute Capbility of the execution
+        __kernels               : list[str]     ; list of kernels of execution
     """
     
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
-        self._program : str = program
-        self._output_file : str = output_file
-        self._recolect_metrics : bool = recoltect_metrics
-        self._input_file : str = None
-        pass 
-    
-    def __init__(self, program : str, input_file : str, output_file : str, recolect_metrics : bool):
+    def __init_attributes(self, program : str, input_file : str, output_file : str, recolect_metrics : bool):
+        """ Init some attributtes with arguments."""
+
         self._program : str = program
         self._output_file : str = output_file
         self._recolect_metrics : bool = recoltect_metrics
         self._input_file : str = input_file
+        pass
+
+    def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
+        self.__init_attributes(program, None, output_file, recolect_metrics)
+        pass 
+    
+    def __init__(self, program : str, input_file : str, output_file : str, recolect_metrics : bool):
+        self.__init_attributes(program, input_file, output_file, recolect_metrics)
         pass
 
     @abstractmethod
@@ -269,3 +273,41 @@ class LevelExecution(ABC):
         graph : PieChart = self._create_graph()
         self._add_graph_data(graph)
         graph.save(file_str)
+
+    def add_kernel(kernel_name : str): 
+        """ 
+        Add kernel to list of kernels.
+
+        Params:
+            kernel_name : str   ; name of the kernel to be added.
+        """
+
+        self.__kernels.append(kernel_name)
+        pass
+    
+    def kernels() -> list:
+        """
+        Returns list of kernels.
+
+        Returns:
+            list with kernels.
+        """
+
+        return self.__kernels
+        pass
+
+    def kernel_position(kernel_name : str) -> list[int]:
+        """
+        Returns a list with the position of the kernel indicated by argument.
+
+        Returns:
+            list of integers with the positions of the integer
+        """
+
+        positions : list[int] = list()
+        i : int
+        for i in range(0, len(self.__kernels)):
+            if self.__kernels[i] == kernel_name:
+                positions.append(i)
+        return positions
+        pass

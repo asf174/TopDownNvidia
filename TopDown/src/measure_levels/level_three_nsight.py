@@ -35,7 +35,7 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
         __memory_constant_memory_bound     : ConstantMemoryBoundNsight   ; constant cache part
     """
 
-      def __create_measure_part(self, memory_constant_memory_bound : MemoryConstantMemoryBoundNsight):
+    def __create_measure_part(self, memory_constant_memory_bound : MemoryConstantMemoryBoundNsight):
         memory_constant_memory_bound = MemoryConstantMemoryBoundNsight(
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_L3_METRICS)

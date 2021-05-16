@@ -1,5 +1,5 @@
 """
-Class with all params of Parser class
+Class with all params of parser.py
 and their subclasses
 
 @author:    Alvaro Saiz (UC)

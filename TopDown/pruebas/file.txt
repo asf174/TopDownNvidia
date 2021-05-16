@@ -1,0 +1,20 @@
+=10216== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==10216== Profiling application: ../../../../CUDA/bin/add_two_matrix2
+NUMBLOCKS: 47852 THREADS_PER_BLOCK: 256
+==10216== Profiling result:
+==10216== Metric result:
+Invocations                               Metric Name                           Metric Description         Min         Max         Avg
+Device "NVIDIA Tegra X2 (0)"
+    Kernel: addMatrix(int*, int*, int*, int)
+          1                          stall_inst_fetch     Issue Stall Reasons (Instructions Fetch)       2.71%       2.71%       2.71%
+          1                     stall_exec_dependency   Issue Stall Reasons (Execution Dependency)      18.98%      18.98%      18.98%
+          1                                stall_sync        Issue Stall Reasons (Synchronization)       0.00%       0.00%       0.00%
+          1                               stall_other                  Issue Stall Reasons (Other)       8.54%       8.54%       8.54%
+          1                        stall_not_selected           Issue Stall Reasons (Not Selected)       7.92%       7.92%       7.92%
+          1                   stall_memory_dependency           Issue Stall Reasons (Data Request)      57.67%      57.67%      57.67%
+          1          stall_constant_memory_dependency     Issue Stall Reasons (Immediate constant)       0.03%       0.03%       0.03%
+          1                           stall_pipe_busy              Issue Stall Reasons (Pipe Busy)       1.02%       1.02%       1.02%
+          1                     stall_memory_throttle        Issue Stall Reasons (Memory Throttle)       3.13%       3.13%       3.13%
+          1                         branch_efficiency                            Branch Efficiency     100.00%     100.00%     100.00%
+          1                 warp_execution_efficiency                    Warp Execution Efficiency     100.00%     100.00%     100.00%
+          1         warp_nonpred_execution_efficiency     Warp Non-Predicated Execution Efficiency      94.34%      94.34%      94.34%

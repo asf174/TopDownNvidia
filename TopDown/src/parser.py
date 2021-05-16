@@ -7,13 +7,34 @@ and show the results.
 @version 1.0
 """
 
+import argparse
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(1, parentdir)
-from parameters.parser_parameters import ParserParamters
-from parameters.topdown_parameters import TopDownParameters
+from parameters.parser_params import ParserParameters
+from parameters.topdown_params import TopDownParameters
 from pathlib import Path
+from measure_levels.level_one_nvprof import LevelOneNvprof
+from measure_levels.level_one_nsight import LevelOneNsight
+from measure_levels.level_two_nvprof import LevelTwoNvprof
+from measure_levels.level_two_nsight import LevelTwoNsight
+from measure_levels.level_three_nsight import LevelThreeNsight
+from measure_levels.level_three_nvprof import LevelThreeNvprof
+from measure_parts.front_end import FrontEndNsight, FrontEndNvprof
+from measure_parts.back_end import BackEndNsight, BackEndNvprof
+from measure_parts.divergence import DivergenceNsight, DivergenceNvprof
+from measure_parts.retire import RetireNsight, RetireNvprof
+from measure_parts.extra_measure import ExtraMeasureNsight, ExtraMeasureNvprof
+from measure_levels.level_three import LevelThree
+from measure_levels.level_one import LevelOne
+from measure_levels.level_two import LevelTwo
+from measure_parts.front_band_width import  FrontBandWidthNsight, FrontBandWidthNvprof
+from measure_parts.front_dependency import FrontDependencyNsight, FrontDependencyNvprof
+from measure_parts.back_core_bound import BackCoreBoundNsight, BackCoreBoundNvprof
+from measure_parts.back_memory_bound import BackMemoryBoundNsight, BackMemoryBoundNvprof
+from args.unique_argument import DontRepeat
+
 
 class Parser:
     """ 
@@ -25,12 +46,12 @@ class Parser:
         """ 
         Init attributes depending of arguments.
         """
-
+        
         self.__parser : argparse.ArgumentParse = argparse.ArgumentParser(
             formatter_class = lambda prog : argparse.HelpFormatter(prog, max_help_position = 50),
             description = "Parser results obtainded from topdown.py")
-        self.__parser_optionals.title = "Optional Arguments"
-        self.__add_arguments(self.__parser)
+        self.__parser._optionals.title = "Optional arguments"
+        self.__add_arguments()
 
         # Save values
         args : argparse.Namespace = self.__parser.parse_args()
@@ -53,7 +74,7 @@ class Parser:
             ParserParameters.C_INPUT_FILE_ARGUMENT_SHORT_OPTION,
             ParserParameters.C_INPUT_FILE_ARGUMENT_LONG_OPTION,
             required = True,
-            help = TopDownParameters.C_INPUT_FILE_ARGUMENT_DESCRIPTION,
+            help = ParserParameters.C_INPUT_FILE_ARGUMENT_DESCRIPTION,
             default = None,
             nargs = '?',  
             action = DontRepeat,
@@ -62,7 +83,7 @@ class Parser:
             dest = 'input_file')
         pass
     
-     def __add_level_argument(self, group : argparse._ArgumentGroup):
+    def __add_level_argument(self, group : argparse._ArgumentGroup):
         """ 
         Add level argument. 'C_LEVEL_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_LEVEL_ARGUMENT_LONG_OPTION' is the long version of argument.
@@ -84,15 +105,19 @@ class Parser:
             dest = 'level')
         pass
     
-    def __add_arguments(self, parser : argparse.ArgumentParser):
+    def __add_arguments(self):
         """
         Add arguments of the pogram.
          
         Params:
             parser : argparse.ArgumentParser ; group of the arguments.
         """
-        self.__add_level_argument(parser)
-        self.__add_inputfile_argument(parser)
+
+        # Create group for required arguments
+        requiredGroup : argparse._ArgumentGroup = self.__parser.add_argument_group("Required arguments")
+
+        self.__add_level_argument(requiredGroup)
+        self.__add_input_file_argument(requiredGroup)
         
         pass
 
@@ -133,7 +158,6 @@ class Parser:
         """Launch execution."""
 
         if self.__is_nvprof_file():
-
             front_end : FrontEndNvprof
             back_end : BackEndNvprof
             divergence : DivergenceNvprof
@@ -231,26 +255,12 @@ class Parser:
                     RetireParameters.C_RETIRE_NSIGHT_L2_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L2_METRICS)
-
-                front_band_width : FrontBandWidthNsight = FrontBandWidthNsight(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
-                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L2_METRICS)
-                
-                front_dependency : FrontDependencyNsight = FrontDependencyNsight(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
-                    FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L2_METRICS)
-                
-                back_memory_bound : BackMemoryBoundNsight = BackMemoryBoundNsight(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
-                    BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS)
-                
-                back_core_bound : BackCoreBoundNsight = BackCoreBoundNsight(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
                 front_band_width : FrontBandWidthNsight = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
                     FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L2_METRICS)
-                
                 front_dependency : FrontDependencyNsight = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
                     FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L2_METRICS)
-                
                 back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS)
-                
                 back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L2_METRICS) 
                 level : LevelTwoNsight = LevelTwoNsight(program, self.input_file(), self.output_file(), show_metrics, front_end, back_end, divergence, retire, extra_measure, front_band_width,
@@ -272,12 +282,16 @@ class Parser:
                     FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L3_METRICS)
                 back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L3_METRICS)
-                   back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
+                back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
                      BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L3_METRICS)
                 level : LevelThreeNsight = LevelThreeNsight(program, self.input_file(), self.output_file(), show_metrics, front_end, back_end, divergence, retire, extra_measure, front_band_width,
                      front_dependency, back_core_bound, back_memory_bound)
 
-                # set file content in str
-                file_content : str = Path(self.input_file).read_text() 
-                level.set_results(file_content)
+            # set file content in str
+            file_content : str = Path(self.input_file()).read_text() 
+            level.set_results(file_content)
         pass
+
+if __name__ == '__main__':
+    parser = Parser()
+    parser.launch()
