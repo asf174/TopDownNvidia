@@ -11,6 +11,8 @@
 // includes, kernels
 #include "srad_kernel.cu"
 
+#include "../../../time/time.c"
+
 void random_matrix(float *I, int rows, int cols);
 void runTest( int argc, char** argv);
 void usage(int argc, char **argv)
@@ -33,9 +35,11 @@ void usage(int argc, char **argv)
 int
 main( int argc, char** argv) 
 {
+    double initTime = time();
   printf("WG size of kernel = %d X %d\n", BLOCK_SIZE, BLOCK_SIZE);
     runTest( argc, argv);
-
+    double endTime = time();
+    printf("TOTAL time: %g seconds\n", endTime - initTime);
     return EXIT_SUCCESS;
 }
 
@@ -227,9 +231,13 @@ runTest( int argc, char** argv)
 	//Copy data from main memory to device memory
 	cudaMemcpy(J_cuda, J, sizeof(float) * size_I, cudaMemcpyHostToDevice);
 
+    double initKernelTime = time();
 	//Run kernels
 	srad_cuda_1<<<dimGrid, dimBlock>>>(E_C, W_C, N_C, S_C, J_cuda, C_cuda, cols, rows, q0sqr); 
 	srad_cuda_2<<<dimGrid, dimBlock>>>(E_C, W_C, N_C, S_C, J_cuda, C_cuda, cols, rows, lambda, q0sqr); 
+    cudaThreadSynchronize();
+    double endKernelTime = time();
+    printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 
 	//Copy data from device memory to main memory
     cudaMemcpy(J, J_cuda, sizeof(float) * size_I, cudaMemcpyDeviceToHost);

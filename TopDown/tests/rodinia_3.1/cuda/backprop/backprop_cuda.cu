@@ -51,7 +51,10 @@ unsigned int num_blocks = 0;
 int
 main( int argc, char** argv) 
 {
+    double initTime = time();
 	setup(argc, argv);
+    double endTime = time();
+    printf("TOTAL time: %g seconds\n", endTime - initTime);
 }
 
 
@@ -119,7 +122,7 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
   cudaMemcpy(input_hidden_cuda, input_weights_one_dim, (in + 1) * (hid + 1) * sizeof(float), cudaMemcpyHostToDevice);
 
   
-  
+  double initKernelTime = time();
   bpnn_layerforward_CUDA<<< grid, threads >>>(input_cuda,
 	                                          output_hidden_cuda,
 											  input_hidden_cuda,
@@ -128,6 +131,8 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
 											  hid);
  
   cudaThreadSynchronize();
+  double endKernelTime = time();
+  double totalKernelTime = endKernelTime - initKernelTime;
   
   cudaError_t error = cudaGetLastError();
 	if (error != cudaSuccess) {
@@ -169,6 +174,7 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
   cudaMemcpy(input_hidden_cuda, input_weights_one_dim, (in + 1) * (hid + 1) * sizeof(float), cudaMemcpyHostToDevice);
 
 
+  initKernelTime = time();
   bpnn_adjust_weights_cuda<<< grid, threads >>>(hidden_delta_cuda,  
 												hid, 
 												input_cuda, 
@@ -176,6 +182,9 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
 												input_hidden_cuda, 
 												input_prev_weights_cuda
 												);
+  endKernelTime = time();
+  totalKernelTime += (endKernelTime - initKernelTime);
+  printf("TOTAL KERNEL time: %g seconds\n", totalKernelTime);
 
   cudaMemcpy(net->input_units, input_cuda, (in + 1) * sizeof(float), cudaMemcpyDeviceToHost);
   cudaMemcpy(input_weights_one_dim, input_hidden_cuda, (in + 1) * (hid + 1) * sizeof(float), cudaMemcpyDeviceToHost);
