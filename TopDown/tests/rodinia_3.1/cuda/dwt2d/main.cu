@@ -34,6 +34,7 @@
 #include <assert.h>
 #include <sys/time.h>
 #include <getopt.h>
+#include "../../time/time.c"
 
 #include "common.h"
 #include "components.h"
@@ -218,6 +219,7 @@ void processDWT(struct dwt *d, int forward, int writeVisual)
 
 int main(int argc, char **argv) 
 {
+    double initTime = time();
     int optindex = 0;
     char ch;
     struct option longopts[] = {
@@ -393,6 +395,8 @@ int main(int argc, char **argv)
     //writeComponent(b_wave_cuda, componentSize, ".b");
     cudaFreeHost(d->srcImg);
     cudaCheckError("Cuda free host");
-
+    
+    double endTime = time();
+    printf("TOTAL time: %g seconds\n", endTime - initTime);
     return 0;
 }

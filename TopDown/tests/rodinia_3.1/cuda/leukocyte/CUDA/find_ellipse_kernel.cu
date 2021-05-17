@@ -1,7 +1,7 @@
 #include "find_ellipse_kernel.h"
 // #include <cutil.h>
 #include <stdio.h>
-
+#include " ../../../time/time.c"
 
 // The number of sample points in each ellipse (stencil)
 #define NPOINTS 150
@@ -110,10 +110,14 @@ float *GICOV_CUDA(int grad_m, int grad_n, float *host_grad_x, float *host_grad_y
 	int threads_per_block = grad_m - (2 * MaxR);
     
 	// Execute the GICOV kernel
+    double initKernelTime = time();
 	GICOV_kernel <<< num_blocks, threads_per_block >>> (grad_m, device_gicov);
 	
 	// Check for kernel errors
 	cudaThreadSynchronize();
+    double endKernelTime = time();
+    printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
+
 	cudaError_t error = cudaGetLastError();
 	if (error != cudaSuccess) {
 		printf("GICOV kernel error: %s\n", cudaGetErrorString(error));
@@ -201,10 +205,14 @@ float *dilate_CUDA(int max_gicov_m, int max_gicov_n, int strel_m, int strel_n) {
 	int num_blocks = (int) (((float) num_threads / (float) threads_per_block) + 0.5);
 
 	// Execute the dilation kernel
+    double initKernelTime = time();
 	dilate_kernel <<< num_blocks, threads_per_block >>> (max_gicov_m, max_gicov_n, strel_m, strel_n, device_img_dilated);
 	
 	// Check for kernel errors
 	cudaThreadSynchronize();
+    double endKernelTime = time();
+    printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
+
 	cudaError_t error = cudaGetLastError();
 	if (error != cudaSuccess) {
 		printf("Dilation kernel error: %s\n", cudaGetErrorString(error));

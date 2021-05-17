@@ -33,6 +33,7 @@
 #include "common.h"
 #include "transform_buffer.h"
 #include "io.h"
+#include "../../../time/time.c"
 
 namespace dwt_cuda {
 
@@ -350,7 +351,11 @@ namespace dwt_cuda {
     
     // run kernel, possibly measure time and finally check the call
     // PERF_BEGIN
+    double initKernelTime = time();
     fdwt53Kernel<WIN_SX, WIN_SY><<<gSize, WIN_SX>>>(in, out, sx, sy, steps);
+    cudaThreadSynchronize();
+    double endKernelTime = time();
+    printf("KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
     // PERF_END("        FDWT53", sx, sy)
     // CudaDWTTester::checkLastKernelCall("FDWT 5/3 kernel");
     printf("fdwt53Kernel in launchFDWT53Kernel has finished");

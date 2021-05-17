@@ -472,6 +472,7 @@ void particleFilter(int * I, int IszX, int IszY, int Nfr, int * seed, int Nparti
 	int k;
 	//double * Ik = (double *)malloc(sizeof(double)*IszX*IszY);
 	int indX, indY;
+    double initKernelTime = 0.0;
 	for(k = 1; k < Nfr; k++){
 		long long set_arrays = get_time();
 		//printf("TIME TO SET ARRAYS TOOK: %f\n", elapsed_time(get_weights, set_arrays));
@@ -568,9 +569,17 @@ void particleFilter(int * I, int IszX, int IszY, int Nfr, int * seed, int Nparti
 		int num_blocks = ceil((double) Nparticles/(double) threads_per_block);
 		
 		//KERNEL FUNCTION CALL
+        if (k == 1) {
+            initKernelTime = get_time();
+        }
 		kernel <<< num_blocks, threads_per_block >>> (arrayX_GPU, arrayY_GPU, CDF_GPU, u_GPU, xj_GPU, yj_GPU, Nparticles);
                 cudaThreadSynchronize();
-                long long start_copy_back = get_time();
+        if (k - 1 == Nfr) {
+            cudaThreadShyncronize();
+            double endKernelTime = get_time();
+            printf("TOTAL KERNEL time: %g seconds\n", (endKernelTime - initKernelTime)*10e-6);
+        }
+        long long start_copy_back = get_time();
 		//CUDA memory copying back from GPU to CPU memory
 		cudaMemcpy(yj, yj_GPU, sizeof(double)*Nparticles, cudaMemcpyDeviceToHost);
 		cudaMemcpy(xj, xj_GPU, sizeof(double)*Nparticles, cudaMemcpyDeviceToHost);
@@ -614,6 +623,7 @@ void particleFilter(int * I, int IszX, int IszY, int Nfr, int * seed, int Nparti
 }
 int main(int argc, char * argv[]){
 	
+    double initTime = time();
 	char* usage = "naive.out -x <dimX> -y <dimY> -z <Nfr> -np <Nparticles>";
 	//check number of arguments
 	if(argc != 9)
@@ -692,5 +702,7 @@ int main(int argc, char * argv[]){
 	
 	free(seed);
 	free(I);
+    double endTime = get_time();
+    printf("TOTAL time %g seconds\n", (endTime - initTime)*10e-6); 
 	return 0;
 }

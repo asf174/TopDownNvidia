@@ -2,7 +2,7 @@
 #include "track_ellipse.h"
 
 int main(int argc, char ** argv) {
-
+    
 	// Choose the best GPU in case there are multiple available
 	choose_GPU();
 

@@ -9,6 +9,7 @@
 #include <float.h>
 #include <vector>
 #include "cuda.h"
+#include "../../time/time.c"
 
 #define min( a, b )			a > b ? b : a
 #define ceilDiv( a, b )		( a + b - 1 ) / b
@@ -63,6 +64,7 @@ __global__ void euclid(LatLong *d_locations, float *d_distances, int numRecords,
 
 int main(int argc, char* argv[])
 {
+    double initTime = time();
 	int    i=0;
 	float lat, lng;
 	int quiet=0,timing=0,platform=0,device=0;
@@ -142,11 +144,13 @@ int main(int argc, char* argv[])
     */
     cudaMemcpy( d_locations, &locations[0], sizeof(LatLong) * numRecords, cudaMemcpyHostToDevice);
 
+    double initKernelTime = time();
     /**
     * Execute kernel
     */
     euclid<<< gridDim, threadsPerBlock >>>(d_locations,d_distances,numRecords,lat,lng);
     cudaThreadSynchronize();
+    doble endKernelTime = time();    
 
     //Copy data from device memory to host memory
     cudaMemcpy( distances, d_distances, sizeof(float)*numRecords, cudaMemcpyDeviceToHost );
@@ -163,6 +167,9 @@ int main(int argc, char* argv[])
     //Free memory
 	cudaFree(d_locations);
 	cudaFree(d_distances);
+    double endTime = time();
+    printf("TOTAL time: %g seconds\n", endTime - initTime);
+    printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 
 }
 

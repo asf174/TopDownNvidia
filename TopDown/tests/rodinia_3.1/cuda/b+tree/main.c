@@ -62,7 +62,7 @@
 // #include <sys/time.h>							// (in directory known to compiler)			needed by ???
 #include <math.h>									// (in directory known to compiler)			needed by log, pow
 #include <string.h>									// (in directory known to compiler)			needed by memset
-
+#include "../../time/time.c"                        // measure time
 //======================================================================================================================================================150
 //	COMMON
 //======================================================================================================================================================150
@@ -1844,7 +1844,7 @@ int
 main(	int argc, 
 		char** argv ) 
 {
-
+    double initTime = time();
   printf("WG size of kernel 1 & 2  = %d \n", DEFAULT_ORDER);
 
 	// ------------------------------------------------------------60
@@ -2417,6 +2417,8 @@ main(	int argc,
 	// ------------------------------------------------------------60
 
 	free(mem);
+    double endTime = time();
+    printf("TOTAL time: %g seconds\n", endTime - initTime);
 	return EXIT_SUCCESS;
 
 }

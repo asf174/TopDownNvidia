@@ -726,9 +726,10 @@ void particleFilter(unsigned char * I, int IszX, int IszY, int Nfr, int * seed, 
     printf("TIME TO SEND TO GPU: %f\n", elapsed_time(send_start, send_end));
     int num_blocks = ceil((double) Nparticles / (double) threads_per_block);
 
-
+    double kernelInitTime = 0.0;
     for (k = 1; k < Nfr; k++) {
-        
+        if (k == 1)
+            kernelInitTime = time();        
         likelihood_kernel << < num_blocks, threads_per_block >> > (arrayX_GPU, arrayY_GPU, xj_GPU, yj_GPU, CDF_GPU, ind_GPU, objxy_GPU, likelihood_GPU, I_GPU, u_GPU, weights_GPU, Nparticles, countOnes, max_size, k, IszY, Nfr, seed_GPU, partial_sums);
 
         sum_kernel << < num_blocks, threads_per_block >> > (partial_sums, Nparticles);
@@ -736,7 +737,11 @@ void particleFilter(unsigned char * I, int IszX, int IszY, int Nfr, int * seed, 
         normalize_weights_kernel << < num_blocks, threads_per_block >> > (weights_GPU, Nparticles, partial_sums, CDF_GPU, u_GPU, seed_GPU);
         
         find_index_kernel << < num_blocks, threads_per_block >> > (arrayX_GPU, arrayY_GPU, CDF_GPU, u_GPU, xj_GPU, yj_GPU, weights_GPU, Nparticles);
-
+        if (k - 1 == Nfr) {
+            cudaThreadSynchronize();
+            double endKernelTime = get_time();
+            printf("TOTAL KERNEL time: %g\n seconds", (endKernelTime - initKernelTime)*10e-6);
+        }
     }//end loop
 
     //block till kernels are finished
@@ -798,6 +803,7 @@ void particleFilter(unsigned char * I, int IszX, int IszY, int Nfr, int * seed, 
 
 int main(int argc, char * argv[]) {
 
+    double initTime = get_time();
     char* usage = "double.out -x <dimX> -y <dimY> -z <Nfr> -np <Nparticles>";
     //check number of arguments
     if (argc != 9) {
@@ -875,5 +881,7 @@ int main(int argc, char * argv[]) {
 
     free(seed);
     free(I);
+    double endTime = get_time();
+    printf("TOTAL time: %g seconds\n", (endTime - initTime)*10e-6);
     return 0;
 }
