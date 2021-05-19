@@ -28,30 +28,13 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         _retire         : Retire        ; Retire part of the execution
     """
 
-    def __set_measure_parts_attributes(front_end : FrontEndNsight, 
-        back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, 
-        extra_measure : ExtraMeasureNsight):
-        """ Set attributes of measure parts."""
-        
+    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, front_end : FrontEndNsight, 
+        back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, extra_measure : ExtraMeasureNsight):
+
         self._front_end : FrontEndNsight = front_end
         self._back_end  : BackEndNsight = back_end
         self._divergence : DivergenceNsight = divergence
         self._retire : RetireNsight = retire
-                
-        pass
-
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, front_end : FrontEndNsight, 
-        back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, 
-        extra_measure : ExtraMeasureNsight):
-        
-        self.__set_measure_parts_attributes(front_end, back_end, divergence, retire, extra_measure)
-        super().__init__(program, output_file, recoltect_metrics, extra_measure)
-        pass
-
-    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, front_end : FrontEndNsight, 
-        back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, extra_measure : ExtraMeasureNsight):
-
-        self.__set_measure_parts_attributes(front_end, back_end, divergence, retire, extra_measure)
         super().__init__(program, input_file, output_file, recoltect_metrics, extra_measure)
         pass
 

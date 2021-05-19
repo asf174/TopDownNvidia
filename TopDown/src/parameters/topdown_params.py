@@ -68,17 +68,28 @@ class TopDownParameters:
     C_ALL_MEASURES_ARGUMENT_LONG_OPTION                     : str       = "--all-measurements"
     C_ALL_MEASURES_ARGUMENT_DESCRIPTION                     : str       = "show all measures computed by NVIDIA scan tool"
 
-    # recolect metrics
+    # graph argument
     C_GRAPH_ARGUMENT_SHORT_OPTION                           : str       = "-g"
     C_GRAPH_ARGUMENT_LONG_OPTION                            : str       = "--graph"
-    C_GRAPH_ARGUMENT_DESCRIPTION                            : str       = "show graph with description of results"
+    C_GRAPH_ARGUMENT_DESCRIPTION                            : str       = "show graph with description of results."
+    
+    # INPUT scan
+    C_INPUT_SCAN_FILE_ARGUMENT_SHORT_OPTION                 : str       = "-is"
+    C_INPUT_SCAN_FILE_ARGUMENT_LONG_OPTION                  : str       = "--input-scan"
+    C_INPUT_SCAN_FILE_ARGUMENT_DESCRIPTION                  : str       = "input scan file. Path to file."
+
+    # Output scan
+    C_OUTPUT_SCAN_FILE_ARGUMENT_SHORT_OPTION               : str       = "-os"
+    C_OUTPUT_SCAN_FILE_ARGUMENT_LONG_OPTION                : str       = "--output-scan"
+    C_OUTPUT_SCAN_FILE_ARGUMENT_DESCRIPTION                : str       = "output scan file. Path to file."
     
     C_INTRO_MESSAGE_GENERAL_INFORMATION                 : str       = ("\n- Program Name:    topdown.py\n" + \
                                                                     "- Author:          Alvaro Saiz (UC)\n" + \
                                                                     "- Contact info:    asf174@alumnos.unican.es\n" + \
                                                                     "- Company:         University Of Cantabria\n" + \
                                                                     "- Place:           Santander, Cantabria, Kingdom of Spain\n" + \
-                                                                    "- Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es>\n" + \
+                                                                    "- Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) " + \
+                                                                    "<pablo.prieto@unican.es>\n" + \
                                                                     "- Bugs Report:     asf174@alumnos.unican.es"+ 
                                                                     "\n\n- Licence:         GNU GPL")
 

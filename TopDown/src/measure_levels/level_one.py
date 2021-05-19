@@ -128,7 +128,21 @@ class LevelOne(LevelExecution, ABC):
         """
 
         pass
+    
+    @abstractmethod
+    def retire_ipc_per_kernel(self) -> float:
+        """
+        Get "RETIRE" IPC of execution.
 
+        Raises:
+            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not 
+            computed by the NVIDIA scan tool.
+        """
+
+        pass
+
+
+    
     @abstractmethod
     def front_end(self) -> FrontEnd:
         """
@@ -181,7 +195,7 @@ class LevelOne(LevelExecution, ABC):
             Float with percent of total stalls due to FrontEnd
         """
 
-        return self._get_stalls_of_part(self._front_end.metrics())
+        return super()._get_stalls_of_part(self._front_end.metrics())
         pass
     
     def back_end_stall(self) -> float:
@@ -192,8 +206,31 @@ class LevelOne(LevelExecution, ABC):
             Float with percent of total stalls due to BackEnd
         """
 
-        return self._get_stalls_of_part(self._back_end.metrics())
+        return super()._get_stalls_of_part(self._back_end.metrics())
         pass
+    
+    def front_end_stall_per_kernel(self) -> list[float]:
+        """
+        Returns percent of stalls due to FrontEnd part in each kernel.
+
+        Returns:
+            Float with percent of total stalls due to FrontEnd
+        """
+
+        return super()._get_stalls_of_part_per_kernel(self._front_end.metrics())
+        pass
+    
+    def back_end_stall_per_kernel(self) -> float:
+        """
+        Returns percent of stalls due to BackEnd part in each kernel.
+
+        Returns:
+            Float with percent of total stalls due to BackEnd
+        """
+
+        return supe()._get_stalls_of_part_per_kernel(self._back_end.metrics())
+        pass
+
 
     def _diver_ipc_degradation(self, warp_exec_efficiency_name  : str, issue_ipc_name : str) -> float:
         """
@@ -246,6 +283,24 @@ class LevelOne(LevelExecution, ABC):
         return super().get_device_max_ipc() - self.retire_ipc() - self._divergence_ipc_degradation()
         pass
 
+    def _stall_ipc_per_kernel(self) -> list[float]:
+        """
+        Find IPC due to STALLS
+
+        Returns:
+            Float with STALLS' IPC degradation
+        """
+        
+        max_ipc : float = super().get_device_max_ipc()
+        list_retire_ipc : list[float] = self.retire_ipc_per_kernel()
+        list_divergence_ipc_degradation : list[float] = self._divergence_ipc_degradation_per_kernel()
+        list_stall_ipc_per_kernel : list[float] = list()
+        for i in range(0, len(super().kernels())):
+            list_stall_ipc_per_kernel.append(max_ipc - list_retire_ipc[i] - list_divergence_ipc_degradation[i])
+        return list_stall_ipc_per_kernel
+        pass
+
+
     def divergence_percentage_ipc_degradation(self) -> float:
         """
         Find percentage of IPC degradation due to Divergence part.
@@ -287,6 +342,66 @@ class LevelOne(LevelExecution, ABC):
             Float with percentage of TOTAL IPC due to RETIRE
         """
         return (self.ipc()/super().get_device_max_ipc())*100.0
+ 
+    def divergence_percentage_ipc_degradation_per_kernel(self) -> list[float]:
+        """
+        Find percentage of IPC degradation due to Divergence part in each kernel.
+
+        Returns:
+            Float with the percent of Divergence's IPC degradation
+        """
+        
+        max_ipc : float = supercentage().get_device_max_ipc()
+        list_divergence_ipc_degradation : list[float] = self._divergence_ipc_degradation_percentage_kernel()
+        list_percentage_ipc_degradation_percentage_kernel : list[float] = list()
+        for i in range(0, len(supercentage().kernels())):
+         list_percentage_ipc_degradation_percentage_kernel.append((list_divergence_ipc_degradation[i]/max_ipc)*100.0)
+        return list_percentage_ipc_degradation_percentage_kernel
+        pass
+
+    def front_end_percentage_ipc_degradation_per_kernel(self) -> list[float]:
+        """
+        Find percentage of IPC degradation due to FrontEnd part.
+
+        Returns:
+            Float with the percent of FrontEnd's IPC degradation
+        """
+        
+        return ((self._stall_ipc()*(self.front_end_stall()/100.0))/self.get_device_max_ipc())*100.0
+        pass
+
+    def back_end_percentage_ipc_degradation_per_kernel(self) -> list[float]:
+        """
+        Find percentage of IPC degradation due to BackEnd part.
+
+        Returns:
+            Float with the percent of BackEnd's IPC degradation
+        """
+        
+        max_ipc : float = super().get_device_max_ipc()
+        list_stall_ipc_per_kernel : list[float] = self._stall_ipc_per_kernel()
+        list_back_end_stall_per_kernel : list[float] = self.back_end_stall_per_kernel()
+        list_back_end_percentage_ipc_degra_per_kernel : list[float] = list()
+        for i in range(0, len(super().kernels())):
+            list_back_end_percentage_ipc_degra_per_kernel.append((list_stall_ipc_per_kernel[i]*(list_back_end_stall_per_kernel[i]/100.0))/max_ipc)*100.0
+        return list_back_end_percentage_ipc_degra_per_kernel
+        pass
+
+    def retire_ipc_percentage_per_kernel(self) -> list[float]:
+        """
+        Get percentage of TOTAL IPC due to RETIRE.
+
+        Returns:
+            Float with percentage of TOTAL IPC due to RETIRE
+        """
+
+        list_ipc_per_kernel : list[float] = self.ipc_per_kernel()
+        max_ipc : float = super().get_device_max_ipc()
+        retire_ipc_percentage_per_kernel : list[float] = list()
+        for i in range(0, len(super().kernels())):
+            retire_ipc_percentage_per_kernel.append((list_ipc_per_kernel[i] / max_ipc)*100.0)
+        return retire_ipc_percentage_per_kernel 
+
 
     @abstractmethod
     def _set_front_back_divergence_retire_results(self, results_launch : str):
@@ -326,7 +441,8 @@ class LevelOne(LevelExecution, ABC):
         """
 
         labels : list = [self._front_end.name(), self._back_end.name(), self._divergence.name(), self._retire.name()]
-        values : list = [self.front_end_percentage_ipc_degradation(), self.back_end_percentage_ipc_degradation(), self.divergence_percentage_ipc_degradation(), self.retire_ipc()]
+        values : list = [self.front_end_percentage_ipc_degradation(), self.back_end_percentage_ipc_degradation(), 
+            self.divergence_percentage_ipc_degradation(), self.retire_ipc()]
         graph.add_graph(labels, values, "1")
         values = [self.front_end_stall(), self.back_end_stall()]
         graph.add_graph(labels, values, "1")

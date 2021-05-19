@@ -49,7 +49,7 @@ class Parser:
         
         self.__parser : argparse.ArgumentParse = argparse.ArgumentParser(
             formatter_class = lambda prog : argparse.HelpFormatter(prog, max_help_position = 50),
-            description = "Parser results obtainded from topdown.py")
+            description = "Parser results obtained from topdown.py")
         self.__parser._optionals.title = "Optional arguments"
         self.__add_arguments()
 

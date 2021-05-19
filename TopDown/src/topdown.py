@@ -41,32 +41,42 @@ from parameters.front_dependency_params import FrontDependencyParameters
 from parameters.front_band_width_params import FrontBandWidthParameters
 from parameters.back_memory_bound_params import BackMemoryBoundParameters
 from parameters.back_core_bound_params import BackCoreBoundParameters
-
+from argparse import RawTextHelpFormatter
 class TopDown:
     """
     Class that implements TopDown methodology over NVIDIA GPUs.
     
     Attributes:
-        __parser                        : argparse.ArgumentParse    ;   reference to arguments parser
         __level                         : int                       ;   level of the exection
+        
+        __input_scan_file               : str                       ;   input file with results computed by NVIDIA scan tool
+
         __output_file                   : str                       ;   path to log to show results or 'None' if option
                                                                         is not specified
+
         __verbose                       : bool                      ;   True to show long-descriptions of results or
                                                                         False in other case
+
         __program                       : str                       ;   path to program to be executed
+                            
         __delete_output_file_content    : bool                      ;   If '-o/--output' is set delete output's file contents 
                                                                         before write results
+
         __show_desc                     : bool                      ;   True to show descriptions of results or
                                                                         False in other case
+
         __show_metrics                  : bool                      ;   True if program has to show metrics computed by NVIDIA 
                                                                         scan tool
+
         __show_events                   : bool                      ;   True if program has to show events computed by NVIDIA scan 
                                                                         tool
+
         __show_all_measurements         : bool                      ;   True if program has to show all measures 
                                                                         computed by NVIDIA scan tool
+
         __show_graph                    : bool                      ;   True if program has to show graphs or False if not
         __output_graph_file             : str                       ;   path to graph file or 'None' if option is not specified
-
+        __output_scan_file              : str                       ;   path to scan file or 'None' if option is not specified
     """
 
     def __init__(self):
@@ -74,18 +84,18 @@ class TopDown:
         Init attributes depending of arguments.
         """
 
-        self.__parser : argparse.ArgumentParse = argparse.ArgumentParser(#prog='[/path/to/PROGRAM]',
-            formatter_class = lambda prog: argparse.HelpFormatter(prog, max_help_position = 50),
+        parser : argparse.ArgumentParse = argparse.ArgumentParser(#prog='[/path/to/PROGRAM]',
+            formatter_class = lambda prog: argparse.HelpFormatter(prog, max_help_position = 100, width=200),
             description = "TopDown methodology on NVIDIA's GPUs",
-            epilog = "Check options to run program")
-            #usage='%(prog)s [OPTIONS]') #exit_on_error=False)
-        self.__parser._optionals.title = "Optional arguments"
-        self.__add_arguments(self.__parser)
+            epilog = "Check options to run program",
+            usage='%(prog)s [OPTIONS] -f [PROGRAM] -l [NUM]') #exit_on_error=False)
+        parser._optionals.title = "Optional arguments"
+        self.__add_arguments(parser)
 
         # Save values into attributes
-        args : argparse.Namespace = self.__parser.parse_args()
+        args : argparse.Namespace = parser.parse_args()
       
-        self.__level : int = args.level[0]
+        self.__level : int = args.level
         self.__output_file : str = args.file
         self.__verbose : bool = args.verbose
         self.__program : str = args.program
@@ -96,17 +106,8 @@ class TopDown:
         self.__show_all_measurements : bool = args.all_measures
         self.__show_graph : bool = args.show_graph
         self.__output_graph_file : str = args.graph_file
-        pass
-    
-    def arg_parser(self) -> argparse :# TODO-> ArgumentParser:
-        """ 
-        Returns arg parser used by program
-
-        Returns:
-            Reference to arguments' parser 
-        """
-        
-        return self.__parser
+        self.__output_scan_file : str = args.scan_file
+        self.__input_scan_file : str = args.input_scan_file
         pass
     
     def __add_show_desc_argument(self, parser : argparse.ArgumentParser):
@@ -209,7 +210,7 @@ class TopDown:
             required = True,
             help = TopDownParameters.C_FILE_ARGUMENT_DESCRIPTION,
             default = None,
-            nargs = '+', # stored in a list 
+            nargs = '?',  
             action = DontRepeat,
             type = str, 
             #metavar='/path/to/file',
@@ -231,9 +232,8 @@ class TopDown:
             help = TopDownParameters.C_LEVEL_ARGUMENT_DESCRIPTION,
             type = int,
             action = DontRepeat,
-            nargs = 1,
-            default = -1,
-            choices = range(TopDownParameters.C_MIN_LEVEL_EXECUTION, TopDownParameters.C_MAX_LEVEL_EXECUTION + 1), # range [1,3], produces error, no if needed
+            nargs = '?',
+            choices = range(TopDownParameters.C_MIN_LEVEL_EXECUTION, TopDownParameters.C_MAX_LEVEL_EXECUTION + 1), # range [1,3], produces error, 
             metavar = '[NUM]',
             dest = 'level')
         pass
@@ -314,7 +314,49 @@ class TopDown:
             dest = 'graph_file')
         pass
 
-    def __add_ouput_file_argument(self, parser : argparse.ArgumentParser):
+    def __add_input_scan_file_argument(self, parser : argparse.ArgumentParser):
+        """ 
+        Add input scan file argument. 'C_INPUT_SCAN_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_INPUT_SCAN_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
+
+        Params:
+            parser : argparse.ArgumentParser ; group of the argument.
+        """
+        
+        parser.add_argument (
+            TopDownParameters.C_INPUT_SCAN_FILE_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_INPUT_SCAN_FILE_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_INPUT_SCAN_FILE_ARGUMENT_DESCRIPTION,
+            default = None,
+            action = DontRepeat, # preguntar TODO
+            nargs = '?', 
+            type = str, 
+            #metavar='/path/to/file',
+            dest = 'input_scan_file')
+        pass
+
+    def __add_output_scan_file_argument(self, parser : argparse.ArgumentParser):
+        """ 
+        Add output scan file argument. 'C_OUTPUT_SCAN_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
+        and 'C_OUTPUT_SCAN_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
+
+        Params:
+            parser : argparse.ArgumentParser ; group of the argument.
+        """
+        
+        parser.add_argument (
+            TopDownParameters.C_OUTPUT_SCAN_FILE_ARGUMENT_SHORT_OPTION, 
+            TopDownParameters.C_OUTPUT_SCAN_FILE_ARGUMENT_LONG_OPTION, 
+            help = TopDownParameters.C_OUTPUT_SCAN_FILE_ARGUMENT_DESCRIPTION,
+            default = None,
+            action = DontRepeat, # preguntar TODO
+            nargs = '?', 
+            type = str, 
+            #metavar='/path/to/file',
+            dest = 'scan_file')
+        pass
+
+    def __add_output_file_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add ouput-file argument. 'C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_OUTPUT_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
@@ -357,6 +399,8 @@ class TopDown:
         self.__add_all_measures_argument(parser)
         self.__add_show_graph_argument(parser)
         self.__add_ouput_graph_file_argument(parser)
+        self.__add_output_scan_file_argument(parser)
+        self.__add_input_scan_file_argument(parser)
         pass
 
     def program(self) -> str:
@@ -403,6 +447,19 @@ class TopDown:
 
         return self.__output_graph_file # descriptor to file or None
         pass
+
+    def output_scan_file(self) -> str:
+        """
+        Find path to output scan file.
+
+        Returns:
+            path to scan file to write, or None if 
+            option '-o' or '--output' has not been indicated
+        """
+
+        return self.__output_scan_file # descriptor to file or None
+        pass
+    
 
 
     def show_verbose(self) -> bool:
@@ -534,7 +591,8 @@ class TopDown:
             delete_content_file = False)
         print()
         message = "\n\nSaid that, according to the level entered by you, WE START THE ANALYSIS.\n"
-        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
+        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+            output_file = self.output_file(), delete_content_file = False)
         print()
         pass
       
@@ -629,7 +687,8 @@ class TopDown:
             stalls_constant_memory_bound_on_memory_bound_message + "\n" + stalls_constant_memory_bound_on_back_message 
             + "\n\n" + ipc_degradation_constant_memory_bound_width_message)
         #MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
-        MessageFormat().print_msg_box(messages, 1, None, level_execution.memory_constant_memory_bound().name(), self.output_file(), self.delete_output_file_content())
+        MessageFormat().print_msg_box(messages, 1, None, level_execution.memory_constant_memory_bound().name(), self.output_file(), 
+            self.delete_output_file_content())
         pass
     
     def __show_results(self, level_execution):
@@ -641,8 +700,8 @@ class TopDown:
 
         printer : MessageFormat = MessageFormat()
         message : str = "The results have been obtained correctly. General results of IPC are the following:\n\n"
-        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
-        delete_content_file = False)
+        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+            output_file = self.output_file(), delete_content_file = False)
         print()
         message = ("IPC OBTAINED: " + str(round(level_execution.ipc(),TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + " | MAXIMUM POSSIBLE IPC: " +  
             str(level_execution.get_device_max_ipc()))
@@ -651,14 +710,14 @@ class TopDown:
             message = ("\n\n'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'\n" +
                 "is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the\n" +
                 "number of warp planners per SM, as well as the number of Dispatch units of each SM.")
-            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), 
             delete_content_file = False)
             message = ("\n    As you can see, the IPC obtanied it " + "is " + str(round((level_execution.get_device_max_ipc()/level_execution.ipc())*100, 
-                TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts " +
-                "of the architecture and DIVERGENCE problems. " +
+                TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts "              + "of the architecture and DIVERGENCE problems. " +
                 "We analyze them based on the level of the TopDown:\n")
-            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
-            delete_content_file = False)
+            printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
             print()
             
         printer.print_max_line_length_message("\n", TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
@@ -672,11 +731,12 @@ class TopDown:
             printer.print_max_line_length_message("\n", TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False) 
             if self.show_desc():
                 message = "\n" + level_execution.front_end().name() + ": " + level_execution.front_end().description() + "\n\n"
-                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
-                delete_content_file = False)
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                    output_file = self.output_file(), delete_content_file = False)
                 print()
                 message = "\n" + level_execution.back_end().name() + ": " + level_execution.back_end().description() + "\n\n"
-                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                    output_file = self.output_file(), 
                 delete_content_file = False)
                 print()
                 message = "\n" + level_execution.divergence().name() + ": " + level_execution.divergence().description() + "\n\n"
@@ -725,10 +785,12 @@ class TopDown:
             print()
             if self.show_desc():
                 message = "\n" + level_execution.front_end().name() + ": " + level_execution.front_end().description() + "\n\n"
-                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), delete_content_file = False)
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                    output_file = self.output_file(), delete_content_file = False)
                 print()
                 message = "\n" + level_execution.back_end().name() + ": " + level_execution.back_end().description() + "\n\n"
-                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = self.output_file(), 
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                    output_file = self.output_file(), 
                 delete_content_file = False)
                 print()
                 message = "\n" + level_execution.divergence().name() + ": " + level_execution.divergence().description() + "\n\n"
@@ -749,11 +811,10 @@ class TopDown:
         """
         
         shell : Shell = Shell()
-        compute_capability : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/src/measure_parts/compute_capability.cu --run", None)
+        compute_capability : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/TopDown/src/measure_parts/compute_capability.cu --run", None)
         shell.launch_command("rm -f ../src/measure_parts/a.out", None) # delte file
         if not compute_capability:
             raise ModeExecutionError
-        print(compute_capability)
         compute_capability_float : float = float(compute_capability)
         if compute_capability_float < 0.0 or compute_capability_float  > TopDownParameters.C_COMPUTE_CAPABILITY_MAX_VALUE:
             raise ComputeCabilityNumberError
@@ -795,10 +856,10 @@ class TopDown:
                     DivergenceParameters.C_DIVERGENCE_NVPROF_L1_METRICS, DivergenceParameters.C_DIVERGENCE_NVPROF_L1_EVENTS)
                 retire = RetireNvprof(RetireParameters.C_RETIRE_NAME, RetireParameters.C_RETIRE_DESCRIPTION,
                     RetireParameters.C_RETIRE_NVPROF_L1_METRICS, RetireParameters.C_RETIRE_NVPROF_L1_EVENTS)
-                extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
+                extra_measure = ExtraMeasureNvprof(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_EVENTS)
-                level : LevelOneNvprof = LevelOneNvprof(program, self.output_file(), show_metrics, show_events, front_end,
-                    back_end, divergence, retire, extra_measure)
+                level : LevelOneNvprof = LevelOneNvprof(program, self.input_file(), self.output_file(), show_metrics, show_events, front_end, back_end, 
+                    divergence, retire, extra_measure)
             elif self.level() == 2:
                 front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
                     FrontEndParameters.C_FRONT_END_NVPROF_L2_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_L2_EVENTS)
@@ -822,7 +883,7 @@ class TopDown:
                 back_core_bound : BackCoreBoundNvprof = BackCoreBoundNvprof(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_METRICS, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_EVENTS)
-                level : LevelTwoNvprof = LevelTwoNvprof(program, self.output_file(), show_metrics, show_events, front_end, back_end,
+                level : LevelTwoNvprof = LevelTwoNvprof(program, self.input_file(), self.output_file(), show_metrics, show_events, front_end, back_end, 
                     divergence, retire, extra_measure, front_dependency, front_band_width, back_core_bound, back_memory_bound) 
             elif self.level() == 3:
                 front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
@@ -847,7 +908,7 @@ class TopDown:
                 back_core_bound : BackCoreBoundNvprof = BackCoreBoundNvprof(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L3_METRICS, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L3_EVENTS)
-                level : LevelThreeNvprof = LevelThreeNvprof(program, self.output_file(), show_metrics, show_events, front_end, back_end,
+                level : LevelThreeNvprof = LevelThreeNvprof(program, self.input_file(), self.output_file(), show_metrics, show_events, front_end, back_end,
                     divergence, retire, extra_meausre, front_dependency, front_band_width, back_core_bound, back_memory_bound)        
         else:
             front_end : FrontEndNsight
@@ -866,7 +927,8 @@ class TopDown:
                     RetireParameters.C_RETIRE_NSIGHT_L1_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L1_METRICS)
-                level : LevelOneNsight = LevelOneNsight(program, self.output_file(), show_metrics, front_end, back_end, divergence, retire, extra_measure)
+                level : LevelOneNsight = LevelOneNsight(program, self.input_file(), self.output_file(), show_metrics, front_end, back_end, divergence, 
+                    retire, extra_measure)
             elif self.level() == 2:
                 front_end = FrontEndNsight(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
                     FrontEndParameters.C_FRONT_END_NSIGHT_L2_METRICS)
@@ -878,16 +940,16 @@ class TopDown:
                     RetireParameters.C_RETIRE_NSIGHT_L2_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L2_METRICS)
-                front_band_width : FrontBandWidthNsight = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
-                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L2_METRICS)
-                front_dependency : FrontDependencyNsight = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
-                    FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L2_METRICS)
-                back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
-                    BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS)
-                back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
-                    BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L2_METRICS) 
-                level : LevelTwoNsight = LevelTwoNsight(program, self.output_file(), show_metrics, front_end, back_end, divergence, retire, extra_measure, front_band_width,
-                    front_dependency, back_core_bound, back_memory_bound) 
+                front_band_width : FrontBandWidthNsight = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
+                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L2_METRICS)
+                front_dependency : FrontDependencyNsight = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
+                    FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L2_METRICS)
+                back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
+                    BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS)
+                back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
+                    BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L2_METRICS) 
+                level : LevelTwoNsight = LevelTwoNsight(program, self.input_file(), self.output_file(), show_metrics, front_end, back_end, divergence, 
+                    retire, extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound) 
             elif self.level() == 3:
                 front_end = FrontEndNsight(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
                     FrontEndParameters.C_FRONT_END_NSIGHT_L3_METRICS)
@@ -899,16 +961,15 @@ class TopDown:
                     RetireParameters.C_RETIRE_NSIGHT_L3_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L3_METRICS)
-                front_band_width : FrontBandWidthNsight = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION,
-                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L3_METRICS)
-                front_dependency : FrontDependencyNsight = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION,
-                    FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L3_METRICS)
-                back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION,
-                    BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L3_METRICS)
-                back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION,
-                    BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L3_METRICS) 
-                level : LevelThreeNsight = LevelThreeNsight(program, self.output_file(), show_metrics, front_end, back_end, divergence, retire, extra_measure, front_band_width,
-                    front_dependency, back_core_bound, back_memory_bound) 
+                front_band_width : FrontBandWidthNsight = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
+                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L3_METRICS)
+                front_dependency : FrontDependencyNsight = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
+                    FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L3_METRICS)
+                back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
+                    BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L3_METRICS)
+                back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
+                    BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L3_METRICS) 
+                level : LevelThreeNsight = LevelThreeNsight(program, self.input_file(), self.output_file(), show_metrics, front_end, back_end, divergence,                      retire, extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound) 
 
         lst_output : list[str] = list() # for extra information
         level.run(lst_output)

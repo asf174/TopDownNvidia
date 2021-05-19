@@ -34,21 +34,11 @@ class LevelExecution(ABC):
         __kernels               : list[str]     ; list of kernels of execution
     """
     
-    def __init_attributes(self, program : str, input_file : str, output_file : str, recolect_metrics : bool):
-        """ Init some attributtes with arguments."""
-
+    def __init__(self, program : str, input_file : str, output_file : str, recolect_metrics : bool):
         self._program : str = program
         self._output_file : str = output_file
         self._recolect_metrics : bool = recoltect_metrics
         self._input_file : str = input_file
-        pass
-
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool):
-        self.__init_attributes(program, None, output_file, recolect_metrics)
-        pass 
-    
-    def __init__(self, program : str, input_file : str, output_file : str, recolect_metrics : bool):
-        self.__init_attributes(program, input_file, output_file, recolect_metrics)
         pass
 
     @abstractmethod
@@ -100,14 +90,14 @@ class LevelExecution(ABC):
 
         shell : Shell = Shell()
         #output_file : str = self._output_file
-        output_command : bool
+        output_command : str
         # if que muestra el resultado del NVPROF en el fichero
         #if output_file is None:
         #    output_command = shell.launch_command(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF)
         #else:
         #    output_command = shell.launch_command_redirect(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF, 
         #        output_file, True)
-        output_command = shell.launch_command(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF)
+        output_command = shell.launch_command_redirect(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF, super().input_file(), True)
         if output_command is None:
             raise ProfilingError
         return output_command  
@@ -182,6 +172,23 @@ class LevelExecution(ABC):
     def _get_stalls_of_part(self, dict : dict) -> float:
         """
         Get percent of stalls of the dictionary indicated by argument.
+
+        Params:
+            dic :   dict    ; dictionary with stalls of the corresponding part
+
+        Returns:
+            A float with percent of stalls of the dictionary indicated by argument.
+        """
+
+        total_value : float = 0.0
+        for key in dict.keys():
+            total_value += self._get_total_value_of_list(dict.get(key), True)
+        return total_value
+        pass
+    
+    def _get_stalls_of_part_per_kernel(self, dict : dict) -> float:
+        """
+        Get percent of stalls of the dictionary indicated by argument in each kernel.
 
         Params:
             dic :   dict    ; dictionary with stalls of the corresponding part
@@ -298,7 +305,7 @@ class LevelExecution(ABC):
 
     def kernel_position(kernel_name : str) -> list[int]:
         """
-        Returns a list with the position of the kernel indicated by argument.
+        Returns a list with the positions of the kernel (profiled) indicated by argument.
 
         Returns:
             list of integers with the positions of the integer

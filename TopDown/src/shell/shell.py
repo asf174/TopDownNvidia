@@ -37,9 +37,9 @@ class Shell:
                 output : sh.CompletedProcess = sh.run(args = command, shell = True, check = hasToCheck, 
                 stdout = sh.PIPE, stderr = sh.STDOUT, executable = '/bin/bash', env = dict(os.environ)) # text to use as string
                 str_output = output.stdout.decode('utf-8')
-        except : 
+        except: 
             pass # No need to do nothing, command was not executed succesfully
-        return str(str_output)
+        return str_output
         pass
     
     def launch_command(self, command: str, message : str) -> str:
@@ -79,7 +79,7 @@ class Shell:
         str_output : str = None
         try:
             str_output = self.__launch_shell_and_message(command, message, True)
-            if not str_output is None:
+            if str_output is not None:
                 open_mode : str = "a" # set as end by default
                 if not add_to_end_file:
                     open_mode = "w"
@@ -95,7 +95,7 @@ class Shell:
 
     def launch_command_show_all(self, command: str, message : str) -> str:
         """
-        Launch Shell command and show the result of the execution (including errors)
+        Launch Shell command and return the result of the execution (including errors)
         
         Params:
             command     : str   ; command to launch in shell
@@ -103,7 +103,7 @@ class Shell:
                                   'None' to show no message
 
         Returns:
-            String with the output of the command executed
+            String with (all of) the output of the command executed
         """
         return self.__launch_shell_and_message(command, message, False)
         pass
