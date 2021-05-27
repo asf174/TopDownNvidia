@@ -15,6 +15,7 @@
 #define PI 3.1415926535897932
 #define BLOCK_X 16
 #define BLOCK_Y 16
+#include "../../time/time.c"
 
 /**
 @var M value for Linear Congruential Generator (LCG); use GCC's value
@@ -575,7 +576,7 @@ void particleFilter(int * I, int IszX, int IszY, int Nfr, int * seed, int Nparti
 		kernel <<< num_blocks, threads_per_block >>> (arrayX_GPU, arrayY_GPU, CDF_GPU, u_GPU, xj_GPU, yj_GPU, Nparticles);
                 cudaThreadSynchronize();
         if (k - 1 == Nfr) {
-            cudaThreadShyncronize();
+            cudaThreadSynchronize();
             double endKernelTime = get_time();
             printf("TOTAL KERNEL time: %g seconds\n", (endKernelTime - initKernelTime)*10e-6);
         }
@@ -623,7 +624,7 @@ void particleFilter(int * I, int IszX, int IszY, int Nfr, int * seed, int Nparti
 }
 int main(int argc, char * argv[]){
 	
-    double initTime = time();
+    double initTime = get_time();
 	char* usage = "naive.out -x <dimX> -y <dimY> -z <Nfr> -np <Nparticles>";
 	//check number of arguments
 	if(argc != 9)

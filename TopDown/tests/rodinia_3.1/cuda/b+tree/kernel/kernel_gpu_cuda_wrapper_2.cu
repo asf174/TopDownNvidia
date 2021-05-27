@@ -273,9 +273,9 @@ kernel_gpu_cuda_wrapper_2(	knode *knodes,
 												ansDStart,
 												ansDLength);
 	cudaThreadSynchronize();
-    double endKernelTime = time();
+    double endKernelTime = get_time();
 	checkCUDAError("findRangeK");
-    printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - time3*10e-6);
+    printf("TOTAL KERNEL time: %g seconds\n", (endKernelTime - time3)*10e-6);
 	time4 = get_time();
 
 	//======================================================================================================================================================150

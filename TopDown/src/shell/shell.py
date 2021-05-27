@@ -35,9 +35,10 @@ class Shell:
                 if message:
                     print(message)
                 output : sh.CompletedProcess = sh.run(args = command, shell = True, check = hasToCheck, 
-                stdout = sh.PIPE, stderr = sh.STDOUT, executable = '/bin/bash', env = dict(os.environ)) # text to use as string
-                str_output = output.stdout.decode('utf-8')
-        except: 
+                stdout = sh.PIPE, stderr = sh.STDOUT, executable = '/bin/bash', env = dict(os.environ)) # text to use as string 
+                str_output = str(output.stdout, 'utf-8')
+                print(str_output)
+        except:
             pass # No need to do nothing, command was not executed succesfully
         return str_output
         pass
@@ -79,16 +80,17 @@ class Shell:
         str_output : str = None
         try:
             str_output = self.__launch_shell_and_message(command, message, True)
-            if str_output is not None:
-                open_mode : str = "a" # set as end by default
+            print(str_output)
+            if str_output is not None and dest is not None:
+                open_mode : str = "a+" # set as end by default
                 if not add_to_end_file:
-                    open_mode = "w"
+                    open_mode = "w+"
                 f : _io.TextIOWrapper = open(dest, open_mode)
                 try:
                     f.write(str_output)
                 finally:
                     f.close()
-        except:  
+        except: #TODO quiza lanzar excepcion. Si llega aki, la app muestra que NO SE HAN GENERADO LOS RESULTADOS 
             str_output = None
         return str_output
         pass

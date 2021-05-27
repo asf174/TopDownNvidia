@@ -1,1 +1,3 @@
-./pathfinder 100000 100 20 > result.txt
+# > result.txt
+topdown.py -f ./pathfinder 100000 100 20 -l3 -nd -os scan_file.txt -o results_topdown.txt
+

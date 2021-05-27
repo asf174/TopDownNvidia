@@ -25,7 +25,7 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         _front_dependency       : FrontDependencyNsight     ; front's dependency part
     """
 
-    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool,
           front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight,
           extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight,
           back_core_bound : BackCoreBoundNsight, back_memory_bound : BackMemoryBoundNsight):
@@ -34,8 +34,7 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         self._back_memory_bound : BackMemoryBoundNsight = back_memory_bound
         self._front_band_width : FrontBandWidthNsight = front_band_width
         self._front_dependency : FrontDependencyNsight = front_dependency 
-        self.__set_measure_parts_attributes(front_band_width, front_dependency, back_core_bounnd, back_memory_bound)
-        super().__init__(program, input_file, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire, extra_measure)
+        super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, front_end, back_end, divergence, retire, extra_measure)
         pass
 
     def back_core_bound(self) -> BackCoreBoundNsight:
@@ -109,41 +108,41 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         # revisar en unos usa atributo y en otros la llamada al metodo
         #  Keep Results
         converter : MessageFormat = MessageFormat()
-        if not self._recolect_metrics:
+        if not self._collect_metrics:
             return
-        if self._recolect_metrics and self._front_end.metrics_str() != "":
+        if self._collect_metrics and self._front_end.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._front_end.name()))
             super()._add_result_part_to_lst(self._front_end.metrics(), 
                 self._front_end.metrics_description(), lst_output)
-        if  self._recolect_metrics and self._front_band_width.metrics_str() != "":
+        if  self._collect_metrics and self._front_band_width.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._front_band_width.name()))
             super()._add_result_part_to_lst(self._front_band_width.metrics(), 
                 self._front_band_width.metrics_description(), lst_output)
-        if self._recolect_metrics and self._front_dependency.metrics_str() != "":
+        if self._collect_metrics and self._front_dependency.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._front_dependency.name()))
             super()._add_result_part_to_lst(self._front_dependency.metrics(), 
                 self._front_dependency.metrics_description(), lst_output)
-        if self._recolect_metrics and self._back_end.metrics_str() != "":
+        if self._collect_metrics and self._back_end.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_end.name()))
             super()._add_result_part_to_lst(self._back_end.metrics(), 
                 self._back_end.metrics_description(), lst_output)
-        if self._recolect_metrics and self._back_core_bound.metrics_str() != "":
+        if self._collect_metrics and self._back_core_bound.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_core_bound.name()))
             super()._add_result_part_to_lst(self._back_core_bound.metrics(), 
                 self._back_core_bound.metrics_description(), lst_output)
-        if self._recolect_metrics and self._back_memory_bound.metrics_str() != "":
+        if self._collect_metrics and self._back_memory_bound.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_memory_bound.name()))
             super()._add_result_part_to_lst(self._back_memory_bound.metrics(), 
                 self._back_memory_bound.metrics_description(), lst_output)
-        if self._recolect_metrics and self._divergence.metrics_str() != "":
+        if self._collect_metrics and self._divergence.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._divergence.name()))
             super()._add_result_part_to_lst(self._divergence.metrics(), 
                 self._divergence.metrics_description(), lst_output)
-        if self._recolect_metrics and  self._retire.metrics_str() != "":
+        if self._collect_metrics and  self._retire.metrics_str() != "":
                 lst_output.append(converter.underlined_str(self._retire.name()))
                 super()._add_result_part_to_lst(self._retire.metrics(), 
                 self._retire.metrics_description(), lst_output)
-        if self._recolect_metrics and self._extra_measure.metrics_str() != "":
+        if self._collect_metrics and self._extra_measure.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._extra_measure.name()))
             super()._add_result_part_to_lst(self._extra_measure.metrics(), 
                 self._extra_measure.metrics_description(), lst_output)

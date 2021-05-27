@@ -1,1 +1,1 @@
-./lavaMD -boxes1d 10
+topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f "./lavaMD -boxes1d 10"

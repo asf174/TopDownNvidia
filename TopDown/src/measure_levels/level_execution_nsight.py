@@ -17,14 +17,15 @@ class LevelExecutionNsight(LevelExecution, ABC):
      
     Attributes:
         _extra_measure      : ExtraMeasureNsight  ; support measures
-        _recolect_events    : bool          ; True if the execution must recolted the events used by NVIDIA scan tool
+        _collect_events    : bool          ; True if the execution must recolted the events used by NVIDIA scan tool
                                               or False in other case
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, extra_measure : ExtraMeasureNsight):
+    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, 
+        extra_measure : ExtraMeasureNsight):
         locale.setlocale(locale.LC_ALL, 'es_ES.utf8') # locale -a to check
         self._extra_measure : ExtraMeasureNsight = extra_measure
-        super().__init__(program, output_file, recoltect_metrics)
+        super().__init__(program, input_file, output_file, output_scan_file, collect_metrics)
         pass
 
     def extra_measure(self) -> ExtraMeasureNsight:

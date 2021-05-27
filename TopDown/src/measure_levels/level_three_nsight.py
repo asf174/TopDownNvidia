@@ -35,32 +35,15 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
         __memory_constant_memory_bound     : ConstantMemoryBoundNsight   ; constant cache part
     """
 
-    def __create_measure_part(self, memory_constant_memory_bound : MemoryConstantMemoryBoundNsight):
-        memory_constant_memory_bound = MemoryConstantMemoryBoundNsight(
+    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool,
+        front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight,
+        extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight,
+        back_core_bound : BackCoreBoundNsight, back_memory_bound : BackMemoryBoundNsight):
+
+        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNsight = MemoryConstantMemoryBoundNsight(
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_L3_METRICS)
-        pass
-
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
-        front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight,
-        extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight,
-        back_core_bound : MemoryConstantMemoryBoundNsight, back_memory_bound : BackMemoryBoundNsight):
-
-        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNsight
-        self.__create_measure_part(self.__memory_constant_memory_bound)
-        super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire,
-            extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
-        pass  
-
-
-    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
-        front_end : FrontEndNsight, back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight,
-        extra_measure : ExtraMeasureNsight, front_band_width : FrontBandWidthNsight, front_dependency : FrontDependencyNsight,
-        back_core_bound : MemoryConstantMemoryBoundNsight, back_memory_bound : BackMemoryBoundNsight):
-
-        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNsight
-        self.__create_measure_part(self.__memory_constant_memory_bound)
-        super().__init__(program, input_file, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire,
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_METRICS)
+        super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, front_end, back_end, divergence, retire,
             extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
         pass  
 
@@ -82,13 +65,13 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
             String with command to be executed
         """
 
-        print(type(self._front_band))
-        command : str = ("sudo $(which ncu) --metrics " + self._front_end.metrics_str() +
+        command : str = ("ncu --target-processes all --metrics " + self._front_end.metrics_str() +
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," +
             self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," + 
             self._front_band_width.metrics_str() + "," + self._front_dependency.metrics_str() + 
             "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
-            self.__memory_constant_memory_bound.metrics_str() + " " + self._program)
+             " " + self._program)
+        print(command)
         return command
         pass
 
@@ -104,45 +87,45 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
         #  Keep Results
         converter : MessageFormat = MessageFormat()
 
-        if not self._recolect_metrics:
+        if not self._collect_metrics:
             return
-        if self._recolect_metrics and self._front_end.metrics_str() != "":
+        if self._collect_metrics and self._front_end.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._front_end.name()))
             super()._add_result_part_to_lst(self._front_end.metrics(), 
                 self._front_end.metrics_description(), lst_output)
-        if  self._recolect_metrics and self._front_band_width.metrics_str() != "":
+        if  self._collect_metrics and self._front_band_width.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._front_band_width.name()))
             super()._add_result_part_to_lst(self._front_band_width.metrics(), 
                 self._front_band_width.metrics_description(), lst_output)      
-        if self._recolect_metrics and self._front_dependency.metrics_str() != "":
+        if self._collect_metrics and self._front_dependency.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._front_dependency.name()))
             super()._add_result_part_to_lst(self._front_dependency.metrics(), 
                 self._front_dependency.metrics_description(), lst_output)
-        if self._recolect_metrics and self._back_end.metrics_str() != "":
+        if self._collect_metrics and self._back_end.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_end.name()))
             super()._add_result_part_to_lst(self._back_end.metrics(), 
                 self._back_end.metrics_description(), lst_output)
-        if self._recolect_metrics and self._back_core_bound.metrics_str() != "":
+        if self._collect_metrics and self._back_core_bound.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_core_bound.name()))
             super()._add_result_part_to_lst(self._back_core_bound.metrics(), 
                 self._back_core_bound.metrics_description(), lst_output)
-        if self._recolect_metrics and self._back_memory_bound.metrics_str() != "":
+        if self._collect_metrics and self._back_memory_bound.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_memory_bound.name()))
             super()._add_result_part_to_lst(self._back_memory_bound.metrics(), 
                 self._back_memory_bound.metrics_description(), lst_output)
-        if  self._recolect_metrics and self.__memory_constant_memory_bound.metrics_str() != "":
+        if  self._collect_metrics and self.__memory_constant_memory_bound.metrics_str() != "":
             lst_output.append(converter.underlined_str(self.__memory_constant_memory_bound.name()))
             super()._add_result_part_to_lst(self.__memory_constant_memory_bound.metrics(), 
                 self.__memory_constant_memory_bound.metrics_description(), lst_output)
-        if self._recolect_metrics and self._divergence.metrics_str() != "":
+        if self._collect_metrics and self._divergence.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._divergence.name()))
             super()._add_result_part_to_lst(self._divergence.metrics(), 
                 self._divergence.metrics_description(), lst_output)
-        if self._recolect_metrics and  self._retire.metrics_str() != "":
+        if self._collect_metrics and  self._retire.metrics_str() != "":
                 lst_output.append(converter.underlined_str(self._retire.name()))
                 super()._add_result_part_to_lst(self._retire.metrics(), 
                 self._retire.metrics_description(), lst_output)
-        if self._recolect_metrics and self._extra_measure.metrics_str() != "":
+        if self._collect_metrics and self._extra_measure.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._extra_measure.name()))
             super()._add_result_part_to_lst(self._extra_measure.metrics(), 
                 self._extra_measure.metrics_description(), lst_output)

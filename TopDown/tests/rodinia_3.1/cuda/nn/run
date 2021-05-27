@@ -1,1 +1,1 @@
-./nn filelist_4 -r 5 -lat 30 -lng 90
+topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./nn filelist_4 "-r 5 -lat 30 -lng 90"

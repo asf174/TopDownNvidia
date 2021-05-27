@@ -20,7 +20,7 @@
 #include <string.h>
 #include <math.h>
 #include <cuda.h>
-
+#include "../../time/time.c"
 #define MAX_THREADS_PER_BLOCK 512
 
 int no_of_nodes;
@@ -208,7 +208,7 @@ void BFSGraph( int argc, char** argv)
 		k++;
 	}
 	while(stop);
-    cudaThreadShyncronize();
+    cudaThreadSynchronize();
     double endKernelTime = time();
     printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 

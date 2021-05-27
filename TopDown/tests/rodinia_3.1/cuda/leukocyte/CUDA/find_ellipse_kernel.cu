@@ -1,7 +1,7 @@
 #include "find_ellipse_kernel.h"
 // #include <cutil.h>
 #include <stdio.h>
-#include " ../../../time/time.c"
+#include "../../../time/time.c"
 
 // The number of sample points in each ellipse (stencil)
 #define NPOINTS 150

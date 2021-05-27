@@ -16,25 +16,25 @@ class LevelExecutionNvprof(LevelExecution, ABC):
      
     Attributes:
          _extra_measure      : ExtraMeasureNvprof  ; support measures
-        _recolect_events    : bool          ; True if the execution must recolted the events used by NVIDIA scan tool
+        _collect_events    : bool          ; True if the execution must recolted the events used by NVIDIA scan tool
                                               or False in other case
     """
 
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool, extra_measure : ExtraMeasureNvprof):
+    def __init__(self, program : str, input_file : str, output_file : str, collect_metrics : bool, collect_events : bool, extra_measure : ExtraMeasureNvprof):
         self._extra_measure : ExtraMeasureNvprof = extra_measure
-        self._recolect_events = recolect_events
-        super().__init__(program, output_file, recoltect_metrics)
+        self._collect_events = collect_events
+        super().__init__(program, input_file, output_file, collect_metrics)
         pass
 
-    def recolect_events(self) -> bool:
+    def collect_events(self) -> bool:
         """
-        Check if execution must recolect NVIDIA's scan tool events.
+        Check if execution must collect NVIDIA's scan tool events.
 
         Returns:
-            Boolean with True if it has to recolect events or False if not
+            Boolean with True if it has to collect events or False if not
         """
 
-        return self._recolect_events
+        return self._collect_events
         pass
 
     def extra_measure(self) -> ExtraMeasureNvprof:

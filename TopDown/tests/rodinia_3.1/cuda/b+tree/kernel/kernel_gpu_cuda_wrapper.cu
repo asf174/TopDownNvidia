@@ -30,7 +30,7 @@ extern "C" {
 //======================================================================================================================================================150
 
 #include "./kernel_gpu_cuda_wrapper.h"				// (in current directory)
-#include "../../time/time.c"                        // to measure time
+//#include "../../../time/time.c"                        // to measure time
 
 //========================================================================================================================================================================================================200
 //	KERNEL_GPU_CUDA_WRAPPER FUNCTION
@@ -224,8 +224,8 @@ kernel_gpu_cuda_wrapper(record *records,
 											keysD,
 											ansD);
 	cudaThreadSynchronize();
-    double endKernelTime = time();
-    printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - time3*10e-6);
+    double endKernelTime = get_time();
+    printf("TOTAL KERNEL time: %g seconds\n", (endKernelTime - time3)*10e-6);
 	checkCUDAError("findK");
 
 	time4 = get_time();

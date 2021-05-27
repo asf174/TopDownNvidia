@@ -150,7 +150,7 @@ int main(int argc, char* argv[])
     */
     euclid<<< gridDim, threadsPerBlock >>>(d_locations,d_distances,numRecords,lat,lng);
     cudaThreadSynchronize();
-    doble endKernelTime = time();    
+    double endKernelTime = time();    
 
     //Copy data from device memory to host memory
     cudaMemcpy( distances, d_distances, sizeof(float)*numRecords, cudaMemcpyDeviceToHost );

@@ -20,7 +20,7 @@ CUFILES		:= mummergpu.cu
 # C/C++ source files (compiled with gcc / c++)
 CCFILES		:= \
 	 mummergpu_gold.cpp suffix-tree.cpp PoolMalloc.cpp
-
+CUDA_LIB_DIR=/usr/local/cuda
 ################################################################################
 # Rules and targets
 

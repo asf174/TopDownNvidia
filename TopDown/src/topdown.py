@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Program that implements the Top Down methodology over NVIDIA GPUs.
 
@@ -49,7 +50,7 @@ class TopDown:
     Attributes:
         __level                         : int                       ;   level of the exection
         
-        __input_scan_file               : str                       ;   input file with results computed by NVIDIA scan tool
+        __input_output_scan_file               : str                       ;   input file with results computed by NVIDIA scan tool
 
         __output_file                   : str                       ;   path to log to show results or 'None' if option
                                                                         is not specified
@@ -76,7 +77,7 @@ class TopDown:
 
         __show_graph                    : bool                      ;   True if program has to show graphs or False if not
         __output_graph_file             : str                       ;   path to graph file or 'None' if option is not specified
-        __output_scan_file              : str                       ;   path to scan file or 'None' if option is not specified
+        __output_output_scan_file              : str                       ;   path to scan file or 'None' if option is not specified
     """
 
     def __init__(self):
@@ -98,7 +99,7 @@ class TopDown:
         self.__level : int = args.level
         self.__output_file : str = args.file
         self.__verbose : bool = args.verbose
-        self.__program : str = args.program
+        self.__program : str = " ".join(str(string) for string in args.program)
         self.__delete_output_file_content : bool = args.delete_output_file_content
         self.__show_desc : bool = args.show_desc
         self.__show_metrics : bool = args.metrics
@@ -106,7 +107,7 @@ class TopDown:
         self.__show_all_measurements : bool = args.all_measures
         self.__show_graph : bool = args.show_graph
         self.__output_graph_file : str = args.graph_file
-        self.__output_scan_file : str = args.scan_file
+        self.__output_scan_file : str = args.output_scan_file
         self.__input_scan_file : str = args.input_scan_file
         pass
     
@@ -210,7 +211,7 @@ class TopDown:
             required = True,
             help = TopDownParameters.C_FILE_ARGUMENT_DESCRIPTION,
             default = None,
-            nargs = '?',  
+            nargs = '*',  
             action = DontRepeat,
             type = str, 
             #metavar='/path/to/file',
@@ -353,7 +354,7 @@ class TopDown:
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
-            dest = 'scan_file')
+            dest = 'output_scan_file')
         pass
 
     def __add_output_file_argument(self, parser : argparse.ArgumentParser):
@@ -529,6 +530,18 @@ class TopDown:
         """
 
         return self.__delete_output_file_content
+        pass
+
+    def input_file(self) -> str:
+        """
+        Find path to output file.
+
+        Returns:
+            path to file with results computed by NVIDIA scan tool, or None if 
+            option '-is' or '--input-scan' has not been indicated
+        """
+
+        return self.__input_scan_file 
         pass
 
     def show_graph(self) -> bool:
@@ -825,7 +838,7 @@ class TopDown:
 
     def launch(self):
         """ Launch execution."""
-        
+
         if self.show_verbose():
             # introduction
             self.__intro_message()
@@ -858,7 +871,7 @@ class TopDown:
                     RetireParameters.C_RETIRE_NVPROF_L1_METRICS, RetireParameters.C_RETIRE_NVPROF_L1_EVENTS)
                 extra_measure = ExtraMeasureNvprof(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_EVENTS)
-                level : LevelOneNvprof = LevelOneNvprof(program, self.input_file(), self.output_file(), show_metrics, show_events, front_end, back_end, 
+                level : LevelOneNvprof = LevelOneNvprof(program, self.input_file(), self.output_file(), self.output_output_scan_file(), show_metrics, show_events, front_end, back_end, 
                     divergence, retire, extra_measure)
             elif self.level() == 2:
                 front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
@@ -883,7 +896,7 @@ class TopDown:
                 back_core_bound : BackCoreBoundNvprof = BackCoreBoundNvprof(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_METRICS, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_EVENTS)
-                level : LevelTwoNvprof = LevelTwoNvprof(program, self.input_file(), self.output_file(), show_metrics, show_events, front_end, back_end, 
+                level : LevelTwoNvprof = LevelTwoNvprof(program, self.input_file(), self.output_file(), self.output_output_scan_file(), show_metrics, show_events, front_end, back_end, 
                     divergence, retire, extra_measure, front_dependency, front_band_width, back_core_bound, back_memory_bound) 
             elif self.level() == 3:
                 front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
@@ -908,7 +921,7 @@ class TopDown:
                 back_core_bound : BackCoreBoundNvprof = BackCoreBoundNvprof(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L3_METRICS, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L3_EVENTS)
-                level : LevelThreeNvprof = LevelThreeNvprof(program, self.input_file(), self.output_file(), show_metrics, show_events, front_end, back_end,
+                level : LevelThreeNvprof = LevelThreeNvprof(program, self.input_file(), self.output_file(), self.output_output_scan_file(), show_metrics, show_events, front_end, back_end,
                     divergence, retire, extra_meausre, front_dependency, front_band_width, back_core_bound, back_memory_bound)        
         else:
             front_end : FrontEndNsight
@@ -927,7 +940,7 @@ class TopDown:
                     RetireParameters.C_RETIRE_NSIGHT_L1_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L1_METRICS)
-                level : LevelOneNsight = LevelOneNsight(program, self.input_file(), self.output_file(), show_metrics, front_end, back_end, divergence, 
+                level : LevelOneNsight = LevelOneNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, back_end, divergence, 
                     retire, extra_measure)
             elif self.level() == 2:
                 front_end = FrontEndNsight(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
@@ -961,15 +974,16 @@ class TopDown:
                     RetireParameters.C_RETIRE_NSIGHT_L3_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L3_METRICS)
-                front_band_width : FrontBandWidthNsight = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
+                front_band_width : FrontBandWidthNsight = FrontBandWidthNsight(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
                     FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L3_METRICS)
-                front_dependency : FrontDependencyNsight = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
+                front_dependency : FrontDependencyNsight =  FrontDependencyNsight(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
                     FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L3_METRICS)
-                back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
+                back_memory_bound : BackMemoryBoundNsight = BackMemoryBoundNsight(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L3_METRICS)
-                back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
+                back_core_bound : BackCoreBoundNsight = BackCoreBoundNsight(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L3_METRICS) 
-                level : LevelThreeNsight = LevelThreeNsight(program, self.input_file(), self.output_file(), show_metrics, front_end, back_end, divergence,                      retire, extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound) 
+                level : LevelThreeNsight = LevelThreeNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, back_end, divergence,
+                    retire, extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound) 
 
         lst_output : list[str] = list() # for extra information
         level.run(lst_output)

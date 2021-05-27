@@ -1,1 +1,1 @@
-./b+tree.out file ../../data/b+tree/mil.txt command ../../data/b+tree/command.txt
+topdown.py -f bfs ../../../../../../data/bfs/graph1MW_6.txt -l3 -nd -os scan_file.txt -o results_topdown.txt -l3 -nd -os scan_file.txt -o results_topdown.txt 

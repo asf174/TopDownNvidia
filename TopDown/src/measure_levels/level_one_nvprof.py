@@ -27,15 +27,15 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         _divergence     : Divergence    ; Divergence part of the execution
         _retire         : Retire        ; Retire part of the execution
     """
-    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
-        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
-        extra_measure : ExtraMeasureNvprof):
+    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, 
+        collect_events : bool, front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, 
+        retire : RetireNvprof, extra_measure : ExtraMeasureNvprof):
 
         self._front_end : FrontEndNvprof = front_end
         self._back_end  : BackEndNvprof = back_end
         self._divergence : DivergenceNvprof = divergence
         self._retire : RetireNvprof = retire
-        super().__init__(program, input_file, output_file, recoltect_metrics, recolect_events, extra_measure)
+        super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, collect_events, extra_measure)
         pass
 
     def retire_ipc(self) -> float:
@@ -227,51 +227,51 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
 
         converter : MessageFormat = MessageFormat()
         #  Keep Results
-        if not self._recolect_metrics and not self._recolect_events:
+        if not self._collect_metrics and not self._collect_events:
             return
-        if (self._recolect_metrics and self._front_end.metrics_str() != "" or 
-            self._recolect_events and self._front_end.events_str() != ""):
+        if (self._collect_metrics and self._front_end.metrics_str() != "" or 
+            self._collect_events and self._front_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_end.name()))
-        if self._recolect_metrics and self._front_end.metrics_str() != "":
+        if self._collect_metrics and self._front_end.metrics_str() != "":
             super()._add_result_part_to_lst(self._front_end.metrics(), 
                 self._front_end.metrics_description(), lst_output, True)
-        if self._recolect_events and self._front_end.events_str() != "":
+        if self._collect_events and self._front_end.events_str() != "":
                 super()._add_result_part_to_lst(self._front_end.events(), 
                 self._front_end.events_description(), "", lst_output, False) 
-        if (self._recolect_metrics and self._back_end.metrics_str() != "" or 
-            self._recolect_events and self._back_end.events_str() != ""):
+        if (self._collect_metrics and self._back_end.metrics_str() != "" or 
+            self._collect_events and self._back_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_end.name()))
-        if self._recolect_metrics and self._back_end.metrics_str() != "":
+        if self._collect_metrics and self._back_end.metrics_str() != "":
             super()._add_result_part_to_lst(self._back_end.metrics(), 
                 self._back_end.metrics_description(), lst_output, True)
-        if self._recolect_events and self._back_end.events_str() != "":
+        if self._collect_events and self._back_end.events_str() != "":
                 super()._add_result_part_to_lst(self._back_end.events(), 
                 self._back_end.events_description(), lst_output, False)
-        if (self._recolect_metrics and self._divergence.metrics_str() != "" or 
-            self._recolect_events and self._divergence.events_str() != ""):
+        if (self._collect_metrics and self._divergence.metrics_str() != "" or 
+            self._collect_events and self._divergence.events_str() != ""):
             lst_output.append(converter.underlined_str(self._divergence.name()))
-        if self._recolect_metrics and self._divergence.metrics_str() != "":
+        if self._collect_metrics and self._divergence.metrics_str() != "":
             super()._add_result_part_to_lst(self._divergence.metrics(), 
                 self._divergence.metrics_description(), lst_output, True)
-        if self._recolect_events and self._divergence.events_str() != "":
+        if self._collect_events and self._divergence.events_str() != "":
                 super()._add_result_part_to_lst(self._divergence.events(), 
                 self._divergence.events_description(),lst_output, False)
-        if (self._recolect_metrics and self._retire.metrics_str() != "" or 
-            self._recolect_events and self._retire.events_str() != ""):
+        if (self._collect_metrics and self._retire.metrics_str() != "" or 
+            self._collect_events and self._retire.events_str() != ""):
             lst_output.append(converter.underlined_str(self._retire.name()))
-        if self._recolect_metrics and  self._retire.metrics_str() != "":
+        if self._collect_metrics and  self._retire.metrics_str() != "":
                 super()._add_result_part_to_lst(self._retire.metrics(), 
                 self._retire.metrics_description(), lst_output, True)
-        if self._recolect_events and self._retire.events_str() != "":
+        if self._collect_events and self._retire.events_str() != "":
                 super()._add_result_part_to_lst(self._retire.events(), 
                 self._retire.events_description(), lst_output, False)
-        if (self._recolect_metrics and self._extra_measure.metrics_str() != "" or 
-            self._recolect_events and self._extra_measure.events_str() != ""):
+        if (self._collect_metrics and self._extra_measure.metrics_str() != "" or 
+            self._collect_events and self._extra_measure.events_str() != ""):
             lst_output.append(converter.underlined_str(self._extra_measure.name()))
-        if self._recolect_metrics and self._extra_measure.metrics_str() != "":
+        if self._collect_metrics and self._extra_measure.metrics_str() != "":
             super()._add_result_part_to_lst(self._extra_measure.metrics(), 
                 self._extra_measure.metrics_description(), lst_output, True)
-        if self._recolect_events and self._extra_measure.events_str() != "":
+        if self._collect_events and self._extra_measure.events_str() != "":
                 super()._add_result_part_to_lst(self._extra_measure.events(), 
                 self._extra_measure.events_description(), lst_output, False)
         lst_output.append("\n")

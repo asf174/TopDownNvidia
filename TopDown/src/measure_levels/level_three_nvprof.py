@@ -35,31 +35,29 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
     """
     
     def __create_measure_part(self, memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof):
-        memory_constant_memory_bound = MemoryConstantMemoryBoundNvprof(
+        pass
+
+    def __init__(self, program : str, output_file : str, output_scan_file : str, collect_metrics : bool, collect_events : bool,
+        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
+        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+        back_core_bound : MemoryConstantMemoryBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
+        
+        self.__memory_constant_memory_bound = MemoryConstantMemoryBoundNvprof(
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_L3_METRICS,
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_L3_EVENTS)
-        pass
-
-    def __init__(self, program : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
-        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
-        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
-        back_core_bound : MemoryConstantMemoryBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
-        
-        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof
-        self.__create_measure_part(self.__memory_constant_memory_bound)
-        super().__init__(program, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire,
+        super().__init__(program, output_file, output_scan_file, collect_metrics, collect_events, front_end, back_end, divergence, retire,
             extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
         pass
 
-    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, recolect_events : bool,
+    def __init__(self, program : str, input_file : str, output_file : str, collect_metrics : bool, collect_events : bool,
         front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
         extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
         back_core_bound : MemoryConstantMemoryBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
         
         self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof
         self.__create_measure_part(self.__memory_constant_memory_bound)
-        super().__init__(program, input_file, output_file, recoltect_metrics, recolect_events, front_end, back_end, divergence, retire,
+        super().__init__(program, input_file, output_file, collect_metrics, collect_events, front_end, back_end, divergence, retire,
             extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
         pass
 
@@ -105,96 +103,96 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         # revisar en unos usa atributo y en otros la llamada al metodo TODO
         #  Keep Results
         converter : MessageFormat = MessageFormat()
-        if not self._recolect_metrics and not self._recolect_events:
+        if not self._collect_metrics and not self._collect_events:
             return
-        if (self._recolect_metrics and self._front_end.metrics_str() != "" or 
-            self._recolect_events and self._front_end.events_str() != ""):
+        if (self._collect_metrics and self._front_end.metrics_str() != "" or 
+            self._collect_events and self._front_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_end.name()))
-        if self._recolect_metrics and self._front_end.metrics_str() != "":
+        if self._collect_metrics and self._front_end.metrics_str() != "":
             super()._add_result_part_to_lst(self._front_end.metrics(), 
                 self._front_end.metrics_description(), lst_output, True)
-        if self._recolect_events and self._front_end.events_str() != "":
+        if self._collect_events and self._front_end.events_str() != "":
                 super()._add_result_part_to_lst(self._front_end.events(), 
                 self._front_end.events_description(), "", lst_output, False)  
-        if (self._recolect_metrics and self._front_band_width.metrics_str() != "" or 
-            self._recolect_events and self._front_band_width.events_str() != ""):
+        if (self._collect_metrics and self._front_band_width.metrics_str() != "" or 
+            self._collect_events and self._front_band_width.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_band_width.name()))
-        if  self._recolect_metrics and self._front_band_width.metrics_str() != "":
+        if  self._collect_metrics and self._front_band_width.metrics_str() != "":
             super()._add_result_part_to_lst(self._front_band_width.metrics(), 
                 self._front_band_width.metrics_description(), lst_output, True)
-        if self._recolect_events and self._front_band_width.events_str() != "":
+        if self._collect_events and self._front_band_width.events_str() != "":
                 super()._add_result_part_to_lst(self._front_band_width.events(), 
                 self._front_band_width.events_description(), lst_output, False)
-        if (self._recolect_metrics and self._front_dependency.metrics_str() != "" or 
-            self._recolect_events and self._front_dependency.events_str() != ""):
+        if (self._collect_metrics and self._front_dependency.metrics_str() != "" or 
+            self._collect_events and self._front_dependency.events_str() != ""):
             lst_output.append(converter.underlined_str(self._front_dependency.name()))
-        if self._recolect_metrics and self._front_dependency.metrics_str() != "":
+        if self._collect_metrics and self._front_dependency.metrics_str() != "":
             super()._add_result_part_to_lst(self._front_dependency.metrics(), 
                 self._front_dependency.metrics_description(), lst_output, True)
-        if self._recolect_events and self._front_dependency.events_str() != "":
+        if self._collect_events and self._front_dependency.events_str() != "":
                 super()._add_result_part_to_lst(self._front_dependency.events(), 
                 self._front_dependency.events_description(), lst_output, False)
-        if (self._recolect_metrics and self._back_end.metrics_str() != "" or 
-            self._recolect_events and self._back_end.events_str() != ""):
+        if (self._collect_metrics and self._back_end.metrics_str() != "" or 
+            self._collect_events and self._back_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_end.name()))
-        if self._recolect_metrics and self._back_end.metrics_str() != "":
+        if self._collect_metrics and self._back_end.metrics_str() != "":
             super()._add_result_part_to_lst(self._back_end.metrics(), 
                 self._back_end.metrics_description(), lst_output, True)
-        if self._recolect_events and self._back_end.events_str() != "":
+        if self._collect_events and self._back_end.events_str() != "":
                 super()._add_result_part_to_lst(self._back_end.events(), 
                 self._back_end.events_description(), lst_output, False)
-        if (self._recolect_metrics and self._back_core_bound.metrics_str() != "" or 
-            self._recolect_events and self._back_core_bound.events_str() != ""):
+        if (self._collect_metrics and self._back_core_bound.metrics_str() != "" or 
+            self._collect_events and self._back_core_bound.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_core_bound.name()))
-        if self._recolect_metrics and self._back_core_bound.metrics_str() != "":
+        if self._collect_metrics and self._back_core_bound.metrics_str() != "":
             super()._add_result_part_to_lst(self._back_core_bound.metrics(), 
                 self._back_core_bound.metrics_description(), lst_output, True)
-        if self._recolect_events and self._back_core_bound.events_str() != "":
+        if self._collect_events and self._back_core_bound.events_str() != "":
                 super()._add_result_part_to_lst(self._back_core_bound.events(), 
                 self._back_core_bound.events_description(), lst_output, False) 
-        if (self._recolect_metrics and self._back_memory_bound.metrics_str() != "" or 
-            self._recolect_events and self._back_memory_bound.events_str() != ""):
+        if (self._collect_metrics and self._back_memory_bound.metrics_str() != "" or 
+            self._collect_events and self._back_memory_bound.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_memory_bound.name()))
-        if self._recolect_metrics and self._back_memory_bound.metrics_str() != "":
+        if self._collect_metrics and self._back_memory_bound.metrics_str() != "":
             super()._add_result_part_to_lst(self._back_memory_bound.metrics(), 
                 self._back_memory_bound.metrics_description(), lst_output, True)
-        if self._recolect_events and self._back_memory_bound.events_str() != "":
+        if self._collect_events and self._back_memory_bound.events_str() != "":
                 super()._add_result_part_to_lst(self._back_memory_bound.events(), 
                 self._back_memory_bound.events_description(), lst_output, False)
-        if (self._recolect_metrics and self.__memory_constant_memory_bound.metrics_str() != "" or 
-            self._recolect_events and self.__memory_constant_memory_bound.events_str() != ""):
+        if (self._collect_metrics and self.__memory_constant_memory_bound.metrics_str() != "" or 
+            self._collect_events and self.__memory_constant_memory_bound.events_str() != ""):
             lst_output.append(converter.underlined_str(self.__memory_constant_memory_bound.name()))
-        if  self._recolect_metrics and self.__memory_constant_memory_bound.metrics_str() != "":
+        if  self._collect_metrics and self.__memory_constant_memory_bound.metrics_str() != "":
             super()._add_result_part_to_lst(self.__memory_constant_memory_bound.metrics(), 
                 self.__memory_constant_memory_bound.metrics_description(), lst_output, True)
-        if  self._recolect_events and self.__memory_constant_memory_bound.events_str() != "":
+        if  self._collect_events and self.__memory_constant_memory_bound.events_str() != "":
                 super()._add_result_part_to_lst(self.__memory_constant_memory_bound.events(), 
                 self.__memory_constant_memory_bound.events_description(), lst_output, False)
-        if (self._recolect_metrics and self._divergence.metrics_str() != "" or 
-            self._recolect_events and self._divergence.events_str() != ""):
+        if (self._collect_metrics and self._divergence.metrics_str() != "" or 
+            self._collect_events and self._divergence.events_str() != ""):
             lst_output.append(converter.underlined_str(self._divergence.name()))
-        if self._recolect_metrics and self._divergence.metrics_str() != "":
+        if self._collect_metrics and self._divergence.metrics_str() != "":
             super()._add_result_part_to_lst(self._divergence.metrics(), 
                 self._divergence.metrics_description(), lst_output, True)
-        if self._recolect_events and self._divergence.events_str() != "":
+        if self._collect_events and self._divergence.events_str() != "":
                 super()._add_result_part_to_lst(self._divergence.events(), 
                 self._divergence.events_description(),lst_output, False)
-        if (self._recolect_metrics and self._retire.metrics_str() != "" or 
-            self._recolect_events and self._retire.events_str() != ""):
+        if (self._collect_metrics and self._retire.metrics_str() != "" or 
+            self._collect_events and self._retire.events_str() != ""):
             lst_output.append(converter.underlined_str(self._retire.name()))
-        if self._recolect_metrics and  self._retire.metrics_str() != "":
+        if self._collect_metrics and  self._retire.metrics_str() != "":
                 super()._add_result_part_to_lst(self._retire.metrics(), 
                 self._retire.metrics_description(), lst_output, True)
-        if self._recolect_events and self._retire.events_str() != "":
+        if self._collect_events and self._retire.events_str() != "":
                 super()._add_result_part_to_lst(self._retire.events(), 
                 self._retire.events_description(), lst_output, False)
-        if (self._recolect_metrics and self._extra_measure.metrics_str() != "" or 
-            self._recolect_events and self._extra_measure.events_str() != ""):
+        if (self._collect_metrics and self._extra_measure.metrics_str() != "" or 
+            self._collect_events and self._extra_measure.events_str() != ""):
             lst_output.append(converter.underlined_str(self._extra_measure.name()))
-        if self._recolect_metrics and self._extra_measure.metrics_str() != "":
+        if self._collect_metrics and self._extra_measure.metrics_str() != "":
             super()._add_result_part_to_lst(self._extra_measure.metrics(), 
                 self._extra_measure.metrics_description(), lst_output, True)
-        if self._recolect_events and self._extra_measure.events_str() != "":
+        if self._collect_events and self._extra_measure.events_str() != "":
                 super()._add_result_part_to_lst(self._extra_measure.events(), 
                 self._extra_measure.events_description(), lst_output, False)
         lst_output.append("\n")

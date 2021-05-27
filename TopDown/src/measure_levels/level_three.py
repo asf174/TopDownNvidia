@@ -56,7 +56,7 @@ class LevelThree(LevelTwo):
         pass
 
 
-    def set_results(output_command : str):
+    def set_results(self,output_command : str):
         """
         Set results of execution ALREADY DONE. Results are in the argument.
 

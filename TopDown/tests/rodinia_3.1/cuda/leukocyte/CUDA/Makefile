@@ -7,7 +7,9 @@ endif
 # C compiler
 CC = gcc
 CC_FLAGS = -g -O3 -Wall -I$(MATRIX_DIR)
+CUDA_LIB_DIR=/usr/local/cuda
 
+CUDA_DIR=/usr
 # CUDA compiler
 NVCC = $(CUDA_DIR)/bin/nvcc
 NVCC_FLAGS = -I$(CUDA_DIR)/include -I$(SDK_DIR)/common/inc

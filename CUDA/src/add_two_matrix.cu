@@ -5,7 +5,7 @@
 #include <time.h>
 
 #ifndef N 
-	#define N 15000
+	#define N 200
 #endif
 
 #ifndef numThreadsPerBlock
@@ -31,7 +31,6 @@ __global__ void addMatrix(int* a, int* b, int* result, int size)
 	int idx = blockDim.x*blockIdx.x + threadIdx.x;	
 	if (idx < size)
 		result[idx] = a[idx] + b[idx];
-    printf("Hola");
 	/*if (result[idx] == 4)
 		result[idx*result[idx] % size] = a[idx*result[idx] % size] + b[idx*result[idx] % size];
 	else
@@ -88,6 +87,8 @@ main(int argc, char* argv[])
 {
     int i = 0;
 top:
+    if(argc > 1)
+        printf("%s", argv[1]);
     i++;
 	// create events to measure time
 	cudaEvent_t start, stop;
@@ -160,4 +161,5 @@ top:
 	//printf("%g %d\n",endtime - initime,numThreadsPerBlock);
     //if (i < 3)
     // goto top;
+    return 0;
 }

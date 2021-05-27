@@ -1,0 +1,1097 @@
+==PROF== Connected to process 53288 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/TopDown/tests/rodinia_3.1/cuda/particlefilter/particlefilter_float)
+==PROF== Profiling "likelihood_kernel" - 1: 0%....50%....100% - 9 passes
+==PROF== Profiling "sum_kernel(double*, int)" - 2: 0%....50%....100% - 9 passes
+==PROF== Profiling "normalize_weights_kernel" - 3: 0%....50%....100% - 9 passes
+==PROF== Profiling "find_index_kernel" - 4: 0%....50%....100% - 9 passes
+==PROF== Profiling "likelihood_kernel" - 5: 0%....50%....100% - 9 passes
+==PROF== Profiling "sum_kernel(double*, int)" - 6: 0%....50%....100% - 9 passes
+==PROF== Profiling "normalize_weights_kernel" - 7: 0%....50%....100% - 9 passes
+==PROF== Profiling "find_index_kernel" - 8: 0%....50%....100% - 9 passes
+==PROF== Profiling "likelihood_kernel" - 9: 0%....50%....100% - 9 passes
+==PROF== Profiling "sum_kernel(double*, int)" - 10: 0%....50%....100% - 9 passes
+==PROF== Profiling "normalize_weights_kernel" - 11: 0%....50%....100% - 9 passes
+==PROF== Profiling "find_index_kernel" - 12: 0%....50%....100% - 9 passes
+==PROF== Profiling "likelihood_kernel" - 13: 0%....50%....100% - 9 passes
+==PROF== Profiling "sum_kernel(double*, int)" - 14: 0%....50%....100% - 9 passes
+==PROF== Profiling "normalize_weights_kernel" - 15: 0%....50%....100% - 9 passes
+==PROF== Profiling "find_index_kernel" - 16: 0%....50%....100% - 9 passes
+==PROF== Profiling "likelihood_kernel" - 17: 0%....50%....100% - 9 passes
+==PROF== Profiling "sum_kernel(double*, int)" - 18: 0%....50%....100% - 9 passes
+==PROF== Profiling "normalize_weights_kernel" - 19: 0%....50%....100% - 9 passes
+==PROF== Profiling "find_index_kernel" - 20: 0%....50%....100% - 9 passes
+==PROF== Profiling "likelihood_kernel" - 21: 0%....50%....100% - 9 passes
+==PROF== Profiling "sum_kernel(double*, int)" - 22: 0%....50%....100% - 9 passes
+==PROF== Profiling "normalize_weights_kernel" - 23: 0%....50%....100% - 9 passes
+==PROF== Profiling "find_index_kernel" - 24: 0%....50%....100% - 9 passes
+==PROF== Profiling "likelihood_kernel" - 25: 0%....50%....100% - 9 passes
+==PROF== Profiling "sum_kernel(double*, int)" - 26: 0%....50%....100% - 9 passes
+==PROF== Profiling "normalize_weights_kernel" - 27: 0%....50%....100% - 9 passes
+==PROF== Profiling "find_index_kernel" - 28: 0%....50%....100% - 9 passes
+==PROF== Profiling "likelihood_kernel" - 29: 0%....50%....100% - 9 passes
+==PROF== Profiling "sum_kernel(double*, int)" - 30: 0%....50%....100% - 9 passes
+==PROF== Profiling "normalize_weights_kernel" - 31: 0%....50%....100% - 9 passes
+==PROF== Profiling "find_index_kernel" - 32: 0%....50%....100% - 9 passes
+==PROF== Profiling "likelihood_kernel" - 33: 0%....50%....100% - 9 passes
+==PROF== Profiling "sum_kernel(double*, int)" - 34: 0%....50%....100% - 9 passes
+==PROF== Profiling "normalize_weights_kernel" - 35: 0%....50%....100% - 9 passes
+==PROF== Profiling "find_index_kernel" - 36: 0%....50%....100% - 9 passes
+VIDEO SEQUENCE TOOK 0.016038
+TIME TO SEND TO GPU: 0.000130
+GPU Execution: 6.662023
+FREE TIME: 0.000123
+TIME TO SEND BACK: 0.000219
+SEND ARRAY X BACK: 0.000047
+SEND ARRAY Y BACK: 0.000029
+SEND WEIGHTS BACK: 0.000020
+XE: 48.826411
+YE: 72.118380
+17.208890
+PARTICLE FILTER TOOK 7.977814
+ENTIRE PROGRAM TOOK 7.993852
+TOTAL time: 79.9393 seconds
+==PROF== Disconnected from process 53288
+[53288] particlefilter_float@127.0.0.1
+  likelihood_kernel(double*, double*, double*, double*, double*, int*, int*, double*, unsigned char*, double*, double*, int, int, int, int, int, int, int*, double*), 2021-May-27 18:12:41, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      7.900.093
+    sm__cycles_elapsed.sum                                                           cycle                    142.281.260
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,03
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,03
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          82,78
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,36
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,23
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,34
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,02
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,03
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          73,90
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,21
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,68
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          22,31
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           2,12
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  sum_kernel(double*, int), 2021-May-27 18:12:41, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                          1.895
+    sm__cycles_elapsed.sum                                                           cycle                        107.030
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              28,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,49
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                              0
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,77
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          60,13
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                              5
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                              0
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,07
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           5,34
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,42
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,10
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,70
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,72
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  normalize_weights_kernel(double*, int, double*, double*, double*, int*), 2021-May-27 18:12:41, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        128.716
+    sm__cycles_elapsed.sum                                                           cycle                      4.466.874
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,01
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,01
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          97,38
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              12,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          87,14
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,15
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,04
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,39
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          10,43
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,04
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,31
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,23
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  find_index_kernel(double*, double*, double*, double*, double*, double*, double*, int), 2021-May-27 18:12:41, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        334.551
+    sm__cycles_elapsed.sum                                                           cycle                      8.327.762
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,09
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          99,96
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,95
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          25,85
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,82
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,32
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          56,62
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                              0
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,55
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           2,15
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,02
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          13,42
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  likelihood_kernel(double*, double*, double*, double*, double*, int*, int*, double*, unsigned char*, double*, double*, int, int, int, int, int, int, int*, double*), 2021-May-27 18:12:41, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      7.852.964
+    sm__cycles_elapsed.sum                                                           cycle                    141.462.268
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,03
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,03
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          86,05
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,68
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,21
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,34
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,02
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,02
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          74,16
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,21
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,67
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          22,14
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           2,11
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  sum_kernel(double*, int), 2021-May-27 18:12:42, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                          2.013
+    sm__cycles_elapsed.sum                                                           cycle                        109.796
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              28,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,51
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                              0
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,78
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          60,35
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                           5,03
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                              0
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,07
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           5,37
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,42
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,12
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,77
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,78
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  normalize_weights_kernel(double*, int, double*, double*, double*, int*), 2021-May-27 18:12:42, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        128.852
+    sm__cycles_elapsed.sum                                                           cycle                      4.470.934
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,01
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,01
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          97,38
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              12,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          87,13
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,15
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,04
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,39
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          10,44
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,04
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,31
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,23
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  find_index_kernel(double*, double*, double*, double*, double*, double*, double*, int), 2021-May-27 18:12:42, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        403.819
+    sm__cycles_elapsed.sum                                                           cycle                      9.377.452
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,09
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          99,99
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,16
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          18,69
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,85
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,02
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,27
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          63,46
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                              0
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,57
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,03
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           2,24
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,02
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          13,99
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  likelihood_kernel(double*, double*, double*, double*, double*, int*, int*, double*, unsigned char*, double*, double*, int, int, int, int, int, int, int*, double*), 2021-May-27 18:12:42, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      7.883.261
+    sm__cycles_elapsed.sum                                                           cycle                    141.983.312
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,03
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,03
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          83,61
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,45
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,22
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,34
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,02
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,03
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          73,86
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,21
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,68
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          22,33
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           2,11
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  sum_kernel(double*, int), 2021-May-27 18:12:42, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                          1.894
+    sm__cycles_elapsed.sum                                                           cycle                        107.564
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              28,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,49
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                              0
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,77
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          60,30
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                           5,02
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                              0
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,07
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           5,34
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,42
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,10
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,71
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,72
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  normalize_weights_kernel(double*, int, double*, double*, double*, int*), 2021-May-27 18:12:42, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        128.724
+    sm__cycles_elapsed.sum                                                           cycle                      4.466.540
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,01
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,01
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          97,38
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              12,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          87,14
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,15
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,04
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,39
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          10,43
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,04
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,31
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,23
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  find_index_kernel(double*, double*, double*, double*, double*, double*, double*, int), 2021-May-27 18:12:43, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        381.398
+    sm__cycles_elapsed.sum                                                           cycle                      9.540.248
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,09
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          99,98
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,47
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          24,38
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,82
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,02
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,28
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          58,09
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                              0
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,55
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           2,17
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,02
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          13,57
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  likelihood_kernel(double*, double*, double*, double*, double*, int*, int*, double*, unsigned char*, double*, double*, int, int, int, int, int, int, int*, double*), 2021-May-27 18:12:43, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      7.857.021
+    sm__cycles_elapsed.sum                                                           cycle                    141.547.678
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,03
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,03
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          85,41
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,62
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,24
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,34
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,02
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,02
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          73,98
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,21
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,67
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          22,40
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           2,11
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  sum_kernel(double*, int), 2021-May-27 18:12:43, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                          2.020
+    sm__cycles_elapsed.sum                                                           cycle                        110.084
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              28,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,49
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                              0
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,78
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          60,58
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                           5,04
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                              0
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,07
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           5,34
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,42
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,11
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,71
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,72
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  normalize_weights_kernel(double*, int, double*, double*, double*, int*), 2021-May-27 18:12:43, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        128.726
+    sm__cycles_elapsed.sum                                                           cycle                      4.467.204
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,01
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,01
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          97,38
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              12,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          87,15
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,15
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,04
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,39
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          10,44
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,04
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,31
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,23
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  find_index_kernel(double*, double*, double*, double*, double*, double*, double*, int), 2021-May-27 18:12:43, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        497.683
+    sm__cycles_elapsed.sum                                                           cycle                     10.081.158
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,09
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          99,99
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,66
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          15,44
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,84
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,22
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          66,54
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                              0
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,56
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           2,22
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,01
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          13,84
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  likelihood_kernel(double*, double*, double*, double*, double*, int*, int*, double*, unsigned char*, double*, double*, int, int, int, int, int, int, int*, double*), 2021-May-27 18:12:43, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      7.850.395
+    sm__cycles_elapsed.sum                                                           cycle                    141.431.764
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,03
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,03
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          86,34
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,76
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,21
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,34
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,02
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          74,06
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,21
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,67
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          22,16
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           2,11
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  sum_kernel(double*, int), 2021-May-27 18:12:44, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                          1.902
+    sm__cycles_elapsed.sum                                                           cycle                        107.186
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              28,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,49
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                              0
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,77
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          59,93
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                           5,01
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                              0
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,07
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           5,33
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,42
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,10
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,69
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,70
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  normalize_weights_kernel(double*, int, double*, double*, double*, int*), 2021-May-27 18:12:44, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        128.758
+    sm__cycles_elapsed.sum                                                           cycle                      4.467.348
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,01
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,01
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          97,38
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              12,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          87,15
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,15
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,04
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,39
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          10,44
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,04
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,31
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,23
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  find_index_kernel(double*, double*, double*, double*, double*, double*, double*, int), 2021-May-27 18:12:44, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        284.692
+    sm__cycles_elapsed.sum                                                           cycle                      7.143.286
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,08
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          99,98
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,71
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          25,22
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,79
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,02
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,38
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          58,09
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                              0
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,53
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           2,07
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,02
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          12,94
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  likelihood_kernel(double*, double*, double*, double*, double*, int*, int*, double*, unsigned char*, double*, double*, int, int, int, int, int, int, int*, double*), 2021-May-27 18:12:44, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      7.860.466
+    sm__cycles_elapsed.sum                                                           cycle                    141.588.448
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,03
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,03
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          85,30
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,63
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,27
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,34
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,02
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,02
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          73,97
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,21
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,67
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          22,12
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           2,11
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  sum_kernel(double*, int), 2021-May-27 18:12:44, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                          1.894
+    sm__cycles_elapsed.sum                                                           cycle                        107.780
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              28,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,50
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                              0
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,78
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          60,41
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                           5,04
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                              0
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,07
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           5,36
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,42
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,12
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,76
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,77
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  normalize_weights_kernel(double*, int, double*, double*, double*, int*), 2021-May-27 18:12:45, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        128.734
+    sm__cycles_elapsed.sum                                                           cycle                      4.466.370
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,01
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,01
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          97,38
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              12,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          87,16
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,15
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,04
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,39
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          10,44
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,04
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,31
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,23
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  find_index_kernel(double*, double*, double*, double*, double*, double*, double*, int), 2021-May-27 18:12:45, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        298.660
+    sm__cycles_elapsed.sum                                                           cycle                      7.532.624
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,08
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          99,98
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,42
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          28,05
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,80
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,02
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,41
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          54,73
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                              0
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,54
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,03
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           2,10
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,02
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          13,11
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  likelihood_kernel(double*, double*, double*, double*, double*, int*, int*, double*, unsigned char*, double*, double*, int, int, int, int, int, int, int*, double*), 2021-May-27 18:12:45, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      7.869.561
+    sm__cycles_elapsed.sum                                                           cycle                    141.742.584
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,03
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,03
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          84,85
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,60
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,23
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,34
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,02
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,04
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          73,92
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,21
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,67
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          22,25
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           2,11
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  sum_kernel(double*, int), 2021-May-27 18:12:45, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                          1.914
+    sm__cycles_elapsed.sum                                                           cycle                        108.060
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              28,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,51
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                              0
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,78
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          59,98
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                           5,08
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                              0
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,07
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           5,38
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,42
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,13
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,79
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,80
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  normalize_weights_kernel(double*, int, double*, double*, double*, int*), 2021-May-27 18:12:45, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        128.687
+    sm__cycles_elapsed.sum                                                           cycle                      4.465.890
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,01
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,01
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          97,38
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              12,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          87,10
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,15
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,04
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,39
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          10,43
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,04
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,31
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,23
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  find_index_kernel(double*, double*, double*, double*, double*, double*, double*, int), 2021-May-27 18:12:45, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        425.339
+    sm__cycles_elapsed.sum                                                           cycle                      9.829.718
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,09
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          99,98
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,84
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          21,30
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,83
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,02
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,28
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          61,17
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                              0
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,56
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           2,18
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,02
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          13,65
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  likelihood_kernel(double*, double*, double*, double*, double*, int*, int*, double*, unsigned char*, double*, double*, int, int, int, int, int, int, int*, double*), 2021-May-27 18:12:46, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      7.846.208
+    sm__cycles_elapsed.sum                                                           cycle                    141.344.178
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,03
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,03
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          86,60
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,71
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,25
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,34
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,02
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          73,92
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,21
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,67
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          22,12
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           2,11
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  sum_kernel(double*, int), 2021-May-27 18:12:46, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                          1.895
+    sm__cycles_elapsed.sum                                                           cycle                        107.804
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              28,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,49
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                              0
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,77
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          59,91
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                           5,01
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                              0
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,07
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           5,33
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,42
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,10
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,69
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,70
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  normalize_weights_kernel(double*, int, double*, double*, double*, int*), 2021-May-27 18:12:46, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        128.716
+    sm__cycles_elapsed.sum                                                           cycle                      4.466.232
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,01
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,01
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          97,38
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              12,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          87,17
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,15
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,04
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,39
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          10,43
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,04
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,31
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,23
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  find_index_kernel(double*, double*, double*, double*, double*, double*, double*, int), 2021-May-27 18:12:46, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        541.607
+    sm__cycles_elapsed.sum                                                           cycle                     11.234.042
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,08
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                         100,00
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,13
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          25,65
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,73
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,20
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,01
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          58,78
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                              0
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,49
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           1,92
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,01
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          11,98
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  likelihood_kernel(double*, double*, double*, double*, double*, int*, int*, double*, unsigned char*, double*, double*, int, int, int, int, int, int, int*, double*), 2021-May-27 18:12:46, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      7.858.223
+    sm__cycles_elapsed.sum                                                           cycle                    141.605.568
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,03
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,03
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          85,83
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              29,64
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,23
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,34
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,02
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,03
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          73,98
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,21
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,67
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          22,25
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           2,11
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  sum_kernel(double*, int), 2021-May-27 18:12:47, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                          1.921
+    sm__cycles_elapsed.sum                                                           cycle                        108.658
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,08
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,09
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              28,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,50
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                              0
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,77
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          60,22
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                           5,03
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                              0
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,02
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,07
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           5,36
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,42
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,12
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,75
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,76
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  normalize_weights_kernel(double*, int, double*, double*, double*, int*), 2021-May-27 18:12:47, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                        128.728
+    sm__cycles_elapsed.sum                                                           cycle                      4.466.568
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,01
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,01
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          97,38
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              12,37
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          87,17
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,15
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,04
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,39
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                              0
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          10,44
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,01
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,04
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,31
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,06
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,23
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  find_index_kernel(double*, double*, double*, double*, double*, double*, double*, int), 2021-May-27 18:12:47, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                         42.127
+    sm__cycles_elapsed.sum                                                           cycle                        812.390
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,10
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,10
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                          99,97
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              31,26
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,23
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,99
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,01
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,01
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           2,57
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,14
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          77,76
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,03
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                              0
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,72
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,05
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           2,40
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,13
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          14,62
+    ---------------------------------------------------------------------- --------------- ------------------------------
+

@@ -53,17 +53,17 @@ class TopDownParameters:
     C_MIN_LEVEL_EXECUTION                                   : int       = 1
     C_MAX_LEVEL_EXECUTION                                   : int       = 3
 
-    # recolect metrics
+    # collect metrics
     C_METRICS_ARGUMENT_SHORT_OPTION                         : str       = "-m"
     C_METRICS_ARGUMENT_LONG_OPTION                          : str       = "--metrics"
     C_METRICS_ARGUMENT_DESCRIPTION                          : str       = "show metrics computed by NVIDIA scan tool" 
 
-    # recolect events
+    # collect events
     C_EVENTS_ARGUMENT_SHORT_OPTION                          : str       = "-e"
     C_EVENTS_ARGUMENT_LONG_OPTION                           : str       = "--events"
     C_EVENTS_ARGUMENT_DESCRIPTION                           : str       = "show eventss computed by NVIDIA scan tool"
 
-    # recolect all measures
+    # collect all measures
     C_ALL_MEASURES_ARGUMENT_SHORT_OPTION                    : str       = "-am"
     C_ALL_MEASURES_ARGUMENT_LONG_OPTION                     : str       = "--all-measurements"
     C_ALL_MEASURES_ARGUMENT_DESCRIPTION                     : str       = "show all measures computed by NVIDIA scan tool"

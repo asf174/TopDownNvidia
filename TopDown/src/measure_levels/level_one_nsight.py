@@ -28,14 +28,14 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         _retire         : Retire        ; Retire part of the execution
     """
 
-    def __init__(self, program : str, input_file : str, output_file : str, recoltect_metrics : bool, front_end : FrontEndNsight, 
+    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, front_end : FrontEndNsight, 
         back_end : BackEndNsight, divergence : DivergenceNsight, retire : RetireNsight, extra_measure : ExtraMeasureNsight):
 
         self._front_end : FrontEndNsight = front_end
         self._back_end  : BackEndNsight = back_end
         self._divergence : DivergenceNsight = divergence
         self._retire : RetireNsight = retire
-        super().__init__(program, input_file, output_file, recoltect_metrics, extra_measure)
+        super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, extra_measure)
         pass
 
     def _generate_command(self) -> str:
@@ -46,10 +46,9 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
             String with command to be executed
         """
         
-        command : str = ("ncu --metrics " + self._front_end.metrics_str() + 
+        command : str = ("ncu --target-processes all --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str() +
             "," + self._retire.metrics_str() + " "+  str(self._program))
-        print(command)
         return command
         pass
 
@@ -118,25 +117,25 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
 
         converter : MessageFormat = MessageFormat()
         #  Keep Results
-        if not self._recolect_metrics:
+        if not self._collect_metrics:
             return
-        if self._recolect_metrics and self._front_end.metrics_str() != "":
+        if self._collect_metrics and self._front_end.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._front_end.name()))
             super()._add_result_part_to_lst(self._front_end.metrics(), 
                 self._front_end.metrics_description(), lst_output)           
-        if self._recolect_metrics and self._back_end.metrics_str() != "":
+        if self._collect_metrics and self._back_end.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_end.name()))
             super()._add_result_part_to_lst(self._back_end.metrics(), 
                 self._back_end.metrics_description(), lst_output)  
-        if self._recolect_metrics and self._divergence.metrics_str() != "":
+        if self._collect_metrics and self._divergence.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._back_end.name()))
             super()._add_result_part_to_lst(self._divergence.metrics(), 
                 self._divergence.metrics_description(), lst_output)
-        if self._recolect_metrics and self._retire.metrics_str() != "":
+        if self._collect_metrics and self._retire.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._retire.name()))
             super()._add_result_part_to_lst(self._retire.metrics(), 
                 self._retire.metrics_description(), lst_output)
-        if self._recolect_metrics and self._extra_measure.metrics_str() != "":
+        if self._collect_metrics and self._extra_measure.metrics_str() != "":
             lst_output.append(converter.underlined_str(self._extra_measure.name()))
             super()._add_result_part_to_lst(self._extra_measure.metrics(), 
                 self._extra_measure.metrics_description(), lst_output)
@@ -229,4 +228,15 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
 
         return super()._ret_ipc(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT)
         pass
-    
+
+    def retire_ipc_per_kernel(self) -> float:
+        """
+        Get "RETIRE" IPC of execution.
+
+        Raises:
+            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not
+            computed by the NVIDIA scan tool.
+        """
+
+        return 0.0 #TODO
+        pass

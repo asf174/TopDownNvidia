@@ -1,0 +1,68 @@
+==PROF== Connected to process 49955 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/TopDown/tests/rodinia_3.1/cuda/backprop/backprop)
+==PROF== Profiling "bpnn_layerforward_CUDA" - 1: 0%....50%....100% - 9 passes
+==PROF== Profiling "bpnn_adjust_weights_cuda" - 2: 0%....50%....100% - 9 passes
+Random number generator seed: 7
+Input layer size : 65536
+Starting training kernel
+Performing GPU computation
+Training done
+==PROF== Disconnected from process 49955
+[49955] backprop@127.0.0.1
+  bpnn_layerforward_CUDA(float*, float*, float*, float*, int, int), 2021-May-27 17:19:23, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      2.503.505
+    sm__cycles_elapsed.sum                                                           cycle                      2.575.264
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,44
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,44
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                              0
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,88
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          19,61
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,91
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           1,85
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           1,50
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,74
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,02
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          26,30
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           2,53
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           7,31
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,43
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           5,54
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           6,15
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                          11,41
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          15,08
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+  bpnn_adjust_weights_cuda(float*, int, float*, int, float*, float*), 2021-May-27 17:19:23, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                      9.527.932
+    sm__cycles_elapsed.sum                                                           cycle                      9.622.318
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,04
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,04
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                              0
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              32,00
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           5,80
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,12
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,05
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,02
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,20
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,31
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          29,66
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,01
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,11
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,09
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           0,90
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           0,47
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,35
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          60,81
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,17
+    ---------------------------------------------------------------------- --------------- ------------------------------
+

@@ -726,10 +726,10 @@ void particleFilter(unsigned char * I, int IszX, int IszY, int Nfr, int * seed, 
     printf("TIME TO SEND TO GPU: %f\n", elapsed_time(send_start, send_end));
     int num_blocks = ceil((double) Nparticles / (double) threads_per_block);
 
-    double kernelInitTime = 0.0;
+    double initKernelTime = 0.0;
     for (k = 1; k < Nfr; k++) {
         if (k == 1)
-            kernelInitTime = time();        
+            initKernelTime = get_time();        
         likelihood_kernel << < num_blocks, threads_per_block >> > (arrayX_GPU, arrayY_GPU, xj_GPU, yj_GPU, CDF_GPU, ind_GPU, objxy_GPU, likelihood_GPU, I_GPU, u_GPU, weights_GPU, Nparticles, countOnes, max_size, k, IszY, Nfr, seed_GPU, partial_sums);
 
         sum_kernel << < num_blocks, threads_per_block >> > (partial_sums, Nparticles);

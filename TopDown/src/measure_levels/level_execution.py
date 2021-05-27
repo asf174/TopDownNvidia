@@ -27,19 +27,28 @@ class LevelExecution(ABC):
         _input_file             : str           ; path to input file with results. 'None' if we must do the analysis
         _output_file            : str           ; path to output file with results. 'None' to don't use
                                                   output file
+        _output_scan_file       : str           ; path to output scan file with results computed by Nvidia Scan tool. 
+                                                 'None' to don't use output scan file       
         _program                : str           ; program of the execution
-        _recolect_metrics       : bool          ; True if the execution must recolted the metrics used by NVIDIA scan tool
+        _collect_metrics        : bool          ; True if the execution must recolted the metrics used by NVIDIA scan tool
                                                   or False in other case
-        __compute_capability    : float         ; Compute Capbility of the execution
+        _compute_capability     : float         ; Compute Capbility of the execution
         __kernels               : list[str]     ; list of kernels of execution
     """
     
-    def __init__(self, program : str, input_file : str, output_file : str, recolect_metrics : bool):
+    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool):
         self._program : str = program
         self._output_file : str = output_file
-        self._recolect_metrics : bool = recoltect_metrics
+        self._collect_metrics : bool = collect_metrics
         self._input_file : str = input_file
+        self._output_scan_file : str = output_scan_file
+        shell : Shell = Shell()
+        compute_capability_str : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/TopDown/src/measure_parts/compute_capability.cu --run", None)
+        shell.launch_command("rm -f a.out", None) # delete 'a.out' generated
+        if not compute_capability_str:
+            raise ComputeCapabilityError
         pass
+        self._compute_capability : float = float(compute_capability_str)
 
     @abstractmethod
     def _generate_command(self) -> str:
@@ -89,15 +98,7 @@ class LevelExecution(ABC):
         """
 
         shell : Shell = Shell()
-        #output_file : str = self._output_file
-        output_command : str
-        # if que muestra el resultado del NVPROF en el fichero
-        #if output_file is None:
-        #    output_command = shell.launch_command(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF)
-        #else:
-        #    output_command = shell.launch_command_redirect(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF, 
-        #        output_file, True)
-        output_command = shell.launch_command_redirect(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF, super().input_file(), True)
+        output_command : str = shell.launch_command_redirect(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF, self.output_scan_file(), True)
         if output_command is None:
             raise ProfilingError
         return output_command  
@@ -120,16 +121,11 @@ class LevelExecution(ABC):
         Raises:
         """
 
-        shell : Shell = Shell()
-        compute_capability : str = shell.launch_command_show_all("nvcc ../src/measure_parts/compute_capability.cu --run", None)
-        shell.launch_command("rm -f a.out", None) # delete 'a.out' generated
-        if not compute_capability:
-            raise ComputeCapabilityError
         dict_warps_schedulers_per_cc : dict = dict({3.0: 4, 3.2: 4, 3.5: 4, 3.7: 4, 5.0: 4, 5.2: 4, 5.3: 4, 
             6.0: 2, 6.1: 4, 6.2: 4, 7.0: 4, 7.5: 4, 8.0: 1}) 
         dict_ins_per_cycle : dict = dict({3.0: 1.5, 3.2: 1.5, 3.5: 1.5, 3.7: 1.5, 5.0: 1.5, 5.2: 1.5, 5.3: 1.5, 
             6.0: 1.5, 6.1: 1.5, 6.2: 1.5, 7.0: 1, 7.5: 1, 8.0: 1})
-        return dict_warps_schedulers_per_cc.get(float(compute_capability))*dict_ins_per_cycle.get(float(compute_capability))
+        return dict_warps_schedulers_per_cc.get(self._compute_capability)*dict_ins_per_cycle.get(self._compute_capability)
         pass
     
     def _get_total_value_of_list(self, list_values, computed_as_average : bool) -> float:
@@ -158,7 +154,7 @@ class LevelExecution(ABC):
                     value *= (self._percentage_time_kernel(i)/100.0)
                 total_value += value
             else:
-                if self.__compute_capability > TopDownParameters.C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE:
+                if self._compute_capability > TopDownParameters.C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE:
                     value = locale.atof(value_str)
                 else:
                     value = float(value_str)
@@ -203,15 +199,15 @@ class LevelExecution(ABC):
         return total_value
         pass
 
-    def recolect_metrics(self) -> bool:
+    def collect_metrics(self) -> bool:
         """
-        Check if execution must recolect NVIDIA's scan tool metrics.
+        Check if execution must collect NVIDIA's scan tool metrics.
 
         Returns:
-            Boolean with True if it has to recolect metrics or False if not
+            Boolean with True if it has to collect metrics or False if not
         """
 
-        return self._recolect_metrics
+        return self._collect_metrics
         pass
 
     def input_file(self) -> str:
@@ -223,7 +219,29 @@ class LevelExecution(ABC):
         """
         
         return self._input_file
-  
+        pass        
+
+    def output_file(self) -> str:
+        """ 
+        Returns path to output file.
+        
+        Returns: 
+            Path to output file or 'None' if it hasn't been specified.
+        """
+        
+        return self._output_file
+        pass
+
+    def output_scan_file(self) -> str:
+        """ 
+        Returns path to output scan file.
+        
+        Returns: 
+            Path to output scan file or 'None' if it hasn't been specified.
+        """
+        
+        return self._output_scan_file
+ 
     @abstractmethod
     def _percentage_time_kernel(self, kernel_number : int) -> float:
         """ 
@@ -303,7 +321,7 @@ class LevelExecution(ABC):
         return self.__kernels
         pass
 
-    def kernel_position(kernel_name : str) -> list[int]:
+    def kernel_position(kernel_name : str) -> list:
         """
         Returns a list with the positions of the kernel (profiled) indicated by argument.
 
