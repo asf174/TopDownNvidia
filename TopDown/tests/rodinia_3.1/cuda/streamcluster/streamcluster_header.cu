@@ -125,7 +125,7 @@ private:
 };
 
 /* function prototypes */
-double gettime();
+double getg_time();
 int isIdentical(float*, float*, int);
 //static int floatcomp(const void*, const void*);
 void shuffle(Points*);

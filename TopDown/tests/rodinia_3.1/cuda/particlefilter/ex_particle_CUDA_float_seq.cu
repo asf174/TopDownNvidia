@@ -30,7 +30,7 @@ int C = 12345;
  *GET_TIME
  *returns a long int representing the time
  *****************************/
-long long get_time() {
+long long get_g_time() {
     struct timeval tv;
     gettimeofday(&tv, NULL);
     return (tv.tv_sec * 1000000) +tv.tv_usec;
@@ -715,21 +715,21 @@ void particleFilter(unsigned char * I, int IszX, int IszY, int Nfr, int * seed, 
     int k;
     int indX, indY;
     //start send
-    long long send_start = get_time();
+    long long send_start = get_g_time();
     check_error(cudaMemcpy(I_GPU, I, sizeof (unsigned char) *IszX * IszY*Nfr, cudaMemcpyHostToDevice));
     check_error(cudaMemcpy(objxy_GPU, objxy, sizeof (int) *2 * countOnes, cudaMemcpyHostToDevice));
     check_error(cudaMemcpy(weights_GPU, weights, sizeof (double) *Nparticles, cudaMemcpyHostToDevice));
     check_error(cudaMemcpy(xj_GPU, xj, sizeof (double) *Nparticles, cudaMemcpyHostToDevice));
     check_error(cudaMemcpy(yj_GPU, yj, sizeof (double) *Nparticles, cudaMemcpyHostToDevice));
     check_error(cudaMemcpy(seed_GPU, seed, sizeof (int) *Nparticles, cudaMemcpyHostToDevice));
-    long long send_end = get_time();
+    long long send_end = get_g_time();
     printf("TIME TO SEND TO GPU: %f\n", elapsed_time(send_start, send_end));
     int num_blocks = ceil((double) Nparticles / (double) threads_per_block);
 
     double initKernelTime = 0.0;
     for (k = 1; k < Nfr; k++) {
         if (k == 1)
-            initKernelTime = get_time();        
+            initKernelTime = get_g_time();        
         likelihood_kernel << < num_blocks, threads_per_block >> > (arrayX_GPU, arrayY_GPU, xj_GPU, yj_GPU, CDF_GPU, ind_GPU, objxy_GPU, likelihood_GPU, I_GPU, u_GPU, weights_GPU, Nparticles, countOnes, max_size, k, IszY, Nfr, seed_GPU, partial_sums);
 
         sum_kernel << < num_blocks, threads_per_block >> > (partial_sums, Nparticles);
@@ -739,14 +739,14 @@ void particleFilter(unsigned char * I, int IszX, int IszY, int Nfr, int * seed, 
         find_index_kernel << < num_blocks, threads_per_block >> > (arrayX_GPU, arrayY_GPU, CDF_GPU, u_GPU, xj_GPU, yj_GPU, weights_GPU, Nparticles);
         if (k - 1 == Nfr) {
             cudaThreadSynchronize();
-            double endKernelTime = get_time();
+            double endKernelTime = get_g_time();
             printf("TOTAL KERNEL time: %g\n seconds", (endKernelTime - initKernelTime)*10e-6);
         }
     }//end loop
 
     //block till kernels are finished
     cudaThreadSynchronize();
-    long long back_time = get_time();
+    long long back_time = get_g_time();
 
     cudaFree(xj_GPU);
     cudaFree(yj_GPU);
@@ -759,13 +759,13 @@ void particleFilter(unsigned char * I, int IszX, int IszY, int Nfr, int * seed, 
     cudaFree(seed_GPU);
     cudaFree(partial_sums);
 
-    long long free_time = get_time();
+    long long free_time = get_g_time();
     check_error(cudaMemcpy(arrayX, arrayX_GPU, sizeof (double) *Nparticles, cudaMemcpyDeviceToHost));
-    long long arrayX_time = get_time();
+    long long arrayX_time = get_g_time();
     check_error(cudaMemcpy(arrayY, arrayY_GPU, sizeof (double) *Nparticles, cudaMemcpyDeviceToHost));
-    long long arrayY_time = get_time();
+    long long arrayY_time = get_g_time();
     check_error(cudaMemcpy(weights, weights_GPU, sizeof (double) *Nparticles, cudaMemcpyDeviceToHost));
-    long long back_end_time = get_time();
+    long long back_end_time = get_g_time();
     printf("GPU Execution: %lf\n", elapsed_time(send_end, back_time));
     printf("FREE TIME: %lf\n", elapsed_time(back_time, free_time));
     printf("TIME TO SEND BACK: %lf\n", elapsed_time(back_time, back_end_time));
@@ -803,7 +803,7 @@ void particleFilter(unsigned char * I, int IszX, int IszY, int Nfr, int * seed, 
 
 int main(int argc, char * argv[]) {
 
-    double initTime = get_time();
+    double initTime = get_g_time();
     char* usage = "double.out -x <dimX> -y <dimY> -z <Nfr> -np <Nparticles>";
     //check number of arguments
     if (argc != 9) {
@@ -868,20 +868,20 @@ int main(int argc, char * argv[]) {
         seed[i] = time(0) * i;
     //malloc matrix
     unsigned char * I = (unsigned char *) malloc(sizeof (unsigned char) *IszX * IszY * Nfr);
-    long long start = get_time();
+    long long start = get_g_time();
     //call video sequence
     videoSequence(I, IszX, IszY, Nfr, seed);
-    long long endVideoSequence = get_time();
+    long long endVideoSequence = get_g_time();
     printf("VIDEO SEQUENCE TOOK %f\n", elapsed_time(start, endVideoSequence));
     //call particle filter
     particleFilter(I, IszX, IszY, Nfr, seed, Nparticles);
-    long long endParticleFilter = get_time();
+    long long endParticleFilter = get_g_time();
     printf("PARTICLE FILTER TOOK %f\n", elapsed_time(endVideoSequence, endParticleFilter));
     printf("ENTIRE PROGRAM TOOK %f\n", elapsed_time(start, endParticleFilter));
 
     free(seed);
     free(I);
-    double endTime = get_time();
+    double endTime = get_g_time();
     printf("TOTAL time: %g seconds\n", (endTime - initTime)*10e-6);
     return 0;
 }

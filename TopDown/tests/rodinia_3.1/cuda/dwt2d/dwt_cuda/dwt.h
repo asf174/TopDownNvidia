@@ -49,9 +49,9 @@
 /// - Input and output buffers can't overlap.
 /// - Size of output buffer must be greater or equal to size of input buffer.
 ///
-/// There are no common compile time settings (buffer size, etc...) for
+/// There are no common compile g_time() settings (buffer size, etc...) for
 /// all DWTs, because each DTW type needs different amount of GPU resources.
-/// Instead, each DWT type has its own compile time settings, which can be
+/// Instead, each DWT type has its own compile g_time() settings, which can be
 /// found in *.cu file, where it is implemented.
 ///
 

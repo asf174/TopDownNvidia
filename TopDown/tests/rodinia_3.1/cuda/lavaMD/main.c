@@ -57,7 +57,7 @@ main(	int argc,
 	// timer
 	long long time0;
 
-	time0 = get_time();
+	time0 = get_g_time();
 
 	// timer
 	long long time1;
@@ -80,7 +80,7 @@ main(	int argc,
 	FOUR_VECTOR* fv_cpu;
 	int nh;
 
-	time1 = get_time();
+	time1 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	CHECK INPUT ARGUMENTS
@@ -126,7 +126,7 @@ main(	int argc,
 	// Print configuration
 	printf("Configuration used: boxes1d = %d\n", dim_cpu.boxes1d_arg);
 
-	time2 = get_time();
+	time2 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	INPUTS
@@ -134,7 +134,7 @@ main(	int argc,
 
 	par_cpu.alpha = 0.5;
 
-	time3 = get_time();
+	time3 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	DIMENSIONS
@@ -151,7 +151,7 @@ main(	int argc,
 	// box array
 	dim_cpu.box_mem = dim_cpu.number_boxes * sizeof(box_str);
 
-	time4 = get_time();
+	time4 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	SYSTEM MEMORY
@@ -251,7 +251,7 @@ main(	int argc,
 		fv_cpu[i].z = 0;								// set to 0, because kernels keeps adding to initial value
 	}
 
-	time5 = get_time();
+	time5 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	KERNEL
@@ -268,7 +268,7 @@ main(	int argc,
 							qv_cpu,
 							fv_cpu);
 
-	time6 = get_time();
+	time6 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	SYSTEM MEMORY DEALLOCATION
@@ -291,7 +291,7 @@ main(	int argc,
 	free(fv_cpu);
 	free(box_cpu);
 
-	time7 = get_time();
+	time7 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	DISPLAY TIMING

@@ -247,12 +247,12 @@ int compute_tran_temp(float *MatrixPower,float *MatrixTemp[2], int col, int row,
             src = dst;
             dst = temp;
             if (t == 0)
-                initKernelTime = time();
+                initKernelTime = g_time();
             calculate_temp<<<dimGrid, dimBlock>>>(MIN(num_iterations, total_iterations-t), MatrixPower,MatrixTemp[src],MatrixTemp[dst],\
 		col,row,borderCols, borderRows, Cap,Rx,Ry,Rz,step,time_elapsed);
             if (t == total_iterations - 1) {
                 cudaThreadSynchronize();
-                endKernelTime = time();
+                endKernelTime = g_time();
             }
 
 	}
@@ -274,11 +274,11 @@ void usage(int argc, char **argv)
 
 int main(int argc, char** argv)
 {
-    double initTime = time();
+    double initTime = g_time();
   printf("WG size of kernel = %d X %d\n", BLOCK_SIZE, BLOCK_SIZE);
 
     run(argc,argv);
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
 
     return EXIT_SUCCESS;

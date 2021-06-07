@@ -1,4 +1,4 @@
-long long get_time() {
+long long get_g_time() {
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000000) + tv.tv_usec;
@@ -81,7 +81,7 @@ void hotspot_opt1(float *p, float *tIn, float *tOut,
     dim3 block_dim(64, 4, 1);
     dim3 grid_dim(nx / 64, ny / 4, 1);
 
-    long long start = get_time();
+    long long start = get_g_time();
     for (int i = 0; i < numiter; ++i) {
         hotspotOpt1<<<grid_dim, block_dim>>>
             (p_d, tIn_d, tOut_d, stepDivCap, nx, ny, nz, ce, cw, cn, cs, ct, cb, cc);
@@ -90,7 +90,7 @@ void hotspot_opt1(float *p, float *tIn, float *tOut,
         tOut_d = t;
     }
     cudaDeviceSynchronize();
-    long long stop = get_time();
+    long long stop = get_g_time();
     float time = (float)((stop - start)/(1000.0 * 1000.0));
     printf("Time: %.3f (s)\n",time);
     cudaMemcpy(tOut, tOut_d, s, cudaMemcpyDeviceToHost);

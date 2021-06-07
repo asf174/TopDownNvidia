@@ -157,7 +157,7 @@ int setup(int argc, char **argv) {
 		
 	/* ============== I/O begin ==============*/
     /* get nfeatures and npoints */
-    //io_timing = omp_get_wtime();
+    //io_timing = omp_get_wg_time();
     if (isBinaryFile) {		//Binary file input
         int infile;
         if ((infile = open(filename, O_RDONLY, "0600")) == -1) {
@@ -213,7 +213,7 @@ int setup(int argc, char **argv) {
         }
         fclose(infile);
     }
-    //io_timing = omp_get_wtime() - io_timing;
+    //io_timing = omp_get_wg_time() - io_timing;
 	
 	printf("\nI/O completed\n");
 	printf("\nNumber of objects: %d\n", npoints);
@@ -233,7 +233,7 @@ int setup(int argc, char **argv) {
 
 	/* ======================= core of the clustering ===================*/
 
-    //cluster_timing = omp_get_wtime();		/* Total clustering time */
+    //cluster_timing = omp_get_wg_time();		/* Total clustering time */
 	cluster_centres = NULL;
     index = cluster(npoints,				/* number of data points */
 					nfeatures,				/* number of features for each point */
@@ -247,7 +247,7 @@ int setup(int argc, char **argv) {
 					isRMSE,					/* calculate RMSE */
 					nloops);				/* number of iteration for each number of clusters */		
     
-	//cluster_timing = omp_get_wtime() - cluster_timing;
+	//cluster_timing = omp_get_wg_time() - cluster_timing;
 
 
 	/* =============== Command Line Output =============== */

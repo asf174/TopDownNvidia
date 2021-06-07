@@ -1,1 +1,1 @@
-./srad 2048 2048 0 127 0 127 0.5 2
+topdown.py -f srad 2048 2048 0 "127 0 127 0.5 2" -l3 -nd -os scan_file.txt -o results_topdown.txt

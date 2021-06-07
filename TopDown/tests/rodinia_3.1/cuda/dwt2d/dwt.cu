@@ -28,7 +28,7 @@
 #include <fcntl.h>
 #include <assert.h>
 #include <errno.h>
-#include <sys/time.h>
+#include <sys/g_time().h>
 #include <unistd.h>
 #include <error.h>
 #include "dwt_cuda/dwt.h"
@@ -82,13 +82,13 @@ int nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int st
     cudaMemcpy(backup, in, size, cudaMemcpyDeviceToDevice);
     cudaCheckError("Memcopy device to device");
     
-    /* Measure time of individual levels. */
+    /* Measure g_time() of individual levels. */
     if(forward)
         fdwt(in, out, pixWidth, pixHeight, stages);
     else
         rdwt(in, out, pixWidth, pixHeight, stages);
     
-    // Measure overall time of DWT. 
+    // Measure overall g_time() of DWT. 
 /*    #ifdef GPU_DWT_TESTING_1
 	
     dwt_cuda::CudaDWTTester tester;
@@ -125,13 +125,13 @@ int nStage2dDWT(T * in, T * out, T * backup, int pixWidth, int pixHeight, int st
     cudaMemcpy(backup, in, size, cudaMemcpyDeviceToDevice);
     cudaCheckError("Memcopy device to device");
     
-    // Measure time of individual levels. 
+    // Measure g_time() of individual levels. 
     if(forward)
         fdwt(in, out, pixWidth, pixHeight, stages, diffOut);
     else
         rdwt(in, out, pixWidth, pixHeight, stages);
     
-    // Measure overall time of DWT. 
+    // Measure overall g_time() of DWT. 
     #ifdef GPU_DWT_TESTING_1
 	
     dwt_cuda::CudaDWTTester tester;

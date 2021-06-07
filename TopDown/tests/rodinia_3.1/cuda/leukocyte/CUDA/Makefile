@@ -5,14 +5,14 @@ override OUTPUT = -DOUTPUT
 endif
 
 # C compiler
-CC = gcc
+CC = /usr/bin/gcc
 CC_FLAGS = -g -O3 -Wall -I$(MATRIX_DIR)
 CUDA_LIB_DIR=/usr/local/cuda
 
 CUDA_DIR=/usr
 # CUDA compiler
 NVCC = $(CUDA_DIR)/bin/nvcc
-NVCC_FLAGS = -I$(CUDA_DIR)/include -I$(SDK_DIR)/common/inc
+NVCC_FLAGS = -I$(CUDA_DIR)/include -I$(SDK_DIR)/common/inc -fPIC
 
 # Matrix library path
 MATRIX_DIR = ../meschach_lib

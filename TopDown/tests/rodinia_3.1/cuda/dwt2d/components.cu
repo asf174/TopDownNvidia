@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <assert.h>
-#include "../../time/time.c"
+#include "../../g_time()/g_time().c"
 
 #include "components.h"
 #include "common.h"
@@ -150,11 +150,11 @@ void rgbToComponents(T *d_r, T *d_g, T *d_b, unsigned char * src, int width, int
     dim3 threads(THREADS);
     dim3 grid(alignedSize/(THREADS*3));
     assert(alignedSize%(THREADS*3) == 0);
-    double initKernelTime = time();
+    double initKernelTime = g_time();
     c_CopySrcToComponents<<<grid, threads>>>(d_r, d_g, d_b, d_src, pixels);
     cudaThreadSynchronize();
-    double endKernelTime = time();
-    printf("KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
+    double endKernelTime = g_time();
+    printf("KERNEL g_time(): %g seconds\n", endKernelTime - initKernelTime);
     cudaCheckAsyncError("CopySrcToComponents kernel")
 
     /* Free Memory */
@@ -186,11 +186,11 @@ void bwToComponent(T *d_c, unsigned char * src, int width, int height)
     dim3 threads(THREADS);
     dim3 grid(alignedSize/(THREADS));
     assert(alignedSize%(THREADS) == 0);
-    double initKernelTime = time();
+    double initKernelTime = g_time();
     c_CopySrcToComponent<<<grid, threads>>>(d_c, d_src, pixels);
     cudaThreadSynchronize(); 
-    double endKernelTime = time();
-    printf("KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
+    double endKernelTime = g_time();
+    printf("KERNEL g_time(): %g seconds\n", endKernelTime - initKernelTime);
     cudaCheckAsyncError("CopySrcToComponent kernel")
 
     /* Free Memory */

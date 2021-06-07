@@ -1844,7 +1844,7 @@ int
 main(	int argc, 
 		char** argv ) 
 {
-    double initTime = time();
+    double initTime = g_time();
   printf("WG size of kernel 1 & 2  = %d \n", DEFAULT_ORDER);
 
 	// ------------------------------------------------------------60
@@ -2417,7 +2417,7 @@ main(	int argc,
 	// ------------------------------------------------------------60
 
 	free(mem);
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
 	return EXIT_SUCCESS;
 

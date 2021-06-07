@@ -179,10 +179,10 @@ __global__ void cuda_initialize_variables(int nelr, float* variables)
 void initialize_variables(int nelr, float* variables)
 {
 	dim3 Dg(nelr / BLOCK_SIZE_1), Db(BLOCK_SIZE_1);
-    double initKernelTime = time();
+    double initKernelTime = g_time();
 	cuda_initialize_variables<<<Dg, Db>>>(nelr, variables);
     cudaThreadSynchronize();
-    double endKernelTime = time();
+    double endKernelTime = g_time();
     printf("KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 	getLastCudaError("initialize_variables failed");
 }
@@ -253,10 +253,10 @@ __global__ void cuda_compute_step_factor(int nelr, float* variables, float* area
 void compute_step_factor(int nelr, float* variables, float* areas, float* step_factors)
 {
 	dim3 Dg(nelr / BLOCK_SIZE_2), Db(BLOCK_SIZE_2);
-	double initKernelTime = time();
+	double initKernelTime = g_time();
     cuda_compute_step_factor<<<Dg, Db>>>(nelr, variables, areas, step_factors);		
     cudaThreadySynchronize();
-    double endKernelTime = time();
+    double endKernelTime = g_time();
     printf("KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 	getLastCudaError("compute_step_factor failed");
 }
@@ -398,10 +398,10 @@ __global__ void cuda_compute_flux(int nelr, int* elements_surrounding_elements, 
 void compute_flux(int nelr, int* elements_surrounding_elements, float* normals, float* variables, float* fluxes)
 {
 	dim3 Dg(nelr / BLOCK_SIZE_3), Db(BLOCK_SIZE_3);
-    double initKernelTime = time();
+    double initKernelTime = g_time();
 	cuda_compute_flux<<<Dg,Db>>>(nelr, elements_surrounding_elements, normals, variables, fluxes);
     cudaThreadSynchronize();
-    double endKernelTime = time();
+    double endKernelTime = g_time();
     printf("KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 	getLastCudaError("compute_flux failed");
 }
@@ -421,10 +421,10 @@ __global__ void cuda_time_step(int j, int nelr, float* old_variables, float* var
 void time_step(int j, int nelr, float* old_variables, float* variables, float* step_factors, float* fluxes)
 {
 	dim3 Dg(nelr / BLOCK_SIZE_4), Db(BLOCK_SIZE_4);
-    double initKernelTime = time();
+    double initKernelTime = g_time();
 	cuda_time_step<<<Dg,Db>>>(j, nelr, old_variables, variables, step_factors, fluxes);
 	cudaThreadSynchronize();
-    double endKernelTime = time();
+    double endKernelTime = g_time();
     printf("KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
     getLastCudaError("update failed");
 }
@@ -434,7 +434,7 @@ void time_step(int j, int nelr, float* old_variables, float* variables, float* s
  */
 int main(int argc, char** argv)
 {
-    double initTime = time();
+    double initTime = g_time();
   printf("WG size of kernel:initialize = %d, WG size of kernel:compute_step_factor = %d, WG size of kernel:compute_flux = %d, WG size of kernel:time_step = %d\n", BLOCK_SIZE_1, BLOCK_SIZE_2, BLOCK_SIZE_3, BLOCK_SIZE_4);
 
 	if (argc < 2)
@@ -622,7 +622,7 @@ int main(int argc, char** argv)
 
 	std::cout << "Done..." << std::endl;
     
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
 	return 0;
 }

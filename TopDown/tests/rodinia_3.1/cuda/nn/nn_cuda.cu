@@ -64,7 +64,7 @@ __global__ void euclid(LatLong *d_locations, float *d_distances, int numRecords,
 
 int main(int argc, char* argv[])
 {
-    double initTime = time();
+    double initTime = g_time();
 	int    i=0;
 	float lat, lng;
 	int quiet=0,timing=0,platform=0,device=0;
@@ -144,13 +144,13 @@ int main(int argc, char* argv[])
     */
     cudaMemcpy( d_locations, &locations[0], sizeof(LatLong) * numRecords, cudaMemcpyHostToDevice);
 
-    double initKernelTime = time();
+    double initKernelTime = g_time();
     /**
     * Execute kernel
     */
     euclid<<< gridDim, threadsPerBlock >>>(d_locations,d_distances,numRecords,lat,lng);
     cudaThreadSynchronize();
-    double endKernelTime = time();    
+    double endKernelTime = g_time();    
 
     //Copy data from device memory to host memory
     cudaMemcpy( distances, d_distances, sizeof(float)*numRecords, cudaMemcpyDeviceToHost );
@@ -167,7 +167,7 @@ int main(int argc, char* argv[])
     //Free memory
 	cudaFree(d_locations);
 	cudaFree(d_distances);
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
     printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 

@@ -1,1 +1,1 @@
-./sc_gpu 10 20 256 65536 65536 1000 none output.txt 1
+topdown.py -f ./sc_gpu 10 20 256 65536 65536 1000 none output.txt 1 -l3 -nd -os scan_file.txt -o results_topdown.txt

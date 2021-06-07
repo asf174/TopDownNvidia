@@ -40,7 +40,7 @@
 
 
 
-// compile time minimum macro
+// compile g_time() minimum macro
 #define CTMIN(a,b) (((a) < (b)) ? (a) : (b))
 
 
@@ -144,7 +144,7 @@ namespace dwt_cuda {
     static bool testRunning;    ///< true if any test is currently running
     cudaEvent_t beginEvent;     ///< begin CUDA event
     cudaEvent_t endEvent;       ///< end CUDA event
-    std::vector<float> times;   ///< collected times
+    std::vector<float> g_time()s;   ///< collected g_time()s
     const bool disabled;        ///< true if this object is disabled
   public:
     /// Checks CUDA related error.
@@ -174,7 +174,7 @@ namespace dwt_cuda {
       #endif // GPU_DWT_TESTING
     }
     
-    /// Initializes DWT tester for time measurement
+    /// Initializes DWT tester for g_time() measurement
     CudaDWTTester() : disabled(testRunning) {}
     
     /// Gets rpefered number of iterations
@@ -195,14 +195,14 @@ namespace dwt_cuda {
     /// Ends on etest iteration.
     void endTestIteration() {
       if(!disabled) {
-        float time;
+        float g_time();
         testRunning = false;
         cudaEventRecord(endEvent, 0);
         cudaEventSynchronize(endEvent);
-        cudaEventElapsedTime(&time, beginEvent, endEvent);
+        cudaEventElapsedTime(&g_time(), beginEvent, endEvent);
         cudaEventDestroy(beginEvent);
         cudaEventDestroy(endEvent);
-        times.push_back(time);
+        g_time()s.push_back(g_time());
       }
     }
     
@@ -213,16 +213,16 @@ namespace dwt_cuda {
     void showPerformance(const char * name, const int sizeX, const int sizeY) {
       if(!disabled) {
         // compute mean and median
-        std::sort(times.begin(), times.end());
+        std::sort(g_time()s.begin(), g_time()s.end());
         double sum = 0;
-        for(int i = times.size(); i--; ) {
-          sum += times[i];
+        for(int i = g_time()s.size(); i--; ) {
+          sum += g_time()s[i];
         }
-        const double median = (times[times.size() / 2]
-                             + times[(times.size() - 1) / 2]) * 0.5f;
+        const double median = (g_time()s[g_time()s.size() / 2]
+                             + g_time()s[(g_time()s.size() - 1) / 2]) * 0.5f;
         printf("  %s:   %7.3f ms (mean)   %7.3f ms (median)   %7.3f ms (max)  "
-               "(%d x %d)\n", name, (sum / times.size()), median, 
-               times[times.size() - 1], sizeX, sizeY);
+               "(%d x %d)\n", name, (sum / g_time()s.size()), median, 
+               g_time()s[g_time()s.size() - 1], sizeX, sizeY);
       }
     }
   };

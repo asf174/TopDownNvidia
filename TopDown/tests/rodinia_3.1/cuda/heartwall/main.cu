@@ -120,7 +120,7 @@ void write_data(	char* filename,
 //===============================================================================================================================================================================================================
 int main(int argc, char *argv []){
     
-    double initTime = time();
+    double initTime = g_time();
   printf("WG size of kernel = %d \n", NUMBER_THREADS);
 	//======================================================================================================================================================
 	//	VARIABLES
@@ -647,7 +647,7 @@ int main(int argc, char *argv []){
 	//	LAUNCH
 	//====================================================================================================
 
-    double initKernelTime = time();
+    double initKernelTime = g_time();
 	for(common_change.frame_no=0; common_change.frame_no<frames_processed; common_change.frame_no++){
 
 		// Extract a cropped version of the first frame from the video file
@@ -662,12 +662,12 @@ int main(int argc, char *argv []){
 		cudaMemcpyToSymbol(d_common_change, &common_change, sizeof(params_common_change));
 
 		// launch GPU kernel
-        if (common_change.grame_no == 0)
-            initKernelTime = time();
+        if (common_change.frame_no == 0)
+            initKernelTime = g_time();
 		kernel<<<blocks, threads>>>();
         if (common_change.frame_no - 1 == frames_processed) {
             cudaThreadSynchronize();
-            double endKernelTime = time();
+            double endKernelTime = g_time();
             printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
         }
 
@@ -779,7 +779,7 @@ int main(int argc, char *argv []){
 		cudaFree(unique[i].d_tMask);
 		cudaFree(unique[i].d_mask_conv);
 	}
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
 
 }

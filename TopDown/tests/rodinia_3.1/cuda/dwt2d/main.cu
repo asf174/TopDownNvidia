@@ -32,13 +32,13 @@
 #include <errno.h>
 #include <string.h>
 #include <assert.h>
-#include <sys/time.h>
+#include <sys/g_time().h>
 #include <getopt.h>
-#include "../../time/time.c"
 
 #include "common.h"
 #include "components.h"
 #include "dwt.h"
+#include "../../g_time()/g_time().c"
 
 struct dwt {
     char * srcFilename;
@@ -219,7 +219,7 @@ void processDWT(struct dwt *d, int forward, int writeVisual)
 
 int main(int argc, char **argv) 
 {
-    double initTime = time();
+    double initTime = g_time();
     int optindex = 0;
     char ch;
     struct option longopts[] = {
@@ -396,7 +396,7 @@ int main(int argc, char **argv)
     cudaFreeHost(d->srcImg);
     cudaCheckError("Cuda free host");
     
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
     return 0;
 }

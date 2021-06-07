@@ -29940,7 +29940,7 @@ CUresult cuFuncGetModule(CUmodule * hmod, CUfunction hfunc);
 # 15914 "/usr/local/cuda/bin/../targets/x86_64-linux/include/cuda.h"
 }
 # 3 "../../time/time.c"
-double time() {
+double g_time() {
 # 4 "../../time/time.c"
 timeval time;
 # 5 "../../time/time.c"
@@ -29984,7 +29984,7 @@ int main(int argc, char *argv[])
 # 66 "nn_cuda.cu"
 {
 # 67 "nn_cuda.cu"
-double initTime = time();
+double initTime = g_time();
 # 68 "nn_cuda.cu"
 int i = 0;
 # 69 "nn_cuda.cu"
@@ -30094,13 +30094,13 @@ cudaMalloc((void **)(&d_distances), sizeof(float) * numRecords);
 # 145 "nn_cuda.cu"
 cudaMemcpy(d_locations, &locations[0], sizeof(LatLong) * numRecords, cudaMemcpyHostToDevice);
 # 147 "nn_cuda.cu"
-double initKernelTime = time();
+double initKernelTime = g_time();
 # 151 "nn_cuda.cu"
 (__cudaPushCallConfiguration(gridDim, threadsPerBlock)) ? (void)0 : euclid(d_locations, d_distances, numRecords, lat, lng);
 # 152 "nn_cuda.cu"
 cudaThreadSynchronize();
 # 153 "nn_cuda.cu"
-double endKernelTime = time();
+double endKernelTime = g_time();
 # 156 "nn_cuda.cu"
 cudaMemcpy(distances, d_distances, sizeof(float) * numRecords, cudaMemcpyDeviceToHost);
 # 159 "nn_cuda.cu"
@@ -30120,7 +30120,7 @@ cudaFree(d_locations);
 # 169 "nn_cuda.cu"
 cudaFree(d_distances);
 # 170 "nn_cuda.cu"
-double endTime = time();
+double endTime = g_time();
 # 171 "nn_cuda.cu"
 printf("TOTAL time: %g seconds\n", endTime - initTime);
 # 172 "nn_cuda.cu"

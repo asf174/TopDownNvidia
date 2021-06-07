@@ -67,7 +67,7 @@ kernel_gpu_cuda_wrapper_2(	knode *knodes,
 	long long time5;
 	long long time6;
 
-	time0 = get_time();
+	time0 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU SETUP
@@ -90,7 +90,7 @@ kernel_gpu_cuda_wrapper_2(	knode *knodes,
 
 	printf("# of blocks = %d, # of threads/block = %d (ensure that device can handle)\n", numBlocks, threadsPerBlock);
 
-	time1 = get_time();
+	time1 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU MEMORY				MALLOC
@@ -176,7 +176,7 @@ kernel_gpu_cuda_wrapper_2(	knode *knodes,
 	cudaMalloc((void**)&ansDLength, count*sizeof(int));
 	checkCUDAError("cudaMalloc ansDLength");
 
-	time2 = get_time();
+	time2 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU MEMORY			COPY
@@ -253,7 +253,7 @@ kernel_gpu_cuda_wrapper_2(	knode *knodes,
 	cudaMemcpy(ansDLength, reclength, count*sizeof(int), cudaMemcpyHostToDevice);
 	checkCUDAError("cudaMemcpy ansDLength");
 
-	time3 = get_time();
+	time3 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	KERNEL
@@ -273,10 +273,10 @@ kernel_gpu_cuda_wrapper_2(	knode *knodes,
 												ansDStart,
 												ansDLength);
 	cudaThreadSynchronize();
-    double endKernelTime = get_time();
+    double endKernelTime = get_g_time();
 	checkCUDAError("findRangeK");
     printf("TOTAL KERNEL time: %g seconds\n", (endKernelTime - time3)*10e-6);
-	time4 = get_time();
+	time4 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU MEMORY			COPY (CONTD.)
@@ -300,7 +300,7 @@ kernel_gpu_cuda_wrapper_2(	knode *knodes,
 	cudaMemcpy(reclength, ansDLength, count*sizeof(int), cudaMemcpyDeviceToHost);
 	checkCUDAError("cudaMemcpy ansDLength");
 
-	time5 = get_time();
+	time5 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU MEMORY DEALLOCATION
@@ -317,7 +317,7 @@ kernel_gpu_cuda_wrapper_2(	knode *knodes,
 	cudaFree(ansDStart);
 	cudaFree(ansDLength);
 
-	time6 = get_time();
+	time6 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	DISPLAY TIMING

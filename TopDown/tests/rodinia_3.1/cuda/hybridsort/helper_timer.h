@@ -68,7 +68,7 @@ class StopWatchWin : public StopWatchInterface
     public:
         //! Constructor, default
         StopWatchWin() :
-            start_time(),     end_time(),
+            start_g_time(),     end_g_time(),
             diff_time(0.0f),  total_time(0.0f),
             running(false), clock_sessions(0), freq(0), freq_set(false)
         {

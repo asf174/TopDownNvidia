@@ -3,7 +3,7 @@
 
 This is the CUDA version of the code.
 
-The JPEG2000 standard uses 2D Discrete Wavelet Transform (2D DWT), which consumes a significant part of the total encoding time
+The JPEG2000 standard uses 2D Discrete Wavelet Transform (2D DWT), which consumes a significant part of the total encoding g_time()
 
 
 

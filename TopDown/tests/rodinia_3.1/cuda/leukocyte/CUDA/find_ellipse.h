@@ -11,7 +11,7 @@
 #define TOP 110
 #define BOTTOM 328
 
-extern long long get_time();
+extern long long get_g_time();
 
 extern MAT * get_frame(avi_t *cell_file, int frame_num, int cropped, int scaled);
 extern MAT * chop_flip_image(unsigned char *image, int height, int width, int top, int bottom, int left, int right, int scaled);

@@ -53,7 +53,7 @@ kernel_gpu_cuda_wrapper(par_str par_cpu,
 	long long time5;
 	long long time6;
 
-	time0 = get_time();
+	time0 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU SETUP
@@ -86,7 +86,7 @@ kernel_gpu_cuda_wrapper(par_str par_cpu,
 	threads.x = NUMBER_THREADS;											// define the number of threads in the block
 	threads.y = 1;
 
-	time1 = get_time();
+	time1 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU MEMORY				(MALLOC)
@@ -128,7 +128,7 @@ kernel_gpu_cuda_wrapper(par_str par_cpu,
 	cudaMalloc(	(void **)&d_fv_gpu, 
 				dim_cpu.space_mem);
 
-	time2 = get_time();
+	time2 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU MEMORY			COPY
@@ -178,7 +178,7 @@ kernel_gpu_cuda_wrapper(par_str par_cpu,
 				dim_cpu.space_mem, 
 				cudaMemcpyHostToDevice);
 
-	time3 = get_time();
+	time3 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	KERNEL
@@ -195,7 +195,7 @@ kernel_gpu_cuda_wrapper(par_str par_cpu,
 	checkCUDAError("Start");
 	cudaThreadSynchronize();
 
-	time4 = get_time();
+	time4 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU MEMORY			COPY (CONTD.)
@@ -206,7 +206,7 @@ kernel_gpu_cuda_wrapper(par_str par_cpu,
 				dim_cpu.space_mem, 
 				cudaMemcpyDeviceToHost);
 
-	time5 = get_time();
+	time5 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	GPU MEMORY DEALLOCATION
@@ -217,7 +217,7 @@ kernel_gpu_cuda_wrapper(par_str par_cpu,
 	cudaFree(d_fv_gpu);
 	cudaFree(d_box_gpu);
 
-	time6 = get_time();
+	time6 = get_g_time();
 
 	//======================================================================================================================================================150
 	//	DISPLAY TIMING

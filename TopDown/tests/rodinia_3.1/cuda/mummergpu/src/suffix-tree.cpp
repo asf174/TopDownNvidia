@@ -8,13 +8,14 @@
 #include <vector>
 #include <queue>
 #include <cstring>
-
+#include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <errno.h>
 #include <assert.h>
 #include <stdint.h> 
+#include <fstream>
 
 #define ulong4 uint32_t
 #define uint4 uint32_t

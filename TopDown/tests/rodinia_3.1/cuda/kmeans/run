@@ -1,1 +1,1 @@
-topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./kmeans -o -i ../../../../../../data/kmeans/kdd_cup 
+topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./kmeans " -o -i ../../../../../../data/kmeans/kdd_cup"

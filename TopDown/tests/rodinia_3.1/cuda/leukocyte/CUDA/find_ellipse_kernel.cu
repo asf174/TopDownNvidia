@@ -110,12 +110,12 @@ float *GICOV_CUDA(int grad_m, int grad_n, float *host_grad_x, float *host_grad_y
 	int threads_per_block = grad_m - (2 * MaxR);
     
 	// Execute the GICOV kernel
-    double initKernelTime = time();
+    double initKernelTime = g_time();
 	GICOV_kernel <<< num_blocks, threads_per_block >>> (grad_m, device_gicov);
 	
 	// Check for kernel errors
 	cudaThreadSynchronize();
-    double endKernelTime = time();
+    double endKernelTime = g_time();
     printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 
 	cudaError_t error = cudaGetLastError();
@@ -205,12 +205,12 @@ float *dilate_CUDA(int max_gicov_m, int max_gicov_n, int strel_m, int strel_n) {
 	int num_blocks = (int) (((float) num_threads / (float) threads_per_block) + 0.5);
 
 	// Execute the dilation kernel
-    double initKernelTime = time();
+    double initKernelTime = g_time();
 	dilate_kernel <<< num_blocks, threads_per_block >>> (max_gicov_m, max_gicov_n, strel_m, strel_n, device_img_dilated);
 	
 	// Check for kernel errors
 	cudaThreadSynchronize();
-    double endKernelTime = time();
+    double endKernelTime = g_time();
     printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 
 	cudaError_t error = cudaGetLastError();

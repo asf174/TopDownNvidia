@@ -29,7 +29,7 @@
 #include "pack_kernels.cu"
 #include "cpuencode.h"
 
-long long get_time() {
+long long get_g_time() {
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000000) + tv.tv_usec;
@@ -118,9 +118,9 @@ void runVLCTest(char *file_name, uint num_block_threads, uint num_blocks) {
 
     //////////////////* CPU ENCODER *///////////////////////////////////
     unsigned int refbytesize;
-    long long timer = get_time();
+    long long timer = get_g_time();
     cpu_vlc_encode((unsigned int*)sourceData, num_elements, (unsigned int*)crefData,  &refbytesize, codewords, codewordlens);
-    float msec = (float)((get_time() - timer)/1000.0);
+    float msec = (float)((get_g_time() - timer)/1000.0);
     printf("CPU Encoding time (CPU): %f (ms)\n", msec);
     printf("CPU Encoded to %d [B]\n", refbytesize);
     unsigned int num_ints = refbytesize/4 + ((refbytesize%4 ==0)?0:1);

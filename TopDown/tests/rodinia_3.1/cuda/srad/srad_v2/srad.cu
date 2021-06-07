@@ -35,10 +35,10 @@ void usage(int argc, char **argv)
 int
 main( int argc, char** argv) 
 {
-    double initTime = time();
+    double initTime = g_time();
   printf("WG size of kernel = %d X %d\n", BLOCK_SIZE, BLOCK_SIZE);
     runTest( argc, argv);
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
     return EXIT_SUCCESS;
 }
@@ -231,12 +231,12 @@ runTest( int argc, char** argv)
 	//Copy data from main memory to device memory
 	cudaMemcpy(J_cuda, J, sizeof(float) * size_I, cudaMemcpyHostToDevice);
 
-    double initKernelTime = time();
+    double initKernelTime = g_time();
 	//Run kernels
 	srad_cuda_1<<<dimGrid, dimBlock>>>(E_C, W_C, N_C, S_C, J_cuda, C_cuda, cols, rows, q0sqr); 
 	srad_cuda_2<<<dimGrid, dimBlock>>>(E_C, W_C, N_C, S_C, J_cuda, C_cuda, cols, rows, lambda, q0sqr); 
     cudaThreadSynchronize();
-    double endKernelTime = time();
+    double endKernelTime = g_time();
     printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 
 	//Copy data from device memory to main memory

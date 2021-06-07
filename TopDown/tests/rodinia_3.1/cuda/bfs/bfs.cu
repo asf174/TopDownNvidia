@@ -44,11 +44,11 @@ void BFSGraph(int argc, char** argv);
 ////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char** argv) 
 {
-    double initTime = time();
+    double initTime = g_time();
 	no_of_nodes=0;
 	edge_list_size=0;
 	BFSGraph( argc, argv);
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
 }
 
@@ -194,7 +194,7 @@ void BFSGraph( int argc, char** argv)
 		cudaMemcpy( d_over, &stop, sizeof(bool), cudaMemcpyHostToDevice);
 
         if (i == 0) {
-            initKernelTime = time();
+            initKernelTime = g_time();
         }
 		Kernel<<< grid, threads, 0 >>>( d_graph_nodes, d_graph_edges, d_graph_mask, d_updating_graph_mask, d_graph_visited, d_cost, no_of_nodes);
 		// check if kernel execution generated and error
@@ -209,7 +209,7 @@ void BFSGraph( int argc, char** argv)
 	}
 	while(stop);
     cudaThreadSynchronize();
-    double endKernelTime = time();
+    double endKernelTime = g_time();
     printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 
 	printf("Kernel Executed %d times\n",k);

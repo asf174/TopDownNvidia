@@ -94,7 +94,7 @@ double time_gain_dist;
 double time_gain_init;
 #endif 
 
-double gettime() {
+double getg_time() {
   struct timeval t;
   gettimeofday(&t,NULL);
   return (double)t.tv_sec+t.tv_usec*1e-6;
@@ -130,7 +130,7 @@ static int floatcomp(const void *i, const void *j)
 void shuffle(Points *points)
 {
 #ifdef PROFILE
-  double t1 = gettime();
+  double t1 = getg_time();
 #endif
   long i, j;
   Point temp;
@@ -141,7 +141,7 @@ void shuffle(Points *points)
     points->p[j] = temp;
   }
 #ifdef PROFILE
-  double t2 = gettime();
+  double t2 = getg_time();
   time_shuffle += t2-t1;
 #endif
 }
@@ -150,7 +150,7 @@ void shuffle(Points *points)
 void intshuffle(int *intarray, int length)
 {
 #ifdef PROFILE
-  double t1 = gettime();
+  double t1 = getg_time();
 #endif
   long i, j;
   int temp;
@@ -161,7 +161,7 @@ void intshuffle(int *intarray, int length)
     intarray[j]=temp;
   }
 #ifdef PROFILE
-  double t2 = gettime();
+  double t2 = getg_time();
   time_shuffle += t2-t1;
 #endif
 }
@@ -195,7 +195,7 @@ float dist(Point p1, Point p2, int dim)
 float pspeedy(Points *points, float z, long *kcenter, int pid, pthread_barrier_t* barrier)
 {
 #ifdef PROFILE
-  double t1 = gettime();
+  double t1 = getg_time();
 #endif
 
 #ifdef ENABLE_THREADS
@@ -333,7 +333,7 @@ float pspeedy(Points *points, float z, long *kcenter, int pid, pthread_barrier_t
 #endif
 
 #ifdef PROFILE
-  double t2 = gettime();
+  double t2 = getg_time();
   if( pid== 0 ) {
     time_speedy += t2 -t1;
   }
@@ -365,7 +365,7 @@ double pgain(long x, Points *points, double z, long int *numcenters, int pid, pt
   pthread_barrier_wait(barrier);
 #endif
 #ifdef PROFILE
-  double t0 = gettime();
+  double t0 = getg_time();
 #endif
 
   //my block
@@ -448,7 +448,7 @@ double pgain(long x, Points *points, double z, long int *numcenters, int pid, pt
   pthread_barrier_wait(barrier);
 #endif
 #ifdef PROFILE
-  double t1 = gettime();
+  double t1 = getg_time();
   if( pid == 0 ) time_gain_init += t1-t0;
 #endif
   //my *lower* fields
@@ -489,7 +489,7 @@ double pgain(long x, Points *points, double z, long int *numcenters, int pid, pt
 #endif
 
 #ifdef PROFILE
-  double t2 = gettime();
+  double t2 = getg_time();
   if( pid==0){
     time_gain_dist += t2 - t1;
   }
@@ -581,7 +581,7 @@ double pgain(long x, Points *points, double z, long int *numcenters, int pid, pt
   }
 
 #ifdef PROFILE
-  double t3 = gettime();
+  double t3 = getg_time();
   if( pid==0 )
   time_gain += t3-t0;
 #endif
@@ -646,7 +646,7 @@ float pFL(Points *points, int *feasible, int numfeasible,
 int selectfeasible_fast(Points *points, int **feasible, int kmin, int pid, pthread_barrier_t* barrier)
 {
 #ifdef PROFILE
-  double t1 = gettime();
+  double t1 = getg_time();
 #endif
 
   int numfeasible = points->num;
@@ -712,7 +712,7 @@ int selectfeasible_fast(Points *points, int **feasible, int kmin, int pid, pthre
   free(accumweight); 
 
 #ifdef PROFILE
-  double t2 = gettime();
+  double t2 = getg_time();
   time_select_feasible += t2-t1;
 #endif
   return numfeasible;
@@ -973,7 +973,7 @@ void* localSearchSub(void* arg_) {
 
 void localSearch( Points* points, long kmin, long kmax, long* kfinal ) {
 #ifdef PROFILE
-  double t1 = gettime();
+  double t1 = getg_time();
 #endif
 
     pthread_barrier_t barrier;
@@ -1012,7 +1012,7 @@ void localSearch( Points* points, long kmin, long kmax, long* kfinal ) {
 #endif
 
 #ifdef PROFILE
-  double t2 = gettime();
+  double t2 = getg_time();
   time_local_search += t2-t1;
 #endif
  
@@ -1253,7 +1253,7 @@ int main(int argc, char **argv)
     stream = new FileStream(infilename);
   }
 
-  double t1 = gettime();
+  double t1 = getg_time();
 
 #ifdef ENABLE_PARSEC_HOOKS
   __parsec_roi_begin();
@@ -1263,7 +1263,7 @@ int main(int argc, char **argv)
   __parsec_roi_end();
 #endif
 
-  double t2 = gettime();
+  double t2 = getg_time();
 
   printf("time = %lf\n",t2-t1);
 

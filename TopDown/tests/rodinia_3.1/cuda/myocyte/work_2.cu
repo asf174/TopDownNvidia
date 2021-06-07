@@ -32,7 +32,7 @@ int work_2(	int xmax,
 	long long time5;
 	long long time6;
 
-	time0 = get_time();
+	time0 = get_g_time();
 
 	//============================================================60
 	//		COUNTERS, POINTERS
@@ -88,7 +88,7 @@ int work_2(	int xmax,
 	dim3 blocks;
 	int blocks_x;
 
-	time1 = get_time();
+	time1 = get_g_time();
 
 	//================================================================================80
 	// 	ALLOCATE MEMORY
@@ -146,7 +146,7 @@ int work_2(	int xmax,
 	finavalu_temp_mem = workload * 13* EQUATIONS * sizeof(fp);
 	cudaMalloc((void **)&d_finavalu_temp, finavalu_temp_mem);
 
-	time2 = get_time();
+	time2 = get_g_time();
 
 	//================================================================================80
 	// 	READ FROM FILES OR SET INITIAL VALUES
@@ -190,7 +190,7 @@ int work_2(	int xmax,
 	}
 	cudaMemcpy(d_params, params, params_mem, cudaMemcpyHostToDevice);
 
-	time3 = get_time();
+	time3 = get_g_time();
 
 	//================================================================================80
 	//		EXECUTION IF THERE ARE MANY WORKLOADS
@@ -230,7 +230,7 @@ int work_2(	int xmax,
 	// cudaThreadSynchronize();
 	// printf("CUDA error: %s\n", cudaGetErrorString(cudaGetLastError()));
 
-	time4 = get_time();
+	time4 = get_g_time();
 
 	//================================================================================80
 	//		COPY DATA BACK TO CPU
@@ -239,7 +239,7 @@ int work_2(	int xmax,
 	cudaMemcpy(x, d_x, x_mem, cudaMemcpyDeviceToHost);
 	cudaMemcpy(y, d_y, y_mem, cudaMemcpyDeviceToHost);
 
-	time5 = get_time();
+	time5 = get_g_time();
 
 	//================================================================================80
 	//		PRINT RESULTS (ENABLE SELECTIVELY FOR TESTING ONLY)
@@ -295,7 +295,7 @@ int work_2(	int xmax,
 	cudaFree(d_initvalu_temp);
 	cudaFree(d_finavalu_temp);
 
-	time6= get_time();
+	time6= get_g_time();
 
 	//================================================================================80
 	//		DISPLAY TIMING

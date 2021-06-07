@@ -1,5 +1,5 @@
 CC = gcc
-NVCC = nvcc
+NVCC = nvcc 
 
 DEFS += \
 		-DGPU_TIMER \

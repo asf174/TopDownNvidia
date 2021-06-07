@@ -1,1 +1,1 @@
-topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./3D 512 8 100 ../../data/hotspot3D/power_512x8 ../../data/hotspot3D/temp_512x8 output.out
+topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./3D 512 8 100 $HOME/data/hotspot3D/power_512x8 $HOME/data/hotspot3D/temp_512x8 output.out

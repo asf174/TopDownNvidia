@@ -1,1 +1,1 @@
-topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./heartwall ../../data/heartwall/test.avi 20
+topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./heartwall $HOME/data/heartwall/test.avi 20

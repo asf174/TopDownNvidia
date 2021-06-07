@@ -42,7 +42,7 @@ int blosum62[24][24] = {
 {-4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4,  1}
 };
 
-double gettime() {
+double getg_time() {
   struct timeval t;
   gettimeofday(&t,NULL);
   return t.tv_sec+t.tv_usec*1e-6;
@@ -55,12 +55,12 @@ int
 main( int argc, char** argv) 
 {
 
-    double initTime = gettime();
+    double initTime = getg_time();
   printf("WG size of kernel = %d \n", BLOCK_SIZE);
 
     runTest( argc, argv);
 
-    double endTime = gettime();
+    double endTime = getg_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
     return EXIT_SUCCESS;
 }
@@ -158,7 +158,7 @@ void runTest( int argc, char** argv)
 		dimGrid.x = i;
 		dimGrid.y = 1;
         if (i == 1)
-            initKernelTime = gettime();
+            initKernelTime = getg_time();
 		needle_cuda_shared_1<<<dimGrid, dimBlock>>>(referrence_cuda, matrix_cuda
 		                                      ,max_cols, penalty, i, block_width); 
 	}
@@ -171,7 +171,7 @@ void runTest( int argc, char** argv)
 		                                      ,max_cols, penalty, i, block_width); 
         if (i == 1) {
             cudaThreadSynchronize();
-            endKernelTime = gettime();
+            endKernelTime = getg_time();
         }
 
 	}

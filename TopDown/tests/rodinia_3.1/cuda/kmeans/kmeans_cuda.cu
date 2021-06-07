@@ -125,12 +125,12 @@ void deallocateMemory()
 int
 main( int argc, char** argv) 
 {
-    double initTime = time();
+    double initTime = g_time();
 	// make sure we're running on the big card
     cudaSetDevice(1);
 	// as done in the CUDA start/help document provided
 	setup(argc, argv);
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
 }
 
@@ -197,7 +197,7 @@ kmeansCuda(float  **feature,				/* in: [npoints][nfeatures] */
     dim3  grid( num_blocks_perdim, num_blocks_perdim );
     dim3  threads( num_threads_perdim*num_threads_perdim );
     
-    double initKernelTime = time();
+    double initKernelTime = g_time();
 	/* execute the kernel */
     kmeansPoint<<< grid, threads >>>( feature_d,
                                       nfeatures,
@@ -209,7 +209,7 @@ kmeansCuda(float  **feature,				/* in: [npoints][nfeatures] */
 									  block_deltas_d);
 
 	cudaThreadSynchronize();
-    double endKernelTime = time();
+    double endKernelTime = g_time();
     printf("TOTAL KERNEL time: %g seconds\n", endKernelTime - initKernelTime);
 
 	/* copy back membership (device to host) */

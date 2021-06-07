@@ -109,6 +109,7 @@ class TopDown:
         self.__output_graph_file : str = args.graph_file
         self.__output_scan_file : str = args.output_scan_file
         self.__input_scan_file : str = args.input_scan_file
+        print(self.__program)
         pass
     
     def __add_show_desc_argument(self, parser : argparse.ArgumentParser):
@@ -253,7 +254,7 @@ class TopDown:
             TopDownParameters.C_OUTPUT_FILE_ARGUMENT_LONG_OPTION, 
             help = TopDownParameters.C_OUTPUT_FILE_ARGUMENT_DESCRIPTION,
             default = None,
-            action = DontRepeat, # preguntar TODO
+            #action = DontRepeat, # preguntar TODO
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
@@ -350,7 +351,7 @@ class TopDown:
             TopDownParameters.C_OUTPUT_SCAN_FILE_ARGUMENT_LONG_OPTION, 
             help = TopDownParameters.C_OUTPUT_SCAN_FILE_ARGUMENT_DESCRIPTION,
             default = None,
-            action = DontRepeat, # preguntar TODO
+            #action = DontRepeat, # preguntar TODO
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',

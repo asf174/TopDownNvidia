@@ -100,7 +100,7 @@
 int main(int argc, char *argv []){
 
     // measure time
-    double initTime = time();
+    double initTime = g_time();
 	//================================================================================80
 	//		VARIABLES
 	//================================================================================80
@@ -191,7 +191,7 @@ int main(int argc, char *argv []){
 //		END OF FILE
 //====================================================================================================100
 
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
 	return 0;
 

@@ -141,9 +141,9 @@ void ellipsetrack(avi_t *video, double *xc0, double *yc0, int Nc, int R, int Np,
 		}
 		
 		// Compute the motion gradient vector flow (MGVF) edgemaps for all cells concurrently
-		long long MGVF_start_time = get_time();
+		long long MGVF_start_time = get_g_time();
 		MAT **IMGVF = MGVF(IE, 1, 1, Nc);
-		MGVF_time += get_time() - MGVF_start_time;
+		MGVF_time += get_g_time() - MGVF_start_time;
 		
 		// Sequentially determine the new location of each cell
 		for (cell_num = 0; cell_num < Nc; cell_num++) {	
@@ -153,9 +153,9 @@ void ellipsetrack(avi_t *video, double *xc0, double *yc0, int Nc, int R, int Np,
 			ycavg[cell_num] = ycavg[cell_num] - (double) (v1[cell_num] - 1);
 			
 			// Evolve the snake
-			long long snake_start_time = get_time();
+			long long snake_start_time = get_g_time();
 			ellipseevolve(IMGVF[cell_num], &(xci[cell_num]), &(yci[cell_num]), ri[cell_num], t, Np, (double) R, ycavg[cell_num]);
-			snake_time += get_time() - snake_start_time;
+			snake_time += get_g_time() - snake_start_time;
 			
 			// Compute the cell's new position in the full image
 			xci[cell_num] = xci[cell_num] + u1[cell_num];

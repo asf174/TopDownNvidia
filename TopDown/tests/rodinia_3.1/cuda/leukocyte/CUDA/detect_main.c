@@ -7,7 +7,7 @@ int main(int argc, char ** argv) {
 	choose_GPU();
 
 	// Keep track of the start time of the program
-	long long program_start_time = get_time();
+	long long program_start_time = get_g_time();
 	
 	if (argc !=3){
 	fprintf(stderr, "usage: %s <input file> <number of frames to process>", argv[0]);
@@ -45,14 +45,14 @@ int main(int argc, char ** argv) {
 	m_free(image_chopped);
 	
 	// Get GICOV matrices corresponding to image gradients
-	long long GICOV_start_time = get_time();
+	long long GICOV_start_time = get_g_time();
 	MAT *gicov = GICOV(grad_x, grad_y);
-	long long GICOV_end_time = get_time();
+	long long GICOV_end_time = get_g_time();
 
 	// Dilate the GICOV matrices
-	long long dilate_start_time = get_time();
+	long long dilate_start_time = get_g_time();
 	MAT *img_dilated = dilate(gicov);
-	long long dilate_end_time = get_time();
+	long long dilate_end_time = get_g_time();
 	
 	// Find possible matches for cell centers based on GICOV and record the rows/columns in which they are found
 	pair_counter = 0;
@@ -230,19 +230,19 @@ int main(int argc, char ** argv) {
 	printf("-----------------\n");
 	printf("GICOV computation: %.5f seconds\n", ((float) (GICOV_end_time - GICOV_start_time)) / (1000*1000));
 	printf("   GICOV dilation: %.5f seconds\n", ((float) (dilate_end_time - dilate_start_time)) / (1000*1000));
-	printf("            Total: %.5f seconds\n", ((float) (get_time() - program_start_time)) / (1000*1000));
+	printf("            Total: %.5f seconds\n", ((float) (get_g_time() - program_start_time)) / (1000*1000));
 	
 	// Now that the cells have been detected in the first frame,
 	//  track the ellipses through subsequent frames
 	if (num_frames > 1) printf("\nTracking cells across %d frames\n", num_frames);
 	else                printf("\nTracking cells across 1 frame\n");
-	long long tracking_start_time = get_time();
+	long long tracking_start_time = get_g_time();
 	int num_snaxels = 20;
 	ellipsetrack(cell_file, QAX_CENTERS, QAY_CENTERS, k_count, radius, num_snaxels, num_frames);
-	printf("           Total: %.5f seconds\n", ((float) (get_time() - tracking_start_time)) / (float) (1000*1000*num_frames));	
+	printf("           Total: %.5f seconds\n", ((float) (get_g_time() - tracking_start_time)) / (float) (1000*1000*num_frames));	
 	
 	// Report total program execution time
-    printf("\nTotal application run time: %.5f seconds\n", ((float) (get_time() - program_start_time)) / (1000*1000));
+    printf("\nTotal application run time: %.5f seconds\n", ((float) (get_g_time() - program_start_time)) / (1000*1000));
 
 	return 0;
 }

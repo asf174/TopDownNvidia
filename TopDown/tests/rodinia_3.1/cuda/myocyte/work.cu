@@ -32,7 +32,7 @@ int work(	int xmax,
 	long long time4;
 	long long time5;
 
-	time0 = get_time();
+	time0 = get_g_time();
 
 	//============================================================60
 	//		COUNTERS
@@ -51,7 +51,7 @@ int work(	int xmax,
 	fp** params;
 	fp* com;
 
-	time1 = get_time();
+	time1 = get_g_time();
 
 	//================================================================================80
 	// 	ALLOCATE MEMORY
@@ -115,7 +115,7 @@ int work(	int xmax,
 	fp* d_com;
 	cudaMalloc((void **)&d_com, d_com_mem);
 
-	time2 = get_time();
+	time2 = get_g_time();
 
 	//================================================================================80
 	// 	INITIAL VALUES
@@ -139,7 +139,7 @@ int work(	int xmax,
 					0);
 	}
 
-	time3 = get_time();
+	time3 = get_g_time();
 
 	//================================================================================80
 	//	EXECUTION
@@ -188,7 +188,7 @@ int work(	int xmax,
 
 
 
-	time4 = get_time();
+	time4 = get_g_time();
 
 	//================================================================================80
 	//	DEALLOCATION
@@ -215,7 +215,7 @@ int work(	int xmax,
 	}
 	free(params);
 
-	time5= get_time();
+	time5= get_g_time();
 
 	// com
 	free(com);

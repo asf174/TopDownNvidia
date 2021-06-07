@@ -34,7 +34,7 @@
 #include "common.h"
 #include "transform_buffer.h"
 #include "io.h"
-#include "../../../time/time.c"
+#include "../../../g_time()/g_time().c"
 
 namespace dwt_cuda {
 
@@ -322,9 +322,9 @@ namespace dwt_cuda {
     
     // finally launch kernel
     PERF_BEGIN
-    double initKernelTime = time();
+    double initKernelTime = g_time();
     rdwt97Kernel<WIN_SX, WIN_SY><<<gSize, WIN_SX>>>(in, out, sx, sy, steps);
-    double endKernelTime = time(); 
+    double endKernelTime = g_time(); 
     printf("KERNEL tme: %g seconds\n", endKernelTime - initKernelTime);
     PERF_END("        RDWT97", sx, sy)
     CudaDWTTester::checkLastKernelCall("RDWT 9/7 kernel");

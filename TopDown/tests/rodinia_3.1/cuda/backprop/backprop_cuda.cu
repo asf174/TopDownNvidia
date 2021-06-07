@@ -36,7 +36,7 @@ float **alloc_2d_dbl(int m, int n);
 extern "C"
 float squash(float x);
 
-double gettime() {
+double getg_time() {
   struct timeval t;
   gettimeofday(&t,NULL);
   return t.tv_sec+t.tv_usec*1e-6;
@@ -51,9 +51,9 @@ unsigned int num_blocks = 0;
 int
 main( int argc, char** argv) 
 {
-    double initTime = time();
+    double initTime = g_time();
 	setup(argc, argv);
-    double endTime = time();
+    double endTime = g_time();
     printf("TOTAL time: %g seconds\n", endTime - initTime);
 }
 
@@ -122,7 +122,7 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
   cudaMemcpy(input_hidden_cuda, input_weights_one_dim, (in + 1) * (hid + 1) * sizeof(float), cudaMemcpyHostToDevice);
 
   
-  double initKernelTime = time();
+  double initKernelTime = g_time();
   bpnn_layerforward_CUDA<<< grid, threads >>>(input_cuda,
 	                                          output_hidden_cuda,
 											  input_hidden_cuda,
@@ -131,7 +131,7 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
 											  hid);
  
   cudaThreadSynchronize();
-  double endKernelTime = time();
+  double endKernelTime = g_time();
   double totalKernelTime = endKernelTime - initKernelTime;
   
   cudaError_t error = cudaGetLastError();
@@ -174,7 +174,7 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
   cudaMemcpy(input_hidden_cuda, input_weights_one_dim, (in + 1) * (hid + 1) * sizeof(float), cudaMemcpyHostToDevice);
 
 
-  initKernelTime = time();
+  initKernelTime = g_time();
   bpnn_adjust_weights_cuda<<< grid, threads >>>(hidden_delta_cuda,  
 												hid, 
 												input_cuda, 
@@ -182,7 +182,7 @@ void bpnn_train_cuda(BPNN *net, float *eo, float *eh)
 												input_hidden_cuda, 
 												input_prev_weights_cuda
 												);
-  endKernelTime = time();
+  endKernelTime = g_time();
   totalKernelTime += (endKernelTime - initKernelTime);
   printf("TOTAL KERNEL time: %g seconds\n", totalKernelTime);
 

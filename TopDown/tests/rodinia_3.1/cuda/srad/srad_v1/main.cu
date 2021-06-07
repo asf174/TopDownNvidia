@@ -64,7 +64,7 @@ int main(int argc, char *argv []){
 	long long time11;
 	long long time12;
 
-	time0 = get_time();
+	time0 = get_g_time();
 
     // inputs image, input paramenters
     fp* image_ori;																// originalinput image
@@ -135,7 +135,7 @@ int main(int argc, char *argv []){
 	fp* d_I;																// input IMAGE on DEVICE
 	fp* d_c;
 
-	time1 = get_time();
+	time1 = get_g_time();
 
 	//================================================================================80
 	// 	GET INPUT PARAMETERS
@@ -152,7 +152,7 @@ int main(int argc, char *argv []){
 		Nc = atoi(argv[4]);						// it is 458 in the original image
 	}
 
-	time2 = get_time();
+	time2 = get_g_time();
 
 	//================================================================================80
 	// 	READ IMAGE (SIZE OF IMAGE HAS TO BE KNOWN)
@@ -171,7 +171,7 @@ int main(int argc, char *argv []){
 								image_ori_cols,
 								1);
 
-	time3 = get_time();
+	time3 = get_g_time();
 
 	//================================================================================80
 	// 	RESIZE IMAGE (ASSUMING COLUMN MAJOR STORAGE OF image_orig)
@@ -189,7 +189,7 @@ int main(int argc, char *argv []){
 				Nc,
 				1);
 
-	time4 = get_time();
+	time4 = get_g_time();
 
 	//================================================================================80
 	// 	SETUP
@@ -274,7 +274,7 @@ int main(int argc, char *argv []){
 	blocks.x = blocks_x;													// define the number of blocks in the grid
 	blocks.y = 1;
 
-	time5 = get_time();
+	time5 = get_g_time();
 
 	//================================================================================80
 	// 	COPY INPUT TO CPU
@@ -282,7 +282,7 @@ int main(int argc, char *argv []){
 
 	cudaMemcpy(d_I, image, mem_size, cudaMemcpyHostToDevice);
 
-	time6 = get_time();
+	time6 = get_g_time();
 
 	//================================================================================80
 	// 	SCALE IMAGE DOWN FROM 0-255 TO 0-1 AND EXTRACT
@@ -293,7 +293,7 @@ int main(int argc, char *argv []){
 
 	checkCUDAError("extract");
 
-	time7 = get_time();
+	time7 = get_g_time();
 
 	//================================================================================80
 	// 	COMPUTATION
@@ -409,7 +409,7 @@ int main(int argc, char *argv []){
 
 	// printf("\n");
 
-	time8 = get_time();
+	time8 = get_g_time();
 
 	//================================================================================80
 	// 	SCALE IMAGE UP FROM 0-1 TO 0-255 AND COMPRESS
@@ -420,7 +420,7 @@ int main(int argc, char *argv []){
 
 	checkCUDAError("compress");
 
-	time9 = get_time();
+	time9 = get_g_time();
 
 	//================================================================================80
 	// 	COPY RESULTS BACK TO CPU
@@ -430,7 +430,7 @@ int main(int argc, char *argv []){
 
 	checkCUDAError("copy back");
 
-	time10 = get_time();
+	time10 = get_g_time();
 
 	//================================================================================80
 	// 	WRITE IMAGE AFTER PROCESSING
@@ -443,7 +443,7 @@ int main(int argc, char *argv []){
 					1,
 					255);
 
-	time11 = get_time();
+	time11 = get_g_time();
 
 	//================================================================================80
 	//	DEALLOCATE
@@ -469,7 +469,7 @@ int main(int argc, char *argv []){
 	cudaFree(d_sums);
 	cudaFree(d_sums2);
 
-	time12 = get_time();
+	time12 = get_g_time();
 
 	//================================================================================80
 	//	DISPLAY TIMING
