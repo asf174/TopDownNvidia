@@ -113,7 +113,7 @@ class LevelThree(LevelTwo):
 
     def memory_constant_memory_bound_stall(self) -> float:
         """
-        Returns percent of stalls due to BackEnd.MemoryBound.Constant_Memory_Bound part.
+        Returns percent of stalls due to BackEnd.MemoryBound.MemoryConstantMemoryBound part.
 
         Returns:
             Float with percent of total stalls due to BackEnd.MemoryBound.Constant_Memory_Bound part
@@ -124,7 +124,7 @@ class LevelThree(LevelTwo):
     
     def memory_constant_memory_bound_stall_on_back(self) -> float:
         """ 
-        Obtain the percentage of stalls due to BackEnd.MemoryBound.ConstantMemoryBound # repasar estos nombres en todo
+        Obtain the percentage of stalls due to BackEnd.MemoryBound.MemoryConstantMemoryBound # repasar estos nombres en todo
         on the total BackEnd
 
         Returns:
@@ -136,11 +136,11 @@ class LevelThree(LevelTwo):
 
     def memory_constant_memory_bound_stall_on_memory_bound(self) -> float:
         """ 
-        Obtain the percentage of stalls due to BackEnd.MemoryBound.ConstantMemoryBound
+        Obtain the percentage of stalls due to BackEnd.MemoryBound.MemoryConstantMemoryBound
         on the total BackEnd.MemoryBound
 
         Returns:
-            Float the percentage of stalls due to BackEnd.MemoryBound.ConstantMemoryBound
+            Float the percentage of stalls due to BackEnd.MemoryBound.MemoryConstantMemoryBound
             on the total BackEnd.MemoryBound
         """
 
@@ -149,10 +149,10 @@ class LevelThree(LevelTwo):
 
     def memory_constant_memory_bound_percentage_ipc_degradation(self) -> float: # repasar nombres... Incluyen superior TODO
         """
-        Find percentage of IPC degradation due to FrontEnd.Dependency part.
+        Find percentage of IPC degradation due to BackEnd.MemoryBound.MemoryConstantMemoryBound part.
 
         Returns:
-            Float with the percent of FrontEnd.Dependency's IPC degradation
+            Float with the percent of BackEnd.MemoryBound.MemoryConstantMemoryBound's IPC degradation
         """
 
         return (((self._stall_ipc()*(self.memory_constant_memory_bound_stall()/100.0))/self.get_device_max_ipc())*100.0)

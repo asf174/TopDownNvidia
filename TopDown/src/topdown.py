@@ -643,7 +643,6 @@ class TopDown:
             str(round(level_execution.back_core_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_memory_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
             str(round(level_execution.back_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-
         stalls_front_band_width_on_front_message : str = ("{:<22} {:<6}".format('STALLS, on FrontEnd  (%): ', 
             str(round(level_execution.front_band_width_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_front_dependency_on_front_message : str = ("{:<20} {:<6}".format('STALLS, on FrontEnd  (%): ', 
@@ -652,8 +651,6 @@ class TopDown:
             str(round(level_execution.back_core_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_memory_bound_on_back_message : str = ("{:<20} {:<6}".format('STALLS, on BackEnd   (%): ', 
             str(round(level_execution.back_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-
-
         ipc_degradation_front_band_width_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
             str(round(level_execution.front_band_width_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         ipc_degradation_front_dependency_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
@@ -662,7 +659,6 @@ class TopDown:
             str(round(level_execution.back_core_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         ipc_degradation_back_memory_bound_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
             str(round(level_execution.back_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-       
         messages : list[list[str]] = [["","","",""] , [stalls_front_band_width_on_total_message, 
             stalls_front_dependency_on_total_message,  stalls_back_core_bound_on_total_message, 
             stalls_back_memory_bound_on_total_message], [stalls_front_band_width_on_front_message, 
@@ -670,38 +666,56 @@ class TopDown:
             stalls_back_memory_bound_on_back_message], ["", "", "", ""], 
             [ipc_degradation_front_band_width_message, ipc_degradation_front_dependency_message,
             ipc_degradation_back_core_bound_message, ipc_degradation_back_memory_bound_message]]
-
         titles : list[str] = [level_execution.front_band_width().name(), level_execution.front_dependency().name(),
             level_execution.back_core_bound().name(),level_execution.back_memory_bound().name()]
-
         MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
 
     def __show_level_three_results(self, level_execution):
-        stalls_constant_memory_bound_on_total_message : str = ("STALLS, on the total            (%): " +  # revisar formatos, quiza sobren TODO
+        stalls_memory_constant_memory_bound_on_total_message : str = ("STALLS, on the total            (%): " +  # revisar formatos, quiza sobren TODO
             str(round(level_execution.memory_constant_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
         
-        stalls_constant_memory_bound_on_memory_bound_message : str = ("STALLS, on BackEnd.MemoryBound  (%): " +  
+        stalls_memory_constant_memory_bound_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + " (%): " +  
             str(round(level_execution.memory_constant_memory_bound_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
        
-        stalls_constant_memory_bound_on_back_message : str = ("STALLS, on MemoryBound          (%): " +
+        stalls_memory_constant_memory_bound_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "         (%): " +
             str(round(level_execution.memory_constant_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
 
-        ipc_degradation_constant_memory_bound_width_message : str = ("IPC DEGRADATION                 (%): " +  
+        ipc_degradation_memory_constant_memory_bound_width_message : str = ("IPC DEGRADATION                 (%): " +  
             str(round(level_execution.memory_constant_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-       
-        messages : list[list[str]] = [[stalls_constant_memory_bound_on_total_message, "", "", ""],
-                [stalls_constant_memory_bound_on_memory_bound_message, "", "", ""],
-                [stalls_constant_memory_bound_on_back_message, "", "", ""],
-                ["","","",""], [ipc_degradation_constant_memory_bound_width_message, "", "", ""]]
-
-        titles : list[str] = [level_execution.memory_constant_memory_bound().name(), "", "", ""]
-
-        messages : str = ("\n" + stalls_constant_memory_bound_on_total_message + "\n" + 
+        
+        if type(level_execution) is LevelThreeNsight:
+            memory_mio_throttle_name : str = level_execution.memory_mio_throttle().name()
+            memory_tex_throttle_name : str = level_execution.memory_tex_throttle().name()
+            stalls_memory_mio_throttle_on_total_message : str = ("STALLS, on the total            (%): " +  
+                str(round(level_execution.memory_mio_throttle_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            stalls_memory_tex_throttle_on_total_message : str = ("STALLS, on the total            (%): " +
+                str(round(level_execution.memory_tex_throttle_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            
+            stalls_memory_mio_throttle_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + "  (%): " +  
+                str(round(level_execution.memory_mio_throttle_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            stalls_memory_tex_throttle_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + "  (%): " +  
+                str(round(level_execution.memory_tex_throttle_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            stalls_memory_mio_throttle_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "         (%): " +
+                str(round(level_execution.memory_mio_throttle_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            stalls_memory_tex_throttle_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "         (%): " +
+                str(round(level_execution.memory_tex_throttle_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            
+            ipc_degradation_memory_mio_throttle_width_message : str = ("IPC DEGRADATION                 (%): " +  
+                str(round(level_execution.memory_mio_throttle_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            ipc_degradation_memory_tex_throttle_width_message : str = ("IPC DEGRADATION                 (%): " +  
+                str(round(level_execution.memory_tex_throttle_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            titles : list[str] = [level_execution.memory_constant_memory_bound().name(), level_execution.memory_mio_throttle().name(), level_execution.memory_tex_throttle().name()]
+            messages : list[list[str]] = [[stalls_memory_constant_memory_bound_on_total_message, stalls_memory_mio_throttle_on_total_message, stalls_memory_tex_throttle_on_total_message],
+             [stalls_memory_constant_memory_bound_on_memory_bound_message, stalls_memory_mio_throttle_on_memory_bound_message, stalls_memory_tex_throttle_on_memory_bound_message],
+             [stalls_memory_constant_memory_bound_on_back_message, stalls_memory_mio_throttle_on_back_message, stalls_memory_tex_throttle_on_back_message],
+             ["","","",""], [ipc_degradation_memory_constant_memory_bound_width_message, ipc_degradation_memory_mio_throttle_message, ipc_degradation_memory_tex_throttle_message]]
+            MessageFormat().print_three_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        else:
+            messages : str = ("\n" + stalls_constant_memory_bound_on_total_message + "\n" + 
             stalls_constant_memory_bound_on_memory_bound_message + "\n" + stalls_constant_memory_bound_on_back_message 
             + "\n\n" + ipc_degradation_constant_memory_bound_width_message)
-        #MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
-        MessageFormat().print_msg_box(messages, 1, None, level_execution.memory_constant_memory_bound().name(), self.output_file(), 
+            MessageFormat().print_msg_box(messages, 1, None, level_execution.memory_constant_memory_bound().name(), self.output_file(),
             self.delete_output_file_content())
         pass
     
@@ -728,8 +742,8 @@ class TopDown:
                 output_file = self.output_file(), 
             delete_content_file = False)
             message = ("\n    As you can see, the IPC obtanied it " + "is " + str(round((level_execution.get_device_max_ipc()/level_execution.ipc())*100, 
-                TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts "              + "of the architecture and DIVERGENCE problems. " +
-                "We analyze them based on the level of the TopDown:\n")
+                TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + "% smaller than you could get. This lower IPC is due to STALLS in the different \nparts "              
+                + "of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:\n")
             printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                 output_file = self.output_file(), delete_content_file = False)
             print()

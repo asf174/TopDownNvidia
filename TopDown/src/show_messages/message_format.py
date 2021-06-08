@@ -121,6 +121,45 @@ class MessageFormat:
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
         pass
+ 
+    def print_three_msg_box(self, msgs, titles, indent, output_file : str, delete_content_file : bool):
+        """Print message-box with optional title."""
+
+        width1 = len(msgs[0][0])
+        width2 = len(msgs[0][1])
+        width3 = len(msgs[0][2])
+        for i in range(1, len(msgs)):
+            if width1 < len(msgs[i][0]):
+                width1 = len(msgs[i][0])
+            if width2 < len(msgs[i][1]):
+                width2 = len(msgs[i][1])
+            if width3 < len(msgs[i][2]):
+                width3 = len(msgs[i][2])
+    
+        space = " " * indent
+        box = f'╔{"═" * (width1 + indent * 2)}╗  '  # upper_border
+        box += f'╔{"═" * (width2 + indent * 2)}╗  '  # upper_border
+        box += f'╔{"═" * (width3 + indent * 2)}╗  '  # upper_border
+        if titles:
+            box += f'║{space}{titles[0]:<{width1}}{space}║  '  # title
+            box += f'║{space}{titles[1]:<{width2}}{space}║  '  # title
+            box += f'║{space}{titles[2]:<{width3}}{space}║  '  # title
+            box += f'║{space}{"-" * len(titles[0]):<{width1}}{space}║  '  # underscore
+            box += f'║{space}{"-" * len(titles[1]):<{width2}}{space}║  '  # underscore
+            box += f'║{space}{"-" * len(titles[2]):<{width3}}{space}║\n'  # underscore  
+        
+        for i in range(0, len(msgs)):
+            box += ''.join(f'║{space}{msgs[i][0]:<{width1}}{space}║  ')
+            box += ''.join(f'║{space}{msgs[i][1]:<{width2}}{space}║  ')
+            box += ''.join(f'║{space}{msgs[i][2]:<{width3}}{space}║  ')
+            box += "\n"
+        box += f'╚{"═" * (width1 + indent * 2)}╝  '  # lower_border
+        box += f'╚{"═" * (width2 + indent * 2)}╝  '  # lower_border
+        box += f'╚{"═" * (width3 + indent * 2)}╝  '  # lower_border
+        print(box)
+        self.__write_str_in_file(box, output_file, delete_content_file)
+        pass
+
 
     def print_desplazed_msg_box(self, msg, indent, width, title, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
