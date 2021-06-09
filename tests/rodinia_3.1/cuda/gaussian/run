@@ -1,0 +1,2 @@
+topdown.py -l3 -nd -os scan_file_file.txt -o results_topdown_file.txt -f gaussian ../../../../../../data/gaussian/matrix4.txt
+topdown.py -l3 -nd -os scan_file_16.txt -o results_topdown_16.txt -f gaussian "-s 16"

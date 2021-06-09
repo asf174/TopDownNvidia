@@ -1,0 +1,40 @@
+==PROF== Connected to process 51774 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/TopDown/tests/rodinia_3.1/cuda/nn/nn)
+==PROF== Profiling "euclid" - 1: 0%....50%....100% - 9 passes
+1988 12 27  0 18 TONY       30.0  89.8  113   39 --> Distance=0.199997
+1980 10 22 18  3 ISAAC      30.1  90.4  110  778 --> Distance=0.412312
+1997 11 14 12 24 HELENE     30.5  89.8  134  529 --> Distance=0.538515
+2003  8 27 12 10 TONY       29.9  89.4  160  286 --> Distance=0.608275
+1974 12 22 18 24 JOYCE      30.6  89.9   80  593 --> Distance=0.608276
+TOTAL time: 1.6098 seconds
+TOTAL KERNEL time: 0.375564 seconds
+==PROF== Disconnected from process 51774
+[51774] nn@127.0.0.1
+  euclid(latLong*, float*, int, float, float), 2021-May-27 17:38:16, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.sum                                                            cycle                         79.015
+    sm__cycles_elapsed.sum                                                           cycle                        143.062
+    smsp__inst_executed.avg.per_cycle_active                                    inst/cycle                           0,14
+    smsp__inst_issued.avg.per_cycle_active                                      inst/cycle                           0,15
+    smsp__sass_average_branch_targets_threads_uniform.pct                                %                            100
+    smsp__thread_inst_executed_per_inst_executed.ratio                                                              31,99
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                              0
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           1,37
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,29
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           1,87
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                          25,95
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           2,13
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          49,39
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,35
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           1,60
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           2,32
+    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,36
+    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           2,28
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           3,72
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           7,67
+    ---------------------------------------------------------------------- --------------- ------------------------------
+

@@ -1,0 +1,2 @@
+topdown.py -f ./needle 2048 10 -l3 -nd -os scan_file.txt -o results_topdown.txt
+

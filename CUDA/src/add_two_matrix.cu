@@ -5,7 +5,7 @@
 #include <time.h>
 
 #ifndef N 
-	#define N 15000
+	#define N 200
 #endif
 
 #ifndef numThreadsPerBlock
@@ -37,6 +37,17 @@ __global__ void addMatrix(int* a, int* b, int* result, int size)
 		result[idx*result[idx] % size] = a[idx*result[idx] % size];*/
     //sleep2((clock_value_t) 1000000^25);
 }
+
+
+__global__ void addMatrix(int* a, int* b, int* result, int size, int id)
+{
+    if (id < 4) {
+	    int idx = blockDim.x*blockIdx.x + threadIdx.x;	
+	    if (idx < size)
+		    result[idx] = a[idx] + b[idx];
+    }
+}
+
 
 __global__ void addMatrix2(int* a, int* b, int* result, int size)
 {
@@ -74,9 +85,10 @@ double time() {
 int
 main(int argc, char* argv[])
 {
-    printf("Hola");
     int i = 0;
 top:
+    if(argc > 1)
+        printf("%s", argv[1]);
     i++;
 	// create events to measure time
 	cudaEvent_t start, stop;
@@ -114,8 +126,11 @@ top:
 	cudaProfilerStart();
 	
 	//for (int i = 0; i < 10000000; i++) {
-	    addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
-	    addMatrix2<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+	addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+    //addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N, 5);
+    //addMatrix<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
+
+         //addMatrix2<<<numBlock,numThreadsPerBlock>>>(matrixA_d,matrixB_d,matrixResult_d,N*N);
         //sleep(60);
     //}
 	// cudaDeviceSynchronize waits for the kernel to finish, and returns
@@ -146,4 +161,5 @@ top:
 	//printf("%g %d\n",endtime - initime,numThreadsPerBlock);
     //if (i < 3)
     // goto top;
+    return 0;
 }
