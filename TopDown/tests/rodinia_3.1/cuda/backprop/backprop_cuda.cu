@@ -11,6 +11,7 @@
 // includes, kernels
 #include "backprop_cuda_kernel.cu"
 #include "backprop.h"
+#include "../../time/time.c"
 
 ////////////////////////////////////////////////////////////////////////////////
 
