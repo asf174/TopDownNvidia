@@ -9,7 +9,6 @@ Program that implements the Top Down methodology over NVIDIA GPUs.
 
 import argparse
 import sys
-#from tabulate import tabulate #TODO, pintar
 from errors.topdown_errors import *
 from parameters.topdown_params import TopDownParameters # parameters of program
 from measure_levels.level_one_nvprof import LevelOneNvprof
@@ -50,7 +49,7 @@ class TopDown:
     Attributes:
         __level                         : int                       ;   level of the exection
         
-        __input_output_scan_file               : str                       ;   input file with results computed by NVIDIA scan tool
+        __input_output_scan_file        : str                       ;   input file with results computed by NVIDIA scan tool
 
         __output_file                   : str                       ;   path to log to show results or 'None' if option
                                                                         is not specified
@@ -77,7 +76,7 @@ class TopDown:
 
         __show_graph                    : bool                      ;   True if program has to show graphs or False if not
         __output_graph_file             : str                       ;   path to graph file or 'None' if option is not specified
-        __output_output_scan_file              : str                       ;   path to scan file or 'None' if option is not specified
+        __output_output_scan_file       : str                       ;   path to scan file or 'None' if option is not specified
     """
 
     def __init__(self):
@@ -106,10 +105,9 @@ class TopDown:
         self.__show_events : bool = args.events
         self.__show_all_measurements : bool = args.all_measures
         self.__show_graph : bool = args.show_graph
-        self.__output_graph_file : str = args.graph_file
+        self.__output_graph_file : str = args.output_graph_file
         self.__output_scan_file : str = args.output_scan_file
         self.__input_scan_file : str = args.input_scan_file
-        print(self.__program)
         pass
     
     def __add_show_desc_argument(self, parser : argparse.ArgumentParser):
@@ -254,7 +252,7 @@ class TopDown:
             TopDownParameters.C_OUTPUT_FILE_ARGUMENT_LONG_OPTION, 
             help = TopDownParameters.C_OUTPUT_FILE_ARGUMENT_DESCRIPTION,
             default = None,
-            #action = DontRepeat, # preguntar TODO
+            action = DontRepeat, # preguntar TODO
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
@@ -313,7 +311,7 @@ class TopDown:
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
-            dest = 'graph_file')
+            dest = 'output_graph_file')
         pass
 
     def __add_input_scan_file_argument(self, parser : argparse.ArgumentParser):
@@ -462,7 +460,18 @@ class TopDown:
         return self.__output_scan_file # descriptor to file or None
         pass
     
+    def input_scan_file(self) -> str:
+        """
+        Find path to input scan file.
 
+        Returns:
+            path to scan file to write, or None if 
+            option '-is' or '--input-scan' has not been indicated
+        """
+
+        return self.__input_scan_file # descriptor to file or None
+        pass
+    
 
     def show_verbose(self) -> bool:
         """
@@ -584,7 +593,11 @@ class TopDown:
                    "- Analyzed program:                 " + self.program() + "\n" +
                    "- Output File:                      " + str(self.output_file()) + "\n" +
                    "- Verbose:                          " + str(self.show_verbose()) + "\n" +
-                   "- Delete output's file content:     " + str(self.delete_output_file_content()))
+                   "- Delete output's file content:     " + str(self.delete_output_file_content()) + "\n" +
+                   "- Output Graph File:                " + str(self.output_graph_file()) + "\n" + 
+                   "- Show Graph:                       " + str(self.show_graph()) + "\n" +
+                   "- Input Scan File:                  " + str(self.input_scan_file()) + "\n" + 
+                   "- Output Scan File:                 " + str(self.output_scan_file()))
         execute_with_nvprof : bool = self.__is_nvprof_mode()
         show_metrics : bool = self.show_metrics()
         show_events : bool = self.show_events()
@@ -619,18 +632,14 @@ class TopDown:
             str(round(level_execution.divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
         ipc_retire_message : str = ("{:<21} {:<4}".format('PERFORMANCE IPC (%):', 
             str(round(level_execution.retire_ipc_percentage(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')) 
-
         ipc_degradation_front_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
             str(round(level_execution.front_end_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         ipc_degradation_back_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
             str(round(level_execution.back_end_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-        
         messages : list[list[str]] = [["","","",""], [stalls_front_message, stalls_back_message, ipc_degradation_divergence_message, 
         ipc_retire_message], [ipc_degradation_front_message, ipc_degradation_back_message, " ", " "]]
-
         titles : list[str] = [level_execution.front_end().name(), level_execution.back_end().name(),
             level_execution.divergence().name(),level_execution.retire().name()]
-
         MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
 
@@ -672,49 +681,43 @@ class TopDown:
         pass
 
     def __show_level_three_results(self, level_execution):
-        stalls_memory_constant_memory_bound_on_total_message : str = ("STALLS, on the total            (%): " +  # revisar formatos, quiza sobren TODO
+        stalls_memory_constant_memory_bound_on_total_message : str = ("STALLS, on the total             (%): " +  # revisar formatos, quiza sobren TODO
             str(round(level_execution.memory_constant_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-        
         stalls_memory_constant_memory_bound_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + " (%): " +  
             str(round(level_execution.memory_constant_memory_bound_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-       
-        stalls_memory_constant_memory_bound_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "         (%): " +
+        stalls_memory_constant_memory_bound_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "              (%): " +
             str(round(level_execution.memory_constant_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-
-        ipc_degradation_memory_constant_memory_bound_width_message : str = ("IPC DEGRADATION                 (%): " +  
+        ipc_degradation_memory_constant_memory_bound_message : str = ("IPC DEGRADATION                  (%): " +  
             str(round(level_execution.memory_constant_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-        
         if type(level_execution) is LevelThreeNsight:
             memory_mio_throttle_name : str = level_execution.memory_mio_throttle().name()
             memory_tex_throttle_name : str = level_execution.memory_tex_throttle().name()
-            stalls_memory_mio_throttle_on_total_message : str = ("STALLS, on the total            (%): " +  
+            stalls_memory_mio_throttle_on_total_message : str = ("STALLS, on the total             (%): " +  
                 str(round(level_execution.memory_mio_throttle_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            stalls_memory_tex_throttle_on_total_message : str = ("STALLS, on the total            (%): " +
+            stalls_memory_tex_throttle_on_total_message : str = ("STALLS, on the total             (%): " +
                 str(round(level_execution.memory_tex_throttle_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            
-            stalls_memory_mio_throttle_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + "  (%): " +  
+            stalls_memory_mio_throttle_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + " (%): " +  
                 str(round(level_execution.memory_mio_throttle_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            stalls_memory_tex_throttle_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + "  (%): " +  
+            stalls_memory_tex_throttle_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + " (%): " +  
                 str(round(level_execution.memory_tex_throttle_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            stalls_memory_mio_throttle_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "         (%): " +
+            stalls_memory_mio_throttle_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "              (%): " +
                 str(round(level_execution.memory_mio_throttle_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            stalls_memory_tex_throttle_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "         (%): " +
+            stalls_memory_tex_throttle_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "              (%): " +
                 str(round(level_execution.memory_tex_throttle_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            
-            ipc_degradation_memory_mio_throttle_width_message : str = ("IPC DEGRADATION                 (%): " +  
+            ipc_degradation_memory_mio_throttle_message : str = ("IPC DEGRADATION                  (%): " +  
                 str(round(level_execution.memory_mio_throttle_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            ipc_degradation_memory_tex_throttle_width_message : str = ("IPC DEGRADATION                 (%): " +  
+            ipc_degradation_memory_tex_throttle_message : str = ("IPC DEGRADATION                  (%): " +  
                 str(round(level_execution.memory_tex_throttle_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
             titles : list[str] = [level_execution.memory_constant_memory_bound().name(), level_execution.memory_mio_throttle().name(), level_execution.memory_tex_throttle().name()]
             messages : list[list[str]] = [[stalls_memory_constant_memory_bound_on_total_message, stalls_memory_mio_throttle_on_total_message, stalls_memory_tex_throttle_on_total_message],
              [stalls_memory_constant_memory_bound_on_memory_bound_message, stalls_memory_mio_throttle_on_memory_bound_message, stalls_memory_tex_throttle_on_memory_bound_message],
              [stalls_memory_constant_memory_bound_on_back_message, stalls_memory_mio_throttle_on_back_message, stalls_memory_tex_throttle_on_back_message],
-             ["","","",""], [ipc_degradation_memory_constant_memory_bound_width_message, ipc_degradation_memory_mio_throttle_message, ipc_degradation_memory_tex_throttle_message]]
+             ["","","",""], [ipc_degradation_memory_constant_memory_bound_message, ipc_degradation_memory_mio_throttle_message, ipc_degradation_memory_tex_throttle_message]]
             MessageFormat().print_three_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         else:
             messages : str = ("\n" + stalls_constant_memory_bound_on_total_message + "\n" + 
             stalls_constant_memory_bound_on_memory_bound_message + "\n" + stalls_constant_memory_bound_on_back_message 
-            + "\n\n" + ipc_degradation_constant_memory_bound_width_message)
+            + "\n\n" + ipc_degradation_constant_memory_bound_message)
             MessageFormat().print_msg_box(messages, 1, None, level_execution.memory_constant_memory_bound().name(), self.output_file(),
             self.delete_output_file_content())
         pass
@@ -798,10 +801,9 @@ class TopDown:
             if type(level_execution) is LevelThreeNsight or type(level_execution) is LevelThreeNvprof:
                 message = "\n\nLEVEL THREE RESULTS"
                 printer.print_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
-                printer.print_max_line_length_message("\n", TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
                 print()
                 if self.show_desc():
-                    message = "\n" + level_execution.constant_memory_bound().name() + ": " + level_execution.constant_memory_bound().description() + "\n\n"
+                    message = "\n" + level_execution.memory_constant_memory_bound().name() + ": " + level_execution.memory_constant_memory_bound().description() + "\n\n"
                     printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                     output_file = self.output_file(), delete_content_file = False)
                     print()
@@ -840,7 +842,7 @@ class TopDown:
         
         shell : Shell = Shell()
         compute_capability : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/TopDown/src/measure_parts/compute_capability.cu --run", None)
-        shell.launch_command("rm -f ../src/measure_parts/a.out", None) # delte file
+        shell.launch_command("rm -f $DIR_UNTIL_TOPDOWN/TopDownNvidia/TopDown/src/measure_parts/a.out", None) # delete file
         if not compute_capability:
             raise ModeExecutionError
         compute_capability_float : float = float(compute_capability)
@@ -857,7 +859,6 @@ class TopDown:
         if self.show_verbose():
             # introduction
             self.__intro_message()
-
         show_metrics : bool = self.show_metrics()
         show_events : bool = self.show_events()
         if self.show_all_measures():
@@ -999,11 +1000,9 @@ class TopDown:
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L3_METRICS) 
                 level : LevelThreeNsight = LevelThreeNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, back_end, divergence,
                     retire, extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound) 
-
         lst_output : list[str] = list() # for extra information
         level.run(lst_output)
         self.__show_results(level)
-     
         if self.show_all_measures() or self.show_metrics() or self.show_events():
             # Write results in output-file if has been specified
             printer : MessageFormat = MessageFormat()

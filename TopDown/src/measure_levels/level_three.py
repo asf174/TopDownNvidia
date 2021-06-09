@@ -100,7 +100,7 @@ class LevelThree(LevelTwo):
 
 
 
-    @abstractmethod
+    #@abstractmethod
     def _set_memory_constant_memory_bound_results(self, results_launch : str):
         """
         Set results of the level thre part (that are not level one or two).

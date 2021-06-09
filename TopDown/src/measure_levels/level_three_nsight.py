@@ -51,12 +51,12 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION, 
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NSIGHT_METRICS)
 
-        self. __memory_mio_throttle : MemoryMioThrottleNsight =  MemoryMioThrottleNsight (
+        self.__memory_mio_throttle : MemoryMioThrottleNsight =  MemoryMioThrottleNsight (
             MemoryMioThrottleParameters.C_MEMORY_MIO_THROTTLE_NAME, 
             MemoryMioThrottleParameters.C_MEMORY_MIO_THROTTLE_DESCRIPTION, 
             MemoryMioThrottleParameters.C_MEMORY_MIO_THROTTLE_NSIGHT_METRICS)
 
-        self. __memory_mio_throttle : MemoryTexThrottleNsight =  MemoryTexThrottleNsight (
+        self.__memory_tex_throttle : MemoryTexThrottleNsight =  MemoryTexThrottleNsight (
             MemoryTexThrottleParameters.C_MEMORY_TEX_THROTTLE_NAME, 
             MemoryTexThrottleParameters.C_MEMORY_TEX_THROTTLE_DESCRIPTION, 
             MemoryTexThrottleParameters.C_MEMORY_TEX_THROTTLE_NSIGHT_METRICS)

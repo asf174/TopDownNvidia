@@ -37,7 +37,6 @@ class Shell:
                 output : sh.CompletedProcess = sh.run(args = command, shell = True, check = hasToCheck, 
                 stdout = sh.PIPE, stderr = sh.STDOUT, executable = '/bin/bash', env = dict(os.environ)) # text to use as string 
                 str_output = str(output.stdout, 'utf-8')
-                print(str_output)
         except:
             pass # No need to do nothing, command was not executed succesfully
         return str_output
@@ -80,7 +79,6 @@ class Shell:
         str_output : str = None
         try:
             str_output = self.__launch_shell_and_message(command, message, True)
-            print(str_output)
             if str_output is not None and dest is not None:
                 open_mode : str = "a+" # set as end by default
                 if not add_to_end_file:

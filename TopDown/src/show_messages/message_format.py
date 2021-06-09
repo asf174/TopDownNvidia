@@ -139,11 +139,11 @@ class MessageFormat:
         space = " " * indent
         box = f'╔{"═" * (width1 + indent * 2)}╗  '  # upper_border
         box += f'╔{"═" * (width2 + indent * 2)}╗  '  # upper_border
-        box += f'╔{"═" * (width3 + indent * 2)}╗  '  # upper_border
+        box += f'╔{"═" * (width3 + indent * 2)}╗\n'  # upper_border
         if titles:
             box += f'║{space}{titles[0]:<{width1}}{space}║  '  # title
             box += f'║{space}{titles[1]:<{width2}}{space}║  '  # title
-            box += f'║{space}{titles[2]:<{width3}}{space}║  '  # title
+            box += f'║{space}{titles[2]:<{width3}}{space}║\n'  # title
             box += f'║{space}{"-" * len(titles[0]):<{width1}}{space}║  '  # underscore
             box += f'║{space}{"-" * len(titles[1]):<{width2}}{space}║  '  # underscore
             box += f'║{space}{"-" * len(titles[2]):<{width3}}{space}║\n'  # underscore  

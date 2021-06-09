@@ -1,0 +1,131 @@
+					TopDown Metholodgy over NVIDIA's GPUs
+					-------------------------------------
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
+╔═══════════════════════════════════════════════════════════════════╗
+║ EXECUTION FEATURES                                                ║
+║ ------------------                                                ║
+║                                                                   ║
+║ - Execution Level:                  3                             ║
+║ - Analyzed program:                 ../../CUDA/bin/add_two_matrix ║
+║ - Output File:                      a                             ║
+║ - Verbose:                          True                          ║
+║ - Delete output's file content:     False                         ║
+║ - Output Graph File:                None                          ║
+║ - Show Metrics:                     False                         ║
+║ - Show Events:                      False                         ║
+║ - Show All Measurements:            False                         ║
+╚═══════════════════════════════════════════════════════════════════╝
+
+Said that, according to the level entered by you, WE START THE ANALYSIS.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔══════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.07 | MAXIMUM POSSIBLE IPC: 4 ║
+					╚══════════════════════════════════════════════╝
+
+
+'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'
+is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the
+number of warp planners per SM, as well as the number of Dispatch units of each SM.
+    As you can see, the IPC obtanied it is 5714.286% smaller than you could get. This lower IPC is due to STALLS in the different 
+parts of the architecture and DIVERGENCE problems. We analyze them based on the level of the TopDown:
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+LEVEL ONE RESULTS
+------------------
+
+
+FRONT-END: It analyzes the parts of the GPU architecture where the FrontEnd produces bottlenecks,
+which leads to IPC losses. In this part, aspects related to the fetch of instructions
+are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.
+
+
+
+BACK-END: It analyzes the parts of the GPU architecture where the BackEnd produces bottleneck,
+which leads to IPC losses. In this part, We analyze aspects related to the 'execution' part of
+the instructions, in which aspects such as limitations by functional units, memory limits, etc.
+
+
+
+DIVERGENCE: It analyzes the parts of the GPU architecture where divergence causes a loss of performance.
+This problem is caused when warps are not used correctly. This is caused for example when, for example, there are
+threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores
+that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and
+others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the
+cores will not be used.
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                              ║  ║                             ║  
+║ STALLS, on the total (%):  12.3%   ║  ║ STALLS, on the total (%):  85.19%  ║  ║ IPC DEGRADATION (%):  1.44%  ║  ║ PERFORMANCE IPC (%):  1.75% ║  
+║ IPC DEGRADATION      (%):  12.054% ║  ║ IPC DEGRADATION      (%):  83.486% ║  ║                              ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚═════════════════════════════╝  
+
+LEVEL TWO RESULTS
+-------------------
+
+
+FRONT-END.BANDWITH: F.BW D
+
+
+FRONT-END.DEPENDENCY: D description
+
+
+BACK-END.CORE-BOUND: In this part, the aspects related to CUDA cores that cause bottlenecks and thus performance losses are analyzed.
+Some aspects such as the use and availability of the functional units are analyzed.
+
+
+BACK-END.MEMORY-BOUND: It analyzes the parts of the GPU architecture where we have a loss of performance (IPC) due to
+memory bounds. This part takes into account aspects such as data dependencies, failures or access
+limits in caches
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔════════════════════════════════════╗
+║ FRONT-END.BANDWITH                 ║  ║ FRONT-END.DEPENDENCY               ║  ║ BACK-END.CORE-BOUND               ║  ║ BACK-END.MEMORY-BOUND              ║
+║ ------------------                 ║  ║ --------------------               ║  ║ -------------------               ║  ║ ---------------------              ║
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ STALLS, on the total (%):  8.56%   ║  ║ STALLS, on the total (%):  3.74%   ║  ║ STALLS, on the total (%):  0.73%  ║  ║ STALLS, on the total (%):  84.46%  ║  
+║ STALLS, on FrontEnd  (%):  69.593% ║  ║ STALLS, on FrontEnd  (%):  30.407% ║  ║ STALLS, on BackEnd   (%):  0.857% ║  ║ STALLS, on BackEnd   (%):  99.143% ║  
+║                                    ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ IPC DEGRADATION      (%):  8.389%  ║  ║ IPC DEGRADATION      (%):  3.665%  ║  ║ IPC DEGRADATION      (%):  0.715% ║  ║ IPC DEGRADATION      (%):  82.771% ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  
+
+LEVEL THREE RESULTS
+---------------------
+
+BACK-END.MEMORY-BOUND.CONSTANT-MEMORY-BOUND: 
+
+╔═══════════════════════════════════════════════╗  ╔═══════════════════════════════════════════════╗  ╔═══════════════════════════════════════════════╗
+║ BACK-END.MEMORY-BOUND.CONSTANT-MEMORY-BOUND   ║  ║ BACK-END.MEMORY-BOUND.MIO-THROTTLE            ║  ║ BACK-END.MEMORY-BOUND.TEX-THROTTLE            ║
+║ -------------------------------------------   ║  ║ ----------------------------------            ║  ║ ----------------------------------            ║
+║ STALLS, on the total             (%): 28.75%  ║  ║ STALLS, on the total             (%): 28.75%  ║  ║ STALLS, on the total             (%): 28.75%  ║  
+║ STALLS, on BACK-END.MEMORY-BOUND (%): 34.04%  ║  ║ STALLS, on BACK-END.MEMORY-BOUND (%): 34.04%  ║  ║ STALLS, on BACK-END.MEMORY-BOUND (%): 34.04%  ║  
+║ STALLS, on BACK-END              (%): 33.748% ║  ║ STALLS, on BACK-END              (%): 33.748% ║  ║ STALLS, on BACK-END              (%): 33.748% ║  
+║                                               ║  ║                                               ║  ║                                               ║  
+║ IPC DEGRADATION                  (%): 28.175% ║  ║ IPC DEGRADATION                  (%): 28.175% ║  ║ IPC DEGRADATION                  (%): 28.175% ║  
+╚═══════════════════════════════════════════════╝  ╚═══════════════════════════════════════════════╝  ╚═══════════════════════════════════════════════╝  Analysis performed correctly!

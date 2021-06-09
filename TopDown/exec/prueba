@@ -1,0 +1,26 @@
+					TopDown Metholodgy over NVIDIA's GPUs
+					-------------------------------------
+
+
+Welcome to the ../src/topdown.py program where you can check the bottlenecks of your
+CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural
+aspects of your GPU, in its different parts. The objective is to detect the bottlenecks in your
+program, which cause the IPC (Instructions per Cycle) to be drastically reduced.
+
+Next, you can see general information about the program
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║ GENERAL INFORMATION                                                                                   ║
+║ -------------------                                                                                   ║
+║                                                                                                       ║
+║ - Program Name:    topdown.py                                                                         ║
+║ - Author:          Alvaro Saiz (UC)                                                                   ║
+║ - Contact info:    asf174@alumnos.unican.es                                                           ║
+║ - Company:         University Of Cantabria                                                            ║
+║ - Place:           Santander, Cantabria, Kingdom of Spain                                             ║
+║ - Advisors:        Pablo Abad (UC) <pablo.abad@unican.es>, Pablo Prieto (UC) <pablo.prieto@unican.es> ║
+║ - Bugs Report:     asf174@alumnos.unican.es                                                           ║
+║                                                                                                       ║
+║ - Licence:         GNU GPL                                                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+In accordance with what has been entered, the execution will be carried out following the following terms:
