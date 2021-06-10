@@ -173,11 +173,13 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-  ```bash
-    ```bash
-    topdown.py [OPTIONS] -f [PROGRAM] -l [NUM]
-    ```
 
+The command syntax is as follows:
+```bash
+topdown.py [OPTIONS] -f [PROGRAM] -l [NUM]
+```
+
+where [PROGRAM] is the path to your program to be analyzed and [NUM] is the level of the TopDown
 
 
 ## Author
@@ -200,10 +202,10 @@ Distributed under the GPL License.
 
 If you find a bug or something you would like to comment on, do not hesitate to contact the person in charge of the project. You can find us at the following addresses:
 
-* **Álvaro Saiz**         - [e-mail](mailto:asf174@alumnos.unican.es)
-* **Pablo Abad**          - [e-mail](mailto:pablo.abad@unican.es)
-* **Pablo Prieto**        - [e-mail](mailto:pablo.prieto@unican.es)
-* **José Ángel Herrero**  - [e-mail](mailto:joseangel.herrero@unican.es)
+* **Álvaro Saiz**         - [Contact](mailto:asf174@alumnos.unican.es)
+* **Pablo Abad**          - [Contact](mailto:pablo.abad@unican.es)
+* **Pablo Prieto**        - [Contact](mailto:pablo.prieto@unican.es)
+* **José Ángel Herrero**  - [Contact](mailto:joseangel.herrero@unican.es)
 
 
 
