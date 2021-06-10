@@ -65,8 +65,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Author</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -157,39 +155,58 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
     # in order to use the tool
     nvcc compute_capability.cu --run
     ```
-3. Add program to PATH
+3. Add program to PATH [OPTIONAL]
     ```bash
-    # <PATH_TO_TOPDOWN>: path to TopDownNividia
-    echo "PATH=<PATH_TO_TOPDOWN>/TopDownNvidia/TopDown/src:$PATH" >> $HOME/.bashrc
+    # <PATH_UNTIL_TOPDOWN_REPOSITORY>: path until repository 
+    echo "PATH=<PATH_UNTIL_TOPDOWN_REPOSITORY>/TopDownNvidia/src:$PATH" >> $HOME/.bashrc
+    ```
+4. Define the TopDown environment variable, i.e, the PATH until the repository
+    ```bash
+    # <PATH_UNTIL_TOPDOWN_REPOSITORY>: path until repository 
+    echo "export DIR_UNTIL_TOPDOWN="<PATH_UNTIL_TOPDOWN_REPOSITORY>" >> $HOME/.bashrc
     ```
 
+5. Check Options
+    ```bash
+    python3 topdown.py -h
+    ```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+The command syntax is as follows:
+```bash
+topdown.py [OPTIONS] -f [PROGRAM] -l [NUM]
+```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+where [PROGRAM] is the path to your program to be analyzed and [NUM] is the level of the TopDown. Furthermore, you can run topdown.py with 
+'-h' option to see ALL program features. Below is an example of all the available options:
+```bash
+$ topdown.py -h
+usage: topdown.py [OPTIONS] -f [PROGRAM] -l [NUM]
 
+TopDown methodology on NVIDIA's GPUs
 
+Optional arguments:
+  -h, --help                                                   show this help message and exit
+  -o [FILE], --output [FILE]                                   output file. Path to file.
+  -v, --verbose                                                long description of results
+  -dc, --delete-content                                        If '-o/--output' is set delete output's file contents before write results
+  -nd, --no-desc                                               don't show description of results.
+  -m, --metrics                                                show metrics computed by NVIDIA scan tool
+  -e, --events                                                 show eventss computed by NVIDIA scan tool
+  -am, --all-measurements                                      show all measures computed by NVIDIA scan tool
+  -g, --graph                                                  show graph with description of results.
+  -og [OUTPUT_GRAPH_FILE], --output-graph [OUTPUT_GRAPH_FILE]  output graph file. Path to file.
+  -os [OUTPUT_SCAN_FILE], --output-scan [OUTPUT_SCAN_FILE]     output scan file. Path to file.
+  -is [INPUT_SCAN_FILE], --input-scan [INPUT_SCAN_FILE]        input scan file. Path to file.
 
-<!-- ROADMAP -->
-## Roadmap
+Required arguments:
+  -f [PROGRAM [PROGRAM ...]], --file [PROGRAM [PROGRAM ...]]   run file. Path to file.
+  -l [[NUM]], --level [[NUM]]                                  level of execution
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Check options to run program
+```
 
 
 ## Author
@@ -203,7 +220,7 @@ Below are the people who have contributed to the development of the project
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the GPL License.
 
 
 
@@ -212,10 +229,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 If you find a bug or something you would like to comment on, do not hesitate to contact the person in charge of the project. You can find us at the following addresses:
 
-* **Álvaro Saiz**         - [e-mail](mailto:asf174@alumnos.unican.es)
-* **Pablo Abad**          - [e-mail](mailto:pablo.abad@unican.es)
-* **Pablo Prieto**        - [e-mail](mailto:pablo.prieto@unican.es)
-* **José Ángel Herrero**  - [e-mail](mailto:joseangel.herrero@unican.es)
+* **Álvaro Saiz**         - [Contact](mailto:asf174@alumnos.unican.es)
+* **Pablo Abad**          - [Contact](mailto:pablo.abad@unican.es)
+* **Pablo Prieto**        - [Contact](mailto:pablo.prieto@unican.es)
+* **José Ángel Herrero**  - [Contact](mailto:joseangel.herrero@unican.es)
 
 
 
