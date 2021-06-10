@@ -163,7 +163,7 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
 4. Define the TopDown environment variable, i.e, the PATH until the repository
     ```bash
     # <PATH_UNTIL_TOPDOWN_REPOSITORY>: path until repository 
-    echo "export DIR_UNTIL_TOPDOWN="<PATH_UNTIL_TOPDOWN_REPOSITORY" >> $HOME/.bashrc
+    echo "export DIR_UNTIL_TOPDOWN="<PATH_UNTIL_TOPDOWN_REPOSITORY>" >> $HOME/.bashrc
     ```
 
 5. Check Options
