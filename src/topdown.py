@@ -841,8 +841,8 @@ class TopDown:
         """
         
         shell : Shell = Shell()
-        compute_capability : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/TopDown/src/measure_parts/compute_capability.cu --run", None)
-        shell.launch_command("rm -f $DIR_UNTIL_TOPDOWN/TopDownNvidia/TopDown/src/measure_parts/a.out", None) # delete file
+        compute_capability : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/compute_capability.cu --run", None)
+        shell.launch_command("rm -f $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/a.out", None) # delete file
         if not compute_capability:
             raise ModeExecutionError
         compute_capability_float : float = float(compute_capability)

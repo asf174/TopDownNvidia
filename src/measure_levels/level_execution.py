@@ -43,8 +43,8 @@ class LevelExecution(ABC):
         self._input_file : str = input_file
         self._output_scan_file : str = output_scan_file
         shell : Shell = Shell()
-        compute_capability_str : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/TopDown/src/measure_parts/compute_capability.cu --run", None)
-        shell.launch_command("rm -f a.out", None) # delete 'a.out' generated
+        compute_capability_str : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/compute_capability.cu --run", None)
+        shell.launch_command("rm -f $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/a.out", None) # delete 'a.out' generated
         if not compute_capability_str:
             raise ComputeCapabilityError
         pass
