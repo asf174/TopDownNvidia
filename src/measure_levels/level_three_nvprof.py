@@ -25,6 +25,7 @@ from measure_parts.retire import RetireNvprof
 from measure_parts.extra_measure import ExtraMeasureNvprof
 from measure_levels.level_three import LevelThree
 from show_messages.message_format import MessageFormat
+from parameters.memory_constant_memory_bound_params import MemoryConstantMemoryBoundParameters
 
 class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
     """
@@ -34,30 +35,17 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         __memory_constant_memory_bound     : MemoryConstantMemoryBoundNvprof   ; constant cache part
     """
     
-    def __create_measure_part(self, memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof):
-        pass
-
-    def __init__(self, program : str, output_file : str, output_scan_file : str, collect_metrics : bool, collect_events : bool,
+    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, collect_events : bool,
         front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
         extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
         back_core_bound : MemoryConstantMemoryBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
         
         self.__memory_constant_memory_bound = MemoryConstantMemoryBoundNvprof(
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_L3_METRICS,
-            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_L3_EVENTS)
-        super().__init__(program, output_file, output_scan_file, collect_metrics, collect_events, front_end, back_end, divergence, retire,
-            extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
-        pass
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_METRICS,
+            MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_EVENTS)
 
-    def __init__(self, program : str, input_file : str, output_file : str, collect_metrics : bool, collect_events : bool,
-        front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
-        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
-        back_core_bound : MemoryConstantMemoryBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
-        
-        self.__memory_constant_memory_bound : MemoryConstantMemoryBoundNvprof
-        self.__create_measure_part(self.__memory_constant_memory_bound)
-        super().__init__(program, input_file, output_file, collect_metrics, collect_events, front_end, back_end, divergence, retire,
+        super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, collect_events, front_end, back_end, divergence, retire,
             extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
         pass
 
@@ -81,7 +69,7 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         
         command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
-            + "," + self._retire.metrics_str() + "," + self._frond_band_width.metrics_str() + "," + 
+            + "," + self._retire.metrics_str() + "," + self._front_band_width.metrics_str() + "," + 
             self._front_dependency.metrics_str() + "," + self._back_core_bound.metrics_str() + "," + 
             self._back_memory_bound.metrics_str() + "," + self.__memory_constant_memory_bound.metrics_str() + "  --events " + 
             self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + 

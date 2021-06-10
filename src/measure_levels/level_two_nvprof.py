@@ -33,7 +33,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
         back_core_bound : BackCoreBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):
         
-        sself._back_core_bound : BackCoreBoundNvprof = back_core_bound
+        self._back_core_bound : BackCoreBoundNvprof = back_core_bound
         self._back_memory_bound : BackMemoryBoundNvprof = back_memory_bound
         self._front_band_width : FrontBandWidthNvprof = front_band_width
         self._front_dependency : FrontDependencyNvprof = front_dependency

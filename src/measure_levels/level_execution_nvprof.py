@@ -20,10 +20,10 @@ class LevelExecutionNvprof(LevelExecution, ABC):
                                               or False in other case
     """
 
-    def __init__(self, program : str, input_file : str, output_file : str, collect_metrics : bool, collect_events : bool, extra_measure : ExtraMeasureNvprof):
+    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, collect_events : bool, extra_measure : ExtraMeasureNvprof):
         self._extra_measure : ExtraMeasureNvprof = extra_measure
         self._collect_events = collect_events
-        super().__init__(program, input_file, output_file, collect_metrics)
+        super().__init__(program, input_file, output_file, output_scan_file, collect_metrics)
         pass
 
     def collect_events(self) -> bool:
