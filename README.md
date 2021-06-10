@@ -157,8 +157,8 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
     ```
 3. Add program to PATH [OPTIONAL]
     ```bash
-    # <PATH_TO_TOPDOWN>: path to TopDownNividia
-    echo "PATH=<PATH_TO_TOPDOWN>/TopDownNvidia/TopDown/src:$PATH" >> $HOME/.bashrc
+    # <PATH_UNTIL_TOPDOWN_REPOSITORY>: path until repository 
+    echo "PATH=<PATH_UNTIL_TOPDOWN_REPOSITORY>/TopDownNvidia/src:$PATH" >> $HOME/.bashrc
     ```
 4. Define the TopDown environment variable, i.e, the PATH until the repository
     ```bash
@@ -179,7 +179,34 @@ The command syntax is as follows:
 topdown.py [OPTIONS] -f [PROGRAM] -l [NUM]
 ```
 
-where [PROGRAM] is the path to your program to be analyzed and [NUM] is the level of the TopDown
+where [PROGRAM] is the path to your program to be analyzed and [NUM] is the level of the TopDown. Furthermore, you can run topdown.py with 
+'-h' option to see ALL program features. Below is an example of all the available options:
+```bash
+$ topdown.py -h
+usage: topdown.py [OPTIONS] -f [PROGRAM] -l [NUM]
+
+TopDown methodology on NVIDIA's GPUs
+
+Optional arguments:
+  -h, --help                                                   show this help message and exit
+  -o [FILE], --output [FILE]                                   output file. Path to file.
+  -v, --verbose                                                long description of results
+  -dc, --delete-content                                        If '-o/--output' is set delete output's file contents before write results
+  -nd, --no-desc                                               don't show description of results.
+  -m, --metrics                                                show metrics computed by NVIDIA scan tool
+  -e, --events                                                 show eventss computed by NVIDIA scan tool
+  -am, --all-measurements                                      show all measures computed by NVIDIA scan tool
+  -g, --graph                                                  show graph with description of results.
+  -og [OUTPUT_GRAPH_FILE], --output-graph [OUTPUT_GRAPH_FILE]  output graph file. Path to file.
+  -os [OUTPUT_SCAN_FILE], --output-scan [OUTPUT_SCAN_FILE]     output scan file. Path to file.
+  -is [INPUT_SCAN_FILE], --input-scan [INPUT_SCAN_FILE]        input scan file. Path to file.
+
+Required arguments:
+  -f [PROGRAM [PROGRAM ...]], --file [PROGRAM [PROGRAM ...]]   run file. Path to file.
+  -l [[NUM]], --level [[NUM]]                                  level of execution
+
+Check options to run program
+```
 
 
 ## Author
