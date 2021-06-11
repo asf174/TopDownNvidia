@@ -887,7 +887,7 @@ class TopDown:
                     RetireParameters.C_RETIRE_NVPROF_L1_METRICS, RetireParameters.C_RETIRE_NVPROF_L1_EVENTS)
                 extra_measure = ExtraMeasureNvprof(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_EVENTS)
-                level : LevelOneNvprof = LevelOneNvprof(program, self.input_file(), self.output_file(), self.output_output_scan_file(), show_metrics, show_events, front_end, back_end, 
+                level : LevelOneNvprof = LevelOneNvprof(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, show_events, front_end, back_end, 
                     divergence, retire, extra_measure)
             elif self.level() == 2:
                 front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
@@ -912,7 +912,7 @@ class TopDown:
                 back_core_bound : BackCoreBoundNvprof = BackCoreBoundNvprof(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_METRICS, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_EVENTS)
-                level : LevelTwoNvprof = LevelTwoNvprof(program, self.input_file(), self.output_file(), self.output_output_scan_file(), show_metrics, show_events, front_end, back_end, 
+                level : LevelTwoNvprof = LevelTwoNvprof(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, show_events, front_end, back_end, 
                     divergence, retire, extra_measure, front_dependency, front_band_width, back_core_bound, back_memory_bound) 
             elif self.level() == 3:
                 front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
@@ -923,7 +923,7 @@ class TopDown:
                     DivergenceParameters.C_DIVERGENCE_NVPROF_L3_METRICS, DivergenceParameters.C_DIVERGENCE_NVPROF_L3_EVENTS)
                 retire = RetireNvprof(RetireParameters.C_RETIRE_NAME, RetireParameters.C_RETIRE_DESCRIPTION,
                     RetireParameters.C_RETIRE_NVPROF_L3_METRICS, RetireParameters.C_RETIRE_NVPROF_L3_EVENTS)
-                extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
+                extra_measure = ExtraMeasureNvprof(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L3_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L3_EVENTS)
                 front_band_width : FrontBandWidthNvprof = FrontBandWidthNvprof(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
                     FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_L3_METRICS, 
@@ -937,8 +937,8 @@ class TopDown:
                 back_core_bound : BackCoreBoundNvprof = BackCoreBoundNvprof(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L3_METRICS, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L3_EVENTS)
-                level : LevelThreeNvprof = LevelThreeNvprof(program, self.input_file(), self.output_file(), self.output_output_scan_file(), show_metrics, show_events, front_end, back_end,
-                    divergence, retire, extra_meausre, front_dependency, front_band_width, back_core_bound, back_memory_bound)        
+                level : LevelThreeNvprof = LevelThreeNvprof(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, show_events, front_end, back_end,
+                    divergence, retire, extra_measure, front_dependency, front_band_width, back_core_bound, back_memory_bound)        
         else:
             front_end : FrontEndNsight
             back_end : BackEndNsight

@@ -16,12 +16,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
+<!--[![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]-->
 
 
 
@@ -100,21 +100,19 @@ This application is developed in Python, so it will be necessary to have a pytho
 
 The following summarizes the commands necessary to install a stable version of python3 for this application: 
 
-* python3 (version 3.9)
+* python3 (version 3.6)
 ```bash
   # update repositories
-  sudo apt update
+  sudo add-apt-repository ppa:jonathonf/python-3.6
 
-  sudo apt install software-properties-common
-
-  # add repository
-  sudo add-apt-repository ppa:deadsnakes/ppa
+  # update
+  sudo apt-get update
 
   # install
-  sudo apt install python3.9
+  sudo apt-get install python3.6
 
   # this command must return the version (3.9) without errors	
-  python3.9 --version
+  python3.6 -V
 ```
 In the same way, remember that it is also necessary that you have the necessary CUDA toolkit to be able to do the analysis. The program automatically detects your GPU (Compute Capbility or CC) version and performs the analysis with the appropriate tool. You should only have the appropriate one installed for your GPU. The two analysis tools are as follows:
 <ul>
@@ -165,8 +163,16 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
     # <PATH_UNTIL_TOPDOWN_REPOSITORY>: path until repository 
     echo "export DIR_UNTIL_TOPDOWN="<PATH_UNTIL_TOPDOWN_REPOSITORY>" >> $HOME/.bashrc
     ```
+5. Install the tool dependencies
+    ```bash
+    # update pip
+    python -m pip install --upgrade pip
 
-5. Check Options
+    # install graph dependencies
+    pip install matplotlib
+    pip install plotly
+    ```
+5. Check Options [OPTIONAL]
     ```bash
     python3 topdown.py -h
     ```

@@ -288,3 +288,14 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         return super()._get_ipc(LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
         pass
 
+    def retire_ipc_per_kernel(self) -> float:
+        """
+        Get "RETIRE" IPC of execution.
+
+        Raises:
+            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not
+            computed by the NVIDIA scan tool.
+        """
+
+        return 0.0 #TODO
+        pass
