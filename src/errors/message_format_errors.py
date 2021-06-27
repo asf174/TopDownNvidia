@@ -6,7 +6,6 @@ Mistakes launched by MessageFormat class
 @version:   1.0
 """
 
-
 class WriteInOutPutFileError(Exception):
     """Exception raised in case of error writing in output file"""
     

@@ -14,7 +14,6 @@ from abc import ABC # abstract class
 from measure_parts.front_end import FrontEnd
 from measure_parts.metric_measure import MetricMeasureNsight, MetricMeasureNvprof
 
-
 class FrontBandWidth(FrontEnd, ABC):
     """Class that defines the Front-End.BandWidth part."""
     

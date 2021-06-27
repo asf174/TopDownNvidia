@@ -14,7 +14,6 @@ class BackMemoryBoundParameters:
                                                                 + "memory bounds. This part takes into account aspects such as data dependencies, failures or access\n"
                                                                 + "limits in caches")
     # NVPROF metrics/arguments 
-
     C_BACK_MEMORY_BOUND_NVPROF_L2_METRICS          : str        =  ("stall_memory_dependency,stall_constant_memory_dependency,stall_memory_throttle")
     C_BACK_MEMORY_BOUND_NVPROF_L2_EVENTS           : str        = ("")
 

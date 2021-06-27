@@ -13,12 +13,10 @@ from measure_parts.front_end import FrontEnd
 from abc import ABC # abstract class
 from measure_parts.metric_measure import MetricMeasureNsight, MetricMeasureNvprof
 
-
 class FrontDependency(FrontEnd, ABC):
     """Class that defines the Front-End.Dependency part."""
     
     pass
-
 
 class FrontDependencyNsight(MetricMeasureNsight, FrontDependency):
     """Class that defines the Front-End.Dependency part with nsight scan tool."""
