@@ -12,7 +12,6 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from measure_parts.metric_measure import MetricMeasure, MetricMeasureNsight, MetricMeasureNvprof
 from abc import ABC # abstract class
-from parameters.extra_measure_params import ExtraMeasureParameters 
 
 class ExtraMeasure(MetricMeasure, ABC):
     """Class that defines the ExtraMeasure part."""

@@ -98,5 +98,5 @@ class TopDownParameters:
 
 
     C_COMPUTE_CAPABILITY_MAX_VALUE                      : float     = 8.0
-    C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE               : float     = 6.2
+    C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE               : float     = 7.2
 

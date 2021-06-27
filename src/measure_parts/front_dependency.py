@@ -9,7 +9,6 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from parameters.front_dependency_params import FrontDependencyParameters 
 from measure_parts.front_end import FrontEnd
 from abc import ABC # abstract class
 from measure_parts.metric_measure import MetricMeasureNsight, MetricMeasureNvprof

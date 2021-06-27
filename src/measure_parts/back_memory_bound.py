@@ -11,7 +11,6 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from abc import ABC # abstract class
-from parameters.back_memory_bound_params import BackMemoryBoundParameters
 from measure_parts.metric_measure import MetricMeasureNsight, MetricMeasureNvprof
 from measure_parts.back_end import BackEnd
 

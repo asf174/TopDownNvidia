@@ -18,7 +18,6 @@ from errors.level_execution_errors import *
 from measure_parts.front_band_width import FrontBandWidth
 from measure_parts.front_dependency import FrontDependency
 from measure_levels.level_one import LevelOne
-from show_messages.message_format import MessageFormat
 from abc import ABC, abstractmethod # abstract class
 from graph.pie_chart import PieChart 
 from parameters.level_execution_params import LevelExecutionParameters

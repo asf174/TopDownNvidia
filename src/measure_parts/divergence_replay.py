@@ -12,7 +12,6 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from abc import ABC # abstract class
 from measure_parts.metric_measure import MetricMeasureNsight, MetricMeasureNvprof
-from measure_parts.back_end import BackEnd
 from measure_parts.divergence import Divergence
 
 class DivergenceReplay(Divergence, ABC):

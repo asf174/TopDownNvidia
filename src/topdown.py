@@ -41,7 +41,7 @@ from parameters.front_dependency_params import FrontDependencyParameters
 from parameters.front_band_width_params import FrontBandWidthParameters
 from parameters.back_memory_bound_params import BackMemoryBoundParameters
 from parameters.back_core_bound_params import BackCoreBoundParameters
-from argparse import RawTextHelpFormatter
+
 class TopDown:
     """
     Class that implements TopDown methodology over NVIDIA GPUs.
@@ -78,7 +78,7 @@ class TopDown:
         __output_graph_file             : str                       ;   path to graph file or 'None' if option is not specified
         __output_output_scan_file       : str                       ;   path to scan file or 'None' if option is not specified
     """
-
+    
     def __init__(self):
         """
         Init attributes depending of arguments.
@@ -356,27 +356,6 @@ class TopDown:
             dest = 'output_scan_file')
         pass
 
-    def __add_output_file_argument(self, parser : argparse.ArgumentParser):
-        """ 
-        Add ouput-file argument. 'C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
-        and 'C_OUTPUT_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
-
-        Params:
-            parser : argparse.ArgumentParser ; group of the argument.
-        """
-        
-        parser.add_argument (
-            TopDownParameters.C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION, 
-            TopDownParameters.C_OUTPUT_FILE_ARGUMENT_LONG_OPTION, 
-            help = TopDownParameters.C_OUTPUT_FILE_ARGUMENT_DESCRIPTION,
-            default = None,
-            action = DontRepeat, # preguntar TODO
-            nargs = '?', 
-            type = str, 
-            #metavar='/path/to/file',
-            dest = 'file')
-        pass
-    
     def __add_arguments(self, parser : argparse.ArgumentParser):
         """ 
         Add arguments of the pogram.
@@ -472,7 +451,6 @@ class TopDown:
         return self.__input_scan_file # descriptor to file or None
         pass
     
-
     def show_verbose(self) -> bool:
         """
         Check if program has to show verbose.
@@ -643,7 +621,7 @@ class TopDown:
         MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
 
-    def __show_level_two_results(self, level_execution):
+    def __show_level_two_results(self, level_execution : LevelTwo):
         stalls_front_band_width_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
             str(round(level_execution.front_band_width_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_front_dependency_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
@@ -690,7 +668,7 @@ class TopDown:
         box.print_two_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
 
-    def __show_level_three_results(self, level_execution):
+    def __show_level_three_results(self, level_execution : LevelThree):
         stalls_memory_constant_memory_bound_on_total_message : str = ("STALLS, on the total             (%): " +  # revisar formatos, quiza sobren TODO
             str(round(level_execution.memory_constant_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
         stalls_memory_constant_memory_bound_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + " (%): " +  

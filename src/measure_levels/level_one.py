@@ -18,7 +18,6 @@ from measure_parts.front_end import FrontEnd
 from measure_parts.back_end import BackEnd
 from measure_parts.divergence import Divergence
 from measure_parts.retire import Retire
-from show_messages.message_format import MessageFormat
 from abc import ABC, abstractmethod # abstract class
 from graph.pie_chart import PieChart
 

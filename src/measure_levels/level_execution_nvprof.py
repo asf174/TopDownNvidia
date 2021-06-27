@@ -3,8 +3,6 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from measure_parts.extra_measure import ExtraMeasure    
-from shell.shell import Shell # launch shell arguments
 from parameters.level_execution_params import LevelExecutionParameters # parameters of program
 from errors.level_execution_errors import *
 from measure_levels.level_execution import LevelExecution 
