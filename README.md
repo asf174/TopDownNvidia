@@ -146,7 +146,7 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
     ```bash
     cd TopDownNvidia
 
-    cd TopDown/src/measure_parts
+    cd src/measure_parts
 
     # run program. It returns the CC
     # Otherwise, error. CORRECT ERROR
@@ -194,14 +194,14 @@ usage: topdown.py [OPTIONS] -f [PROGRAM] -l [NUM]
 TopDown methodology on NVIDIA's GPUs
 
 Optional arguments:
-  -h, --help                                                   show this help message and exit
+  -h, --help                                                   show this help message and exit.
   -o [FILE], --output [FILE]                                   output file. Path to file.
-  -v, --verbose                                                long description of results
-  -dc, --delete-content                                        If '-o/--output' is set delete output's file contents before write results
+  -v, --verbose                                                long description of results.
+  -dc, --delete-content                                        If '-o/--output' is set delete output's file contents before write results.
   -nd, --no-desc                                               don't show description of results.
-  -m, --metrics                                                show metrics computed by NVIDIA scan tool
-  -e, --events                                                 show eventss computed by NVIDIA scan tool
-  -am, --all-measurements                                      show all measures computed by NVIDIA scan tool
+  -m, --metrics                                                show metrics computed by NVIDIA scan tool.
+  -e, --events                                                 show eventss computed by NVIDIA scan tool.
+  -am, --all-measurements                                      show all measures computed by NVIDIA scan tool.
   -g, --graph                                                  show graph with description of results.
   -og [OUTPUT_GRAPH_FILE], --output-graph [OUTPUT_GRAPH_FILE]  output graph file. Path to file.
   -os [OUTPUT_SCAN_FILE], --output-scan [OUTPUT_SCAN_FILE]     output scan file. Path to file.
@@ -209,7 +209,7 @@ Optional arguments:
 
 Required arguments:
   -f [PROGRAM [PROGRAM ...]], --file [PROGRAM [PROGRAM ...]]   run file. Path to file.
-  -l [[NUM]], --level [[NUM]]                                  level of execution
+  -l [[NUM]], --level [[NUM]]                                  level of execution.
 
 Check options to run program
 ```
