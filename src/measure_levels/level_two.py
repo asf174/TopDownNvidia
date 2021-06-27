@@ -126,7 +126,7 @@ class LevelTwo(LevelOne, ABC):
 
         pass
     
-    def set_results(output_command : str):
+    def set_results(self,output_command : str):
         """
         Set results of execution ALREADY DONE. Results are in the argument.
 
@@ -283,6 +283,101 @@ class LevelTwo(LevelOne, ABC):
 
         return (self.front_dependency_stall()/super().front_end_stall())*100.0 
         pass
+
+    @abstractmethod
+    def _branch_divergence_ipc_degradation(self) -> float:
+        """
+        Find IPC degradation due to Divergence.Branch part
+
+        Returns:
+            Float with theDivergence's IPC degradation
+
+        """
+
+        pass   
+ 
+    @abstractmethod
+    def _replay_divergence_ipc_degradation(self) -> float:
+        """
+        Find IPC degradation due to Divergence.Replay part
+
+        Returns:
+            Float with theDivergence's IPC degradation
+
+        """
+
+        pass   
+    
+    def _branch_diver_ipc_degradation(self, warp_exec_efficiency_name  : str) -> float:
+        """
+        Find IPC degradation due to Branch Divergence part based on the name of the required metric.
+
+        Params:
+            warp_exec_efficiency_name  : str   ; name of metric to obtain warp execution efficiency
+        
+        Returns:
+            Float with the Divergence's IPC degradation
+
+        Raises:
+            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not
+            computed by the NVIDIA scan tool.
+        """
+        
+        ipc : float = self.ipc()
+        warp_execution_efficiency_list  : list = self._divergence.get_metric_value(warp_exec_efficiency_name)
+        if warp_execution_efficiency_list is None:
+            raise RetireIpcMetricNotDefined # revisar si crear otra excepcion (creo que si)
+        total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)        
+        return ipc * (1.0 - (total_warp_execution_efficiency/100.0))
+        pass
+
+    
+    def _replay_diver_ipc_degradation(self, issue_ipc_name : str) -> float:
+        """
+        Find IPC degradation due to Replay Divergence part based on the name of the required metric.
+
+        Params:
+            issued_ipc_name             : str   ; name of metric to obtain issued ipc
+        
+        Returns:
+            Float with the Divergence's IPC degradation
+
+        Raises:
+            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not
+            computed by the NVIDIA scan tool.
+        """
+
+        ipc : float = self.ipc()
+        issued_ipc_list : list = self._divergence.get_metric_value(issue_ipc_name)
+        total_issued_ipc : float = self._get_total_value_of_list(issued_ipc_list, True)
+        ipc_diference : float = float(total_issued_ipc) - ipc
+        if ipc_diference < 0.0:
+            ipc_diference = 0.0
+        return ipc_diference
+        pass
+
+    def branch_divergence_percentage_ipc_degradation(self) -> float:
+        """
+        Find percentage of IPC degradation due to Divergence.Branch part.
+
+        Returns:
+            Float with the percent of Divergence.Branch's IPC degradation
+        """
+
+        return (self._branch_divergence_ipc_degradation()/super().get_device_max_ipc())*100.0
+        pass
+    
+    def branch_divergence_percentage_ipc_degradation(self) -> float:
+        """
+        Find percentage of IPC degradation due to Divergence.Branch part.
+
+        Returns:
+            Float with the percent of Divergence.Branch's IPC degradation
+        """
+
+        return (self._replay_divergence_ipc_degradation()/super().get_device_max_ipc())*100.0
+        pass
+    
 
     def _create_graph(self) -> PieChart:
         """ 

@@ -14,12 +14,12 @@ class TopDownParameters:
     # Level
     C_LEVEL_ARGUMENT_SHORT_OPTION                           : str       = "-l"
     C_LEVEL_ARGUMENT_LONG_OPTION                            : str       = "--level"
-    C_LEVEL_ARGUMENT_DESCRIPTION                            : str       = "level of execution"
+    C_LEVEL_ARGUMENT_DESCRIPTION                            : str       = "level of execution."
 
     # Long description
     C_VERBOSE_ARGUMENT_SHORT_OPTION                         : str       = "-v"
     C_VERBOSE_ARGUMENT_LONG_OPTION                          : str       = "--verbose"
-    C_VERBOSE_ARGUMENT_DESCRIPTION                          : str       = "long description of results"
+    C_VERBOSE_ARGUMENT_DESCRIPTION                          : str       = "long description of results."
 
     # Help 
     C_HELP_ARGUMENT_SHORT_OPTION                            : str       = "-h"
@@ -44,7 +44,7 @@ class TopDownParameters:
     # delete content
     C_DELETE_CONTENT_ARGUMENT_SHORT_OPTION                  : str       = "-dc"
     C_DELETE_CONTENT_ARGUMENT_LONG_OPTION                   : str       = "--delete-content"
-    C_DELETE_CONTENT_ARGUMENT_DESCRIPTION                   : str       = "If '-o/--output' is set delete output's file contents before write results"
+    C_DELETE_CONTENT_ARGUMENT_DESCRIPTION                   : str       = "If '-o/--output' is set delete output's file contents before write results."
     # show description
     C_SHOW_DESCRIPTION_ARGUMENT_SHORT_OPTION                : str       = "-nd"
     C_SHOW_DESCRIPTION_ARGUMENT_LONG_OPTION                 : str       = "--no-desc"
@@ -56,17 +56,17 @@ class TopDownParameters:
     # collect metrics
     C_METRICS_ARGUMENT_SHORT_OPTION                         : str       = "-m"
     C_METRICS_ARGUMENT_LONG_OPTION                          : str       = "--metrics"
-    C_METRICS_ARGUMENT_DESCRIPTION                          : str       = "show metrics computed by NVIDIA scan tool" 
+    C_METRICS_ARGUMENT_DESCRIPTION                          : str       = "show metrics computed by NVIDIA scan tool." 
 
     # collect events
     C_EVENTS_ARGUMENT_SHORT_OPTION                          : str       = "-e"
     C_EVENTS_ARGUMENT_LONG_OPTION                           : str       = "--events"
-    C_EVENTS_ARGUMENT_DESCRIPTION                           : str       = "show eventss computed by NVIDIA scan tool"
+    C_EVENTS_ARGUMENT_DESCRIPTION                           : str       = "show eventss computed by NVIDIA scan tool."
 
     # collect all measures
     C_ALL_MEASURES_ARGUMENT_SHORT_OPTION                    : str       = "-am"
     C_ALL_MEASURES_ARGUMENT_LONG_OPTION                     : str       = "--all-measurements"
-    C_ALL_MEASURES_ARGUMENT_DESCRIPTION                     : str       = "show all measures computed by NVIDIA scan tool"
+    C_ALL_MEASURES_ARGUMENT_DESCRIPTION                     : str       = "show all measures computed by NVIDIA scan tool."
 
     # graph argument
     C_GRAPH_ARGUMENT_SHORT_OPTION                           : str       = "-g"

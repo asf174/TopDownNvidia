@@ -112,7 +112,8 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
             self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," + 
             self._front_band_width.metrics_str() + "," + self._front_dependency.metrics_str() + 
             "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
-             " " + self._program)
+            "," + self.__memory_constant_memory_bound.metrics_str() + " " + self._program)
+        print(command)
         return command
         pass
     
@@ -127,6 +128,7 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
         super()._set_front_back_divergence_retire_results(output_command) # level one results
         super()._set_memory_core_bandwith_dependency_results(output_command) # level two
         self._set_memory_constant_memory_bound_mio_tex_throttle_results(output_command) # level three
+        print(self.retire().metrics())
         pass
 
 

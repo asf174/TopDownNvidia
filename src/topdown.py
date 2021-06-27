@@ -677,7 +677,17 @@ class TopDown:
             ipc_degradation_back_core_bound_message, ipc_degradation_back_memory_bound_message]]
         titles : list[str] = [level_execution.front_band_width().name(), level_execution.front_dependency().name(),
             level_execution.back_core_bound().name(),level_execution.back_memory_bound().name()]
-        MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        
+        box : MessageFormat = MessageFormat()
+        box.print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        
+        ipc_degradation_branch_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
+            str(round(level_execution.branch_divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
+        ipc_degradation_replay_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
+            str(round(level_execution.retire_divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
+        titles = [level_execution.branch_divergence().name(), level_execution.replay_divergence().name()]
+        messages = [[ipc_degradation_branch_divergence_message, ipc_degradation_replay_divergence_message]]
+        box.print_two_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
 
     def __show_level_three_results(self, level_execution):
@@ -969,15 +979,15 @@ class TopDown:
                     RetireParameters.C_RETIRE_NSIGHT_L2_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L2_METRICS)
-                front_band_width : FrontBandWidthNsight = (FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
+                front_band_width : FrontBandWidthNsight =  FrontBandWidthNsight(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
                     FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L2_METRICS)
-                front_dependency : FrontDependencyNsight = (FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
+                front_dependency : FrontDependencyNsight =  FrontDependencyNsight(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
                     FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L2_METRICS)
-                back_memory_bound : BackMemoryBoundNsight = (BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
+                back_memory_bound : BackMemoryBoundNsight =  BackMemoryBoundNsight(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS)
-                back_core_bound : BackCoreBoundNsight = (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
+                back_core_bound : BackCoreBoundNsight = BackCoreBoundNsight (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L2_METRICS) 
-                level : LevelTwoNsight = LevelTwoNsight(program, self.input_file(), self.output_file(), show_metrics, front_end, back_end, divergence, 
+                level : LevelTwoNsight = LevelTwoNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, back_end, divergence, 
                     retire, extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound) 
             elif self.level() == 3:
                 front_end = FrontEndNsight(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,

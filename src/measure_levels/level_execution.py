@@ -99,6 +99,7 @@ class LevelExecution(ABC):
 
         shell : Shell = Shell()
         output_command : str = shell.launch_command_redirect(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF, self.output_scan_file(), True)
+        print(output_command)
         if output_command is None:
             raise ProfilingError
         return output_command  
