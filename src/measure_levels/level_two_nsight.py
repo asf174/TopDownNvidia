@@ -158,10 +158,7 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
                 self._extra_measure.metrics_description(), lst_output)
         lst_output.append("\n")
         pass
-
-    pass
     
-
     def _branch_divergence_ipc_degradation(self) -> float:
         """
         Find IPC degradation due to Divergence.Branch part
@@ -174,7 +171,6 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         return super()._branch_diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT)
         pass
 
-
     def _replay_divergence_ipc_degradation(self) -> float:
         """
         Find IPC degradation due to Divergence.Replay part
@@ -186,7 +182,6 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         
         return super()._replay_diver_ipc_degradation(LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
         pass
-
 
     def _metricExists(self, metric_name : str) -> bool:
         """
