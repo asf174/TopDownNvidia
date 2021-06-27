@@ -163,7 +163,11 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
     # <PATH_UNTIL_TOPDOWN_REPOSITORY>: path until repository 
     echo "export DIR_UNTIL_TOPDOWN="<PATH_UNTIL_TOPDOWN_REPOSITORY>" >> $HOME/.bashrc
     ```
-5. Install the tool dependencies
+5. Update enviroment variable
+    ```bash
+    source $HOME/.bashrc
+    ```
+6. Install the tool dependencies
     ```bash
     # update pip
     python -m pip install --upgrade pip
@@ -172,7 +176,7 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
     pip install matplotlib
     pip install plotly
     ```
-5. Check Options [OPTIONAL]
+7. Check Options [OPTIONAL]
     ```bash
     python3 topdown.py -h
     ```
