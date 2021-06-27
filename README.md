@@ -111,13 +111,13 @@ The following summarizes the commands necessary to install a stable version of p
   # install
   sudo apt-get install python3.6
 
-  # this command must return the version (3.9) without errors	
+  # this command must return the version (3.6) without errors	
   python3.6 -V
 ```
 In the same way, remember that it is also necessary that you have the necessary CUDA toolkit to be able to do the analysis. The program automatically detects your GPU (Compute Capbility or CC) version and performs the analysis with the appropriate tool. You should only have the appropriate one installed for your GPU. The two analysis tools are as follows:
 <ul>
-<li>Nvprof (CC <= 6.3)</li>
-<li>Nsight Compute (CC > 6.3)</li>
+<li>Nvprof (CC <= 7.2)</li>
+<li>Nsight Compute (CC > 7.2)</li>
 </ul> 
 
 The tool provided has the ability to determine the CC of your GPU. To do this, you must have a version of CUDA installed. If you do not have it installed, in section 3 of the following link, NVIDIA provides the necessary steps to perform this task:
@@ -144,9 +144,7 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
    ```
 2. Check Compute Capability [OPTIONAL]
     ```bash
-    cd TopDownNvidia
-
-    cd src/measure_parts
+    cd TopDownNvidia/src/measure_parts
 
     # run program. It returns the CC
     # Otherwise, error. CORRECT ERROR
