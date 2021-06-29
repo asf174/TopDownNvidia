@@ -684,8 +684,8 @@ class TopDown:
         ipc_degradation_branch_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
             str(round(level_execution.branch_divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
         ipc_degradation_replay_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
-            str(round(level_execution.retire_divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
-        titles = [level_execution.branch_divergence().name(), level_execution.replay_divergence().name()]
+            str(round(level_execution.replay_divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
+        titles = [level_execution.divergence_branch().name(), level_execution.divergence_replay().name()]
         messages = [[ipc_degradation_branch_divergence_message, ipc_degradation_replay_divergence_message]]
         box.print_two_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass

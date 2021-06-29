@@ -1,1 +1,1 @@
-topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./pavle ../../../../../../data/huffman/test1024_H2.206587175259.in 
+topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./pavle ../../../../../data/huffman/test1024_H2.206587175259.in 

@@ -16,7 +16,7 @@ from show_messages.message_format import MessageFormat
 from errors.level_execution_errors import *
 from parameters.divergence_replay_params import DivergenceReplayParameters
 from parameters.divergence_branch_params import DivergenceBranchParameters
-
+from parameters.level_execution_params import LevelExecutionParameters
 
 class LevelTwoNsight(LevelTwo, LevelOneNsight):
     """
@@ -43,6 +43,29 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         self._branch_divergence : DivergenceBranchNsight = DivergenceBranchNsight(DivergenceBranchParameters.C_DIVERGENCE_BRANCH_NAME, DivergenceBranchParameters.C_DIVERGENCE_BRANCH_DESCRIPTION, "")
         self._replay_divergence : DivergenceReplayNsight = DivergenceReplayNsight(DivergenceReplayParameters.C_DIVERGENCE_REPLAY_NAME, DivergenceReplayParameters.C_DIVERGENCE_REPLAY_DESCRIPTION, "")
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, front_end, back_end, divergence, retire, extra_measure)
+        pass
+
+    def divergence_replay(self) -> DivergenceReplayNsight:
+        """
+        Return Replay part of the execution.
+ 
+        Returns:
+            reference to CoreBound part of the execution
+        """
+ 
+        return self._replay_divergence
+        pass
+ 
+ 
+    def divergence_branch(self) -> DivergenceBranchNsight:
+        """
+        Return Replay part of the execution.
+ 
+        Returns:
+            reference to CoreBound part of the execution
+        """
+        
+        return self._branch_divergence        
         pass
 
     def back_core_bound(self) -> BackCoreBoundNsight:

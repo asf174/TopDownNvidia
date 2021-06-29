@@ -22,12 +22,40 @@ from show_messages.message_format import MessageFormat
 from abc import ABC, abstractmethod # abstract class
 from graph.pie_chart import PieChart 
 from parameters.level_execution_params import LevelExecutionParameters
+from measure_parts.divergence_replay import DivergenceReplay
+from measure_parts.divergence_branch import DivergenceBranch
 
 class LevelTwo(LevelOne, ABC):
     """
     Class with level two of the execution.
     """
+    
+     
+    @abstractmethod
+    def divergence_replay(self) -> DivergenceReplay:
+        """
+        Return Replay part of the execution.
 
+        Returns:
+            reference to CoreBound part of the execution
+        """
+        
+        pass
+
+  
+    @abstractmethod
+    def divergence_branch(self) -> DivergenceBranch:
+        """
+        Return Replay part of the execution.
+
+        Returns:
+            reference to CoreBound part of the execution
+        """
+        
+        pass
+
+
+    
     @abstractmethod
     def back_core_bound(self) -> BackCoreBound:
         """
@@ -367,9 +395,9 @@ class LevelTwo(LevelOne, ABC):
         return (self._branch_divergence_ipc_degradation()/super().get_device_max_ipc())*100.0
         pass
     
-    def branch_divergence_percentage_ipc_degradation(self) -> float:
+    def replay_divergence_percentage_ipc_degradation(self) -> float:
         """
-        Find percentage of IPC degradation due to Divergence.Branch part.
+        Find percentage of IPC degradation due to Divergence.Replay part.
 
         Returns:
             Float with the percent of Divergence.Branch's IPC degradation

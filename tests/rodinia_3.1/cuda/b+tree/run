@@ -1,1 +1,1 @@
-topdown.py -f b+tree.out file ../../../../../../data/b+tree/mil.txt command ../../../../../../data/b+tree/command.txt  -l3 -nd -os scan_file.txt -o results_topdown.txt 
+topdown.py -f b+tree.out file ../../../../../data/b+tree/mil.txt command ../../../../../data/b+tree/command.txt  -l3 -nd -os scan_file.txt -o results_topdown.txt 
