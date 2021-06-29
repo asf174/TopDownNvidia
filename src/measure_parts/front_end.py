@@ -10,10 +10,8 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from parameters.front_end_params import FrontEndParameters 
 from measure_parts.metric_measure import MetricMeasure, MetricMeasureNsight, MetricMeasureNvprof
 from abc import ABC # abstract class
-from parameters.front_end_params import FrontEndParameters 
 
 class FrontEnd(MetricMeasure, ABC):
     """Class that defines the Front-End part."""

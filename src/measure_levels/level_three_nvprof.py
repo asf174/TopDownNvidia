@@ -38,7 +38,7 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
     def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, collect_events : bool,
         front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
         extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
-        back_core_bound : MemoryConstantMemoryBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
+        back_core_bound : BackCoreBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
         
         self.__memory_constant_memory_bound = MemoryConstantMemoryBoundNvprof(
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NAME, MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_DESCRIPTION,

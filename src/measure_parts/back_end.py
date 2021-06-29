@@ -12,7 +12,6 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from measure_parts.metric_measure import MetricMeasure, MetricMeasureNvprof, MetricMeasureNsight
 from abc import ABC # abstract class
-from parameters.back_end_params import BackEndParameters
 
 class BackEnd(MetricMeasure, ABC):
     """Class that defines the Back-End part."""

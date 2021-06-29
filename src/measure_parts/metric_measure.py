@@ -32,32 +32,26 @@ class MetricMeasure(ABC):
         _metrics_str       : str   ;   string with the metrics
     """
 
-    def __init_dictionaries(self, name : str, description : str, metrics : str):
+    def __init_dictionaries(self, metrics : str):
         """
         Initialize data structures in the correct way.
         
         Params:
-            
-            name                : str   ;   measure name.
-        
-            description         : str   ;   description with information.
-        
+
             metrics             : str   ;   string with the metrics   
         """
 
         self._metrics : dict = dict()
         self._metrics_desc : dict = dict()
-        self._metrics_str : str = metrics
         if metrics != "":
             self._metrics = dict.fromkeys(metrics.replace(" ", "").split(","))
             self._metrics_desc = dict.fromkeys(metrics.replace(" ", "").split(",")) 
 
         key_metrics : str
-        key_metrics_desc : str
-        
-        # TODO todo esto en un bucle for con 'zip'
         for key_metrics in self._metrics:
             self._metrics[key_metrics] = list()
+            self._metrics_desc[key_metrics] = list()
+        self._metrics_str : str = metrics
         pass
 
     def __check_data_structures(self): 
@@ -90,7 +84,7 @@ class MetricMeasure(ABC):
 
         self._name : str = name
         self._description : str = description
-        self.__init_dictionaries(name, description, metrics)
+        self.__init_dictionaries(metrics)
         self.__check_data_structures() # check dictionaries defined correctly
         pass
 
@@ -131,7 +125,6 @@ class MetricMeasure(ABC):
         return self._metrics.get(metric_name)
         pass
 
-
     def set_metric_value(self, metric_name : str, new_value : str) -> bool:
         """
         Update metric with key 'metric_name' with 'new_value' value if 'metric_name' exists.
@@ -151,7 +144,6 @@ class MetricMeasure(ABC):
         self._metrics[metric_name].append(new_value)
         return True
         pass
-
 
     def name(self) -> str:
         """ 
@@ -214,21 +206,7 @@ class MetricMeasureNsight(MetricMeasure):
     to analyze the TopDown methodology over NVIDIA's GPUs with
     with nvprof scan tool.
     """
-
-    def __init_dictionaries(self):
-        """ Initialize data structures in the correct way."""
-
-        key_metrics : str
-        key_events : str
-        key_metrics_desc : str
-        key_events_desc : str
-        # TODO todo esto en un bucle for con 'zip'
-        for key_metrics in self._metrics:
-            self._metrics[key_metrics] = list()
-        for key_events in self._events:
-            self._events[key_events] = list()
-        pass
-                
+             
     def __init__(self, name : str, description : str, metrics : str):
         """
         Set attributtes with argument values.
@@ -314,9 +292,6 @@ class MetricMeasureNvprof(MetricMeasure):
         """
 
         super().__init__(name, description, metrics)
-        self.__events : dict = dict.fromkeys(events.replace(" ", "").split(","))
-        self.__events_desc = dict.fromkeys(events.replace(" ", "").split(","))
-        self.__events_str : str = events
         self.__init_dictionaries(events)
         self.__check_data_structures() # check dictionaries defined correctly
         pass
@@ -331,10 +306,16 @@ class MetricMeasureNvprof(MetricMeasure):
 
         """
 
+        self.__events : dict = dict()
+        self.__events_desc : dict = dict()
+        if events != "":
+            self.__events = dict.fromkeys(events.replace(" ", "").split(","))
+            self.__events_desc = dict.fromkeys(events.replace(" ", "").split(","))
         key_events : str
-        key_events_desc : str
         for key_events in self.__events:
             self.__events[key_events] = list()
+            self.__events_desc[key_events] = list()
+        self.__events_str : str = events
         pass
 
     def __check_data_structures(self): 
@@ -349,7 +330,7 @@ class MetricMeasureNvprof(MetricMeasure):
         event_name : str
         for event_name in self.__events: 
             if not event_name in self.__events_desc:
-                raise DataStructuresOfEventError(metric_name)
+                raise DataStructuresOfEventError(event_name)
         pass
                 
     def get_event_value(self, event_name : str):# -> list[str]:
@@ -405,7 +386,6 @@ class MetricMeasureNvprof(MetricMeasure):
             return None
         return self._metrics_desc.get(event_name)
         pass
-
 
     def set_metric_description(self, metric_name : str, new_description : str) -> bool:
         """

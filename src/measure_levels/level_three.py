@@ -13,10 +13,8 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from measure_levels.level_two import LevelTwo
 from measure_parts.memory_constant_memory_bound import MemoryConstantMemoryBound
-from shell.shell import Shell # launch shell arguments
 from errors.level_execution_errors import *
-from show_messages.message_format import MessageFormat
-from abc import ABC, abstractmethod # abstract class
+from abc import abstractmethod # abstract class
 
 class LevelThree(LevelTwo):
     """

@@ -282,6 +282,31 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
                             raise MetricNotAsignedToPart(metric_name)
         pass
 
+    def _branch_divergence_ipc_degradation(self) -> float:
+        """
+        Find IPC degradation due to Divergence.Branch part
+
+        Returns:
+            Float with theDivergence's IPC degradation
+
+        """
+        
+        return super()._branch_diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF)
+        pass
+
+
+    def _replay_divergence_ipc_degradation(self) -> float:
+        """
+        Find IPC degradation due to Divergence.Replay part
+
+        Returns:
+            Float with theDivergence's IPC degradation
+
+        """
+        
+        return super()._replay_diver_ipc_degradation(LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
+        pass
+
     def _metricExists(self, metric_name : str) -> bool:
         """
         Check if metric exists in some part of the execution (MemoryBound, CoreBound...). 

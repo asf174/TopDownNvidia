@@ -113,7 +113,6 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
             self._front_band_width.metrics_str() + "," + self._front_dependency.metrics_str() + 
             "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
             "," + self.__memory_constant_memory_bound.metrics_str() + " " + self._program)
-        print(command)
         return command
         pass
     
@@ -284,7 +283,7 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
                 memory_tex_throttle_unit_has_found = self.__memory_tex_throttle.set_metric_unit(metric_name, 
                     metric_unit)
                 if (not (memory_constant_memory_bound_value_has_found or memory_mio_throttle_value_has_found or memory_tex_throttle_value_has_found) 
-                    or not (memory_constant_memory_bound_unit_has_found or memory_mio_throttle_unit_has_found or memory_mio_throttle_unit_has_found)):
+                    or not (memory_constant_memory_bound_unit_has_found or memory_mio_throttle_unit_has_found or memory_tex_throttle_unit_has_found)):
                     if not self._metricExists(metric_name):
                         raise MetricNotAsignedToPart(metric_name)
         pass

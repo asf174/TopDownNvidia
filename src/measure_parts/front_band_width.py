@@ -11,10 +11,8 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from abc import ABC # abstract class
-from parameters.front_band_width_params import FrontBandWidthParameters
 from measure_parts.front_end import FrontEnd
 from measure_parts.metric_measure import MetricMeasureNsight, MetricMeasureNvprof
-
 
 class FrontBandWidth(FrontEnd, ABC):
     """Class that defines the Front-End.BandWidth part."""

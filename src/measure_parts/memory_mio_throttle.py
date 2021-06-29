@@ -11,10 +11,8 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from measure_parts.back_memory_bound import BackMemoryBound
-from measure_parts.back_end import BackEnd
-from parameters.memory_constant_memory_bound_params import MemoryConstantMemoryBoundParameters 
 from measure_parts.back_memory_bound import BackMemoryBound
-from measure_parts.metric_measure import MetricMeasureNsight, MetricMeasureNvprof
+from measure_parts.metric_measure import MetricMeasureNsight, 
  
 class MemoryMioThrottle(BackMemoryBound):
     """Class that defines the ConstantMemoryBound (sub-part of MemoryBound) part."""

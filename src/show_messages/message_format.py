@@ -190,8 +190,6 @@ class MessageFormat:
         self.__write_str_in_file(box, output_file, delete_content_file)
         pass
 
-
-
     def print_desplazed_msg_box(self, msg, indent, width, title, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
 

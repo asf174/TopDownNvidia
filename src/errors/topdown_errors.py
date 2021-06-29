@@ -6,7 +6,6 @@ Mistakes launched by TopDown class
 @version:   1.0
 """
 
-    
 class ComputeCapabilityNumberError(Exception):
     """Exception raised when the Compute Capability of Decive is out of range.
     

@@ -13,7 +13,6 @@ class BackCoreBoundParameters:
     C_BACK_CORE_BOUND_DESCRIPTION             : str        = ("In this part, the aspects related to CUDA cores that cause bottlenecks and thus performance losses are analyzed.\n"
                                                             + "Some aspects such as the use and availability of the functional units are analyzed.")
     # NVPROF metrics/arguments
-
     C_BACK_CORE_BOUND_NVPROF_L2_METRICS          : str        = ("stall_pipe_busy")
     C_BACK_CORE_BOUND_NVPROF_L2_EVENTS           : str        = ("")
 

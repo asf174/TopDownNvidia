@@ -27,8 +27,8 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         _back_core_bound        : BackCoreBoundNsight       ; backs' core bound part
         _front_band_width       : FrontBandWidthNsight      ; front's bandwith part
         _front_dependency       : FrontDependencyNsight     ; front's dependency part
-        _branch_divergence      : DivergenceBranch          ; divergence's branch part
-        _replay_divergence      : DivergenceReplay          ; divergence's replay part
+        _branch_divergence      : DivergenceBranchNsight    ; divergence's branch part
+        _replay_divergence      : DivergenceReplayNsight    ; divergence's replay part
     """
 
     def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool,
@@ -181,10 +181,7 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
                 self._extra_measure.metrics_description(), lst_output)
         lst_output.append("\n")
         pass
-
-    pass
     
-
     def _branch_divergence_ipc_degradation(self) -> float:
         """
         Find IPC degradation due to Divergence.Branch part
@@ -197,7 +194,6 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         return super()._branch_diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT)
         pass
 
-
     def _replay_divergence_ipc_degradation(self) -> float:
         """
         Find IPC degradation due to Divergence.Replay part
@@ -209,7 +205,6 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         
         return super()._replay_diver_ipc_degradation(LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
         pass
-
 
     def _metricExists(self, metric_name : str) -> bool:
         """

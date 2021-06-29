@@ -111,13 +111,13 @@ The following summarizes the commands necessary to install a stable version of p
   # install
   sudo apt-get install python3.6
 
-  # this command must return the version (3.9) without errors	
+  # this command must return the version (3.6) without errors	
   python3.6 -V
 ```
 In the same way, remember that it is also necessary that you have the necessary CUDA toolkit to be able to do the analysis. The program automatically detects your GPU (Compute Capbility or CC) version and performs the analysis with the appropriate tool. You should only have the appropriate one installed for your GPU. The two analysis tools are as follows:
 <ul>
-<li>Nvprof (CC <= 6.3)</li>
-<li>Nsight Compute (CC > 6.3)</li>
+<li>Nvprof (CC <= 7.2)</li>
+<li>Nsight Compute (CC > 7.2)</li>
 </ul> 
 
 The tool provided has the ability to determine the CC of your GPU. To do this, you must have a version of CUDA installed. If you do not have it installed, in section 3 of the following link, NVIDIA provides the necessary steps to perform this task:
@@ -144,9 +144,7 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
    ```
 2. Check Compute Capability [OPTIONAL]
     ```bash
-    cd TopDownNvidia
-
-    cd TopDown/src/measure_parts
+    cd TopDownNvidia/src/measure_parts
 
     # run program. It returns the CC
     # Otherwise, error. CORRECT ERROR
@@ -163,7 +161,11 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
     # <PATH_UNTIL_TOPDOWN_REPOSITORY>: path until repository 
     echo "export DIR_UNTIL_TOPDOWN="<PATH_UNTIL_TOPDOWN_REPOSITORY>" >> $HOME/.bashrc
     ```
-5. Install the tool dependencies
+5. Update enviroment variable
+    ```bash
+    source $HOME/.bashrc
+    ```
+6. Install the tool dependencies
     ```bash
     # update pip
     python -m pip install --upgrade pip
@@ -172,7 +174,7 @@ Once you have completed the CUDA installation, you are ready to use the tool to 
     pip install matplotlib
     pip install plotly
     ```
-5. Check Options [OPTIONAL]
+7. Check Options [OPTIONAL]
     ```bash
     python3 topdown.py -h
     ```
@@ -194,14 +196,14 @@ usage: topdown.py [OPTIONS] -f [PROGRAM] -l [NUM]
 TopDown methodology on NVIDIA's GPUs
 
 Optional arguments:
-  -h, --help                                                   show this help message and exit
+  -h, --help                                                   show this help message and exit.
   -o [FILE], --output [FILE]                                   output file. Path to file.
-  -v, --verbose                                                long description of results
-  -dc, --delete-content                                        If '-o/--output' is set delete output's file contents before write results
+  -v, --verbose                                                long description of results.
+  -dc, --delete-content                                        If '-o/--output' is set delete output's file contents before write results.
   -nd, --no-desc                                               don't show description of results.
-  -m, --metrics                                                show metrics computed by NVIDIA scan tool
-  -e, --events                                                 show eventss computed by NVIDIA scan tool
-  -am, --all-measurements                                      show all measures computed by NVIDIA scan tool
+  -m, --metrics                                                show metrics computed by NVIDIA scan tool.
+  -e, --events                                                 show eventss computed by NVIDIA scan tool.
+  -am, --all-measurements                                      show all measures computed by NVIDIA scan tool.
   -g, --graph                                                  show graph with description of results.
   -og [OUTPUT_GRAPH_FILE], --output-graph [OUTPUT_GRAPH_FILE]  output graph file. Path to file.
   -os [OUTPUT_SCAN_FILE], --output-scan [OUTPUT_SCAN_FILE]     output scan file. Path to file.
@@ -209,7 +211,7 @@ Optional arguments:
 
 Required arguments:
   -f [PROGRAM [PROGRAM ...]], --file [PROGRAM [PROGRAM ...]]   run file. Path to file.
-  -l [[NUM]], --level [[NUM]]                                  level of execution
+  -l [[NUM]], --level [[NUM]]                                  level of execution.
 
 Check options to run program
 ```

@@ -12,7 +12,6 @@ class FrontDependencyParameters:
     C_FRONT_DEPENDENCY_DESCRIPTION             : str       = ("D description")
 
     # NVPROF metrics/arguments
-
     C_FRONT_DEPENDENCY_NVPROF_L2_METRICS          : str       = ("stall_inst_fetch,stall_sync,stall_other")
     C_FRONT_DEPENDENCY_NVPROF_L2_EVENTS           : str       = ("")
     

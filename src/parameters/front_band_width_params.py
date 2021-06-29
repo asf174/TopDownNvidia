@@ -13,7 +13,6 @@ class FrontBandWidthParameters:
     C_FRONT_BAND_WIDTH_DESCRIPTION             : str       = ("F.BW D")
     
     # NVPROF metrics/arguments
-
     C_FRONT_BAND_WIDTH_NVPROF_L2_METRICS          : str       = ("stall_exec_dependency,stall_not_selected")
     C_FRONT_BAND_WIDTH_NVPROF_L2_EVENTS           : str       = ("")
 

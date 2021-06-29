@@ -5,7 +5,6 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from measure_levels.level_one import LevelOne 
 from measure_levels.level_execution_nvprof import LevelExecutionNvprof
-from measure_levels.level_execution import LevelExecution 
 from measure_parts.front_end import FrontEndNvprof
 from measure_parts.back_end import BackEndNvprof
 from measure_parts.divergence import DivergenceNvprof
@@ -13,7 +12,6 @@ from measure_parts.retire import RetireNvprof
 from measure_parts.extra_measure import ExtraMeasureNvprof
 from show_messages.message_format import MessageFormat
 from parameters.level_execution_params import LevelExecutionParameters
-from graph.pie_chart import PieChart
 
 class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
 
