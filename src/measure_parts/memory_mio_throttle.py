@@ -12,7 +12,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 from measure_parts.back_memory_bound import BackMemoryBound
 from measure_parts.back_memory_bound import BackMemoryBound
-from measure_parts.metric_measure import MetricMeasureNsight, 
+from measure_parts.metric_measure import MetricMeasureNsight 
  
 class MemoryMioThrottle(BackMemoryBound):
     """Class that defines the ConstantMemoryBound (sub-part of MemoryBound) part."""

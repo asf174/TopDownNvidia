@@ -722,7 +722,7 @@ class TopDown:
         printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
             output_file = self.output_file(), delete_content_file = False)
         print()
-        message = ("IPC OBTAINED: " + str(round(level_execution.ipc(),TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + " | MAXIMUM POSSIBLE IPC: " +  
+        message = ("IPC OBTAINED: " + str(round(level_execution.retire_ipc(),TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + " | MAXIMUM POSSIBLE IPC: " +  
             str(level_execution.get_device_max_ipc()))
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = "", output_file = self.output_file(), width = None, delete_content_file = False)
         if self.show_desc():

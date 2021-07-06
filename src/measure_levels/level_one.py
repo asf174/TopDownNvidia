@@ -340,7 +340,7 @@ class LevelOne(LevelExecution, ABC):
         Returns:
             Float with percentage of TOTAL IPC due to RETIRE
         """
-        return (self.ipc()/super().get_device_max_ipc())*100.0
+        return (self.retire_ipc()/super().get_device_max_ipc())*100.0
  
     def divergence_percentage_ipc_degradation_per_kernel(self) -> list:
         """

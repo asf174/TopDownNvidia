@@ -160,3 +160,24 @@ class TitleSizeError(Exception):
         super().__init__(self.C_ERROR_MESSAGE + str(minimum_graph_num))
         pass
 
+class ComputeCapabilityError(Exception):
+    """Exception raised if cannot obtain the compute capability"""
+    
+    C_ERROR_MESSAGE     : str = "Cannot obtain the compute capability"
+
+    def __init__(self):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE)
+        pass
+
+class MaximumIPCError(Exception):
+    """Exception raised if cannot obtain the MAX ipc of GPU"""
+    
+    C_ERROR_MESSAGE     : str = "Cannot obtain  the MAX ipc of GPU"
+
+    def __init__(self):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE)
+        pass
