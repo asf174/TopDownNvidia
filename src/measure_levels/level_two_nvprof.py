@@ -8,6 +8,8 @@ from measure_parts.back_core_bound import BackCoreBoundNvprof
 from measure_parts.back_memory_bound import BackMemoryBoundNvprof
 from measure_parts.front_band_width import FrontBandWidthNvprof
 from measure_parts.front_dependency import FrontDependencyNvprof
+from measure_parts.divergence_replay import DivergenceReplayNvprof
+from measure_parts.divergence_branch import DivergenceBranchNvprof
 from measure_parts.front_end import FrontEndNvprof
 from measure_parts.back_end import BackEndNvprof
 from measure_parts.divergence import DivergenceNvprof
@@ -16,6 +18,8 @@ from measure_parts.extra_measure import ExtraMeasureNvprof
 from measure_levels.level_two import LevelTwo
 from show_messages.message_format import MessageFormat
 from errors.level_execution_errors import *
+from parameters.divergence_replay_params import DivergenceReplayParameters
+from parameters.divergence_branch_params import DivergenceBranchParameters
 
 class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
     """
