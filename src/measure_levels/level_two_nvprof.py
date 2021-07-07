@@ -40,6 +40,29 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, collect_events, front_end, back_end, divergence, retire, extra_measure)
         pass
 
+    def divergence_replay(self) -> DivergenceReplayNvprof:
+        """
+        Return Replay part of the execution.
+ 
+        Returns:
+            reference to CoreBound part of the execution
+        """
+ 
+        return self._replay_divergence
+        pass
+ 
+ 
+    def divergence_branch(self) -> DivergenceBranchNvprof:
+        """
+        Return Replay part of the execution.
+ 
+        Returns:
+            reference to CoreBound part of the execution
+        """
+        
+        return self._branch_divergence        
+        pass
+
     def back_core_bound(self) -> BackCoreBoundNvprof:
         """
         Return CoreBound part of the execution.
