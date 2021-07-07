@@ -42,6 +42,8 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         self._back_memory_bound : BackMemoryBoundNvprof = back_memory_bound
         self._front_band_width : FrontBandWidthNvprof = front_band_width
         self._front_dependency : FrontDependencyNvprof = front_dependency
+         self._branch_divergence : DivergenceBranchNvprof = DivergenceBranchNvprof(DivergenceBranchParameters.C_DIVERGENCE_BRANCH_NAME, DivergenceBranchParameters.C_DIVERGENCE_BRANCH_DESCRIPTION, "", "")
+        self._replay_divergence : DivergenceReplayNvprof = DivergenceReplayNvprof(DivergenceReplayParameters.C_DIVERGENCE_REPLAY_NAME, DivergenceReplayParameters.C_DIVERGENCE_REPLAY_DESCRIPTION, "", "")
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, collect_events, front_end, back_end, divergence, retire, extra_measure)
         pass
 
@@ -374,7 +376,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         pass
 
     def __eventExists(self, event_name : str) -> bool:
-        """ #TODO se podria poner este metodo (en version abstracta) en otra clase aparte, para que el LevelTwoNsight compruebe si existe
+        """ #TODO se podria poner este metodo (en version abstracta) en otra clase aparte, para que el LevelTwoNvprof compruebe si existe
         Check if event exists in some part of the execution (MemoryBound, CoreBound...). 
 
         Params:
