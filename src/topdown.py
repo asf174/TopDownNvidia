@@ -703,9 +703,9 @@ class TopDown:
              ["","","",""], [ipc_degradation_memory_constant_memory_bound_message, ipc_degradation_memory_mio_throttle_message, ipc_degradation_memory_tex_throttle_message]]
             MessageFormat().print_three_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         else:
-            messages : str = ("\n" + stalls_constant_memory_bound_on_total_message + "\n" + 
-            stalls_constant_memory_bound_on_memory_bound_message + "\n" + stalls_constant_memory_bound_on_back_message 
-            + "\n\n" + ipc_degradation_constant_memory_bound_message)
+            messages : str = ("\n" + stalls_memory_constant_memory_bound_on_total_message + "\n" + 
+            stalls_memory_constant_memory_bound_on_memory_bound_message + "\n" + stalls_memory_constant_memory_bound_on_back_message 
+            + "\n\n" + ipc_degradation_memory_constant_memory_bound_message)
             MessageFormat().print_msg_box(messages, 1, None, level_execution.memory_constant_memory_bound().name(), self.output_file(),
             self.delete_output_file_content())
         pass

@@ -31,6 +31,8 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         _back_core_bound        : BackCoreBoundNvprof       ; backs' core bound part
         _front_band_width       : FrontBandWidthNvprof      ; front's bandwith part
         _front_dependency       : FrontDependencyNvprof     ; front's dependency part
+        _branch_divergence      : DivergenceBranchNvprof    ; divergence's branch part
+        _replay_divergence      : DivergenceReplayNvprof    ; divergence's replay part
     """
 
     def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, collect_events : bool,
