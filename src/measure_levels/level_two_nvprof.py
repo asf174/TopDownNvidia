@@ -20,6 +20,7 @@ from show_messages.message_format import MessageFormat
 from errors.level_execution_errors import *
 from parameters.divergence_replay_params import DivergenceReplayParameters
 from parameters.divergence_branch_params import DivergenceBranchParameters
+from parameters.level_execution_params import LevelExecutionParameters
 
 class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
     """
