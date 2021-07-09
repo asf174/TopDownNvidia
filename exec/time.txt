@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "../src/topdown.py", line 18, in <module>
+    from measure_levels.level_three_nsight import LevelThreeNsight
+  File "/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/src/measure_levels/level_three_nsight.py", line 27, in <module>
+    from measure_parts.memory_mio_throttle import MemoryMioThrottleNsight
+  File "/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/src/measure_parts/memory_mio_throttle.py", line 15
+    from measure_parts.metric_measure import MetricMeasureNsight, 
+                                            ^
+SyntaxError: trailing comma not allowed without surrounding parentheses
+
+real	0m3,774s
+user	0m1,657s
+sys	0m4,633s

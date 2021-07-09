@@ -5,8 +5,8 @@ override OUTPUT = -DOUTPUT
 endif
 
 # C compiler
-CC = /usr/bin/gcc
-CC_FLAGS = -g -O3 -Wall -I$(MATRIX_DIR)
+CC = gcc-4.4
+CC_FLAGS = -g -O3 -Wall -I$(MATRIX_DIR) -fPIC
 CUDA_LIB_DIR=/usr/local/cuda
 
 CUDA_DIR=/usr
@@ -19,9 +19,9 @@ MATRIX_DIR = ../meschach_lib
 
 # 'make dbg=1' enables NVCC debugging
 ifeq ($(dbg),1)
-	NVCC_FLAGS += -g -O0
+	NVCC_FLAGS += -g -O0 -fPIC
 else
-	NVCC_FLAGS += -O3
+	NVCC_FLAGS += -O3 -fPIC
 endif
 
 # 'make emu=1' compiles the CUDA kernels for emulation
@@ -31,7 +31,7 @@ endif
 
 
 leukocyte: detect_main.o avilib.o find_ellipse.o find_ellipse_kernel.o track_ellipse.o track_ellipse_kernel.o misc_math.o $(MATRIX_DIR)/meschach.a
-	$(CC) $(CC_FLAGS) -lm avilib.o find_ellipse.o find_ellipse_kernel.o track_ellipse.o track_ellipse_kernel.o misc_math.o detect_main.o -o leukocyte $(MATRIX_DIR)/meschach.a -L$(CUDA_LIB_DIR) -lm -lcuda -lcudart
+	$(CC) $(CC_FLAGS) -lm avilib.o find_ellipse.o find_ellipse_kernel.o track_ellipse.o track_ellipse_kernel.o misc_math.o detect_main.o -o leukocyte $(MATRIX_DIR)/meschach.a -L$(CUDA_LIB_DIR) -lm -lcuda -lcudart -fPIC
 
 %.o: %.[ch]
 	$(CC)  $(OUTPUT) $(CC_FLAGS) $< -c

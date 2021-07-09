@@ -186,6 +186,20 @@ class LevelOne(LevelExecution, ABC):
 
         pass
 
+    def total_front_back_stall(self) -> float:
+        """
+        Returns all percent of stalls due to FrontEnd and BackEnd part.
+
+        Returns:
+            Float with percent of total stalls due to FrontEnd and BackEnd part.
+        """
+
+        back_end_stall : float = super()._get_stalls_of_part(self._back_end.metrics())
+        front_end_stall : float = super()._get_stalls_of_part(self._front_end.metrics())
+        return front_end_stall + back_end_stall
+        pass
+
+
     def front_end_stall(self) -> float:
         """
         Returns percent of stalls due to FrontEnd part.
@@ -194,7 +208,8 @@ class LevelOne(LevelExecution, ABC):
             Float with percent of total stalls due to FrontEnd
         """
 
-        return super()._get_stalls_of_part(self._front_end.metrics())
+        front_end_stall : float = super()._get_stalls_of_part(self._front_end.metrics())
+        return (front_end_stall/self.total_front_back_stall())*100
         pass
     
     def back_end_stall(self) -> float:
@@ -205,7 +220,8 @@ class LevelOne(LevelExecution, ABC):
             Float with percent of total stalls due to BackEnd
         """
 
-        return super()._get_stalls_of_part(self._back_end.metrics())
+        back_end_stall : float = super()._get_stalls_of_part(self._back_end.metrics())
+        return (back_end_stall/self.total_front_back_stall())*100
         pass
     
     def front_end_stall_per_kernel(self) -> list:
@@ -216,7 +232,7 @@ class LevelOne(LevelExecution, ABC):
             Float with percent of total stalls due to FrontEnd
         """
 
-        return super()._get_stalls_of_part_per_kernel(self._front_end.metrics())
+        return super()._get_stalls_of_part_per_kernel(self._front_end.metrics()) # REVISAR CON LO NUEVO
         pass
     
     def back_end_stall_per_kernel(self) -> list:
@@ -227,7 +243,7 @@ class LevelOne(LevelExecution, ABC):
             Float with percent of total stalls due to BackEnd
         """
 
-        return supe()._get_stalls_of_part_per_kernel(self._back_end.metrics())
+        return super()._get_stalls_of_part_per_kernel(self._back_end.metrics())
         pass
 
 

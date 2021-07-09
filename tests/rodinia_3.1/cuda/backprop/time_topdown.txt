@@ -1,0 +1,16 @@
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./backprop 65536
+Making analysis... Wait to results.
+Traceback (most recent call last):
+  File "/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/src/topdown.py", line 1013, in <module>
+    td.launch()
+  File "/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/src/topdown.py", line 992, in launch
+    level.run(lst_output)
+  File "/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/src/measure_levels/level_one.py", line 62, in run
+    output_command : str = super()._launch(self._generate_command())
+  File "/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/src/measure_levels/level_execution.py", line 102, in _launch
+    raise ProfilingError
+errors.level_execution_errors.ProfilingError: Error with the NVIDIA scan tool (results not generated)
+
+real	0m4,617s
+user	0m2,620s
+sys	0m5,940s

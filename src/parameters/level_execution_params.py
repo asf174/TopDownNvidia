@@ -13,7 +13,7 @@ class LevelExecutionParameters:
     C_IPC_METRIC_NAME_NSIGHT                            : str       = "sm__inst_executed.avg.per_cycle_active"
 
     C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF      : str       = "warp_execution_efficiency"
-    C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT      : str       = "smsp__thread_inst_executed_per_inst_executed.ratio"
+    C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT      : str       = "smsp__thread_inst_executed_per_inst_executed.pct"
     
     C_ISSUE_IPC_METRIC_NAME_NVPROF                      : str       = "issued_ipc"
     C_ISSUE_IPC_METRIC_NAME_NSIGHT                      : str       = "sm__inst_issued.avg.per_cycle_active"

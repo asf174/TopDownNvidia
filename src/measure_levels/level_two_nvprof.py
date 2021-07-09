@@ -85,7 +85,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
 
     def back_memory_bound(self) -> BackMemoryBoundNvprof:
         """
-        Return MemoryBoundNvprof part of the execution.
+        Return MemoryBound part of the execution.
 
         Returns:
             reference to MemoryBoundNvprof part of the execution
@@ -96,7 +96,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
 
     def front_band_width(self) -> FrontBandWidthNvprof:
         """
-        Return FrontBandWidthNvprof part of the execution.
+        Return FrontBandWidth part of the execution.
 
         Returns:
             reference to FrontBandWidthNvprof part of the execution
@@ -107,7 +107,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
 
     def front_dependency(self) -> FrontDependencyNvprof:
         """
-        Return FrontDependencyNvprof part of the execution.
+        Return FrontDependency part of the execution.
 
         Returns:
             reference to FrontDependencyNvprof part of the execution

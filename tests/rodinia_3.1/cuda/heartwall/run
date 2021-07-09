@@ -1,1 +1,7 @@
+#!/bin/bash
+#topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./heartwall $HOME/data/heartwall/test.avi 20
+for i in $(seq 1 1 10); do
+    (time topdown.py -l3 -nd -f ./heartwall $HOME/data/heartwall/test.avi 20) >> time_topdown.txt 2>&1
+    (time ./heartwall $HOME/data/heartwall/test.avi 20) >> time_native.txt 2>&1
+done
 topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./heartwall $HOME/data/heartwall/test.avi 20

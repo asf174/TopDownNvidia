@@ -1,2 +1,6 @@
-topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./myocyte.out 100 1 0
 
+for i in $(seq 1 1 10); do
+    (time topdown.py -l3 -nd -f ./myocyte.out 100 1 0) >> time_topdown.txt 2>&1 
+    (time ./myocyte.out 100 1 0) >> time_native.txt 2>&1
+done
+topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./myocyte.out 100 1 0

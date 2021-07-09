@@ -1,4 +1,11 @@
-topdown.py -f ./particlefilter_naive "-x 128 -y 128 -z 10 -np 1000" -l3 -nd -os scan_naive_file.txt -o results_naive_topdown.txt
-topdown.py -f ./particlefilter_float "-x 128 -y 128 -z 10 -np 1000" -l3 -nd -os scan_float_file.txt -o results_float_topdown.txt
+#!/bin/bash
+#topdown.py -f ./particlefilter_naive "-x 128 -y 128 -z 10 -np 1000" -l3 -nd -os scan_naive_file.txt -o results_naive_topdown.txt
 
+
+for i in $(seq 1 1 10); do
+    (time topdown.py -f ./particlefilter_float "-x 128 -y 128 -z 10 -np 1000" -l3 -nd) >> time_topdown.txt 2>&1
+    (time ./particlefilter_float -x 128 -y 128 -z 10 -np 1000) >> time_native.txt 2>&1
+done
+
+ topdown.py -f ./particlefilter_float "-x 128 -y 128 -z 10 -np 1000" -l3 -nd -os scan_float_file.txt -o results_float_topdown.txt
 

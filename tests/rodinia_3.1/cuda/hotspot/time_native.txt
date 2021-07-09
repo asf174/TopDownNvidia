@@ -1,0 +1,140 @@
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 2.14815 seconds
+
+real	0m2,300s
+user	0m0,320s
+sys	0m1,137s
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 2.45392 seconds
+
+real	0m2,602s
+user	0m0,309s
+sys	0m1,121s
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 1.84832 seconds
+
+real	0m1,993s
+user	0m0,318s
+sys	0m1,105s
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 2.47953 seconds
+
+real	0m2,638s
+user	0m0,312s
+sys	0m1,102s
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 1.49817 seconds
+
+real	0m1,634s
+user	0m0,313s
+sys	0m1,064s
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 2.073 seconds
+
+real	0m2,231s
+user	0m0,328s
+sys	0m1,123s
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 1.84003 seconds
+
+real	0m1,996s
+user	0m0,363s
+sys	0m1,102s
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 2.05858 seconds
+
+real	0m2,219s
+user	0m0,304s
+sys	0m1,172s
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 1.90623 seconds
+
+real	0m2,057s
+user	0m0,325s
+sys	0m1,114s
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 2.22019 seconds
+
+real	0m2,366s
+user	0m0,313s
+sys	0m1,197s

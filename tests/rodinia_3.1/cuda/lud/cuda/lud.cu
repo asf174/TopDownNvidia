@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "common.h"
+#include "../common/common.h"
 
 #ifdef RD_WG_SIZE_0_0
         #define BLOCK_SIZE RD_WG_SIZE_0_0

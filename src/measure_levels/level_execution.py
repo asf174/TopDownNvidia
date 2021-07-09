@@ -124,18 +124,18 @@ class LevelExecution(ABC):
         dict_cores_per_sm_per_cc : dict = dict({3.0: 192, 3.2: 192, 3.5: 192, 3.7: 192, 5.0: 128, 5.2: 128, 5.3: 128, 
             6.0: 64, 6.1: 128, 6.2: 128, 7.0: 64, 7.2: 64, 7.5: 64, 8.0: 64, 8.6: 128})
         warp_size : int = int()
-        """dict_warps_schedulers_per_cc : dict = dict({3.0: 4, 3.2: 4, 3.5: 4, 3.7: 4, 5.0: 4, 5.2: 4, 5.3: 4, 
+        dict_warps_schedulers_per_cc : dict = dict({3.0: 4, 3.2: 4, 3.5: 4, 3.7: 4, 5.0: 4, 5.2: 4, 5.3: 4, 
             6.0: 2, 6.1: 4, 6.2: 4, 7.0: 4, 7.5: 4, 8.0: 1}) 
         dict_ins_per_cycle : dict = dict({3.0: 1.5, 3.2: 1.5, 3.5: 1.5, 3.7: 1.5, 5.0: 1.5, 5.2: 1.5, 5.3: 1.5, 
             6.0: 1.5, 6.1: 1.5, 6.2: 1.5, 7.0: 1, 7.5: 1, 8.0: 1})
-        return dict_warps_schedulers_per_cc.get(self._compute_capability)*dict_ins_per_cycle.get(self._compute_capability)"""
-        shell : Shell = Shell()
-        cores_per_sm_str : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/cores_per_sm.cu --run", None)
-        shell.launch_command("rm -f $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/a.out", None) # delete 'a.out' generated
-        if not cores_per_sm_str:
-            raise MaximumIPCError
-        pass
-        return dict_cores_per_sm_per_cc.get(self._compute_capability)/int(cores_per_sm_str)
+        return dict_warps_schedulers_per_cc.get(self._compute_capability)*dict_ins_per_cycle.get(self._compute_capability)
+        #shell : Shell = Shell()
+        #cores_per_sm_str : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/cores_per_sm.cu --run", None)
+        #shell.launch_command("rm -f $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/a.out", None) # delete 'a.out' generated
+        #if not cores_per_sm_str:
+        #    raise MaximumIPCError"""
+        ##pass
+        #return dict_cores_per_sm_per_cc.get(self._compute_capability)/int(cores_per_sm_str)
         pass
     
     def _get_total_value_of_list(self, list_values, computed_as_average : bool) -> float:

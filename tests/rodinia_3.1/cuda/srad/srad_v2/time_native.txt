@@ -1,0 +1,110 @@
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.15289 seconds
+TOTAL KERNEL time: 2.86102e-06 seconds
+Computation Done
+TOTAL time: 1.13876 seconds
+
+real	0m1,297s
+user	0m0,165s
+sys	0m0,908s
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.0398221 seconds
+TOTAL KERNEL time: 3.09944e-06 seconds
+Computation Done
+TOTAL time: 1.04386 seconds
+
+real	0m1,201s
+user	0m0,163s
+sys	0m0,920s
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.00191808 seconds
+TOTAL KERNEL time: 0.00183702 seconds
+Computation Done
+TOTAL time: 1.04488 seconds
+
+real	0m1,196s
+user	0m0,146s
+sys	0m0,939s
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.00186205 seconds
+TOTAL KERNEL time: 0.00186205 seconds
+Computation Done
+TOTAL time: 1.02026 seconds
+
+real	0m1,165s
+user	0m0,165s
+sys	0m0,886s
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.00185919 seconds
+TOTAL KERNEL time: 0.0018611 seconds
+Computation Done
+TOTAL time: 1.01347 seconds
+
+real	0m1,155s
+user	0m0,153s
+sys	0m0,891s
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.0329101 seconds
+TOTAL KERNEL time: 2.14577e-06 seconds
+Computation Done
+TOTAL time: 1.1847 seconds
+
+real	0m1,339s
+user	0m0,163s
+sys	0m1,032s
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.0380359 seconds
+TOTAL KERNEL time: 1.90735e-06 seconds
+Computation Done
+TOTAL time: 1.05538 seconds
+
+real	0m1,189s
+user	0m0,174s
+sys	0m0,869s
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.040427 seconds
+TOTAL KERNEL time: 1.12057e-05 seconds
+Computation Done
+TOTAL time: 1.07473 seconds
+
+real	0m1,208s
+user	0m0,178s
+sys	0m0,909s
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.038173 seconds
+TOTAL KERNEL time: 2.14577e-06 seconds
+Computation Done
+TOTAL time: 1.21591 seconds
+
+real	0m1,349s
+user	0m0,164s
+sys	0m1,062s
+WG size of kernel = 16 X 16
+Randomizing the input matrix
+Start the SRAD main loop
+TOTAL KERNEL time: 0.0392191 seconds
+TOTAL KERNEL time: 1.09673e-05 seconds
+Computation Done
+TOTAL time: 1.05387 seconds
+
+real	0m1,205s
+user	0m0,158s
+sys	0m0,920s

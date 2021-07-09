@@ -1,6 +1,7 @@
 include ../../common/make.config
 
 CUDA_SDK_PATH := $(SDK_DIR)
+CUDA_SDK_PATH := /usr/local/cuda/bin/NVIDIA_CUDA-9.0_Samples
 
 # Determine the correct version of the cutil library
 CUTIL_LIB = # -lcutil

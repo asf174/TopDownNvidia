@@ -1,7 +1,14 @@
+
+#!/bin/bash
 #There are three datasets:
 
-topdown.py -l3 -nd -os scan_file_097.txt -o results_topdown_097.txt -f ./euler3d ../../data/cfd/fvcorr.domn.097K   
-topdown.py -l3 -nd -os scan_file_193.txt -o results_topdown_193.txt -f ./euler3d ../../data/cfd/fvcorr.domn.193K   
-topdown.py -l3 -nd -os scan_file_02M.txt -o results_topdown_02M.txt -f ./euler3d ../../data/cfd/missile.domn.0.2M  
+#topdown.py -l3 -nd -os scan_file_097.txt -o results_topdown_097.txt -f ./euler3d ../../data/cfd/fvcorr.domn.097K   
+#topdown.py -l3 -nd -os scan_file_193.txt -o results_topdown_193.txt -f ./euler3d ../../data/cfd/fvcorr.domn.193K   
+#topdown.py -l3 -nd -os scan_file_02M.txt -o results_topdown_02M.txt -f ./euler3d ../../data/cfd/missile.domn.0.2M  
 
 #replace euler3d with other CFD programs
+for i in $(seq 1 1 10); do
+    (time topdown.py -l3 -nd -f ./euler3d ../../data/cfd/fvcorr.domn.097K) >> time_topdown.txt 2>&1
+    (time ./euler3d ../../data/cfd/fvcorr.domn.097K) >> time_native_97.txt 2>&1
+done
+topdown.py -l3 -nd -os scan_file_097.txt -o results_topdown_097.txt -f ./euler3d ../../data/cfd/fvcorr.domn.097K

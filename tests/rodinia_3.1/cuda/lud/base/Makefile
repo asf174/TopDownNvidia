@@ -15,13 +15,13 @@ EXECUTABLE      := lud_base
 SOURCES         := lud.c lud_base.c ../common/common.c 
 
 # ------------  compiler  ------------------------------------------------------
-CC              := gcc
+CC              := gcc -fPIC
 CXX             := g++
 
 # ------------  compiler flags  ------------------------------------------------
-DEBUG_CFLAGS    := -Wall -O0 -g
-RELEASE_CFLAGS  := -Wall -O3 
-COMMON_CFLAGS   := 
+DEBUG_CFLAGS    := -Wall -O0 -g -fPIC
+RELEASE_CFLAGS  := -Wall -O3 -fPIC
+COMMON_CFLAGS   :=  -fPIC
 
 # ------------  compiler defs  ------------------------------------------------
 DEBUG_CDEFS    := -D_DEBUG_RESULT
@@ -81,7 +81,7 @@ ALL_INC_DIR     = $(addprefix -I, $(LOCAL_INC_DIR) $(GLOBAL_INC_DIR))
 ALL_LIB_DIR     = $(addprefix -L, $(LOCAL_LIB_DIR) $(GLOBAL_LIB_DIR))
 GLOBAL_LIBSS    = $(addprefix $(GLOBAL_LIB_DIR)/, $(GLOBAL_LIBS))
 LOCAL_LIBSS     = $(addprefix $(LOCAL_LIB_DIR)/, $(LOCAL_LIBS))
-ALL_CFLAGS      = $(CFLAGS) $(ALL_INC_DIR)
+ALL_CFLAGS      = $(CFLAGS) $(ALL_INC_DIR) -fPIC
 ALL_LFLAGS      = $(LDFLAGS) $(ALL_LIB_DIR)
 BASENAMES       = $(basename $(SOURCES))
 

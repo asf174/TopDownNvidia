@@ -21,10 +21,17 @@ class BackMemoryBoundParameters:
     C_BACK_MEMORY_BOUND_NVPROF_L3_EVENTS           : str        = ("")
 
     # NSIGHT metrics
-    C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS          : str        = ("smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct," +
-                                                                "smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct," +
-                                                                "smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct")
-    C_BACK_MEMORY_BOUND_NSIGHT_L3_METRICS          : str        = ("smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct," +
-                                                                "smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct," +
-                                                                "smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct")
-
+    C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS          : str        =  ("smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct," + 
+                                                                    "smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_imc_miss_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_drain_per_warp_active.pct")
+    C_BACK_MEMORY_BOUND_NSIGHT_L3_METRICS          : str        = ("smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct," + 
+                                                                    "smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_imc_miss_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct," +
+                                                                    "smsp__warp_issue_stalled_drain_per_warp_active.pct")

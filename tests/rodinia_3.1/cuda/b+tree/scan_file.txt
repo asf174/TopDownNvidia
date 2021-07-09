@@ -1,4 +1,4 @@
-==PROF== Connected to process 32576 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/tests/rodinia_3.1/cuda/b+tree/b+tree.out)
+==PROF== Connected to process 11197 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/tests/rodinia_3.1/cuda/b+tree/b+tree.out)
 ==PROF== Profiling "findRangeK" - 1: 0%....50%....100% - 8 passes
 ==PROF== Profiling "findK" - 2: 0%....50%....100% - 8 passes
 WG size of kernel 1 & 2  = 256 
@@ -12,304 +12,84 @@ k 10000
 
 Getting input from file ../../../../../data/b+tree/mil.txt...
 Transforming data to a GPU suitable structure...
-Tree transformation took 0.235112
+Tree transformation took 0.232485
 Waiting for command
 > 
 ******command: j count=6000, rSize=6000 
 knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
 # of blocks = 6000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 3.94426 seconds
+TOTAL KERNEL time: 3.9004 seconds
 Time spent in different stages of GPU_CUDA KERNEL:
- 0.080401003361 s, 16.771207809448 % : GPU: SET DEVICE / DRIVER INIT
- 0.000724999991 s,  0.151231020689 % : GPU MEM: ALO
- 0.002919000108 s,  0.608887374401 % : GPU MEM: COPY IN
- 0.394437998533 s, 82.277603149414 % : GPU: KERNEL
- 0.000076999997 s,  0.016061777249 % : GPU MEM: COPY OUT
- 0.000838999986 s,  0.175010800362 % : GPU MEM: FRE
+ 0.079502001405 s, 16.771654129028 % : GPU: SET DEVICE / DRIVER INIT
+ 0.000699999975 s,  0.147671222687 % : GPU MEM: ALO
+ 0.002872999990 s,  0.606084883213 % : GPU MEM: COPY IN
+ 0.390053987503 s, 82.285362243652 % : GPU: KERNEL
+ 0.000065000000 s,  0.013712327927 % : GPU MEM: COPY OUT
+ 0.000831999991 s,  0.175517797470 % : GPU MEM: FRE
 Total time:
-0.479398995638 s
+0.474025994539 s
 > > > > > > > > > > > > 
  ******command: k count=10000 
 records_elem=1000000, records_unit_mem=4, records_mem=4000000
 knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
 # of blocks = 10000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 1.69658 seconds
+TOTAL KERNEL time: 1.68242 seconds
 Time spent in different stages of GPU_CUDA KERNEL:
- 0.000031000000 s,  0.017577383667 % : GPU: SET DEVICE / DRIVER INIT
- 0.001357999980 s,  0.770002782345 % : GPU MEM: ALO
- 0.004031999968 s,  2.286193847656 % : GPU MEM: COPY IN
- 0.169670000672 s, 96.204986572266 % : GPU: KERNEL
- 0.000053000000 s,  0.030051654205 % : GPU MEM: COPY OUT
- 0.001218999969 s,  0.691188097000 % : GPU MEM: FRE
+ 0.000014000000 s,  0.008011215366 % : GPU: SET DEVICE / DRIVER INIT
+ 0.000821000023 s,  0.469800591469 % : GPU MEM: ALO
+ 0.004567999858 s,  2.613945245743 % : GPU MEM: COPY IN
+ 0.168255999684 s, 96.281082153320 % : GPU: KERNEL
+ 0.000050999999 s,  0.029183715582 % : GPU MEM: COPY OUT
+ 0.001045000041 s,  0.597980022430 % : GPU MEM: FRE
 Total time:
-0.176363006234 s
+0.174755007029 s
 > > > > > > > > > > 
-TOTAL time: 3.46758 seconds
-==PROF== Disconnected from process 32576
-[32576] b+tree.out@127.0.0.1
-  findRangeK, 2021-Jun-29 13:19:32, Context 1, Stream 7
+TOTAL time: 3.45696 seconds
+==PROF== Disconnected from process 11197
+[11197] b+tree.out@127.0.0.1
+  findRangeK, 2021-Jul-07 20:44:12, Context 1, Stream 7
     Section: Command line profiler metrics
     ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     203.210,53
-    sm__cycles_elapsed.sum                                                           cycle                      7.409.706
+    sm__cycles_active.avg                                                            cycle                     203.139,56
+    sm__cycles_elapsed.sum                                                           cycle                      7.409.474
     sm__inst_executed.avg                                                             inst                     206.603,44
     sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           1,02
     sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           1,02
     sm__sass_average_branch_targets_threads_uniform.pct                                  %                          91,01
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,43
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          27,29
-    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           3,21
+    smsp__thread_inst_executed_per_inst_executed.pct                                     %                          95,09
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          27,30
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           3,20
     smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,39
     smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,09
     smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,28
-    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,32
-    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          50,19
-    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,44
-    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
-    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,07
-    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
-    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,25
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,68
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,62
-    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,72
-    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
-    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
-    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,36
-    ---------------------------------------------------------------------- --------------- ------------------------------
-
-  findK, 2021-Jun-29 13:19:33, Context 1, Stream 7
-    Section: Command line profiler metrics
-    ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     268.723,56
-    sm__cycles_elapsed.sum                                                           cycle                      9.755.158
-    sm__inst_executed.avg                                                             inst                     220.155,64
-    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           0,82
-    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           0,82
-    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          93,60
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,09
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          34,52
-    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,95
-    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,50
-    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,15
-    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,23
-    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,13
-    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          43,89
-    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,55
-    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
-    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,08
-    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
-    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,35
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,16
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,33
-    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,75
-    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
-    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
-    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,43
-    ---------------------------------------------------------------------- --------------- ------------------------------
-
-==PROF== Connected to process 33160 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/tests/rodinia_3.1/cuda/b+tree/b+tree.out)
-==PROF== Profiling "findRangeK" - 1: 0%....50%....100% - 8 passes
-==PROF== Profiling "findK" - 2: 0%....50%....100% - 8 passes
-WG size of kernel 1 & 2  = 256 
-Selecting device 0
-Input File: ../../../../../data/b+tree/mil.txt 
-Command File: ../../../../../data/b+tree/command.txt 
-Command Buffer: 
-j 6000 3000
-k 10000
-
-
-Getting input from file ../../../../../data/b+tree/mil.txt...
-Transforming data to a GPU suitable structure...
-Tree transformation took 0.215436
-Waiting for command
-> 
-******command: j count=6000, rSize=6000 
-knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
-# of blocks = 6000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 3.92754 seconds
-Time spent in different stages of GPU_CUDA KERNEL:
- 0.081376001239 s, 16.989223480225 % : GPU: SET DEVICE / DRIVER INIT
- 0.000956000003 s,  0.199588298798 % : GPU MEM: ALO
- 0.002995999996 s,  0.625488042831 % : GPU MEM: COPY IN
- 0.392767995596 s, 81.999893188477 % : GPU: KERNEL
- 0.000068000001 s,  0.014196656644 % : GPU MEM: COPY OUT
- 0.000821999973 s,  0.171612530947 % : GPU MEM: FRE
-Total time:
-0.478985995054 s
-> > > > > > > > > > > > 
- ******command: k count=10000 
-records_elem=1000000, records_unit_mem=4, records_mem=4000000
-knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
-# of blocks = 10000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 1.70557 seconds
-Time spent in different stages of GPU_CUDA KERNEL:
- 0.000018000001 s,  0.010197722353 % : GPU: SET DEVICE / DRIVER INIT
- 0.001007999992 s,  0.571072459221 % : GPU MEM: ALO
- 0.003804000095 s,  2.155118703842 % : GPU MEM: COPY IN
- 0.170569002628 s, 96.634185791016 % : GPU: KERNEL
- 0.000058000001 s,  0.032859329134 % : GPU MEM: COPY OUT
- 0.001052999985 s,  0.596566796303 % : GPU MEM: FRE
-Total time:
-0.176510006189 s
-> > > > > > > > > > 
-TOTAL time: 2.97248 seconds
-==PROF== Disconnected from process 33160
-[33160] b+tree.out@127.0.0.1
-  findRangeK, 2021-Jun-29 13:47:13, Context 1, Stream 7
-    Section: Command line profiler metrics
-    ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     203.001,72
-    sm__cycles_elapsed.sum                                                           cycle                      7.402.840
-    sm__inst_executed.avg                                                             inst                     206.603,44
-    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           1,02
-    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           1,02
-    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          91,01
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,43
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          27,35
-    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           3,21
-    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,39
-    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,09
-    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,28
-    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,31
-    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          50,15
-    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,43
-    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
-    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,07
-    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
-    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,26
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,68
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,63
-    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,73
-    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
-    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
-    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,37
-    ---------------------------------------------------------------------- --------------- ------------------------------
-
-  findK, 2021-Jun-29 13:47:13, Context 1, Stream 7
-    Section: Command line profiler metrics
-    ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     268.686,28
-    sm__cycles_elapsed.sum                                                           cycle                      9.752.578
-    sm__inst_executed.avg                                                             inst                     220.155,64
-    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           0,82
-    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           0,82
-    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          93,60
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,09
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          34,43
-    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,95
-    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,50
-    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,15
-    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,23
-    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,14
-    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          43,84
-    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,55
-    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
-    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,09
-    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
-    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,34
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,15
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,33
-    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,75
-    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
-    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                           0,00
-    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,43
-    ---------------------------------------------------------------------- --------------- ------------------------------
-
-==PROF== Connected to process 33507 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/tests/rodinia_3.1/cuda/b+tree/b+tree.out)
-==PROF== Profiling "findRangeK" - 1: 0%....50%....100% - 8 passes
-==PROF== Profiling "findK" - 2: 0%....50%....100% - 8 passes
-WG size of kernel 1 & 2  = 256 
-Selecting device 0
-Input File: ../../../../../data/b+tree/mil.txt 
-Command File: ../../../../../data/b+tree/command.txt 
-Command Buffer: 
-j 6000 3000
-k 10000
-
-
-Getting input from file ../../../../../data/b+tree/mil.txt...
-Transforming data to a GPU suitable structure...
-Tree transformation took 0.234790
-Waiting for command
-> 
-******command: j count=6000, rSize=6000 
-knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
-# of blocks = 6000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 3.9624 seconds
-Time spent in different stages of GPU_CUDA KERNEL:
- 0.079773001373 s, 16.594896316528 % : GPU: SET DEVICE / DRIVER INIT
- 0.000926000008 s,  0.192632541060 % : GPU MEM: ALO
- 0.002922999905 s,  0.608061432838 % : GPU MEM: COPY IN
- 0.396248012781 s, 82.430084228516 % : GPU: KERNEL
- 0.000051999999 s,  0.010817377828 % : GPU MEM: COPY OUT
- 0.000785999990 s,  0.163508817554 % : GPU MEM: FRE
-Total time:
-0.480708003044 s
-> > > > > > > > > > > > 
- ******command: k count=10000 
-records_elem=1000000, records_unit_mem=4, records_mem=4000000
-knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
-# of blocks = 10000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 1.67128 seconds
-Time spent in different stages of GPU_CUDA KERNEL:
- 0.000017000000 s,  0.009834434837 % : GPU: SET DEVICE / DRIVER INIT
- 0.000907999987 s,  0.525274515152 % : GPU MEM: ALO
- 0.003709000070 s,  2.145642280579 % : GPU MEM: COPY IN
- 0.167135000229 s, 96.686950683594 % : GPU: KERNEL
- 0.000040999999 s,  0.023718342185 % : GPU MEM: COPY OUT
- 0.001051999978 s,  0.608577966690 % : GPU MEM: FRE
-Total time:
-0.172861993313 s
-> > > > > > > > > > 
-TOTAL time: 2.9833 seconds
-==PROF== Disconnected from process 33507
-[33507] b+tree.out@127.0.0.1
-  findRangeK, 2021-Jun-29 13:53:44, Context 1, Stream 7
-    Section: Command line profiler metrics
-    ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     203.301,56
-    sm__cycles_elapsed.sum                                                           cycle                      7.426.806
-    sm__inst_executed.avg                                                             inst                     206.603,44
-    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           1,02
-    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           1,02
-    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          91,01
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,43
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          27,39
-    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           3,21
-    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,39
-    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,09
-    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,28
-    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,30
-    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          50,33
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,29
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          50,14
     smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,43
     smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
     smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,07
     smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
     smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,24
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,70
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,62
     smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,72
     smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
     smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
     smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,36
     ---------------------------------------------------------------------- --------------- ------------------------------
 
-  findK, 2021-Jun-29 13:53:44, Context 1, Stream 7
+  findK, 2021-Jul-07 20:44:12, Context 1, Stream 7
     Section: Command line profiler metrics
     ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     268.679,83
-    sm__cycles_elapsed.sum                                                           cycle                      9.754.206
+    sm__cycles_active.avg                                                            cycle                     268.505,06
+    sm__cycles_elapsed.sum                                                           cycle                      9.746.162
     sm__inst_executed.avg                                                             inst                     220.155,64
     sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           0,82
     sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           0,82
     sm__sass_average_branch_targets_threads_uniform.pct                                  %                          93,60
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,09
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          34,45
+    smsp__thread_inst_executed_per_inst_executed.pct                                     %                          94,02
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          34,54
     smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,95
-    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,49
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,50
     smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,15
-    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,23
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,24
     smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,14
     smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          43,79
     smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,56
@@ -317,229 +97,9 @@ TOTAL time: 2.9833 seconds
     smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,08
     smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
     smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,34
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,16
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,33
     smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,75
     smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
     smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
-    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,42
-    ---------------------------------------------------------------------- --------------- ------------------------------
-
-==PROF== Connected to process 33774 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/tests/rodinia_3.1/cuda/b+tree/b+tree.out)
-==PROF== Profiling "findRangeK" - 1: 0%....50%....100% - 8 passes
-==PROF== Profiling "findK" - 2: 0%....50%....100% - 8 passes
-WG size of kernel 1 & 2  = 256 
-Selecting device 0
-Input File: ../../../../../data/b+tree/mil.txt 
-Command File: ../../../../../data/b+tree/command.txt 
-Command Buffer: 
-j 6000 3000
-k 10000
-
-
-Getting input from file ../../../../../data/b+tree/mil.txt...
-Transforming data to a GPU suitable structure...
-Tree transformation took 0.233258
-Waiting for command
-> 
-******command: j count=6000, rSize=6000 
-knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
-# of blocks = 6000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 4.08737 seconds
-Time spent in different stages of GPU_CUDA KERNEL:
- 0.080003999174 s, 16.208791732788 % : GPU: SET DEVICE / DRIVER INIT
- 0.000895000005 s,  0.181326776743 % : GPU MEM: ALO
- 0.003015999915 s,  0.611040890217 % : GPU MEM: COPY IN
- 0.408751010895 s, 82.812850952148 % : GPU: KERNEL
- 0.000072000003 s,  0.014587183483 % : GPU MEM: COPY OUT
- 0.000845999981 s,  0.171399399638 % : GPU MEM: FRE
-Total time:
-0.493584007025 s
-> > > > > > > > > > > > 
- ******command: k count=10000 
-records_elem=1000000, records_unit_mem=4, records_mem=4000000
-knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
-# of blocks = 10000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 1.75259 seconds
-Time spent in different stages of GPU_CUDA KERNEL:
- 0.000017000000 s,  0.009265617467 % : GPU: SET DEVICE / DRIVER INIT
- 0.001057000016 s,  0.576103448868 % : GPU MEM: ALO
- 0.005993000232 s,  3.266402721405 % : GPU MEM: COPY IN
- 0.175272002816 s, 95.529609680176 % : GPU: KERNEL
- 0.000053000000 s,  0.028886925429 % : GPU MEM: COPY OUT
- 0.001081999973 s,  0.589729309082 % : GPU MEM: FRE
-Total time:
-0.183474004269 s
-> > > > > > > > > > 
-TOTAL time: 2.99821 seconds
-==PROF== Disconnected from process 33774
-[33774] b+tree.out@127.0.0.1
-  findRangeK, 2021-Jun-29 13:54:33, Context 1, Stream 7
-    Section: Command line profiler metrics
-    ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     203.002,58
-    sm__cycles_elapsed.sum                                                           cycle                      7.404.844
-    sm__inst_executed.avg                                                             inst                     206.603,44
-    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           1,02
-    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           1,02
-    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          91,01
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,43
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          27,35
-    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           3,21
-    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,39
-    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,09
-    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,28
-    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,31
-    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          50,14
-    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,43
-    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
-    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,07
-    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
-    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,25
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,68
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,63
-    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,73
-    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
-    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
-    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,37
-    ---------------------------------------------------------------------- --------------- ------------------------------
-
-  findK, 2021-Jun-29 13:54:33, Context 1, Stream 7
-    Section: Command line profiler metrics
-    ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     268.682,94
-    sm__cycles_elapsed.sum                                                           cycle                      9.754.140
-    sm__inst_executed.avg                                                             inst                     220.155,64
-    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           0,82
-    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           0,82
-    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          93,60
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,09
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          34,47
-    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,95
-    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,50
-    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,15
-    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,24
-    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,13
-    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          43,84
-    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,54
-    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
-    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,08
-    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
-    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,34
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,17
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,33
-    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,75
-    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
-    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
-    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,42
-    ---------------------------------------------------------------------- --------------- ------------------------------
-
-==PROF== Connected to process 34015 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/tests/rodinia_3.1/cuda/b+tree/b+tree.out)
-==PROF== Profiling "findRangeK" - 1: 0%....50%....100% - 8 passes
-==PROF== Profiling "findK" - 2: 0%....50%....100% - 8 passes
-WG size of kernel 1 & 2  = 256 
-Selecting device 0
-Input File: ../../../../../data/b+tree/mil.txt 
-Command File: ../../../../../data/b+tree/command.txt 
-Command Buffer: 
-j 6000 3000
-k 10000
-
-
-Getting input from file ../../../../../data/b+tree/mil.txt...
-Transforming data to a GPU suitable structure...
-Tree transformation took 0.234756
-Waiting for command
-> 
-******command: j count=6000, rSize=6000 
-knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
-# of blocks = 6000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 3.96994 seconds
-Time spent in different stages of GPU_CUDA KERNEL:
- 0.084717996418 s, 17.425592422485 % : GPU: SET DEVICE / DRIVER INIT
- 0.000684000028 s,  0.140691518784 % : GPU MEM: ALO
- 0.002889000112 s,  0.594236552715 % : GPU MEM: COPY IN
- 0.397008001804 s, 81.660324096680 % : GPU: KERNEL
- 0.000069000002 s,  0.014192566276 % : GPU MEM: COPY OUT
- 0.000801999995 s,  0.164962872863 % : GPU MEM: FRE
-Total time:
-0.486169993877 s
-> > > > > > > > > > > > 
- ******command: k count=10000 
-records_elem=1000000, records_unit_mem=4, records_mem=4000000
-knodes_elem=7874, knodes_unit_mem=2068, knodes_mem=16283432
-# of blocks = 10000, # of threads/block = 256 (ensure that device can handle)
-TOTAL KERNEL time: 1.70714 seconds
-Time spent in different stages of GPU_CUDA KERNEL:
- 0.000027000000 s,  0.015204586089 % : GPU: SET DEVICE / DRIVER INIT
- 0.001244000043 s,  0.700537204742 % : GPU MEM: ALO
- 0.004497999791 s,  2.532971382141 % : GPU MEM: COPY IN
- 0.170728996396 s, 96.143104553223 % : GPU: KERNEL
- 0.000051999999 s,  0.029282907024 % : GPU MEM: COPY OUT
- 0.001028000028 s,  0.578900516033 % : GPU MEM: FRE
-Total time:
-0.177578002214 s
-> > > > > > > > > > 
-TOTAL time: 3.49477 seconds
-==PROF== Disconnected from process 34015
-[34015] b+tree.out@127.0.0.1
-  findRangeK, 2021-Jun-29 13:55:50, Context 1, Stream 7
-    Section: Command line profiler metrics
-    ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     203.762,78
-    sm__cycles_elapsed.sum                                                           cycle                      7.427.464
-    sm__inst_executed.avg                                                             inst                     206.603,44
-    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           1,01
-    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           1,02
-    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          91,01
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,43
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          27,38
-    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           3,21
-    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,39
-    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,09
-    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,28
-    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,31
-    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          50,35
-    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,43
-    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
-    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,07
-    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
-    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,27
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,69
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,62
-    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,73
-    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
-    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
-    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,36
-    ---------------------------------------------------------------------- --------------- ------------------------------
-
-  findK, 2021-Jun-29 13:55:50, Context 1, Stream 7
-    Section: Command line profiler metrics
-    ---------------------------------------------------------------------- --------------- ------------------------------
-    sm__cycles_active.avg                                                            cycle                     268.553,47
-    sm__cycles_elapsed.sum                                                           cycle                      9.754.014
-    sm__inst_executed.avg                                                             inst                     220.155,64
-    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           0,82
-    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           0,82
-    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          93,60
-    smsp__thread_inst_executed_per_inst_executed.ratio                                                              30,09
-    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          34,46
-    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           2,95
-    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,50
-    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,15
-    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,23
-    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,13
-    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          43,79
-    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,55
-    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
-    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,08
-    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,02
-    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           1,34
-    smsp__warp_issue_stalled_not_selected_per_warp_active.pct                            %                           1,18
-    smsp__warp_issue_stalled_selected_per_warp_active.pct                                %                           3,33
-    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,75
-    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
-    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                              0
-    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,41
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                          10,43
     ---------------------------------------------------------------------- --------------- ------------------------------
 

@@ -81,7 +81,7 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
 
     def back_memory_bound(self) -> BackMemoryBoundNsight:
         """
-        Return MemoryBoundNsight part of the execution.
+        Return MemoryBound part of the execution.
 
         Returns:
             reference to MemoryBoundNsight part of the execution
@@ -92,7 +92,7 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
 
     def front_band_width(self) -> FrontBandWidthNsight:
         """
-        Return FrontBandWidthNsight part of the execution.
+        Return FrontBandWidth part of the execution.
 
         Returns:
             reference to FrontBandWidthNsight part of the execution
@@ -103,7 +103,7 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
 
     def front_dependency(self) -> FrontDependencyNsight:
         """
-        Return FrontDependencyNsight part of the execution.
+        Return FrontDependency part of the execution.
 
         Returns:
             reference to FrontDependencyNsight part of the execution

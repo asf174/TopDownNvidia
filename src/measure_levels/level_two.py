@@ -53,8 +53,6 @@ class LevelTwo(LevelOne, ABC):
         
         pass
 
-
-    
     @abstractmethod
     def back_core_bound(self) -> BackCoreBound:
         """
@@ -217,6 +215,32 @@ class LevelTwo(LevelOne, ABC):
         return (((self._stall_ipc()*(self.front_dependency_stall()/100.0))/super().get_device_max_ipc())*100.0)
         pass
 
+    def total_fetch_decode_stall(self) -> float:
+        """
+        Returns  percent of stalls due to Fetch and Decode part.
+
+        Returns:
+            Float with percent of total stalls due to Fetch and Decode part.
+        """
+
+        fetch_stall : float = super()._get_stalls_of_part(self.front_dependency().metrics())
+        decode_stall : float = super()._get_stalls_of_part(self.front_band_width().metrics())
+        return fetch_stall + decode_stall
+        pass
+
+    def total_core_memory_stall(self) -> float:
+        """
+        Returns percent of stalls due to Core and Memory part.
+
+        Returns:
+            Float with percent of total stalls due to Core and Memory part.
+        """
+
+        back_core : float = super()._get_stalls_of_part(self.back_core_bound().metrics())
+        back_memory : float = super()._get_stalls_of_part(self.back_memory_bound().metrics())
+        return back_core + back_memory
+        pass
+
     def back_memory_bound_stall(self) -> float:
         """
         Returns percent of stalls due to BackEnd.Memory_Bound part.
@@ -225,7 +249,7 @@ class LevelTwo(LevelOne, ABC):
             Float with percent of total stalls due to BackEnd.Memory_Bound
         """
         
-        return self._get_stalls_of_part(self._back_memory_bound.metrics())
+        return (super()._get_stalls_of_part(self._back_memory_bound.metrics())/super().total_front_back_stall())*100.0
         pass
 
     def back_core_bound_stall(self) -> float:
@@ -236,7 +260,7 @@ class LevelTwo(LevelOne, ABC):
             Float with percent of total stalls due to BackEnd.Core_Bound
         """
 
-        return self._get_stalls_of_part(self._back_core_bound.metrics())
+        return (super()._get_stalls_of_part(self._back_core_bound.metrics())/super().total_front_back_stall())*100.0
         pass
 
     def front_band_width_stall(self) -> float:
@@ -247,7 +271,7 @@ class LevelTwo(LevelOne, ABC):
             Float with percent of total stalls due to FrontEnd.Band_width part
         """
 
-        return self._get_stalls_of_part(self._front_band_width.metrics())
+        return (super()._get_stalls_of_part(self._front_band_width.metrics())/super().total_front_back_stall())*100.0
         pass
 
     def front_dependency_stall(self) -> float:
@@ -258,7 +282,7 @@ class LevelTwo(LevelOne, ABC):
             Float with percent of total stalls due to FrontEnd.Dependency part
         """
 
-        return self._get_stalls_of_part(self._front_dependency.metrics())
+        return (super()._get_stalls_of_part(self._front_dependency.metrics())/super().total_front_back_stall())*100.0
         pass
 
     def back_memory_bound_stall_on_back(self) -> float:
@@ -271,7 +295,8 @@ class LevelTwo(LevelOne, ABC):
             on the total BackEnd
         """
 
-        return (self.back_memory_bound_stall()/super().back_end_stall())*100.0 
+        print(super().back_end_stall())
+        return (super()._get_stalls_of_part(self._back_memory_bound.metrics())/self.total_core_memory_stall())*100.0 
 
     def back_core_bound_stall_on_back(self) -> float:
         """ 
@@ -283,7 +308,7 @@ class LevelTwo(LevelOne, ABC):
             on the total BackEnd
         """
 
-        return (self.back_core_bound_stall()/super().back_end_stall())*100.0 
+        return (super()._get_stalls_of_part(self._back_core_bound.metrics())/self.total_core_memory_stall())*100.0 
 
     def front_band_width_stall_on_front(self) -> float:
         """ 
@@ -295,7 +320,7 @@ class LevelTwo(LevelOne, ABC):
             on the total FrontEnd
         """
 
-        return (self.front_band_width_stall()/super().front_end_stall())*100.0 
+        return (super()._get_stalls_of_part(self._front_band_width.metrics())/self.total_fetch_decode_stall())*100.0 
         pass
 
     def front_dependency_stall_on_front(self) -> float:
@@ -308,7 +333,8 @@ class LevelTwo(LevelOne, ABC):
             on the total FrontEnd
         """
 
-        return (self.front_dependency_stall()/super().front_end_stall())*100.0 
+        
+        return (super()._get_stalls_of_part(self._front_dependency.metrics())/self.total_fetch_decode_stall())*100.0 
         pass
 
     @abstractmethod

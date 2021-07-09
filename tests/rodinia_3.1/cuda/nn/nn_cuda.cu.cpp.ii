@@ -1,9 +1,9 @@
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.cpp"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.cpp"
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.cpp"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.cpp"
 # 1 "nn_cuda.cu"
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
 # 1 "nn_cuda.cu"
@@ -30387,9 +30387,9 @@ printf("       2. If you declare either the device or the platform,\n");
 printf("          you must declare both.\n\n");
 # 329 "nn_cuda.cu"
 }
-# 1 "tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
-# 1 "tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 1 3
+# 1 "tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 1 3
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-function"
 #pragma GCC diagnostic ignored "-Wcast-qual"
@@ -31022,8 +31022,8 @@ inline float erfcxf(float a)
 # 268 "/usr/local/cuda/bin/../targets/x86_64-linux/include/crt/host_runtime.h" 2 3
 
 #pragma pack()
-# 9 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 2 3
-# 1 "/tmp/tmpxft_0000c67e_00000000-3_nn_cuda.fatbin.c" 1 3
+# 9 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 2 3
+# 1 "/tmp/tmpxft_00009a41_00000000-3_nn_cuda.fatbin.c" 1 3
 
 # 1 "/usr/local/cuda/bin/../targets/x86_64-linux/include/fatbinary_section.h" 1 3
 # 18 "/usr/local/cuda/bin/../targets/x86_64-linux/include/fatbinary_section.h" 3
@@ -31062,7 +31062,7 @@ typedef struct {
 } __fatBinC_Wrapper_t;
 # 60 "/usr/local/cuda/bin/../targets/x86_64-linux/include/fatbinary_section.h" 3
 }
-# 3 "/tmp/tmpxft_0000c67e_00000000-3_nn_cuda.fatbin.c" 2 3
+# 3 "/tmp/tmpxft_00009a41_00000000-3_nn_cuda.fatbin.c" 2 3
 
 
 
@@ -31196,7 +31196,7 @@ static const __fatBinC_Wrapper_t __fatDeviceText __attribute__ ((aligned (8))) _
  { 0x466243b1, 1, fatbinData, 0 };
 
 }
-# 10 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 2 3
+# 10 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 2 3
 extern void __device_stub__Z6euclidP7latLongPfiff(LatLong *, float *, int, float, float);
 static void __nv_cudaEntityRegisterCallback(void **);
 static void __sti____cudaRegisterAll(void) __attribute__((__constructor__));
@@ -31209,46 +31209,46 @@ void euclid( LatLong *__cuda_0,float *__cuda_1,int __cuda_2,float __cuda_3,float
 {__device_stub__Z6euclidP7latLongPfiff( __cuda_0,__cuda_1,__cuda_2,__cuda_3,__cuda_4);
 # 59 "nn_cuda.cu"
 }
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
 static void __nv_cudaEntityRegisterCallback( void **__T3) { 
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 3
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 3
                                                             { volatile static void **__ref __attribute__((unused)); __ref = (volatile void **)
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
                                                             __T3
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 3
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 3
                                                             ; }
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
                                                                                       ; __nv_save_fatbinhandle_for_managed_rt(__T3); 
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 3
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 3
                                                                                                                                      __cudaRegisterFunction(
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
                                                                                                                                      __T3
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 3
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 3
                                                                                                                                      , (const char*)
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
                                                                                                                                      ((void ( *)(LatLong *, float *, int, float, float))euclid)
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 3
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 3
                                                                                                                                      , (char*)
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
                                                                                                                                      "_Z6euclidP7latLongPfiff"
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 3
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 3
                                                                                                                                      , 
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
                                                                                                                                      "_Z6euclidP7latLongPfiff"
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 3
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 3
                                                                                                                                      , -1, (uint3*)0, (uint3*)0, (dim3*)0, (dim3*)0, (int*)0)
-# 1 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 1 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
                                                                                                                                                                                                                                                          ; }
 static void __sti____cudaRegisterAll(void) { 
-# 2 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 3
+# 2 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 3
                                              __cudaFatCubinHandle = __cudaRegisterFatBinary((void*)&__fatDeviceText); { void (*callback_fp)(void **) = (void (*)(void **))(
-# 2 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 2 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
                                              __nv_cudaEntityRegisterCallback
-# 2 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 3
+# 2 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 3
                                              ); (*callback_fp)(__cudaFatCubinHandle); __cudaRegisterFatBinaryEnd(__cudaFatCubinHandle); } atexit(__cudaUnregisterBinaryUtil)
-# 2 "/tmp/tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 2 "/tmp/tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
                                                                                                   ; }
 
 #pragma GCC diagnostic pop
-# 2 "tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c" 2
-# 1 "tmpxft_0000c67e_00000000-6_nn_cuda.cudafe1.stub.c"
+# 2 "tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c" 2
+# 1 "tmpxft_00009a41_00000000-6_nn_cuda.cudafe1.stub.c"
