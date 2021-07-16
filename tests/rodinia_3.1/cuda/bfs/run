@@ -1,7 +1,0 @@
-#!/bin/bash
-
-for i in $(seq 1 1 10); do
-    (time topdown.py -f bfs ../../../../../data/bfs/graph1MW_6.txt -l3 -nd) >> time_topdown.txt 2>&1
-    (time ./bfs ../../../../../data/bfs/graph1MW_6.txt) >> time_native.txt 2>&1
-done
-topdown.py -f bfs ../../../../../data/bfs/graph1MW_6.txt -l3 -nd -os scan_file.txt -o results_topdown.txt

@@ -23,7 +23,10 @@ for line in Lines:
         sec = l_real[2][:-1].partition('s')[0]
         sec = sec.replace(',','.')
         sec = float(sec)
+        #print(minut)
+        #print(sec)
         l_result.append(minut*60 + sec)
+#print(l_result)
 l_result.remove(max(l_result))
 l_result.remove(min(l_result))
-print(str(statistics.median(l_result)) + " sec")
+print(str(statistics.mean(l_result)) + " sec")
