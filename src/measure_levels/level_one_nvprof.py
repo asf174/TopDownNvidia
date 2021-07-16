@@ -1,3 +1,11 @@
+"""
+Class that represents the level one of the execution with nvprof scan tool.
+
+@author:    Alvaro Saiz (UC)
+@date:      Jul 2021
+@version:   1.0
+"""
+
 from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect, re
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -14,17 +22,19 @@ from show_messages.message_format import MessageFormat
 from parameters.level_execution_params import LevelExecutionParameters
 
 class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
-
-
     """ 
     Class thath represents the level one of the execution with nvprof scan tool.
 
     Attributes:
         _front_end      : FrontEnd      ; FrontEnd part of the execution
+
         _back_end       : BackEnd       ; BackEnd part of the execution
+
         _divergence     : Divergence    ; Divergence part of the execution
+        
         _retire         : Retire        ; Retire part of the execution
     """
+
     def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, 
         collect_events : bool, front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, 
         retire : RetireNvprof, extra_measure : ExtraMeasureNvprof):
@@ -56,7 +66,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
             String with command to be executed
         """
         
-        command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
+        command : str = ("nvprof --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
             + "," + self._retire.metrics_str() + "  --events " + self._front_end.events_str() + 
             "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + self._extra_measure.events_str() +
@@ -72,6 +82,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
             
         Raises:
             EventNotAsignedToPart       ; raised when an event has not been assigned to any analysis part 
+            
             MetricNotAsignedToPart      ; raised when a metric has not been assigned to any analysis part
         """
 
@@ -284,16 +295,4 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
         """
 
         return super()._get_ipc(LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)
-        pass
-
-    def retire_ipc_per_kernel(self) -> float:
-        """
-        Get "RETIRE" IPC of execution.
-
-        Raises:
-            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not
-            computed by the NVIDIA scan tool.
-        """
-
-        return 0.0 #TODO
         pass

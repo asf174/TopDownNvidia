@@ -3,7 +3,7 @@ Class with all params of Divergence class
 and their subclasses
 
 @author:    Alvaro Saiz (UC)
-@date:      Jan 2021
+@date:      Jul 2021
 @version:   1.0
 """
 
@@ -16,30 +16,26 @@ from parameters.level_execution_params import LevelExecutionParameters
 class DivergenceParameters:
 
     C_DIVERGENCE_NAME                    : str      = "DIVERGENCE"
-    C_DIVERGENCE_DESCRIPTION             : str      = ("It analyzes the parts of the GPU architecture where divergence causes a loss of performance.\n" + 
-                                                        "This problem is caused when warps are not used correctly. This is caused for example when, for example, there are\n" + 
-                                                        "threads (of the same warp) that have to execute an instruction and others do not. In this case there are GPU cores\n" + 
-                                                        "that are not being used. Another worst case occurs when some threads of a warp have to execute one instruction and\n" + 
-                                                        "others another (if-else). In this case, twice as many cycles are necessary to execute, and in all cases part of the\n" +  
-                                                        "cores will not be used.") # TODO preguntar separaciones, si anhadir el espacio
+    C_DIVERGENCE_DESCRIPTION             : str      = ("Includes performance losses caused by conditional jumps (in which warp is not " +
+                                                        "generally not fully exploited and repetition of instructions")
     # NVPROF metrics/arguments
-    C_DIVERGENCE_NVPROF_L1_METRICS          : str      = ("branch_efficiency," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
+    C_DIVERGENCE_NVPROF_L1_METRICS          : str      = (LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
                                                         LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
-    C_DIVERGENCE_NVPROF_L1_EVENTS           : str      = ("branch,divergent_branch")
+    C_DIVERGENCE_NVPROF_L1_EVENTS           : str      = ("")
     
-    C_DIVERGENCE_NVPROF_L2_METRICS          : str      = ("branch_efficiency," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
+    C_DIVERGENCE_NVPROF_L2_METRICS          : str      = (LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
                                                         LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
-    C_DIVERGENCE_NVPROF_L2_EVENTS           : str      = ("branch,divergent_branch")
+    C_DIVERGENCE_NVPROF_L2_EVENTS           : str      = ("")
 
-    C_DIVERGENCE_NVPROF_L3_METRICS          : str      = ("branch_efficiency," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
+    C_DIVERGENCE_NVPROF_L3_METRICS          : str      = (LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
                                                         LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
-    C_DIVERGENCE_NVPROF_L3_EVENTS           : str      = ("branch,divergent_branch")
+    C_DIVERGENCE_NVPROF_L3_EVENTS           : str      = ("")
 
     # NSIGHT metrics
-    C_DIVERGENCE_NSIGHT_L1_METRICS          : str      = ("sm__sass_average_branch_targets_threads_uniform.pct," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
+    C_DIVERGENCE_NSIGHT_L1_METRICS          : str      = (LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
                                                       "," + LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
-    C_DIVERGENCE_NSIGHT_L2_METRICS          : str      = ("sm__sass_average_branch_targets_threads_uniform.pct," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
+    C_DIVERGENCE_NSIGHT_L2_METRICS          : str      = (LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
                                                       "," + LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
-    C_DIVERGENCE_NSIGHT_L3_METRICS          : str      = ("sm__sass_average_branch_targets_threads_uniform.pct," + LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
+    C_DIVERGENCE_NSIGHT_L3_METRICS          : str      = (LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT + 
                                                       "," + LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
 

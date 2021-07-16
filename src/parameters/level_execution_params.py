@@ -1,9 +1,9 @@
 """
 Class with parameters used by LevelExecution file
-and their subclasses of the hierachy
+and their subclasses of the hierachy.
 
 @author:    Alvaro Saiz (UC)
-@date:      Jan 2021
+@date:      Jul 2021
 @version:   1.0
 """
 
@@ -24,7 +24,7 @@ class LevelExecutionParameters:
 
     C_MAX_NUM_RESULTS_DECIMALS                          : int       = 3 # recommended be same with same value definided in TopDownParameters
 
-    C_INFO_MESSAGE_EXECUTION_NVPROF                     : str       = "Making analysis... Wait to results."
+    C_INFO_MESSAGE_EXECUTION                            : str       = "Making analysis... Wait to results."
 
     # add here the events and metrics 
     # that will be computed by adding in 

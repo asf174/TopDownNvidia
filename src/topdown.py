@@ -3,7 +3,7 @@
 Program that implements the Top Down methodology over NVIDIA GPUs.
 
 @author:    Alvaro Saiz (UC)
-@date:      Jan-2021
+@date:      Jul 2021
 @version:   1.0
 """
 
@@ -25,8 +25,8 @@ from measure_parts.extra_measure import ExtraMeasureNsight, ExtraMeasureNvprof
 from measure_levels.level_three import LevelThree
 from measure_levels.level_one import LevelOne
 from measure_levels.level_two import LevelTwo
-from measure_parts.front_band_width import  FrontBandWidthNsight, FrontBandWidthNvprof
-from measure_parts.front_dependency import FrontDependencyNsight, FrontDependencyNvprof
+from measure_parts.front_decode import  FrontDecodeNsight, FrontDecodeNvprof
+from measure_parts.front_fetch import FrontFetchNsight, FrontFetchNvprof
 from measure_parts.back_core_bound import BackCoreBoundNsight, BackCoreBoundNvprof
 from measure_parts.back_memory_bound import BackMemoryBoundNsight, BackMemoryBoundNvprof
 from show_messages.message_format import MessageFormat
@@ -37,8 +37,8 @@ from parameters.back_end_params import BackEndParameters
 from parameters.divergence_params import DivergenceParameters
 from parameters.retire_params import RetireParameters
 from parameters.extra_measure_params import ExtraMeasureParameters
-from parameters.front_dependency_params import FrontDependencyParameters
-from parameters.front_band_width_params import FrontBandWidthParameters
+from parameters.front_fetch_params import FrontFetchParameters
+from parameters.front_decode_params import FrontDecodeParameters
 from parameters.back_memory_bound_params import BackMemoryBoundParameters
 from parameters.back_core_bound_params import BackCoreBoundParameters
 
@@ -75,7 +75,9 @@ class TopDown:
                                                                         computed by NVIDIA scan tool
 
         __show_graph                    : bool                      ;   True if program has to show graphs or False if not
+
         __output_graph_file             : str                       ;   path to graph file or 'None' if option is not specified
+
         __output_output_scan_file       : str                       ;   path to scan file or 'None' if option is not specified
     """
     
@@ -95,7 +97,7 @@ class TopDown:
         # Save values into attributes
         args : argparse.Namespace = parser.parse_args()
       
-        self.__level : int = args.level
+        self.__level : int = args.level[0]
         self.__output_file : str = args.file
         self.__verbose : bool = args.verbose
         self.__program : str = " ".join(str(string) for string in args.program)
@@ -232,7 +234,7 @@ class TopDown:
             help = TopDownParameters.C_LEVEL_ARGUMENT_DESCRIPTION,
             type = int,
             action = DontRepeat,
-            nargs = '?',
+            nargs = 1,
             choices = range(TopDownParameters.C_MIN_LEVEL_EXECUTION, TopDownParameters.C_MAX_LEVEL_EXECUTION + 1), # range [1,3], produces error, 
             metavar = '[NUM]',
             dest = 'level')
@@ -252,7 +254,7 @@ class TopDown:
             TopDownParameters.C_OUTPUT_FILE_ARGUMENT_LONG_OPTION, 
             help = TopDownParameters.C_OUTPUT_FILE_ARGUMENT_DESCRIPTION,
             default = None,
-            action = DontRepeat, # preguntar TODO
+            action = DontRepeat,
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
@@ -307,7 +309,7 @@ class TopDown:
             TopDownParameters.C_OUTPUT_GRAPH_FILE_ARGUMENT_LONG_OPTION, 
             help = TopDownParameters.C_OUTPUT_GRAPH_FILE_ARGUMENT_DESCRIPTION,
             default = None,
-            action = DontRepeat, # preguntar TODO
+            action = DontRepeat,
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
@@ -328,7 +330,7 @@ class TopDown:
             TopDownParameters.C_INPUT_SCAN_FILE_ARGUMENT_LONG_OPTION, 
             help = TopDownParameters.C_INPUT_SCAN_FILE_ARGUMENT_DESCRIPTION,
             default = None,
-            action = DontRepeat, # preguntar TODO
+            action = DontRepeat,
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
@@ -349,7 +351,7 @@ class TopDown:
             TopDownParameters.C_OUTPUT_SCAN_FILE_ARGUMENT_LONG_OPTION, 
             help = TopDownParameters.C_OUTPUT_SCAN_FILE_ARGUMENT_DESCRIPTION,
             default = None,
-            #action = DontRepeat, # preguntar TODO
+            #action = DontRepeat,
             nargs = '?', 
             type = str, 
             #metavar='/path/to/file',
@@ -367,7 +369,7 @@ class TopDown:
         # Create group for required arguments
         requiredGroup : argparse._ArgumentGroup = parser.add_argument_group("Required arguments")
 
-        self.__add_program_argument(requiredGroup)
+        self.__add_program_argument(parser)
         self.__add_level_argument(requiredGroup)
         self.__add_ouput_file_argument(parser)
         self.__add_verbose_argument(parser)
@@ -389,6 +391,7 @@ class TopDown:
         Returns:
             str with path to program to be executed
         """
+
         return self.__program
         pass
     
@@ -602,6 +605,8 @@ class TopDown:
         pass
       
     def __show_level_one_results(self, level_execution : LevelOne):
+        """Show results of level one."""
+        
         stalls_front_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
             str(round(level_execution.front_end_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
@@ -622,54 +627,59 @@ class TopDown:
         pass
 
     def __show_level_two_results(self, level_execution : LevelTwo):
-        stalls_front_band_width_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(round(level_execution.front_band_width_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-        stalls_front_dependency_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
-            str(round(level_execution.front_dependency_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        """Show results of level two."""
+
+        stalls_front_decode_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
+            str(round(level_execution.front_decode_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        stalls_front_fetch_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
+            str(round(level_execution.front_fetch_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_core_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
             str(round(level_execution.back_core_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_memory_bound_on_total_message : str = ("{:<20} {:<6}".format('STALLS, on the total (%): ', 
             str(round(level_execution.back_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-        stalls_front_band_width_on_front_message : str = ("{:<22} {:<6}".format('STALLS, on FrontEnd  (%): ', 
-            str(round(level_execution.front_band_width_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-        stalls_front_dependency_on_front_message : str = ("{:<20} {:<6}".format('STALLS, on FrontEnd  (%): ', 
-            str(round(level_execution.front_dependency_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        stalls_front_decode_on_front_message : str = ("{:<22} {:<6}".format('STALLS, on FrontEnd  (%): ', 
+            str(round(level_execution.front_decode_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        stalls_front_fetch_on_front_message : str = ("{:<20} {:<6}".format('STALLS, on FrontEnd  (%): ', 
+            str(round(level_execution.front_fetch_stall_on_front(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_core_bound_on_back_message : str = ("{:<20} {:<6}".format('STALLS, on BackEnd   (%): ', 
             str(round(level_execution.back_core_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         stalls_back_memory_bound_on_back_message : str = ("{:<20} {:<6}".format('STALLS, on BackEnd   (%): ', 
             str(round(level_execution.back_memory_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-        ipc_degradation_front_band_width_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
-            str(round(level_execution.front_band_width_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-        ipc_degradation_front_dependency_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
-            str(round(level_execution.front_dependency_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        ipc_degradation_front_decode_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
+            str(round(level_execution.front_decode_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
+        ipc_degradation_front_fetch_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
+            str(round(level_execution.front_fetch_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         ipc_degradation_back_core_bound_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
             str(round(level_execution.back_core_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
         ipc_degradation_back_memory_bound_message : str = ("{:<26} {:<5}".format('IPC DEGRADATION      (%): ', 
             str(round(level_execution.back_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))
-        messages : list[list[str]] = [["","","",""] , [stalls_front_band_width_on_total_message, 
-            stalls_front_dependency_on_total_message,  stalls_back_core_bound_on_total_message, 
-            stalls_back_memory_bound_on_total_message], [stalls_front_band_width_on_front_message, 
-            stalls_front_dependency_on_front_message, stalls_back_core_bound_on_back_message, 
+        messages : list[list[str]] = [["","","",""] , [stalls_front_decode_on_total_message, 
+            stalls_front_fetch_on_total_message,  stalls_back_core_bound_on_total_message, 
+            stalls_back_memory_bound_on_total_message], [stalls_front_decode_on_front_message, 
+            stalls_front_fetch_on_front_message, stalls_back_core_bound_on_back_message, 
             stalls_back_memory_bound_on_back_message], ["", "", "", ""], 
-            [ipc_degradation_front_band_width_message, ipc_degradation_front_dependency_message,
+            [ipc_degradation_front_decode_message, ipc_degradation_front_fetch_message,
             ipc_degradation_back_core_bound_message, ipc_degradation_back_memory_bound_message]]
-        titles : list[str] = [level_execution.front_band_width().name(), level_execution.front_dependency().name(),
+        titles : list[str] = [level_execution.front_decode().name(), level_execution.front_fetch().name(),
             level_execution.back_core_bound().name(),level_execution.back_memory_bound().name()]
-        
-        box : MessageFormat = MessageFormat()
-        box.print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
-        
+    
+        printer : MessageFormat = MessageFormat()
+        printer.print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        printer.print_max_line_length_message(message = "\n", max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
         ipc_degradation_branch_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
             str(round(level_execution.branch_divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
         ipc_degradation_replay_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
             str(round(level_execution.replay_divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
         titles = [level_execution.divergence_branch().name(), level_execution.divergence_replay().name()]
         messages = [[ipc_degradation_branch_divergence_message, ipc_degradation_replay_divergence_message]]
-        box.print_two_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        printer.print_two_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         pass
 
     def __show_level_three_results(self, level_execution : LevelThree):
-        stalls_memory_constant_memory_bound_on_total_message : str = ("STALLS, on the total             (%): " +  # revisar formatos, quiza sobren TODO
+        """Show results of level three."""
+
+        stalls_memory_constant_memory_bound_on_total_message : str = ("STALLS, on the total             (%): " +
             str(round(level_execution.memory_constant_memory_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
         stalls_memory_constant_memory_bound_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + " (%): " +  
             str(round(level_execution.memory_constant_memory_bound_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
@@ -679,28 +689,30 @@ class TopDown:
             str(round(level_execution.memory_constant_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
         if type(level_execution) is LevelThreeNsight:
             memory_mio_throttle_name : str = level_execution.memory_mio_throttle().name()
-            memory_tex_throttle_name : str = level_execution.memory_tex_throttle().name()
+            memory_l1_bound_name : str = level_execution.memory_l1_bound().name()
             stalls_memory_mio_throttle_on_total_message : str = ("STALLS, on the total             (%): " +  
                 str(round(level_execution.memory_mio_throttle_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            stalls_memory_tex_throttle_on_total_message : str = ("STALLS, on the total             (%): " +
-                str(round(level_execution.memory_tex_throttle_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            stalls_memory_l1_bound_on_total_message : str = ("STALLS, on the total             (%): " +
+                str(round(level_execution.memory_l1_bound_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
             stalls_memory_mio_throttle_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + " (%): " +  
                 str(round(level_execution.memory_mio_throttle_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            stalls_memory_tex_throttle_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + " (%): " +  
-                str(round(level_execution.memory_tex_throttle_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            stalls_memory_l1_bound_on_memory_bound_message : str = ("STALLS, on " + level_execution.back_memory_bound().name() + " (%): " +  
+                str(round(level_execution.memory_l1_bound_stall_on_memory_bound(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
             stalls_memory_mio_throttle_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "              (%): " +
                 str(round(level_execution.memory_mio_throttle_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            stalls_memory_tex_throttle_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "              (%): " +
-                str(round(level_execution.memory_tex_throttle_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            stalls_memory_l1_bound_on_back_message : str = ("STALLS, on " + level_execution.back_end().name() + "              (%): " +
+                str(round(level_execution.memory_l1_bound_stall_on_back(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
             ipc_degradation_memory_mio_throttle_message : str = ("IPC DEGRADATION                  (%): " +  
                 str(round(level_execution.memory_mio_throttle_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            ipc_degradation_memory_tex_throttle_message : str = ("IPC DEGRADATION                  (%): " +  
-                str(round(level_execution.memory_tex_throttle_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
-            titles : list[str] = [level_execution.memory_constant_memory_bound().name(), level_execution.memory_mio_throttle().name(), level_execution.memory_tex_throttle().name()]
-            messages : list[list[str]] = [[stalls_memory_constant_memory_bound_on_total_message, stalls_memory_mio_throttle_on_total_message, stalls_memory_tex_throttle_on_total_message],
-             [stalls_memory_constant_memory_bound_on_memory_bound_message, stalls_memory_mio_throttle_on_memory_bound_message, stalls_memory_tex_throttle_on_memory_bound_message],
-             [stalls_memory_constant_memory_bound_on_back_message, stalls_memory_mio_throttle_on_back_message, stalls_memory_tex_throttle_on_back_message],
-             ["","","",""], [ipc_degradation_memory_constant_memory_bound_message, ipc_degradation_memory_mio_throttle_message, ipc_degradation_memory_tex_throttle_message]]
+            ipc_degradation_memory_l1_bound_message : str = ("IPC DEGRADATION                  (%): " +  
+                str(round(level_execution.memory_l1_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
+            titles : list[str] = [level_execution.memory_constant_memory_bound().name(), level_execution.memory_mio_throttle().name(), 
+                level_execution.memory_l1_bound().name()]
+            messages : list[list[str]] = [[stalls_memory_constant_memory_bound_on_total_message, stalls_memory_mio_throttle_on_total_message, 
+            stalls_memory_l1_bound_on_total_message], [stalls_memory_constant_memory_bound_on_memory_bound_message, 
+            stalls_memory_mio_throttle_on_memory_bound_message, stalls_memory_l1_bound_on_memory_bound_message], [stalls_memory_constant_memory_bound_on_back_message, 
+            stalls_memory_mio_throttle_on_back_message, stalls_memory_l1_bound_on_back_message], ["","","",""], 
+            [ipc_degradation_memory_constant_memory_bound_message, ipc_degradation_memory_mio_throttle_message, ipc_degradation_memory_l1_bound_message]]
             MessageFormat().print_three_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
         else:
             messages : str = ("\n" + stalls_memory_constant_memory_bound_on_total_message + "\n" + 
@@ -726,7 +738,7 @@ class TopDown:
             str(level_execution.get_device_max_ipc()))
         printer.print_desplazed_msg_box(msg = message, indent = 1, title = "", output_file = self.output_file(), width = None, delete_content_file = False)
         if self.show_desc():
-            message = ("\n\n'IPC OBTAINED' is the IPC of the analyzed program (computed by scan tool) and 'MAXIMUM POSSIBLE IPC'\n" +
+            message = ("\n\n'IPC OBTAINED' is the retire IPC of the analyzed program and 'MAXIMUM POSSIBLE IPC'\n" +
                 "is the the maximum IPC your GPU can achieve. This is computed taking into account architectural concepts, such as the\n" +
                 "number of warp planners per SM, as well as the number of Dispatch units of each SM.")
             printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
@@ -768,11 +780,11 @@ class TopDown:
             printer.print_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
             printer.print_max_line_length_message("\n", TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, self.output_file(), False)
             if self.show_desc():
-                message = "\n" + level_execution.front_band_width().name() + ": " + level_execution.front_band_width().description() + "\n\n"
+                message = "\n" + level_execution.front_fetch().name() + ": " + level_execution.front_fetch().description() + "\n\n"
                 printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                 output_file = self.output_file(), delete_content_file = False)
                 print()
-                message = "\n" + level_execution.front_dependency().name() + ": " + level_execution.front_dependency().description() + "\n\n"
+                message = "\n" + level_execution.front_decode().name() + ": " + level_execution.front_decode().description() + "\n\n"
                 printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                 output_file = self.output_file(), delete_content_file = False)
                 print()
@@ -795,6 +807,15 @@ class TopDown:
                     printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                     output_file = self.output_file(), delete_content_file = False)
                     print()
+                    if type(level_execution) is LevelThreeNsight:
+                        message = "\n" + level_execution.memory_l1_bound().name() + ": " + level_execution.memory_l1_bound().description() + "\n\n"
+                        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                        output_file = self.output_file(), delete_content_file = False)
+                        print()
+                        message = "\n" + level_execution.memory_mio_throttle().name() + ": " + level_execution.memory_mio_throttle().description() + "\n\n"
+                        printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                        output_file = self.output_file(), delete_content_file = False)
+                        print()
                 self.__show_level_three_results(level_execution)
                 print()
         else: # level one
@@ -834,7 +855,7 @@ class TopDown:
         if not compute_capability:
             raise ModeExecutionError
         compute_capability_float : float = float(compute_capability)
-        if compute_capability_float < 0.0 or compute_capability_float  > TopDownParameters.C_COMPUTE_CAPABILITY_MAX_VALUE:
+        if compute_capability_float < 0.0:
             raise ComputeCabilityNumberError
         if compute_capability_float > TopDownParameters.C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE:
             return False
@@ -875,8 +896,8 @@ class TopDown:
                     RetireParameters.C_RETIRE_NVPROF_L1_METRICS, RetireParameters.C_RETIRE_NVPROF_L1_EVENTS)
                 extra_measure = ExtraMeasureNvprof(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L1_EVENTS)
-                level : LevelOneNvprof = LevelOneNvprof(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, show_events, front_end, back_end, 
-                    divergence, retire, extra_measure)
+                level : LevelOneNvprof = LevelOneNvprof(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, show_events, 
+                front_end, back_end, divergence, retire, extra_measure)
             elif self.level() == 2:
                 front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
                     FrontEndParameters.C_FRONT_END_NVPROF_L2_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_L2_EVENTS)
@@ -888,20 +909,20 @@ class TopDown:
                     RetireParameters.C_RETIRE_NVPROF_L2_METRICS, RetireParameters.C_RETIRE_NVPROF_L2_EVENTS)
                 extra_measure = ExtraMeasureNvprof(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L2_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L2_EVENTS)
-                front_band_width : FrontBandWidthNvprof = FrontBandWidthNvprof(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
-                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_L2_METRICS, 
-                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_L2_EVENTS)
-                front_dependency : FrontDependencyNvprof = FrontDependencyNvprof(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
-                    FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_L2_METRICS, 
-                    FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_L2_EVENTS)
+                front_decode : FrontDecodeNvprof = FrontDecodeNvprof(FrontDecodeParameters.C_FRONT_DECODE_NAME, 
+                    FrontDecodeParameters.C_FRONT_DECODE_DESCRIPTION, FrontDecodeParameters.C_FRONT_DECODE_NVPROF_L2_METRICS, 
+                    FrontDecodeParameters.C_FRONT_DECODE_NVPROF_L2_EVENTS)
+                front_fetch : FrontFetchNvprof = FrontFetchNvprof(FrontFetchParameters.C_FRONT_FETCH_NAME, 
+                    FrontFetchParameters.C_FRONT_FETCH_DESCRIPTION, FrontFetchParameters.C_FRONT_FETCH_NVPROF_L2_METRICS, 
+                    FrontFetchParameters.C_FRONT_FETCH_NVPROF_L2_EVENTS)
                 back_memory_bound : BackMemoryBoundNvprof = BackMemoryBoundNvprof(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_L2_METRICS, 
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_L2_EVENTS)
                 back_core_bound : BackCoreBoundNvprof = BackCoreBoundNvprof(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_METRICS, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L2_EVENTS)
-                level : LevelTwoNvprof = LevelTwoNvprof(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, show_events, front_end, back_end, 
-                    divergence, retire, extra_measure, front_dependency, front_band_width, back_core_bound, back_memory_bound) 
+                level : LevelTwoNvprof = LevelTwoNvprof(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, show_events, 
+                front_end, back_end, divergence, retire, extra_measure, front_fetch, front_decode, back_core_bound, back_memory_bound) 
             elif self.level() == 3:
                 front_end = FrontEndNvprof(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
                     FrontEndParameters.C_FRONT_END_NVPROF_L3_METRICS, FrontEndParameters.C_FRONT_END_NVPROF_L3_EVENTS)
@@ -913,20 +934,20 @@ class TopDown:
                     RetireParameters.C_RETIRE_NVPROF_L3_METRICS, RetireParameters.C_RETIRE_NVPROF_L3_EVENTS)
                 extra_measure = ExtraMeasureNvprof(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L3_METRICS, ExtraMeasureParameters.C_EXTRA_MEASURE_NVPROF_L3_EVENTS)
-                front_band_width : FrontBandWidthNvprof = FrontBandWidthNvprof(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
-                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_L3_METRICS, 
-                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NVPROF_L3_EVENTS)
-                front_dependency : FrontDependencyNvprof = FrontDependencyNvprof(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
-                    FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION, FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_L3_METRICS, 
-                    FrontDependencyParameters.C_FRONT_DEPENDENCY_NVPROF_L3_EVENTS)
+                front_decode : FrontDecodeNvprof = FrontDecodeNvprof(FrontDecodeParameters.C_FRONT_DECODE_NAME, 
+                    FrontDecodeParameters.C_FRONT_DECODE_DESCRIPTION, FrontDecodeParameters.C_FRONT_DECODE_NVPROF_L3_METRICS, 
+                    FrontDecodeParameters.C_FRONT_DECODE_NVPROF_L3_EVENTS)
+                front_fetch : FrontFetchNvprof = FrontFetchNvprof(FrontFetchParameters.C_FRONT_FETCH_NAME, 
+                    FrontFetchParameters.C_FRONT_FETCH_DESCRIPTION, FrontFetchParameters.C_FRONT_FETCH_NVPROF_L3_METRICS, 
+                    FrontFetchParameters.C_FRONT_FETCH_NVPROF_L3_EVENTS)
                 back_memory_bound : BackMemoryBoundNvprof = BackMemoryBoundNvprof(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_L3_METRICS, 
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NVPROF_L3_EVENTS)
                 back_core_bound : BackCoreBoundNvprof = BackCoreBoundNvprof(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L3_METRICS, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_NVPROF_L3_EVENTS)
-                level : LevelThreeNvprof = LevelThreeNvprof(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, show_events, front_end, back_end,
-                    divergence, retire, extra_measure, front_dependency, front_band_width, back_core_bound, back_memory_bound)        
+                level : LevelThreeNvprof = LevelThreeNvprof(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, show_events, 
+                front_end, back_end, divergence, retire, extra_measure, front_fetch, front_decode, back_core_bound, back_memory_bound)        
         else:
             front_end : FrontEndNsight
             back_end : BackEndNsight
@@ -944,8 +965,8 @@ class TopDown:
                     RetireParameters.C_RETIRE_NSIGHT_L1_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L1_METRICS)
-                level : LevelOneNsight = LevelOneNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, back_end, divergence, 
-                    retire, extra_measure)
+                level : LevelOneNsight = LevelOneNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, 
+                back_end, divergence, retire, extra_measure)
             elif self.level() == 2:
                 front_end = FrontEndNsight(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
                     FrontEndParameters.C_FRONT_END_NSIGHT_L2_METRICS)
@@ -957,16 +978,16 @@ class TopDown:
                     RetireParameters.C_RETIRE_NSIGHT_L2_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L2_METRICS)
-                front_band_width : FrontBandWidthNsight =  FrontBandWidthNsight(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
-                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L2_METRICS)
-                front_dependency : FrontDependencyNsight =  FrontDependencyNsight(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
-                    FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L2_METRICS)
+                front_decode : FrontDecodeNsight =  FrontDecodeNsight(FrontDecodeParameters.C_FRONT_DECODE_NAME, 
+                    FrontDecodeParameters.C_FRONT_DECODE_DESCRIPTION, FrontDecodeParameters.C_FRONT_DECODE_NSIGHT_L2_METRICS)
+                front_fetch : FrontFetchNsight =  FrontFetchNsight(FrontFetchParameters.C_FRONT_FETCH_NAME, 
+                    FrontFetchParameters.C_FRONT_FETCH_DESCRIPTION, FrontFetchParameters.C_FRONT_FETCH_NSIGHT_L2_METRICS)
                 back_memory_bound : BackMemoryBoundNsight =  BackMemoryBoundNsight(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L2_METRICS)
                 back_core_bound : BackCoreBoundNsight = BackCoreBoundNsight (BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L2_METRICS) 
-                level : LevelTwoNsight = LevelTwoNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, back_end, divergence, 
-                    retire, extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound) 
+                level : LevelTwoNsight = LevelTwoNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, 
+                back_end, divergence, retire, extra_measure, front_decode, front_fetch, back_core_bound, back_memory_bound) 
             elif self.level() == 3:
                 front_end = FrontEndNsight(FrontEndParameters.C_FRONT_END_NAME, FrontEndParameters.C_FRONT_END_DESCRIPTION,
                     FrontEndParameters.C_FRONT_END_NSIGHT_L3_METRICS)
@@ -978,16 +999,16 @@ class TopDown:
                     RetireParameters.C_RETIRE_NSIGHT_L3_METRICS)
                 extra_measure = ExtraMeasureNsight(ExtraMeasureParameters.C_EXTRA_MEASURE_NAME, ExtraMeasureParameters.C_EXTRA_MEASURE_DESCRIPTION,
                     ExtraMeasureParameters.C_EXTRA_MEASURE_NSIGHT_L3_METRICS)
-                front_band_width : FrontBandWidthNsight = FrontBandWidthNsight(FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NAME, 
-                    FrontBandWidthParameters.C_FRONT_BAND_WIDTH_DESCRIPTION, FrontBandWidthParameters.C_FRONT_BAND_WIDTH_NSIGHT_L3_METRICS)
-                front_dependency : FrontDependencyNsight =  FrontDependencyNsight(FrontDependencyParameters.C_FRONT_DEPENDENCY_NAME, 
-                    FrontDependencyParameters.C_FRONT_DEPENDENCY_DESCRIPTION, FrontDependencyParameters.C_FRONT_DEPENDENCY_NSIGHT_L3_METRICS)
+                front_decode : FrontDecodeNsight = FrontDecodeNsight(FrontDecodeParameters.C_FRONT_DECODE_NAME, 
+                    FrontDecodeParameters.C_FRONT_DECODE_DESCRIPTION, FrontDecodeParameters.C_FRONT_DECODE_NSIGHT_L3_METRICS)
+                front_fetch : FrontFetchNsight =  FrontFetchNsight(FrontFetchParameters.C_FRONT_FETCH_NAME, 
+                    FrontFetchParameters.C_FRONT_FETCH_DESCRIPTION, FrontFetchParameters.C_FRONT_FETCH_NSIGHT_L3_METRICS)
                 back_memory_bound : BackMemoryBoundNsight = BackMemoryBoundNsight(BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NAME, 
                     BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_DESCRIPTION, BackMemoryBoundParameters.C_BACK_MEMORY_BOUND_NSIGHT_L3_METRICS)
                 back_core_bound : BackCoreBoundNsight = BackCoreBoundNsight(BackCoreBoundParameters.C_BACK_CORE_BOUND_NAME, 
                     BackCoreBoundParameters.C_BACK_CORE_BOUND_DESCRIPTION, BackCoreBoundParameters.C_BACK_CORE_BOUND_NSIGHT_L3_METRICS) 
-                level : LevelThreeNsight = LevelThreeNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, back_end, divergence,
-                    retire, extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound) 
+                level : LevelThreeNsight = LevelThreeNsight(program, self.input_file(), self.output_file(), self.output_scan_file(), show_metrics, front_end, 
+                back_end, divergence, retire, extra_measure, front_decode, front_fetch, back_core_bound, back_memory_bound) 
         lst_output : list[str] = list() # for extra information
         level.run(lst_output)
         self.__show_results(level)
@@ -1011,5 +1032,5 @@ class TopDown:
 if __name__ == '__main__':
     td = TopDown()
     td.launch()
-    MessageFormat().print_max_line_length_message(message = "Analysis performed correctly!\n", 
+    MessageFormat().print_max_line_length_message(message = "\nAnalysis performed correctly!\n", 
     max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, output_file = td.output_file(), delete_content_file = False)

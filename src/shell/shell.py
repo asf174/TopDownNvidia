@@ -20,8 +20,10 @@ class Shell:
         
         Params:
             command     : str   ; command to launch in shell
+
             message     : str   ; information about command.
                                   'None' to show no message
+                                  
             hasToCheck  : bool  ; True to do not show the execution of command if command produces errors 
                                   or false in other case 
         Returns:
@@ -48,6 +50,7 @@ class Shell:
         
         Params:
             command     : str   ; command to launch in shell
+
             message     : str   ; information about command.
                                   'None' to show no message
         Returns:
@@ -65,9 +68,12 @@ class Shell:
 
         Params:
             command             : str   ; command to launch in shell
-            message             : str   ; information about command.
+
+            message             : str   ; information about command
                                           'None' to show no message
+
             dest                : str   ; path to dest file.
+
             add_to_end_file     : bool  ; True to add 'message' to the end of 'dest' file
                                           or False if not
         Returns:
@@ -88,7 +94,7 @@ class Shell:
                     f.write(str_output)
                 finally:
                     f.close()
-        except: #TODO quiza lanzar excepcion. Si llega aki, la app muestra que NO SE HAN GENERADO LOS RESULTADOS 
+        except:
             str_output = None
         return str_output
         pass
@@ -99,6 +105,7 @@ class Shell:
         
         Params:
             command     : str   ; command to launch in shell
+
             message     : str   ; information about command.
                                   'None' to show no message
 

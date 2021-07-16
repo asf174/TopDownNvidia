@@ -1,3 +1,11 @@
+"""
+Class that represents the execution level of nvprof.
+
+@author:    Alvaro Saiz (UC)
+@date:      Jul 2021
+@version:   1.0
+"""
+
 from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -13,12 +21,14 @@ class LevelExecutionNvprof(LevelExecution, ABC):
     Class that represents the levels of the execution with nvprof scan tool
      
     Attributes:
-         _extra_measure      : ExtraMeasureNvprof  ; support measures
-        _collect_events    : bool          ; True if the execution must recolted the events used by NVIDIA scan tool
-                                              or False in other case
+         _extra_measure      : ExtraMeasureNvprof   ; support measures
+
+        _collect_events    : bool                   ; True if the execution must recolted the events used by NVIDIA scan tool
+                                                    or False in other case
     """
 
-    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, collect_events : bool, extra_measure : ExtraMeasureNvprof):
+    def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, 
+    collect_events : bool, extra_measure : ExtraMeasureNvprof):
         self._extra_measure : ExtraMeasureNvprof = extra_measure
         self._collect_events = collect_events
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics)
@@ -87,9 +97,12 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         Params:
             dict_values     : dict      ; diccionary with name_metric/event-value elements of the part to
                                           add to 'lst_to_add'
+
             dict_desc       : dict      ; diccionary with name_metric/event-description elements of the
                                           part to add to 'lst_to_add'
+
             lst_output      : list ; list where to add all elements
+            
             isMetric        : bool      ; True if they are metrics or False if they are events
 
         Raises:
@@ -107,7 +120,7 @@ class LevelExecutionNvprof(LevelExecution, ABC):
             measure_desc_title = measure_name + " Description"
             measure_desc_title_max_length = len(measure_desc_title)
             for key_desc in dict_desc:
-                if len(dict_desc.get(key_desc)) > measure_desc_title_max_length: #TODO este dict solo tiene que tener un valor
+                if len(dict_desc.get(key_desc)) > measure_desc_title_max_length:
                     measure_desc_title_max_length = len(dict_desc.get(key_desc))
         measure_name_title : str = measure_name + " Name"
         measure_name_title_max_length : int = len(measure_name_title)
@@ -165,7 +178,7 @@ class LevelExecutionNvprof(LevelExecution, ABC):
             event_name : str
             for key_value in dict_values:
                 total_value = round(self._get_total_value_of_list(dict_values[key_value], False),
-                    LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS) # TODO eventos con decimales?
+                    LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS)
                 if total_value.is_integer():
                     total_value = int(total_value)
                 value_measure_str = str(total_value)

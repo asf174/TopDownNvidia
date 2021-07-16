@@ -1,9 +1,9 @@
 """
-Class that represents the level three of the execution based 
+Class that represents the level three of the execution based.
 on NVPROF scan tool.
 
 @author:    Alvaro Saiz (UC)
-@date:      Jan-2021
+@date:      Jul 2021
 @version:   1.0
 """
 
@@ -16,8 +16,8 @@ from measure_levels.level_two_nvprof import LevelTwoNvprof
 from measure_parts.memory_constant_memory_bound import MemoryConstantMemoryBoundNvprof
 from measure_parts.back_core_bound import BackCoreBoundNvprof
 from measure_parts.back_memory_bound import BackMemoryBoundNvprof
-from measure_parts.front_band_width import FrontBandWidthNvprof
-from measure_parts.front_dependency import FrontDependencyNvprof
+from measure_parts.front_decode import FrontDecodeNvprof
+from measure_parts.front_fetch import FrontFetchNvprof
 from measure_parts.front_end import FrontEndNvprof
 from measure_parts.back_end import BackEndNvprof
 from measure_parts.divergence import DivergenceNvprof
@@ -37,7 +37,7 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
     
     def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, collect_events : bool,
         front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
-        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+        extra_measure : ExtraMeasureNvprof, front_decode : FrontDecodeNvprof, front_fetch : FrontFetchNvprof, 
         back_core_bound : BackCoreBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):  
         
         self.__memory_constant_memory_bound = MemoryConstantMemoryBoundNvprof(
@@ -46,7 +46,7 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
             MemoryConstantMemoryBoundParameters.C_MEMORY_CONSTANT_MEMORY_BOUND_NVPROF_EVENTS)
 
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, collect_events, front_end, back_end, divergence, retire,
-            extra_measure, front_band_width, front_dependency, back_core_bound, back_memory_bound)
+            extra_measure, front_decode, front_fetch, back_core_bound, back_memory_bound)
         pass
 
     def memory_constant_memory_bound(self) -> MemoryConstantMemoryBoundNvprof:
@@ -69,12 +69,12 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         
         command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
-            + "," + self._retire.metrics_str() + "," + self._front_band_width.metrics_str() + "," + 
-            self._front_dependency.metrics_str() + "," + self._back_core_bound.metrics_str() + "," + 
+            + "," + self._retire.metrics_str() + "," + self._front_decode.metrics_str() + "," + 
+            self._front_fetch.metrics_str() + "," + self._back_core_bound.metrics_str() + "," + 
             self._back_memory_bound.metrics_str() + "," + self.__memory_constant_memory_bound.metrics_str() + "  --events " + 
             self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + 
-            self._extra_measure.events_str() + "," + self._retire.events_str() + "," +  self._front_band_width.events_str() + 
-            "," + self._front_dependency.events_str() + self._back_core_bound.events_str() + "," + 
+            self._extra_measure.events_str() + "," + self._retire.events_str() + "," +  self._front_decode.events_str() + 
+            "," + self._front_fetch.events_str() + self._back_core_bound.events_str() + "," + 
             self._back_memory_bound.events_str() +  "," + self.__memory_constant_memory_bound.events_str() + 
             " --unified-memory-profiling off " + self._program)
         return command
@@ -82,13 +82,12 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
 
     def _get_results(self, lst_output : list):
         """ 
-        Get results of the different parts. TODO
+        Get results of the different parts.
 
         Parameters:
             lst_output              : list     ; OUTPUT list with results
         """
 
-        # revisar en unos usa atributo y en otros la llamada al metodo TODO
         #  Keep Results
         converter : MessageFormat = MessageFormat()
         if not self._collect_metrics and not self._collect_events:
@@ -102,24 +101,24 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         if self._collect_events and self._front_end.events_str() != "":
                 super()._add_result_part_to_lst(self._front_end.events(), 
                 self._front_end.events_description(), "", lst_output, False)  
-        if (self._collect_metrics and self._front_band_width.metrics_str() != "" or 
-            self._collect_events and self._front_band_width.events_str() != ""):
-            lst_output.append(converter.underlined_str(self._front_band_width.name()))
-        if  self._collect_metrics and self._front_band_width.metrics_str() != "":
-            super()._add_result_part_to_lst(self._front_band_width.metrics(), 
-                self._front_band_width.metrics_description(), lst_output, True)
-        if self._collect_events and self._front_band_width.events_str() != "":
-                super()._add_result_part_to_lst(self._front_band_width.events(), 
-                self._front_band_width.events_description(), lst_output, False)
-        if (self._collect_metrics and self._front_dependency.metrics_str() != "" or 
-            self._collect_events and self._front_dependency.events_str() != ""):
-            lst_output.append(converter.underlined_str(self._front_dependency.name()))
-        if self._collect_metrics and self._front_dependency.metrics_str() != "":
-            super()._add_result_part_to_lst(self._front_dependency.metrics(), 
-                self._front_dependency.metrics_description(), lst_output, True)
-        if self._collect_events and self._front_dependency.events_str() != "":
-                super()._add_result_part_to_lst(self._front_dependency.events(), 
-                self._front_dependency.events_description(), lst_output, False)
+        if (self._collect_metrics and self._front_decode.metrics_str() != "" or 
+            self._collect_events and self._front_decode.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._front_decode.name()))
+        if  self._collect_metrics and self._front_decode.metrics_str() != "":
+            super()._add_result_part_to_lst(self._front_decode.metrics(), 
+                self._front_decode.metrics_description(), lst_output, True)
+        if self._collect_events and self._front_decode.events_str() != "":
+                super()._add_result_part_to_lst(self._front_decode.events(), 
+                self._front_decode.events_description(), lst_output, False)
+        if (self._collect_metrics and self._front_fetch.metrics_str() != "" or 
+            self._collect_events and self._front_fetch.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._front_fetch.name()))
+        if self._collect_metrics and self._front_fetch.metrics_str() != "":
+            super()._add_result_part_to_lst(self._front_fetch.metrics(), 
+                self._front_fetch.metrics_description(), lst_output, True)
+        if self._collect_events and self._front_fetch.events_str() != "":
+                super()._add_result_part_to_lst(self._front_fetch.events(), 
+                self._front_fetch.events_description(), lst_output, False)
         if (self._collect_metrics and self._back_end.metrics_str() != "" or 
             self._collect_events and self._back_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_end.name()))
@@ -198,12 +197,11 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
             or false in other case
         """
          
-        # revisar si las superiores (core bound sobre back end) tiene que estar definida
-        is_defined_front_dependency_value : str = super().front_dependency().get_event_value(event_name)
-        is_defined_front_dependency_description : str = super().front_dependency().get_event_description(event_name)
+        is_defined_front_fetch_value : str = super().front_fetch().get_event_value(event_name)
+        is_defined_front_fetch_description : str = super().front_fetch().get_event_description(event_name)
  
-        is_defined_front_band_width_value : str = super().front_band_width().get_event_value(event_name)
-        is_defined_front_band_width_description : str = super().front_band_width().get_event_description(event_name)
+        is_defined_front_decode_value : str = super().front_decode().get_event_value(event_name)
+        is_defined_front_decode_description : str = super().front_decode().get_event_description(event_name)
  
         is_defined_back_memory_bound_value : str = super().back_memory_bound().get_event_value(event_name)
         is_defined_back_memory_bound_description : str = super().back_memory_bound().get_event_description(event_name)
@@ -211,10 +209,8 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         is_defined_back_core_bound_value : str = super().back_core_bound().get_event_value(event_name)
         is_defined_back_core_bound_description : str = super().back_core_bound().get_event_description(event_name)
  
-         
-        # comprobar el "if not"
-        if not ((is_defined_front_dependency_value is None and is_defined_front_dependency_description is None)
-            or (is_defined_front_band_width_value is None and is_defined_front_band_width_description is None)
+        if not ((is_defined_front_fetch_value is None and is_defined_front_fetch_description is None)
+            or (is_defined_front_decode_value is None and is_defined_front_decode_description is None)
             or (is_defined_back_memory_bound_value is None and is_defined_back_memory_bound_description is None)
             or (is_defined_back_core_bound_value is None or is_defined_back_core_bound_description is None)):
             return False
@@ -222,7 +218,7 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         pass
     
     def _metricExists(self, metric_name : str) -> bool:
-         """
+        """
          Check if metric exists in some part of the execution (MemoryBound, CoreBound...). 
  
          Params:
@@ -231,29 +227,29 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
          Returns:
              True if metric is defined in some part of the execution (MemoryBound, CoreBound...)
              or false in other case
-         """
+        """
  
-         # revisar si las superiores (core bound sobre back end) tiene que estar definida
-         is_defined_front_dependency_value : str = super().front_dependency().get_metric_value(metric_name)
-         is_defined_front_dependency_description : str = super().front_dependency().get_metric_description(metric_name)
+        is_defined_front_fetch_value : str = super().front_fetch().get_metric_value(metric_name)
+        is_defined_front_fetch_description : str = super().front_fetch().get_metric_description(metric_name)
  
-         is_defined_front_band_width_value : str = super().front_band_width().get_metric_value(metric_name)
-         is_defined_front_band_width_description : str = super().front_band_width().get_metric_description(metric_name)
+        is_defined_front_decode_value : str = super().front_decode().get_metric_value(metric_name)
+        is_defined_front_decode_description : str = super().front_decode().get_metric_description(metric_name)
  
-         is_defined_back_memory_bound_value : str = super().back_memory_bound().get_metric_value(metric_name)
-         is_defined_back_memory_bound_description : str = super().back_memory_bound().get_metric_description(metric_name)
+        is_defined_back_memory_bound_value : str = super().back_memory_bound().get_metric_value(metric_name)
+        is_defined_back_memory_bound_description : str = super().back_memory_bound().get_metric_description(metric_name)
  
-         is_defined_back_core_bound_value : str = super().back_core_bound().get_metric_value(metric_name)
-         is_defined_back_core_bound_description : str = super().back_core_bound().get_metric_description(metric_name)
+        is_defined_back_core_bound_value : str = super().back_core_bound().get_metric_value(metric_name)
+        is_defined_back_core_bound_description : str = super().back_core_bound().get_metric_description(metric_name)
  
          
-         # comprobar el "if not"
-         if not ((is_defined_front_dependency_value is None and is_defined_front_dependency_description is None)
-             or (is_defined_front_band_width_value is None and is_defined_front_band_width_description is None)
-             or (is_defined_back_memory_bound_value is None and is_defined_back_memory_bound_description is None)
-             or (is_defined_back_core_bound_value is None or is_defined_back_core_bound_description is None)):
-             return False
-         return True
+        # comprobar el "if not"
+        if not ((is_defined_front_fetch_value is None and is_defined_front_fetch_description is None)
+            or (is_defined_front_decode_value is None and is_defined_front_decode_description is None)
+            or (is_defined_back_memory_bound_value is None and is_defined_back_memory_bound_description is None)
+            or (is_defined_back_core_bound_value is None or is_defined_back_core_bound_description is None)):
+            return False
+        return True
+        pass
  
 
 
@@ -263,6 +259,13 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
         
         Params:
             results_launch : str   ; results generated by NVIDIA scan tool.
+        
+        Raises:
+        MetricNotAsignedToPart ; raised if some metric is found don't assigned 
+                                to any measure part
+ 
+        EventNotAsignedToPart ; raised if some event is found don't assigned 
+                                to any measure part
         """
 
         has_read_all_events : bool = False

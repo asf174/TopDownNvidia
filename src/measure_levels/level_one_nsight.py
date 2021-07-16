@@ -1,3 +1,12 @@
+"""
+Class that represents the level one of the execution with nsight scan tool.
+
+@author:    Alvaro Saiz (UC)
+@date:      Jul 2021
+@version:   1.0
+"""
+
+
 import re
 from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect
@@ -16,15 +25,16 @@ from errors.level_execution_errors import *
 from parameters.level_execution_params import LevelExecutionParameters
 
 class LevelOneNsight(LevelOne, LevelExecutionNsight):
-
-
     """ 
     Class thath represents the level one of the execution with nsight scan tool.
 
     Attributes:
         _front_end      : FrontEnd      ; FrontEnd part of the execution
+
         _back_end       : BackEnd       ; BackEnd part of the execution
+
         _divergence     : Divergence    ; Divergence part of the execution
+
         _retire         : Retire        ; Retire part of the execution
     """
 
@@ -105,7 +115,8 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
             Float with theDivergence's IPC degradation
 
         """
-        return super()._diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT, LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
+        return super()._diver_ipc_degradation(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT, 
+        LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NSIGHT)
         pass
 
     def _get_results(self, lst_output : list):
@@ -228,16 +239,4 @@ class LevelOneNsight(LevelOne, LevelExecutionNsight):
         """
 
         return super()._ret_ipc(LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NSIGHT)
-        pass
-
-    def retire_ipc_per_kernel(self) -> float:
-        """
-        Get "RETIRE" IPC of execution.
-
-        Raises:
-            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not
-            computed by the NVIDIA scan tool.
-        """
-
-        return 0.0 #TODO
         pass

@@ -1,3 +1,11 @@
+"""
+Class that represents the level two of the execution with nvprof scan tool.
+
+@author:    Alvaro Saiz (UC)
+@date:      Jul 2021
+@version:   1.0
+"""
+
 import re
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -6,8 +14,8 @@ sys.path.insert(1, parentdir)
 from measure_levels.level_one_nvprof import LevelOneNvprof
 from measure_parts.back_core_bound import BackCoreBoundNvprof
 from measure_parts.back_memory_bound import BackMemoryBoundNvprof
-from measure_parts.front_band_width import FrontBandWidthNvprof
-from measure_parts.front_dependency import FrontDependencyNvprof
+from measure_parts.front_decode import FrontDecodeNvprof
+from measure_parts.front_fetch import FrontFetchNvprof
 from measure_parts.divergence_replay import DivergenceReplayNvprof
 from measure_parts.divergence_branch import DivergenceBranchNvprof
 from measure_parts.front_end import FrontEndNvprof
@@ -28,22 +36,27 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
     
     Atributes:
         _back_memory_bound      : BackMemoryBoundNvprof     ; backs' memory bound part
+
         _back_core_bound        : BackCoreBoundNvprof       ; backs' core bound part
-        _front_band_width       : FrontBandWidthNvprof      ; front's bandwith part
-        _front_dependency       : FrontDependencyNvprof     ; front's dependency part
+
+        _front_decode           : FrontDecodeNvprof         ; front's decode part
+
+        _front_fetch            : FrontFetchNvprof          ; front's fetch part
+
         _branch_divergence      : DivergenceBranchNvprof    ; divergence's branch part
+
         _replay_divergence      : DivergenceReplayNvprof    ; divergence's replay part
     """
 
     def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, collect_events : bool,
         front_end : FrontEndNvprof, back_end : BackEndNvprof, divergence : DivergenceNvprof, retire : RetireNvprof, 
-        extra_measure : ExtraMeasureNvprof, front_band_width : FrontBandWidthNvprof, front_dependency : FrontDependencyNvprof, 
+        extra_measure : ExtraMeasureNvprof, front_decode : FrontDecodeNvprof, front_fetch : FrontFetchNvprof, 
         back_core_bound : BackCoreBoundNvprof, back_memory_bound : BackMemoryBoundNvprof):
         
         self._back_core_bound : BackCoreBoundNvprof = back_core_bound
         self._back_memory_bound : BackMemoryBoundNvprof = back_memory_bound
-        self._front_band_width : FrontBandWidthNvprof = front_band_width
-        self._front_dependency : FrontDependencyNvprof = front_dependency
+        self._front_decode : FrontDecodeNvprof = front_decode
+        self._front_fetch : FrontFetchNvprof = front_fetch
         self._branch_divergence : DivergenceBranchNvprof = DivergenceBranchNvprof(DivergenceBranchParameters.C_DIVERGENCE_BRANCH_NAME, DivergenceBranchParameters.C_DIVERGENCE_BRANCH_DESCRIPTION, "", "")
         self._replay_divergence : DivergenceReplayNvprof = DivergenceReplayNvprof(DivergenceReplayParameters.C_DIVERGENCE_REPLAY_NAME, DivergenceReplayParameters.C_DIVERGENCE_REPLAY_DESCRIPTION, "", "")
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, collect_events, front_end, back_end, divergence, retire, extra_measure)
@@ -94,26 +107,26 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         return self._back_memory_bound
         pass
 
-    def front_band_width(self) -> FrontBandWidthNvprof:
+    def front_decode(self) -> FrontDecodeNvprof:
         """
-        Return FrontBandWidth part of the execution.
+        Return FrontDecode part of the execution.
 
         Returns:
-            reference to FrontBandWidthNvprof part of the execution
+            reference to FrontDecodeNvprof part of the execution
         """
         
-        return self._front_band_width
+        return self._front_decode
         pass
 
-    def front_dependency(self) -> FrontDependencyNvprof:
+    def front_fetch(self) -> FrontFetchNvprof:
         """
-        Return FrontDependency part of the execution.
+        Return FrontFetch part of the execution.
 
         Returns:
-            reference to FrontDependencyNvprof part of the execution
+            reference to FrontFetchNvprof part of the execution
         """
         
-        return self._front_dependency
+        return self._front_fetch
         pass
 
     def _generate_command(self) -> str:
@@ -123,13 +136,13 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         Returns:
             String with command to be executed
         """
-        command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + "," + self._back_end.metrics_str() + 
+        command : str = ("nvprof --metrics " + self._front_end.metrics_str() + "," + self._back_end.metrics_str() + 
             "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + 
-            "," + self._front_band_width.metrics_str() + "," + self._front_dependency.metrics_str() + "," + 
+            "," + self._front_decode.metrics_str() + "," + self._front_fetch.metrics_str() + "," + 
             self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() + "  --events " + 
             self._front_end.events_str() + "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + 
-            self._extra_measure.events_str() + "," + self._retire.events_str() + "," +  self._front_band_width.events_str() + 
-            "," + self._front_dependency.events_str() + "," + self._back_core_bound.events_str() + "," + self._back_memory_bound.events_str() + 
+            self._extra_measure.events_str() + "," + self._retire.events_str() + "," +  self._front_decode.events_str() + 
+            "," + self._front_fetch.events_str() + "," + self._back_core_bound.events_str() + "," + self._back_memory_bound.events_str() + 
             " --unified-memory-profiling off " + self._program)
         return command
         pass
@@ -142,7 +155,6 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
             lst_output              : list     ; OUTPUT list with results
         """
 
-        # revisar en unos usa atributo y en otros la llamada al metodo
         #  Keep Results
         converter : MessageFormat = MessageFormat()
 
@@ -157,24 +169,24 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         if self._collect_events and self._front_end.events_str() != "":
                 super()._add_result_part_to_lst(self._front_end.events(), 
                 self._front_end.events_description(), "", lst_output, False)
-        if (self._collect_metrics and self._front_band_width.metrics_str() != "" or 
-            self._collect_events and self._front_band_width.events_str() != ""):
-            lst_output.append(converter.underlined_str(self._front_band_width.name()))
-        if  self._collect_metrics and self._front_band_width.metrics_str() != "":
-            super()._add_result_part_to_lst(self._front_band_width.metrics(), 
-                self._front_band_width.metrics_description(), lst_output, True)
-        if self._collect_events and self._front_band_width.events_str() != "":
-                super()._add_result_part_to_lst(self._front_band_width.events(), 
-                self._front_band_width.events_description(), lst_output, False)
-        if (self._collect_metrics and self._front_dependency.metrics_str() != "" or 
-            self._collect_events and self._front_dependency.events_str() != ""):
-            lst_output.append(converter.underlined_str(self._front_dependency.name()))
-        if self._collect_metrics and self._front_dependency.metrics_str() != "":
-            super()._add_result_part_to_lst(self._front_dependency.metrics(), 
-                self._front_dependency.metrics_description(), lst_output, True)
-        if self._collect_events and self._front_dependency.events_str() != "":
-                super()._add_result_part_to_lst(self._front_dependency.events(), 
-                self._front_dependency.events_description(), lst_output, False)
+        if (self._collect_metrics and self._front_decode.metrics_str() != "" or 
+            self._collect_events and self._front_decode.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._front_decode.name()))
+        if  self._collect_metrics and self._front_decode.metrics_str() != "":
+            super()._add_result_part_to_lst(self._front_decode.metrics(), 
+                self._front_decode.metrics_description(), lst_output, True)
+        if self._collect_events and self._front_decode.events_str() != "":
+                super()._add_result_part_to_lst(self._front_decode.events(), 
+                self._front_decode.events_description(), lst_output, False)
+        if (self._collect_metrics and self._front_fetch.metrics_str() != "" or 
+            self._collect_events and self._front_fetch.events_str() != ""):
+            lst_output.append(converter.underlined_str(self._front_fetch.name()))
+        if self._collect_metrics and self._front_fetch.metrics_str() != "":
+            super()._add_result_part_to_lst(self._front_fetch.metrics(), 
+                self._front_fetch.metrics_description(), lst_output, True)
+        if self._collect_events and self._front_fetch.events_str() != "":
+                super()._add_result_part_to_lst(self._front_fetch.events(), 
+                self._front_fetch.events_description(), lst_output, False)
         if (self._collect_metrics and self._back_end.metrics_str() != "" or 
             self._collect_events and self._back_end.events_str() != ""):
             lst_output.append(converter.underlined_str(self._back_end.name()))
@@ -232,12 +244,13 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         lst_output.append("\n")
         pass
     
-    def _set_memory_core_bandwith_dependency_results(self, results_launch : str):
+    def _set_memory_core_decode_fetch_results(self, results_launch : str):
         """
         Set results of the level two part (that are not level one).
         
         Params:
             results_launch : str   ; results generated by NVIDIA scan tool.
+        
         Raises:
              MetricNotAsignedToPart ; raised if some metric is found don't assigned 
                                       to any measure part
@@ -256,10 +269,10 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         back_core_bound_description_has_found : bool
         back_memory_bound_value_has_found : bool 
         back_memory_bound_description_has_found : bool
-        front_band_width_value_has_found : bool 
-        front_band_width_description_has_found : bool
-        front_dependency_value_has_found : bool 
-        front_dependency_description_has_found : bool
+        front_decode_value_has_found : bool 
+        front_decode_description_has_found : bool
+        front_fetch_value_has_found : bool 
+        front_fetch_description_has_found : bool
         for line in results_launch.splitlines():
             line = re.sub(' +', ' ', line) # delete more than one spaces and put only one
             list_words = line.split(" ")
@@ -276,14 +289,14 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
                         #back_core_bound_description_has_found = self._back_core_bound.set_event_description(event_name, metric_description)
                         back_memory_bound_value_has_found = self._back_memory_bound.set_event_value(event_name, event_total_value)
                         #back_memory_bound_description_has_found = self._back_memory_bound.set_event_description(event_name, metric_description)
-                        front_band_width_value_has_found = self._front_band_width.set_event_value(event_name, event_total_value)
-                        #front_band_width_description_has_found = self._front_band_width.set_event_description(event_name, metric_description)
-                        front_dependency_value_has_found = self._front_dependency.set_event_value(event_name, event_total_value)
-                        #front_dependency_description_has_found = self._front_dependency.set_event_description(event_name, metric_description)
-                        if not (back_core_bound_value_has_found or back_memory_bound_value_has_found or front_band_width_value_has_found
-                            or front_dependency_value_has_found): #or 
-                            #not(back_core_bound_description_has_found or back_memory_bound_description_has_found or front_band_width_description_has_found
-                            # or front_dependency_description_has_found)): 
+                        front_decode_value_has_found = self._front_decode.set_event_value(event_name, event_total_value)
+                        #front_decode_description_has_found = self._front_decode.set_event_description(event_name, metric_description)
+                        front_fetch_value_has_found = self._front_fetch.set_event_value(event_name, event_total_value)
+                        #front_fetch_description_has_found = self._front_fetch.set_event_description(event_name, metric_description)
+                        if not (back_core_bound_value_has_found or back_memory_bound_value_has_found or front_decode_value_has_found
+                            or front_fetch_value_has_found): #or 
+                            #not(back_core_bound_description_has_found or back_memory_bound_description_has_found or front_decode_description_has_found
+                            # or front_fetch_description_has_found)): 
                             if not self.__eventExists(event_name):
                                 raise EventNotAsignedToPart(event_name)
             else: # metrics
@@ -303,13 +316,13 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
                     back_core_bound_description_has_found = self._back_core_bound.set_metric_description(metric_name, metric_description)
                     back_memory_bound_value_has_found = self._back_memory_bound.set_metric_value(metric_name, metric_avg_value)
                     back_memory_bound_description_has_found = self._back_memory_bound.set_metric_description(metric_name, metric_description)
-                    front_band_width_value_has_found = self._front_band_width.set_metric_value(metric_name, metric_avg_value)
-                    front_band_width_description_has_found = self._front_band_width.set_metric_description(metric_name, metric_description)  
-                    front_dependency_value_has_found = self._front_dependency.set_metric_value(metric_name, metric_avg_value)
-                    front_dependency_description_has_found = self._front_dependency.set_metric_description(metric_name, metric_description)         
-                    if (not (back_core_bound_value_has_found or back_memory_bound_value_has_found or front_band_width_value_has_found
-                        or front_dependency_value_has_found) or not(back_core_bound_description_has_found or back_memory_bound_description_has_found 
-                        or front_band_width_description_has_found or front_dependency_description_has_found)): 
+                    front_decode_value_has_found = self._front_decode.set_metric_value(metric_name, metric_avg_value)
+                    front_decode_description_has_found = self._front_decode.set_metric_description(metric_name, metric_description)  
+                    front_fetch_value_has_found = self._front_fetch.set_metric_value(metric_name, metric_avg_value)
+                    front_fetch_description_has_found = self._front_fetch.set_metric_description(metric_name, metric_description)         
+                    if (not (back_core_bound_value_has_found or back_memory_bound_value_has_found or front_decode_value_has_found
+                        or front_fetch_value_has_found) or not(back_core_bound_description_has_found or back_memory_bound_description_has_found 
+                        or front_decode_description_has_found or front_fetch_description_has_found)): 
                         if not self._metricExists(metric_name):
                             raise MetricNotAsignedToPart(metric_name)
         pass
@@ -351,7 +364,6 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
             or false in other case
         """
 
-        # revisar si las superiores (core bound sobre back end) tiene que estar definida
         is_defined_front_end_value : str = super().front_end().get_metric_value(metric_name)
         is_defined_front_end_description : str = super().front_end().get_metric_description(metric_name)
 
@@ -378,7 +390,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         pass
 
     def __eventExists(self, event_name : str) -> bool:
-        """ #TODO se podria poner este metodo (en version abstracta) en otra clase aparte, para que el LevelTwoNvprof compruebe si existe
+        """
         Check if event exists in some part of the execution (MemoryBound, CoreBound...). 
 
         Params:
@@ -389,7 +401,6 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
             or false in other case
         """
 
-        # revisar si las superiores (core bound sobre back end pe) tiene que estar definida
         is_defined_front_end_value : str = self.front_end().get_metric_value(event_name)
         is_defined_front_end_description : str = self.front_end().get_metric_description(event_name)
 
@@ -405,7 +416,6 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         is_defined_extra_measure_value : str = self.extra_measure().get_metric_value(event_name)
         is_defined_extra_measure_description : str = self.extra_measure().get_metric_description(event_name)
 
-        # revisar IF, puede ser (1 y 0) y (1 y 1). EL primero no puede darse pero cumpliria
         if not ((is_defined_front_end_value is None and is_defined_front_end_description is None)
             or (is_defined_back_end_value is None and is_defined_back_end_description is None)
             or (is_defined_divergence_value is None and is_defined_divergence_description is None)

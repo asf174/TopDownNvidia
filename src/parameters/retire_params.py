@@ -3,7 +3,7 @@ Class with all params of Retire class
 and their subclasses
 
 @author:    Alvaro Saiz (UC)
-@date:      Jan 2021
+@date:      Jul 2021
 @version:   1.0
 """
 
@@ -16,7 +16,7 @@ from parameters.level_execution_params import LevelExecutionParameters
 class RetireParameters:
 
     C_RETIRE_NAME                    : str       = "RETIRE"
-    C_RETIRE_DESCRIPTION             : str       = ("R Description")
+    C_RETIRE_DESCRIPTION             : str       = ("This part collects the performance of the application, considering the efficiency of the WARP.")
     
     # NVPROF metrics/arguments
     C_RETIRE_NVPROF_L1_METRICS          : str       = (LevelExecutionParameters.C_IPC_METRIC_NAME_NVPROF)

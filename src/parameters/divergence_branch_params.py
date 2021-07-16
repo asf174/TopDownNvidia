@@ -10,6 +10,4 @@ and their subclasses
 class DivergenceBranchParameters:
 
     C_DIVERGENCE_BRANCH_NAME                    : str        = "DIVERGENCE BRANCH"
-    C_DIVERGENCE_BRANCH_DESCRIPTION             : str        = ("It analyzes the parts of the GPU architecture where we have a loss of performance (IPC) due to\n"
-                                                                + "memory bounds. This part takes into account aspects such as data dependencies, failures or access\n"
-                                                                + "limits in caches")
+    C_DIVERGENCE_BRANCH_DESCRIPTION             : str        = ("Includes losses caused by not fully exploiting the warp due to a conditional branches")

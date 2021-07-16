@@ -1,9 +1,0 @@
-#!/bin/bash
-#topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./3D 512 8 100 $HOME/data/hotspot3D/power_512x8 $HOME/data/hotspot3D/temp_512x8 output.out
-
-for i in $(seq 1 1 10); do
-    (time topdown.py -l3 -nd -f ./3D 512 8 100 $HOME/data/hotspot3D/power_512x8 $HOME/data/hotspot3D/temp_512x8 output.out) >> time_topdown.txt 2>&1
-    (time ./3D 512 8 100 $HOME/data/hotspot3D/power_512x8 $HOME/data/hotspot3D/temp_512x8 output.out) >> time_native.txt 2>&1
-done
-topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./3D 512 8 100 $HOME/data/hotspot3D/power_512x8 $HOME/data/hotspot3D/temp_512x8 output.out
-

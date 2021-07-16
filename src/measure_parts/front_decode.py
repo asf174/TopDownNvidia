@@ -1,8 +1,8 @@
 """
-Measurements made by the TopDown methodology in (memory) constant memory part.
+Measurements made by the TopDown methodology in front end decode part.
 
 @author:    Alvaro Saiz (UC)
-@date:      Jul 2021
+@date:      Jan-2021
 @version:   1.0
 """
 
@@ -10,19 +10,20 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from measure_parts.back_memory_bound import BackMemoryBound
+from abc import ABC # abstract class
+from measure_parts.front_end import FrontEnd
 from measure_parts.metric_measure import MetricMeasureNsight, MetricMeasureNvprof
- 
-class MemoryConstantMemoryBound(BackMemoryBound):
-    """Class that defines the ConstantMemoryBound (sub-part of MemoryBound) part."""
 
+class FrontDecode(FrontEnd, ABC):
+    """Class that defines the Front-End.Decode part."""
+    
     pass
- 
-class MemoryConstantMemoryBoundNsight(MetricMeasureNsight, MemoryConstantMemoryBound):
-    """Class that defines the Core-Bound.ConstantMemoryBound part with nsight scan tool."""
+
+class FrontDecodeNsight(MetricMeasureNsight, FrontDecode):
+    """Class that defines the Front-End.Decode part with nsight scan tool."""
 
     def __init__(self, name : str, description : str, metrics : str):
-        """ 
+        """
         Set attributtes with argument values.
         
         Params:
@@ -38,8 +39,8 @@ class MemoryConstantMemoryBoundNsight(MetricMeasureNsight, MemoryConstantMemoryB
         super().__init__(name, description, metrics)
         pass
 
-class MemoryConstantMemoryBoundNvprof(MetricMeasureNvprof, MemoryConstantMemoryBound):
-    """Class that defines the Core-Bound.ConstantMemoryBound part with nvprof scan tool."""
+class FrontDecodeNvprof(MetricMeasureNvprof, FrontDecode):
+    """Class that defines the Front-End.Decode part with nvprof scan tool."""
 
     def __init__(self, name : str, description : str, metrics : str, events : str):
         """ 
@@ -59,4 +60,4 @@ class MemoryConstantMemoryBoundNvprof(MetricMeasureNvprof, MemoryConstantMemoryB
         super().__init__(name, description, metrics, events)
         pass
 
-  
+

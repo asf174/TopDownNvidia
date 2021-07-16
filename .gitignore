@@ -33,6 +33,10 @@ coverage.xml
 
 # Translations
 *.mo
+*.swp
+*.swpo
+*.swpy
+*.swo 
 
 # Mr Developer
 .mr.developer.cfg

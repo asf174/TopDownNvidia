@@ -1,5 +1,5 @@
 """
-Class that represents the level one of the execution
+Class that represents the level one of the execution.
 
 @author:    Alvaro Saiz (UC)
 @date:      Jan-2021
@@ -59,7 +59,11 @@ class LevelOne(LevelExecution, ABC):
     def run(self, lst_output : list):
         """Run execution."""
         
-        output_command : str = super()._launch(self._generate_command())
+        output_command : str
+        if super().input_file() is None: 
+            output_command = super()._launch(self._generate_command())
+        else:
+            output_command = Path(super().input_file()).read_text()      
         self.set_results(output_command)
         self._get_results(lst_output)
         pass
@@ -81,7 +85,7 @@ class LevelOne(LevelExecution, ABC):
 
         ipc_list : list = self._retire.get_metric_value(ipc_metric_name)
         if ipc_list is None:
-            raise IpcMetricNotDefined # revisar TODO
+            raise IpcMetricNotDefined
         total_ipc : float = self._get_total_value_of_list(ipc_list, True)
         return total_ipc
         pass
@@ -109,7 +113,7 @@ class LevelOne(LevelExecution, ABC):
             computed by the NVIDIA scan tool.
         """
 
-        warp_execution_efficiency_list : list = self._divergence.get_metric_value(warp_exec_efficiency_name) #TODO importante
+        warp_execution_efficiency_list : list = self._divergence.get_metric_value(warp_exec_efficiency_name)
         if warp_execution_efficiency_list is None:
             raise RetireIpcMetricNotDefined
         total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
@@ -127,20 +131,6 @@ class LevelOne(LevelExecution, ABC):
         """
 
         pass
-    
-    @abstractmethod
-    def retire_ipc_per_kernel(self) -> float:
-        """
-        Get "RETIRE" IPC of execution.
-
-        Raises:
-            RetireIpcMetricNotDefined ; raised if retire IPC cannot be obtanied because it was not 
-            computed by the NVIDIA scan tool.
-        """
-
-        pass
-
-
     
     @abstractmethod
     def front_end(self) -> FrontEnd:
@@ -224,28 +214,6 @@ class LevelOne(LevelExecution, ABC):
         return (back_end_stall/self.total_front_back_stall())*100
         pass
     
-    def front_end_stall_per_kernel(self) -> list:
-        """
-        Returns percent of stalls due to FrontEnd part in each kernel.
-
-        Returns:
-            Float with percent of total stalls due to FrontEnd
-        """
-
-        return super()._get_stalls_of_part_per_kernel(self._front_end.metrics()) # REVISAR CON LO NUEVO
-        pass
-    
-    def back_end_stall_per_kernel(self) -> list:
-        """
-        Returns percent of stalls due to BackEnd part in each kernel.
-
-        Returns:
-            Float with percent of total stalls due to BackEnd
-        """
-
-        return super()._get_stalls_of_part_per_kernel(self._back_end.metrics())
-        pass
-
 
     def _diver_ipc_degradation(self, warp_exec_efficiency_name  : str, issue_ipc_name : str) -> float:
         """
@@ -253,6 +221,7 @@ class LevelOne(LevelExecution, ABC):
 
         Params:
             warp_exec_efficiency_name  : str   ; name of metric to obtain warp execution efficiency
+
             issue_ipc_name             : str   ; name of metric to bain issue ipc
         Returns:
             Float with the Divergence's IPC degradation
@@ -265,7 +234,7 @@ class LevelOne(LevelExecution, ABC):
         ipc : float = self.ipc() 
         warp_execution_efficiency_list  : list = self._divergence.get_metric_value(warp_exec_efficiency_name)
         if warp_execution_efficiency_list is None:
-            raise RetireIpcMetricNotDefined # revisar si crear otra excepcion (creo que si)
+            raise RetireIpcMetricNotDefined
         total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
         issued_ipc_list : list = self._divergence.get_metric_value(issue_ipc_name)
         total_issued_ipc : float = self._get_total_value_of_list(issued_ipc_list, True)
@@ -357,22 +326,6 @@ class LevelOne(LevelExecution, ABC):
             Float with percentage of TOTAL IPC due to RETIRE
         """
         return (self.retire_ipc()/super().get_device_max_ipc())*100.0
- 
-    def divergence_percentage_ipc_degradation_per_kernel(self) -> list:
-        """
-        Find percentage of IPC degradation due to Divergence part in each kernel.
-
-        Returns:
-            Float with the percent of Divergence's IPC degradation
-        """
-        
-        max_ipc : float = supercentage().get_device_max_ipc()
-        list_divergence_ipc_degradation : list = self._divergence_ipc_degradation_percentage_kernel()
-        list_percentage_ipc_degradation_percentage_kernel : list = list()
-        for i in range(0, len(supercentage().kernels())):
-         list_percentage_ipc_degradation_percentage_kernel.append((list_divergence_ipc_degradation[i]/max_ipc)*100.0)
-        return list_percentage_ipc_degradation_percentage_kernel
-        pass
 
     def front_end_percentage_ipc_degradation_per_kernel(self) -> list:
         """
@@ -385,39 +338,6 @@ class LevelOne(LevelExecution, ABC):
         return ((self._stall_ipc()*(self.front_end_stall()/100.0))/self.get_device_max_ipc())*100.0
         pass
 
-    def back_end_percentage_ipc_degradation_per_kernel(self) -> list:
-        """
-        Find percentage of IPC degradation due to BackEnd part.
-
-        Returns:
-            Float with the percent of BackEnd's IPC degradation
-        """
-        
-        max_ipc : float = super().get_device_max_ipc()
-        list_stall_ipc_per_kernel : list = self._stall_ipc_per_kernel()
-        list_back_end_stall_per_kernel : list = self.back_end_stall_per_kernel()
-        list_back_end_percentage_ipc_degra_per_kernel : list = list()
-        for i in range(0, len(super().kernels())):
-            list_back_end_percentage_ipc_degra_per_kernel.append((list_stall_ipc_per_kernel[i]*(list_back_end_stall_per_kernel[i]/100.0))/max_ipc)*100.0
-        return list_back_end_percentage_ipc_degra_per_kernel
-        pass
-
-    def retire_ipc_percentage_per_kernel(self) -> list:
-        """
-        Get percentage of TOTAL IPC due to RETIRE.
-
-        Returns:
-            Float with percentage of TOTAL IPC due to RETIRE
-        """
-
-        list_ipc_per_kernel : list = self.ipc_per_kernel()
-        max_ipc : float = super().get_device_max_ipc()
-        retire_ipc_percentage_per_kernel : list = list()
-        for i in range(0, len(super().kernels())):
-            retire_ipc_percentage_per_kernel.append((list_ipc_per_kernel[i] / max_ipc)*100.0)
-        return retire_ipc_percentage_per_kernel 
-
-
     @abstractmethod
     def _set_front_back_divergence_retire_results(self, results_launch : str):
         """ Get Results from FrontEnd, BanckEnd, Divergence and Retire parts.
@@ -427,6 +347,7 @@ class LevelOne(LevelExecution, ABC):
             
         Raises:
             EventNotAsignedToPart       ; raised when an event has not been assigned to any analysis part * (NVPROF mode only)
+
             MetricNotAsignedToPart      ; raised when a metric has not been assigned to any analysis part 
         """
         
@@ -452,6 +373,7 @@ class LevelOne(LevelExecution, ABC):
 
         Params:
             graph   : PieChart  ; reference to PieChart where save figures
+            
             title   : str       ; title of graph to be added        
         """
 

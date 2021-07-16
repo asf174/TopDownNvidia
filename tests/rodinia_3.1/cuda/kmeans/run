@@ -1,8 +1,0 @@
-#!/bin/bash
-
-
-for i in $(seq 1 1 10); do
-    (time topdown.py -l3 -nd -f ./kmeans " -o -i ../../../../../data/kmeans/kdd_cup") >> time_topdown.txt 2>&1
-    (time ./kmeans -o -i ../../../../../data/kmeans/kdd_cup) >> time_native.txt 2>&1
-done
-topdown.py -l3 -nd -os scan_file.txt -o results_topdown.txt -f ./kmeans " -o -i ../../../../../data/kmeans/kdd_cup"

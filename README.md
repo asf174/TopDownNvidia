@@ -116,8 +116,8 @@ The following summarizes the commands necessary to install a stable version of p
 ```
 In the same way, remember that it is also necessary that you have the necessary CUDA toolkit to be able to do the analysis. The program automatically detects your GPU (Compute Capbility or CC) version and performs the analysis with the appropriate tool. You should only have the appropriate one installed for your GPU. The two analysis tools are as follows:
 <ul>
-<li>Nvprof (CC <= 7.2)</li>
-<li>Nsight Compute (CC > 7.2)</li>
+<li>Nvprof (CC < 7.2)</li>
+<li>Nsight Compute (CC >= 7.2)</li>
 </ul> 
 
 The tool provided has the ability to determine the CC of your GPU. To do this, you must have a version of CUDA installed. If you do not have it installed, in section 3 of the following link, NVIDIA provides the necessary steps to perform this task:
@@ -132,6 +132,12 @@ It is very important that you follow the steps in detail, without skipping any. 
 * post-installation CUDA (NVDIA reference)
 ```
 https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions
+```
+Finalmente, la última tarea que debe realizar es la de otorgar permisos a la herramienta para medir los resultados. Para ello, siga los pasos mencionados en el enlace siguiente
+
+* grant permission to measure results (NVDIA reference)
+```
+https://developer.nvidia.com/nvidia-development-tools-solutions-err_nvgpuctrperm-permission-issue-performance-counters
 ```
 
 Once you have completed the CUDA installation, you are ready to use the tool to check your CC. To do this, **it is recommended that you go to the next section and install the tool**.

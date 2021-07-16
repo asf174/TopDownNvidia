@@ -1,6 +1,0 @@
-#!/bin/bash
-for i in $(seq 1 1 5); do
-    (time topdown.py -f ./backprop 65536 -l3 -nd) > time_topdown.txt 2>&1
-    (time ./backprop 65536) >> time_native.txt 2>&1
-done
-topdown.py -f ./backprop 65536 -l3 -nd -os scan_file.txt -o results_topdown.txt

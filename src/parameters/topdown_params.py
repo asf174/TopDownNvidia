@@ -97,6 +97,5 @@ class TopDownParameters:
     C_MAX_NUM_RESULTS_DECIMALS                          : int       = 3
 
 
-    C_COMPUTE_CAPABILITY_MAX_VALUE                      : float     = 8.0
-    C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE               : float     = 7.2
+    C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE               : float     = 7.0
 

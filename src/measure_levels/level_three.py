@@ -1,5 +1,5 @@
 """
-Class that represents the level three of the execution
+Class that represents the level three of the execution.
 
 @author:    Alvaro Saiz (UC)
 @date:      Jan-2021
@@ -15,6 +15,7 @@ from measure_levels.level_two import LevelTwo
 from measure_parts.memory_constant_memory_bound import MemoryConstantMemoryBound
 from errors.level_execution_errors import *
 from abc import abstractmethod # abstract class
+from pathlib import Path
 
 class LevelThree(LevelTwo):
     """
@@ -41,7 +42,7 @@ class LevelThree(LevelTwo):
             String with command to be executed
         """
         
-        command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
+        command : str = ("nvprof --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," +
             self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," +
             self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
@@ -49,7 +50,7 @@ class LevelThree(LevelTwo):
             "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + self._extra_measure.events_str() +
             "," + self._retire.events_str() + "," + self._back_core_bound.events_str() + "," + 
             self._back_memory_bound.events_str() +  "," + self.__memory_constant_memory_bound.events_str() + 
-            " --unified-memory-profiling off --profile-from-start off " + self._program)
+            " --unified-memory-profiling off " + self._program)
         return command
         pass
 
@@ -67,19 +68,6 @@ class LevelThree(LevelTwo):
         self._set_memory_constant_memory_bound_results(output_command) # level three
         pass
 
-    def run(self, lst_output : list):
-        """ 
-        Makes execution.
-        
-        Parameters:
-            lst_output  : list ; list with results
-        """
-
-        # compute results
-        output_command : str = super()._launch(self._generate_command())
-        self.set_results(output_command)
-        self._get_results(lst_output)
-        pass
 
     @abstractmethod
     def _metricExists(self, metric_name : str) -> bool:
@@ -96,9 +84,6 @@ class LevelThree(LevelTwo):
 
         pass
 
-
-
-    #@abstractmethod
     def _set_memory_constant_memory_bound_results(self, results_launch : str):
         """
         Set results of the level thre part (that are not level one or two).
@@ -122,8 +107,8 @@ class LevelThree(LevelTwo):
     
     def memory_constant_memory_bound_stall_on_back(self) -> float:
         """ 
-        Obtain the percentage of stalls due to BackEnd.MemoryBound.MemoryConstantMemoryBound # repasar estos nombres en todo
-        on the total BackEnd
+        Obtain the percentage of stalls due to BackEnd.MemoryBound.MemoryConstantMemoryBound.
+        on the total BackEnd.
 
         Returns:
             Float the percentage of stalls due to BackEnd.Memory_Bound
@@ -135,7 +120,7 @@ class LevelThree(LevelTwo):
     def memory_constant_memory_bound_stall_on_memory_bound(self) -> float:
         """ 
         Obtain the percentage of stalls due to BackEnd.MemoryBound.MemoryConstantMemoryBound
-        on the total BackEnd.MemoryBound
+        on the total BackEnd.MemoryBound.
 
         Returns:
             Float the percentage of stalls due to BackEnd.MemoryBound.MemoryConstantMemoryBound
@@ -145,7 +130,7 @@ class LevelThree(LevelTwo):
         return (self.memory_constant_memory_bound_stall()/super().back_memory_bound_stall())*100.0
         pass
 
-    def memory_constant_memory_bound_percentage_ipc_degradation(self) -> float: # repasar nombres... Incluyen superior TODO
+    def memory_constant_memory_bound_percentage_ipc_degradation(self) -> float:
         """
         Find percentage of IPC degradation due to BackEnd.MemoryBound.MemoryConstantMemoryBound part.
 

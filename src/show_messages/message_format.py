@@ -260,6 +260,7 @@ class MessageFormat:
 
         Params:
             file    : str           ; path to file to write.
+            
             message : list     ; list of string with the information to be written (in order) to file.
                                       Each element of the list corresponds to a line.
 
@@ -307,6 +308,6 @@ class MessageFormat:
         """ Returns a string underlined. """
         #return '{:s}'.format('\u0332'.join(" " + message))
         leng : int = len(message)
-        message  += "\n" + f'{"-" * (leng)}\n' # REVISAR TIPO DE DATO 'F'. POR AHI HAY BYTE
+        message  += "\n" + f'{"-" * (leng)}\n'
         return message 
         pass

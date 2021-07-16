@@ -24,14 +24,20 @@ class LevelExecution(ABC):
      
     Attributes:
         _input_file             : str           ; path to input file with results. 'None' if we must do the analysis
+
         _output_file            : str           ; path to output file with results. 'None' to don't use
                                                   output file
+
         _output_scan_file       : str           ; path to output scan file with results computed by Nvidia Scan tool. 
-                                                 'None' to don't use output scan file       
+                                                 'None' to don't use output scan file   
+
         _program                : str           ; program of the execution
+
         _collect_metrics        : bool          ; True if the execution must recolted the metrics used by NVIDIA scan tool
                                                   or False in other case
+
         _compute_capability     : float         ; Compute Capbility of the execution
+
         __kernels               : list[str]     ; list of kernels of execution
     """
     
@@ -72,7 +78,7 @@ class LevelExecution(ABC):
         pass
 
     @abstractmethod
-    def run(self, lst_output): #: list):
+    def run(self, lst_output):
         """
         Makes execution.
         
@@ -97,53 +103,45 @@ class LevelExecution(ABC):
         """
 
         shell : Shell = Shell()
-        output_command : str = shell.launch_command_redirect(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION_NVPROF, self.output_scan_file(), True)
+        output_command : str = shell.launch_command_redirect(command, LevelExecutionParameters.C_INFO_MESSAGE_EXECUTION, self.output_scan_file(), True)
         if output_command is None:
             raise ProfilingError
         return output_command  
         pass
     
     @abstractmethod
-    def _get_results(self, lst_output): #: list):
+    def _get_results(self, lst_output):
         """ 
         Get results of the different parts.
 
         Parameters:
             lst_output              : list     ; OUTPUT list with results
         """
+
         pass
 
     def get_device_max_ipc(self) -> float:
         """
-        Get Max IPC of device
+        Get Max IPC of device.
 
         Returns:
             Float with the max IPC supported by GPU
         """
 
-        dict_cores_per_sm_per_cc : dict = dict({3.0: 192, 3.2: 192, 3.5: 192, 3.7: 192, 5.0: 128, 5.2: 128, 5.3: 128, 
-            6.0: 64, 6.1: 128, 6.2: 128, 7.0: 64, 7.2: 64, 7.5: 64, 8.0: 64, 8.6: 128})
-        warp_size : int = int()
         dict_warps_schedulers_per_cc : dict = dict({3.0: 4, 3.2: 4, 3.5: 4, 3.7: 4, 5.0: 4, 5.2: 4, 5.3: 4, 
-            6.0: 2, 6.1: 4, 6.2: 4, 7.0: 4, 7.5: 4, 8.0: 1}) 
+            6.0: 2, 6.1: 4, 6.2: 4, 7.0: 4, 7.2:4, 7.5: 4, 8.0: 1}) 
         dict_ins_per_cycle : dict = dict({3.0: 1.5, 3.2: 1.5, 3.5: 1.5, 3.7: 1.5, 5.0: 1.5, 5.2: 1.5, 5.3: 1.5, 
             6.0: 1.5, 6.1: 1.5, 6.2: 1.5, 7.0: 1, 7.5: 1, 8.0: 1})
         return dict_warps_schedulers_per_cc.get(self._compute_capability)*dict_ins_per_cycle.get(self._compute_capability)
-        #shell : Shell = Shell()
-        #cores_per_sm_str : str = shell.launch_command_show_all("nvcc $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/cores_per_sm.cu --run", None)
-        #shell.launch_command("rm -f $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/a.out", None) # delete 'a.out' generated
-        #if not cores_per_sm_str:
-        #    raise MaximumIPCError"""
-        ##pass
-        #return dict_cores_per_sm_per_cc.get(self._compute_capability)/int(cores_per_sm_str)
         pass
     
     def _get_total_value_of_list(self, list_values, computed_as_average : bool) -> float:
         """
-        Get total value of list of metric/event
+        Get total value of list of metric/event.
     
         Params:
             list_values         : list ; list to be computed
+
             computed_as_average : bool      ; True if you want to obtain total value as average
                                               as the average of the elements as a function of the 
                                               time executed or False if it is the total value per 
@@ -152,7 +150,6 @@ class LevelExecution(ABC):
             Float with total value of the list
         """
         
-        # TODO mirar este metodo, repetir for para no hacer if en cada iteraccion o que
         i : int = 0
         total_value : float = 0.0
         value_str : str = ""
@@ -260,6 +257,7 @@ class LevelExecution(ABC):
 
         Params:
                 kernel_number                   : int   ; number of kernel
+                
                 cycles_elapsed_counter_name     : str   ; name of event/metric to obatin cycles elapsed in kernel
         Raises:
                 ElapsedCyclesError      ; cycles elapsed in 'kernel_number' cannot be obtained

@@ -1,3 +1,11 @@
+"""
+Class that represents the execution level of nsight
+
+@author:    Alvaro Saiz (UC)
+@date:      Jul 2021
+@version:   1.0
+"""
+
 import locale
 from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect
@@ -13,17 +21,18 @@ from measure_parts.extra_measure import ExtraMeasureNsight
 
 class LevelExecutionNsight(LevelExecution, ABC):
     """ 
-    Class that represents the levels of the execution with nsight scan tool
+    Class that represents the levels of the execution with nsight scan tool.
      
     Attributes:
         _extra_measure      : ExtraMeasureNsight  ; support measures
+
         _collect_events    : bool          ; True if the execution must recolted the events used by NVIDIA scan tool
                                               or False in other case
     """
 
     def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool, 
         extra_measure : ExtraMeasureNsight):
-        locale.setlocale(locale.LC_ALL, 'es_ES.utf8') # locale -a to check
+        locale.setlocale(locale.LC_ALL, 'es_ES.utf8')
         self._extra_measure : ExtraMeasureNsight = extra_measure
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics)
         pass
@@ -90,8 +99,10 @@ class LevelExecutionNsight(LevelExecution, ABC):
         Params:
             dict_values     : dict      ; diccionary with name_metric/event-value elements of the part to
                                           add to 'lst_to_add'
+
             dict_desc       : dict      ; diccionary with name_metric/event-description elements of the
                                           part to add to 'lst_to_add'
+                                          
             lst_output      : list ; list where to add all elements
 
         Raises:
@@ -107,7 +118,7 @@ class LevelExecutionNsight(LevelExecution, ABC):
         for key_value,key_unit in zip(dict_values, dict_desc):
             if len(key_value) > name_max_length:
                 name_max_length = len(key_value)
-            if len(key_value[0]) > unit_max_length: #TODO este dict solo tiene que tener un valor
+            if len(key_value[0]) > unit_max_length:
                 unit_max_length = key_value[0]
         metric_name_length : int = name_max_length + 10
         metric_unit_length : int = unit_max_length + 10
@@ -126,7 +137,7 @@ class LevelExecutionNsight(LevelExecution, ABC):
         i : int = 0 
         for key_value, key_unit in zip(dict_values, dict_desc):
             total_value = round(self._get_total_value_of_list(dict_values[key_value], False),
-             LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS) # TODO eventos con decimales? 
+             LevelExecutionParameters.C_MAX_NUM_RESULTS_DECIMALS)
             if total_value.is_integer():
                 total_value = int(total_value)
             value_metric_str = str(total_value)
