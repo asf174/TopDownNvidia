@@ -1,0 +1,80 @@
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,004s
+user	0m0,000s
+sys	0m0,004s
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,004s
+user	0m0,000s
+sys	0m0,004s
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,003s
+user	0m0,002s
+sys	0m0,000s
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,004s
+user	0m0,000s
+sys	0m0,004s
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,004s
+user	0m0,000s
+sys	0m0,004s
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,004s
+user	0m0,004s
+sys	0m0,000s
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,004s
+user	0m0,004s
+sys	0m0,000s
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,004s
+user	0m0,004s
+sys	0m0,000s
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,004s
+user	0m0,000s
+sys	0m0,004s
+Usage: ./needle <max_rows/max_cols> <penalty> 
+	<dimension>  - x and y dimensions
+	<penalty> - penalty(positive integer)
+WG size of kernel = 16 
+
+real	0m0,004s
+user	0m0,000s
+sys	0m0,004s

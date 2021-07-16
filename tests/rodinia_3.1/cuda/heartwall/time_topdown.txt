@@ -1,0 +1,900 @@
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.643% ║  ║ STALLS, on the total (%):  37.386% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.36%  ║  ║ IPC DEGRADATION      (%):  12.151% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,635s
+user	0m12,596s
+sys	0m15,835s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.637% ║  ║ STALLS, on the total (%):  37.376% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.358% ║  ║ IPC DEGRADATION      (%):  12.148% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,352s
+user	0m12,726s
+sys	0m16,511s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.641% ║  ║ STALLS, on the total (%):  37.351% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.36%  ║  ║ IPC DEGRADATION      (%):  12.14%  ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,233s
+user	0m12,598s
+sys	0m16,149s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.615% ║  ║ STALLS, on the total (%):  37.38%  ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.351% ║  ║ IPC DEGRADATION      (%):  12.149% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,772s
+user	0m12,725s
+sys	0m15,770s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.635% ║  ║ STALLS, on the total (%):  37.382% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.358% ║  ║ IPC DEGRADATION      (%):  12.15%  ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,428s
+user	0m12,363s
+sys	0m15,936s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.661% ║  ║ STALLS, on the total (%):  37.326% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.366% ║  ║ IPC DEGRADATION      (%):  12.132% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,137s
+user	0m12,542s
+sys	0m16,103s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.637% ║  ║ STALLS, on the total (%):  37.378% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.358% ║  ║ IPC DEGRADATION      (%):  12.149% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,912s
+user	0m12,829s
+sys	0m16,034s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.652% ║  ║ STALLS, on the total (%):  37.364% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.363% ║  ║ IPC DEGRADATION      (%):  12.144% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m29,154s
+user	0m13,213s
+sys	0m16,810s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.645% ║  ║ STALLS, on the total (%):  37.364% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.361% ║  ║ IPC DEGRADATION      (%):  12.144% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,527s
+user	0m12,721s
+sys	0m16,826s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.63%  ║  ║ STALLS, on the total (%):  37.364% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.356% ║  ║ IPC DEGRADATION      (%):  12.144% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,320s
+user	0m12,711s
+sys	0m16,520s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.629% ║  ║ STALLS, on the total (%):  37.365% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.356% ║  ║ IPC DEGRADATION      (%):  12.144% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,868s
+user	0m12,833s
+sys	0m16,795s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.662% ║  ║ STALLS, on the total (%):  37.377% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.366% ║  ║ IPC DEGRADATION      (%):  12.148% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,901s
+user	0m12,698s
+sys	0m16,460s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.631% ║  ║ STALLS, on the total (%):  37.34%  ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.356% ║  ║ IPC DEGRADATION      (%):  12.136% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,647s
+user	0m12,817s
+sys	0m17,352s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.635% ║  ║ STALLS, on the total (%):  37.38%  ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.358% ║  ║ IPC DEGRADATION      (%):  12.149% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,312s
+user	0m13,043s
+sys	0m17,161s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.642% ║  ║ STALLS, on the total (%):  37.358% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.36%  ║  ║ IPC DEGRADATION      (%):  12.142% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,782s
+user	0m12,798s
+sys	0m16,118s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.625% ║  ║ STALLS, on the total (%):  37.355% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.355% ║  ║ IPC DEGRADATION      (%):  12.141% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,437s
+user	0m12,836s
+sys	0m16,398s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.642% ║  ║ STALLS, on the total (%):  37.337% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.36%  ║  ║ IPC DEGRADATION      (%):  12.135% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,942s
+user	0m12,849s
+sys	0m17,385s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.647% ║  ║ STALLS, on the total (%):  37.325% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.362% ║  ║ IPC DEGRADATION      (%):  12.131% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,059s
+user	0m12,519s
+sys	0m16,163s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.655% ║  ║ STALLS, on the total (%):  37.351% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.364% ║  ║ IPC DEGRADATION      (%):  12.14%  ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,118s
+user	0m12,509s
+sys	0m16,691s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.346 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                      ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                      ║
+║                                    ║  ║                                    ║  ║                               ║  ║                             ║  
+║ STALLS, on the total (%):  62.631% ║  ║ STALLS, on the total (%):  37.354% ║  ║ IPC DEGRADATION (%):  50.198% ║  ║ PERFORMANCE IPC (%):  17.3% ║  
+║ IPC DEGRADATION      (%):  20.356% ║  ║ IPC DEGRADATION      (%):  12.141% ║  ║                               ║  ║                             ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,599s
+user	0m12,530s
+sys	0m16,187s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                               ║  ║                               ║  
+║ STALLS, on the total (%):  13.094% ║  ║ STALLS, on the total (%):  86.906% ║  ║ IPC DEGRADATION (%):  13.431% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.256%  ║  ║ IPC DEGRADATION      (%):  28.246% ║  ║                               ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m28,555s
+user	0m12,671s
+sys	0m16,640s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                               ║  ║                               ║  
+║ STALLS, on the total (%):  13.096% ║  ║ STALLS, on the total (%):  86.904% ║  ║ IPC DEGRADATION (%):  13.431% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.256%  ║  ║ IPC DEGRADATION      (%):  28.246% ║  ║                               ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,929s
+user	0m12,365s
+sys	0m15,849s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                               ║  ║                               ║  
+║ STALLS, on the total (%):  13.088% ║  ║ STALLS, on the total (%):  86.912% ║  ║ IPC DEGRADATION (%):  13.431% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.254%  ║  ║ IPC DEGRADATION      (%):  28.248% ║  ║                               ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,984s
+user	0m12,692s
+sys	0m16,648s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                              ║  ║                               ║  
+║ STALLS, on the total (%):  13.089% ║  ║ STALLS, on the total (%):  86.911% ║  ║ IPC DEGRADATION (%):  13.43% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.254%  ║  ║ IPC DEGRADATION      (%):  28.248% ║  ║                              ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,188s
+user	0m12,949s
+sys	0m17,029s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                        ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                        ║
+║                                   ║  ║                                    ║  ║                               ║  ║                               ║  
+║ STALLS, on the total (%):  13.1%  ║  ║ STALLS, on the total (%):  86.9%   ║  ║ IPC DEGRADATION (%):  13.431% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.258% ║  ║ IPC DEGRADATION      (%):  28.244% ║  ║                               ║  ║                               ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,631s
+user	0m12,420s
+sys	0m16,514s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                               ║  ║                               ║  
+║ STALLS, on the total (%):  13.104% ║  ║ STALLS, on the total (%):  86.896% ║  ║ IPC DEGRADATION (%):  13.431% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.259%  ║  ║ IPC DEGRADATION      (%):  28.243% ║  ║                               ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,553s
+user	0m12,594s
+sys	0m16,651s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                              ║  ║                               ║  
+║ STALLS, on the total (%):  13.092% ║  ║ STALLS, on the total (%):  86.908% ║  ║ IPC DEGRADATION (%):  13.43% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.255%  ║  ║ IPC DEGRADATION      (%):  28.247% ║  ║                              ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,634s
+user	0m12,502s
+sys	0m16,440s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                              ║  ║                               ║  
+║ STALLS, on the total (%):  13.099% ║  ║ STALLS, on the total (%):  86.901% ║  ║ IPC DEGRADATION (%):  13.43% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.257%  ║  ║ IPC DEGRADATION      (%):  28.245% ║  ║                              ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,541s
+user	0m12,633s
+sys	0m16,166s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                               ║  ║                               ║  
+║ STALLS, on the total (%):  13.097% ║  ║ STALLS, on the total (%):  86.903% ║  ║ IPC DEGRADATION (%):  13.431% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.257%  ║  ║ IPC DEGRADATION      (%):  28.245% ║  ║                               ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,160s
+user	0m12,665s
+sys	0m16,304s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./heartwall /afs/atc.unican.es/u/a/alvaro/data/heartwall/test.avi 20
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.081 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                    ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                    ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                               ║  ║                               ║  
+║ STALLS, on the total (%):  13.093% ║  ║ STALLS, on the total (%):  86.907% ║  ║ IPC DEGRADATION (%):  13.431% ║  ║ PERFORMANCE IPC (%):  54.067% ║  
+║ IPC DEGRADATION      (%):  4.256%  ║  ║ IPC DEGRADATION      (%):  28.246% ║  ║                               ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,704s
+user	0m12,804s
+sys	0m16,915s

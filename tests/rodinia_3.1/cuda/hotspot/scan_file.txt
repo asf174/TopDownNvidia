@@ -1,0 +1,42 @@
+==PROF== Connected to process 47501 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/tests/rodinia_3.1/cuda/hotspot/hotspot)
+==PROF== Profiling "calculate_temp" - 1: 0%....50%....100% - 8 passes
+WG size of kernel = 16 X 16
+pyramidHeight: 2
+gridSize: [512, 512]
+border:[2, 2]
+blockGrid:[43, 43]
+targetBlock:[12, 12]
+Start computing the transient temperature
+TOTAL KERNEL time: -1.62568e+09 seconds
+Ending simulation
+TOTAL time: 2.64309 seconds
+==PROF== Disconnected from process 47501
+[47501] hotspot@127.0.0.1
+  calculate_temp(int, float*, float*, float*, int, int, int, int, float, float, float, float, float, float), 2021-Jul-07 21:07:56, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.avg                                                            cycle                     192.841,31
+    sm__cycles_elapsed.sum                                                           cycle                      7.080.260
+    sm__inst_executed.avg                                                             inst                      89.067,33
+    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           0,46
+    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           0,46
+    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          85,56
+    smsp__thread_inst_executed_per_inst_executed.pct                                     %                          93,82
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                          29,10
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,86
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,08
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,22
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,28
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,00
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          29,17
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,25
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,83
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,35
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           1,28
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          31,62
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           3,41
+    ---------------------------------------------------------------------- --------------- ------------------------------
+

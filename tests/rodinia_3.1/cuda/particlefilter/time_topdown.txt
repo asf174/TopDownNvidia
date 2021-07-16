@@ -1,0 +1,600 @@
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.036 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  7.941% ║  ║ STALLS, on the total (%):  92.164% ║  ║ IPC DEGRADATION (%):  4.321% ║  ║ PERFORMANCE IPC (%):  1.775% ║  
+║ IPC DEGRADATION      (%):  7.456% ║  ║ IPC DEGRADATION      (%):  86.546% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m29,531s
+user	0m13,444s
+sys	0m16,823s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.036 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  7.871% ║  ║ STALLS, on the total (%):  92.071% ║  ║ IPC DEGRADATION (%):  4.341% ║  ║ PERFORMANCE IPC (%):  1.787% ║  
+║ IPC DEGRADATION      (%):  7.389% ║  ║ IPC DEGRADATION      (%):  86.429% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,464s
+user	0m13,240s
+sys	0m15,881s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.035 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  7.715% ║  ║ STALLS, on the total (%):  92.225% ║  ║ IPC DEGRADATION (%):  4.248% ║  ║ PERFORMANCE IPC (%):  1.744% ║  
+║ IPC DEGRADATION      (%):  7.253% ║  ║ IPC DEGRADATION      (%):  86.699% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,728s
+user	0m13,336s
+sys	0m16,726s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.035 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  7.712% ║  ║ STALLS, on the total (%):  92.299% ║  ║ IPC DEGRADATION (%):  4.271% ║  ║ PERFORMANCE IPC (%):  1.757% ║  
+║ IPC DEGRADATION      (%):  7.247% ║  ║ IPC DEGRADATION      (%):  86.736% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,021s
+user	0m13,945s
+sys	0m17,208s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.035 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  7.85%  ║  ║ STALLS, on the total (%):  92.174% ║  ║ IPC DEGRADATION (%):  4.266% ║  ║ PERFORMANCE IPC (%):  1.753% ║  
+║ IPC DEGRADATION      (%):  7.378% ║  ║ IPC DEGRADATION      (%):  86.626% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,306s
+user	0m13,436s
+sys	0m16,044s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.036 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  8.376% ║  ║ STALLS, on the total (%):  91.557% ║  ║ IPC DEGRADATION (%):  4.365% ║  ║ PERFORMANCE IPC (%):  1.793% ║  
+║ IPC DEGRADATION      (%):  7.86%  ║  ║ IPC DEGRADATION      (%):  85.92%  ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,472s
+user	0m13,373s
+sys	0m16,259s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.035 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  7.804% ║  ║ STALLS, on the total (%):  92.139% ║  ║ IPC DEGRADATION (%):  4.272% ║  ║ PERFORMANCE IPC (%):  1.755% ║  
+║ IPC DEGRADATION      (%):  7.333% ║  ║ IPC DEGRADATION      (%):  86.586% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,509s
+user	0m13,363s
+sys	0m15,632s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.035 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  7.815% ║  ║ STALLS, on the total (%):  92.142% ║  ║ IPC DEGRADATION (%):  4.252% ║  ║ PERFORMANCE IPC (%):  1.748% ║  
+║ IPC DEGRADATION      (%):  7.346% ║  ║ IPC DEGRADATION      (%):  86.613% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,243s
+user	0m13,301s
+sys	0m15,486s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.035 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  7.581% ║  ║ STALLS, on the total (%):  92.414% ║  ║ IPC DEGRADATION (%):  4.295% ║  ║ PERFORMANCE IPC (%):  1.768% ║  
+║ IPC DEGRADATION      (%):  7.122% ║  ║ IPC DEGRADATION      (%):  86.811% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,965s
+user	0m13,451s
+sys	0m16,600s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_not_selected_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_selected_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.ratio,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.036 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  7.677% ║  ║ STALLS, on the total (%):  92.316% ║  ║ IPC DEGRADATION (%):  4.382% ║  ║ PERFORMANCE IPC (%):  1.804% ║  
+║ IPC DEGRADATION      (%):  7.202% ║  ║ IPC DEGRADATION      (%):  86.605% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,544s
+user	0m13,493s
+sys	0m16,633s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.111 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                      ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                      ║
+║                                   ║  ║                                    ║  ║                              ║  ║                             ║  
+║ STALLS, on the total (%):  4.394% ║  ║ STALLS, on the total (%):  95.606% ║  ║ IPC DEGRADATION (%):  0.545% ║  ║ PERFORMANCE IPC (%):  5.56% ║  
+║ IPC DEGRADATION      (%):  4.126% ║  ║ IPC DEGRADATION      (%):  89.77%  ║  ║                              ║  ║                             ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m30,674s
+user	0m13,786s
+sys	0m16,213s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.111 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  4.067% ║  ║ STALLS, on the total (%):  95.933% ║  ║ IPC DEGRADATION (%):  0.548% ║  ║ PERFORMANCE IPC (%):  5.537% ║  
+║ IPC DEGRADATION      (%):  3.819% ║  ║ IPC DEGRADATION      (%):  90.095% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,555s
+user	0m13,438s
+sys	0m16,518s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.109 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  4.118% ║  ║ STALLS, on the total (%):  95.882% ║  ║ IPC DEGRADATION (%):  0.541% ║  ║ PERFORMANCE IPC (%):  5.474% ║  
+║ IPC DEGRADATION      (%):  3.87%  ║  ║ IPC DEGRADATION      (%):  90.115% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,357s
+user	0m13,471s
+sys	0m17,022s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.11 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  4.065% ║  ║ STALLS, on the total (%):  95.935% ║  ║ IPC DEGRADATION (%):  0.54%  ║  ║ PERFORMANCE IPC (%):  5.488% ║  
+║ IPC DEGRADATION      (%):  3.82%  ║  ║ IPC DEGRADATION      (%):  90.152% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,648s
+user	0m13,435s
+sys	0m15,997s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.11 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  4.274% ║  ║ STALLS, on the total (%):  95.726% ║  ║ IPC DEGRADATION (%):  0.539% ║  ║ PERFORMANCE IPC (%):  5.478% ║  
+║ IPC DEGRADATION      (%):  4.017% ║  ║ IPC DEGRADATION      (%):  89.966% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,167s
+user	0m13,466s
+sys	0m16,506s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.111 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  4.395% ║  ║ STALLS, on the total (%):  95.605% ║  ║ IPC DEGRADATION (%):  0.545% ║  ║ PERFORMANCE IPC (%):  5.527% ║  
+║ IPC DEGRADATION      (%):  4.128% ║  ║ IPC DEGRADATION      (%):  89.8%   ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m27,113s
+user	0m13,617s
+sys	0m16,651s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.11 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  4.02%  ║  ║ STALLS, on the total (%):  95.98%  ║  ║ IPC DEGRADATION (%):  0.547% ║  ║ PERFORMANCE IPC (%):  5.498% ║  
+║ IPC DEGRADATION      (%):  3.777% ║  ║ IPC DEGRADATION      (%):  90.178% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m25,564s
+user	0m13,178s
+sys	0m15,849s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.112 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  4.207% ║  ║ STALLS, on the total (%):  95.793% ║  ║ IPC DEGRADATION (%):  0.546% ║  ║ PERFORMANCE IPC (%):  5.576% ║  
+║ IPC DEGRADATION      (%):  3.949% ║  ║ IPC DEGRADATION      (%):  89.929% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,528s
+user	0m13,507s
+sys	0m17,047s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.109 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔═════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                      ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                      ║
+║                                   ║  ║                                    ║  ║                              ║  ║                             ║  
+║ STALLS, on the total (%):  4.334% ║  ║ STALLS, on the total (%):  95.666% ║  ║ IPC DEGRADATION (%):  0.535% ║  ║ PERFORMANCE IPC (%):  5.44% ║  
+║ IPC DEGRADATION      (%):  4.075% ║  ║ IPC DEGRADATION      (%):  89.951% ║  ║                              ║  ║                             ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚═════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m29,792s
+user	0m13,537s
+sys	0m16,155s
+ncu --target-processes all --metrics smsp__warp_issue_stalled_no_instruction_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct,smsp__warp_issue_stalled_membar_per_warp_active.pct,smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct,smsp__warp_issue_stalled_misc_per_warp_active.pct,smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct,smsp__warp_issue_stalled_sleeping_per_warp_active.pct,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_imc_miss_per_warp_active.pct,smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct,smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct,smsp__warp_issue_stalled_drain_per_warp_active.pct,smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct,smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_wait_per_warp_active.pct,sm__sass_average_branch_targets_threads_uniform.pct,smsp__thread_inst_executed_per_inst_executed.pct,sm__inst_issued.avg.per_cycle_active,sm__cycles_elapsed.sum,sm__inst_executed.avg.per_cycle_active ./particlefilter_float -x 128 -y 128 -z 10 -np 1000
+Making analysis... Wait to results.
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.111 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚═════════════════════════════════════════════════╝
+
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+
+RESULTS
+-------
+
+
+╔═══════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                       ║
+║ ---------                         ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                       ║
+║                                   ║  ║                                    ║  ║                              ║  ║                              ║  
+║ STALLS, on the total (%):  4.081% ║  ║ STALLS, on the total (%):  95.919% ║  ║ IPC DEGRADATION (%):  0.546% ║  ║ PERFORMANCE IPC (%):  5.564% ║  
+║ IPC DEGRADATION      (%):  3.831% ║  ║ IPC DEGRADATION      (%):  90.059% ║  ║                              ║  ║                              ║  
+╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+Analysis performed correctly!
+
+real	0m26,522s
+user	0m13,378s
+sys	0m16,625s

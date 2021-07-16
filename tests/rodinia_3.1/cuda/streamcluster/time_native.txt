@@ -1,0 +1,240 @@
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.458941s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000256s
+time pspeedy = 0.528295s
+time pshuffle = 0.003467s
+time localSearch = 5.281668s
+
+
+====CUDA Timing info (pgain)====
+time serial = 1.867816s
+time CPU to GPU memory copy = 0.723354s
+time GPU to CPU memory copy back = 0.534356s
+time GPU malloc = 0.135668s
+time GPU free = 0.156056s
+time kernel = 0.330052s
+
+real	0m5,617s
+user	0m3,947s
+sys	0m1,524s
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.761106s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000296s
+time pspeedy = 0.633227s
+time pshuffle = 0.003709s
+time localSearch = 5.568658s
+
+
+====CUDA Timing info (pgain)====
+time serial = 1.963480s
+time CPU to GPU memory copy = 0.752913s
+time GPU to CPU memory copy back = 0.571296s
+time GPU malloc = 0.135025s
+time GPU free = 0.159247s
+time kernel = 0.332012s
+
+real	0m5,925s
+user	0m4,200s
+sys	0m1,586s
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.782845s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000277s
+time pspeedy = 0.526740s
+time pshuffle = 0.003575s
+time localSearch = 5.604321s
+
+
+====CUDA Timing info (pgain)====
+time serial = 1.954853s
+time CPU to GPU memory copy = 0.746988s
+time GPU to CPU memory copy back = 0.537597s
+time GPU malloc = 0.132555s
+time GPU free = 0.161190s
+time kernel = 0.334349s
+
+real	0m5,940s
+user	0m4,056s
+sys	0m1,732s
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.614014s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000295s
+time pspeedy = 0.530121s
+time pshuffle = 0.003664s
+time localSearch = 5.436439s
+
+
+====CUDA Timing info (pgain)====
+time serial = 1.984540s
+time CPU to GPU memory copy = 0.741672s
+time GPU to CPU memory copy back = 0.534954s
+time GPU malloc = 0.133070s
+time GPU free = 0.159500s
+time kernel = 0.331656s
+
+real	0m5,774s
+user	0m4,033s
+sys	0m1,591s
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.695253s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000275s
+time pspeedy = 0.528756s
+time pshuffle = 0.003483s
+time localSearch = 5.517753s
+
+
+====CUDA Timing info (pgain)====
+time serial = 2.002342s
+time CPU to GPU memory copy = 0.764860s
+time GPU to CPU memory copy back = 0.573658s
+time GPU malloc = 0.131776s
+time GPU free = 0.159053s
+time kernel = 0.330347s
+
+real	0m5,853s
+user	0m4,070s
+sys	0m1,633s
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.787738s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000283s
+time pspeedy = 0.531472s
+time pshuffle = 0.003465s
+time localSearch = 5.605486s
+
+
+====CUDA Timing info (pgain)====
+time serial = 2.095296s
+time CPU to GPU memory copy = 0.772495s
+time GPU to CPU memory copy back = 0.566640s
+time GPU malloc = 0.136386s
+time GPU free = 0.158955s
+time kernel = 0.330331s
+
+real	0m5,953s
+user	0m4,109s
+sys	0m1,697s
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.698201s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000271s
+time pspeedy = 0.527655s
+time pshuffle = 0.003562s
+time localSearch = 5.519369s
+
+
+====CUDA Timing info (pgain)====
+time serial = 2.020438s
+time CPU to GPU memory copy = 0.750933s
+time GPU to CPU memory copy back = 0.536646s
+time GPU malloc = 0.131903s
+time GPU free = 0.162564s
+time kernel = 0.329297s
+
+real	0m5,866s
+user	0m4,082s
+sys	0m1,649s
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.467932s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000289s
+time pspeedy = 0.528052s
+time pshuffle = 0.003464s
+time localSearch = 5.290547s
+
+
+====CUDA Timing info (pgain)====
+time serial = 1.799586s
+time CPU to GPU memory copy = 0.758549s
+time GPU to CPU memory copy back = 0.562974s
+time GPU malloc = 0.132137s
+time GPU free = 0.159939s
+time kernel = 0.329577s
+
+real	0m5,622s
+user	0m3,933s
+sys	0m1,546s
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.585195s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000276s
+time pspeedy = 0.527500s
+time pshuffle = 0.003537s
+time localSearch = 5.406149s
+
+
+====CUDA Timing info (pgain)====
+time serial = 1.955966s
+time CPU to GPU memory copy = 0.740461s
+time GPU to CPU memory copy back = 0.536389s
+time GPU malloc = 0.133044s
+time GPU free = 0.157180s
+time kernel = 0.331236s
+
+real	0m5,746s
+user	0m3,960s
+sys	0m1,635s
+PARSEC Benchmark Suite
+read 65536 points
+finish local search
+time = 5.487214s
+time pgain = 0.000000s
+time pgain_dist = 0.000000s
+time pgain_init = 0.000000s
+time pselect = 0.000269s
+time pspeedy = 0.527648s
+time pshuffle = 0.003474s
+time localSearch = 5.309182s
+
+
+====CUDA Timing info (pgain)====
+time serial = 1.845635s
+time CPU to GPU memory copy = 0.757205s
+time GPU to CPU memory copy back = 0.559031s
+time GPU malloc = 0.129623s
+time GPU free = 0.148112s
+time kernel = 0.327996s
+
+real	0m5,648s
+user	0m3,974s
+sys	0m1,545s

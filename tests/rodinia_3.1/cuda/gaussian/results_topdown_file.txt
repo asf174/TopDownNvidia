@@ -1,0 +1,23 @@
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔═════════════════════════════════════════════╗
+					║ IPC OBTAINED: 0.0 | MAXIMUM POSSIBLE IPC: 4 ║
+					╚═════════════════════════════════════════════╝
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+LEVEL ONE RESULTS
+------------------
+
+╔═══════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔══════════════════════════════╗  ╔════════════════════════════╗
+║ FRONT-END                         ║  ║ BACK-END                          ║  ║ DIVERGENCE                   ║  ║ RETIRE                     ║
+║ ---------                         ║  ║ --------                          ║  ║ ----------                   ║  ║ ------                     ║
+║                                   ║  ║                                   ║  ║                              ║  ║                            ║  
+║ STALLS, on the total (%):  0.0%   ║  ║ STALLS, on the total (%):  0.0%   ║  ║ IPC DEGRADATION (%):  0.0%   ║  ║ PERFORMANCE IPC (%):  0.0% ║  
+║ IPC DEGRADATION      (%):  0.0%   ║  ║ IPC DEGRADATION      (%):  0.0%   ║  ║                              ║  ║                            ║  
+╚═══════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚══════════════════════════════╝  ╚════════════════════════════╝  
+
+LEVEL TWO RESULTS
+-------------------
+

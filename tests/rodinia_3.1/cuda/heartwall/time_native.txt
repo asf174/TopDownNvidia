@@ -1,0 +1,70 @@
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.02833 seconds
+
+real	0m1,151s
+user	0m0,159s
+sys	0m0,867s
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.07092 seconds
+
+real	0m1,201s
+user	0m0,174s
+sys	0m0,905s
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.11326 seconds
+
+real	0m1,266s
+user	0m0,152s
+sys	0m0,991s
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.0985 seconds
+
+real	0m1,244s
+user	0m0,138s
+sys	0m0,965s
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.13069 seconds
+
+real	0m1,282s
+user	0m0,143s
+sys	0m1,005s
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.08037 seconds
+
+real	0m1,227s
+user	0m0,172s
+sys	0m0,929s
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.07892 seconds
+
+real	0m1,226s
+user	0m0,159s
+sys	0m0,945s
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.07034 seconds
+
+real	0m1,218s
+user	0m0,169s
+sys	0m0,913s
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.08247 seconds
+
+real	0m1,245s
+user	0m0,171s
+sys	0m0,941s
+WG size of kernel = 256 
+frame progress: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
+TOTAL time: 1.07985 seconds
+
+real	0m1,226s
+user	0m0,171s
+sys	0m0,940s

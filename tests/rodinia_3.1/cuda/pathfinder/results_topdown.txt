@@ -1,0 +1,48 @@
+The results have been obtained correctly. General results of IPC are the following:
+
+					╔════════════════════════════════════════════════╗
+					║ IPC OBTAINED: 1.42 | MAXIMUM POSSIBLE IPC: 2.0 ║
+					╚════════════════════════════════════════════════╝
+
+					DESCRIPTION OF MEASURE PARTS
+					----------------------------
+
+LEVEL ONE RESULTS
+------------------
+
+╔════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔══════════════════════════════╗  ╔═══════════════════════════════╗
+║ FRONT-END                          ║  ║ BACK-END                           ║  ║ DIVERGENCE                   ║  ║ RETIRE                        ║
+║ ---------                          ║  ║ --------                           ║  ║ ----------                   ║  ║ ------                        ║
+║                                    ║  ║                                    ║  ║                              ║  ║                               ║  
+║ STALLS, on the total (%):  15.047% ║  ║ STALLS, on the total (%):  84.953% ║  ║ IPC DEGRADATION (%):  0.28%  ║  ║ PERFORMANCE IPC (%):  71.009% ║  
+║ IPC DEGRADATION      (%):  4.32%   ║  ║ IPC DEGRADATION      (%):  24.391% ║  ║                              ║  ║                               ║  
+╚════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚══════════════════════════════╝  ╚═══════════════════════════════╝  
+
+LEVEL TWO RESULTS
+-------------------
+
+╔═════════════════════════════════════╗  ╔════════════════════════════════════╗  ╔═══════════════════════════════════╗  ╔════════════════════════════════════╗
+║ FRONT-END.BANDWITH                  ║  ║ FRONT-END.DEPENDENCY               ║  ║ BACK-END.CORE-BOUND               ║  ║ BACK-END.MEMORY-BOUND              ║
+║ ------------------                  ║  ║ --------------------               ║  ║ -------------------               ║  ║ ---------------------              ║
+║                                     ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ STALLS, on the total (%):  23.798%  ║  ║ STALLS, on the total (%):  13.243% ║  ║ STALLS, on the total (%):  4.902% ║  ║ STALLS, on the total (%):  49.338% ║  
+║ STALLS, on FrontEnd  (%):  158.164% ║  ║ STALLS, on FrontEnd  (%):  88.012% ║  ║ STALLS, on BackEnd   (%):  5.77%  ║  ║ STALLS, on BackEnd   (%):  58.077% ║  
+║                                     ║  ║                                    ║  ║                                   ║  ║                                    ║  
+║ IPC DEGRADATION      (%):  6.833%   ║  ║ IPC DEGRADATION      (%):  3.802%  ║  ║ IPC DEGRADATION      (%):  1.407% ║  ║ IPC DEGRADATION      (%):  14.166% ║  
+╚═════════════════════════════════════╝  ╚════════════════════════════════════╝  ╚═══════════════════════════════════╝  ╚════════════════════════════════════╝  ╔══════════════════════════════╗  ╔══════════════════════════════╗
+║ DIVERGENCE BRANCH            ║  ║ DIVERGENCE REPLAY            ║
+║ -----------------            ║  ║ -----------------            ║
+║ IPC DEGRADATION (%):  0.078% ║  ║ IPC DEGRADATION (%):  0.202% ║  
+╚══════════════════════════════╝  ╚══════════════════════════════╝  
+
+LEVEL THREE RESULTS
+---------------------
+╔══════════════════════════════════════════════╗  ╔══════════════════════════════════════════════╗  ╔════════════════════════════════════════════╗
+║ BACK-END.MEMORY-BOUND.CONSTANT-MEMORY-BOUND  ║  ║ BACK-END.MEMORY-BOUND.MIO-THROTTLE           ║  ║ BACK-END.MEMORY-BOUND.TEX-THROTTLE         ║
+║ -------------------------------------------  ║  ║ ----------------------------------           ║  ║ ----------------------------------         ║
+║ STALLS, on the total             (%): 1.119% ║  ║ STALLS, on the total             (%): 2.36%  ║  ║ STALLS, on the total             (%): 0.0% ║  
+║ STALLS, on BACK-END.MEMORY-BOUND (%): 2.269% ║  ║ STALLS, on BACK-END.MEMORY-BOUND (%): 4.783% ║  ║ STALLS, on BACK-END.MEMORY-BOUND (%): 0.0% ║  
+║ STALLS, on BACK-END              (%): 1.318% ║  ║ STALLS, on BACK-END              (%): 2.778% ║  ║ STALLS, on BACK-END              (%): 0.0% ║  
+║                                              ║  ║                                              ║  ║                                            ║  
+║ IPC DEGRADATION                  (%): 0.321% ║  ║ IPC DEGRADATION                  (%): 0.678% ║  ║ IPC DEGRADATION                  (%): 0.0% ║  
+╚══════════════════════════════════════════════╝  ╚══════════════════════════════════════════════╝  ╚════════════════════════════════════════════╝  Analysis performed correctly!

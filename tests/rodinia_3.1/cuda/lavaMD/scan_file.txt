@@ -1,0 +1,43 @@
+==PROF== Connected to process 24129 (/afs/atc.unican.es/u/a/alvaro/TopDownNvidia/tests/rodinia_3.1/cuda/lavaMD/lavaMD)
+==PROF== Profiling "_Z15kernel_gpu_cuda7par_str7d..." - 1: 0%....50%....100% - 8 passes
+thread block size of kernel = 128 
+Configuration used: boxes1d = 10
+Time spent in different stages of GPU_CUDA KERNEL:
+ 1.149104952812 s, 41.456428527832 % : GPU: SET DEVICE / DRIVER INIT
+ 0.000645000022 s,  0.023269757628 % : GPU MEM: ALO
+ 0.001233999967 s,  0.044519193470 % : GPU MEM: COPY IN
+ 1.616621017456 s, 58.323066711426 % : GPU: KERNEL
+ 0.003540999955 s,  0.127749174833 % : GPU MEM: COPY OUT
+ 0.000691999972 s,  0.024965384975 % : GPU MEM: FRE
+Total time:
+2.771837949753 s
+==PROF== Disconnected from process 24129
+[24129] lavaMD@127.0.0.1
+  _Z15kernel_gpu_cuda7par_str7dim_strP7box_strP11FOUR_VECTORPdS4_, 2021-Jul-07 21:43:17, Context 1, Stream 7
+    Section: Command line profiler metrics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    sm__cycles_active.avg                                                            cycle                 148.982.834,17
+    sm__cycles_elapsed.sum                                                           cycle                  5.567.680.594
+    sm__inst_executed.avg                                                             inst                  11.922.638,44
+    sm__inst_executed.avg.per_cycle_active                                      inst/cycle                           0,08
+    sm__inst_issued.avg.per_cycle_active                                        inst/cycle                           0,08
+    sm__sass_average_branch_targets_threads_uniform.pct                                  %                          99,68
+    smsp__thread_inst_executed_per_inst_executed.pct                                     %                          78,23
+    smsp__warp_issue_stalled_barrier_per_warp_active.pct                                 %                           0,24
+    smsp__warp_issue_stalled_branch_resolving_per_warp_active.pct                        %                           0,08
+    smsp__warp_issue_stalled_dispatch_stall_per_warp_active.pct                          %                           0,00
+    smsp__warp_issue_stalled_drain_per_warp_active.pct                                   %                           0,00
+    smsp__warp_issue_stalled_imc_miss_per_warp_active.pct                                %                           0,00
+    smsp__warp_issue_stalled_lg_throttle_per_warp_active.pct                             %                           0,00
+    smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct                         %                          37,42
+    smsp__warp_issue_stalled_math_pipe_throttle_per_warp_active.pct                      %                           0,00
+    smsp__warp_issue_stalled_membar_per_warp_active.pct                                  %                              0
+    smsp__warp_issue_stalled_mio_throttle_per_warp_active.pct                            %                           0,00
+    smsp__warp_issue_stalled_misc_per_warp_active.pct                                    %                           0,00
+    smsp__warp_issue_stalled_no_instruction_per_warp_active.pct                          %                           0,02
+    smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct                        %                           0,07
+    smsp__warp_issue_stalled_sleeping_per_warp_active.pct                                %                              0
+    smsp__warp_issue_stalled_tex_throttle_per_warp_active.pct                            %                          60,11
+    smsp__warp_issue_stalled_wait_per_warp_active.pct                                    %                           1,03
+    ---------------------------------------------------------------------- --------------- ------------------------------
+

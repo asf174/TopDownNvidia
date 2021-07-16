@@ -1,0 +1,7 @@
+#!/bin/bash
+#topdown.py -f b+tree.out file ../../../../../data/b+tree/mil.txt command ../../../../../data/b+tree/command.txt  -l3 -nd -os scan_file.txt -o results_topdown.txt 
+for i in $(seq 1 1 10); do
+    (time topdown.py -f b+tree.out file ../../../../../data/b+tree/mil.txt command ../../../../../data/b+tree/command.txt  -l3 -nd) >> time_topdown.txt 2>&1
+    (time ./b+tree.out file ../../../../../data/b+tree/mil.txt command ../../../../../data/b+tree/command.txt) >> time_native.txt 2>&1
+done
+topdown.py -f b+tree.out file ../../../../../data/b+tree/mil.txt command ../../../../../data/b+tree/command.txt  -l3 -nd -os scan_file.txt -o results_topdown.txt
