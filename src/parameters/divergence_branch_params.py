@@ -9,5 +9,5 @@ and their subclasses
 
 class DivergenceBranchParameters:
 
-    C_DIVERGENCE_BRANCH_NAME                    : str        = "DIVERGENCE BRANCH"
+    C_DIVERGENCE_BRANCH_NAME                    : str        = "DIVERGENCE.BRANCH"
     C_DIVERGENCE_BRANCH_DESCRIPTION             : str        = ("Includes losses caused by not fully exploiting the warp due to a conditional branches")

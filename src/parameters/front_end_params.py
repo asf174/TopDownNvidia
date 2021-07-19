@@ -14,13 +14,13 @@ class FrontEndParameters:
                                                     + "which leads to IPC losses. In this part, aspects related to the fetch of instructions\n"
                                                     + "are analyzed, such as errors in the instruction cache or IPC losses due to thread synchronization.\n")
     # NVPROF metrics/arguments
-    C_FRONT_END_NVPROF_L1_METRICS          : str       = ("stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other")
+    C_FRONT_END_NVPROF_L1_METRICS          : str       = ("stall_inst_fetch,stall_sync,stall_other")
     C_FRONT_END_NVPROF_L1_EVENTS           : str       = ("")
 
-    C_FRONT_END_NVPROF_L2_METRICS          : str       = ("stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other")
+    C_FRONT_END_NVPROF_L2_METRICS          : str       = ("stall_inst_fetch,stall_sync,stall_other")
     C_FRONT_END_NVPROF_L2_EVENTS           : str       = ("")
 
-    C_FRONT_END_NVPROF_L3_METRICS          : str       = ("stall_inst_fetch,stall_exec_dependency,stall_sync,stall_other")
+    C_FRONT_END_NVPROF_L3_METRICS          : str       = ("stall_inst_fetch,stall_sync,stall_other")
     C_FRONT_END_NVPROF_L3_EVENTS           : str       = ("")
 
 

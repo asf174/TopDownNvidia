@@ -42,16 +42,6 @@ class LevelThree(LevelTwo):
             String with command to be executed
         """
         
-        command : str = ("nvprof --metrics " + self._front_end.metrics_str() + 
-            "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," +
-            self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," +
-            self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
-            "," + self.__memory_constant_memory_bound.metrics_str() + "  --events " + self._front_end.events_str() +
-            "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + self._extra_measure.events_str() +
-            "," + self._retire.events_str() + "," + self._back_core_bound.events_str() + "," + 
-            self._back_memory_bound.events_str() +  "," + self.__memory_constant_memory_bound.events_str() + 
-            " --unified-memory-profiling off " + self._program)
-        return command
         pass
 
 
@@ -64,7 +54,7 @@ class LevelThree(LevelTwo):
         """
 
         super()._set_front_back_divergence_retire_results(output_command) # level one results
-        super()._set_memory_core_bandwith_dependency_results(output_command) # level two
+        super()._set_memory_core_decode_fetch_results(output_command) # level two
         self._set_memory_constant_memory_bound_results(output_command) # level three
         pass
 

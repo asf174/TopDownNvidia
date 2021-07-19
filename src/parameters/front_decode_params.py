@@ -14,10 +14,10 @@ class FrontDecodeParameters:
                                                             "able to do the DECODE of the operations")
     
     # NVPROF metrics/arguments
-    C_FRONT_DECODE_NVPROF_L2_METRICS          : str       = ("stall_exec_dependency,stall_not_selected")
+    C_FRONT_DECODE_NVPROF_L2_METRICS          : str       = ("stall_other")
     C_FRONT_DECODE_NVPROF_L2_EVENTS           : str       = ("")
 
-    C_FRONT_DECODE_NVPROF_L3_METRICS          : str       = ("stall_exec_dependency,stall_not_selected")
+    C_FRONT_DECODE_NVPROF_L3_METRICS          : str       = ("")
     C_FRONT_DECODE_NVPROF_L3_EVENTS           : str       = ("")
     
     # NSIGHT metrics

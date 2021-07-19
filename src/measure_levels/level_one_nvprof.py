@@ -20,6 +20,7 @@ from measure_parts.retire import RetireNvprof
 from measure_parts.extra_measure import ExtraMeasureNvprof
 from show_messages.message_format import MessageFormat
 from parameters.level_execution_params import LevelExecutionParameters
+from errors.level_execution_errors import *
 
 class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
     """ 
@@ -71,6 +72,7 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
             + "," + self._retire.metrics_str() + "  --events " + self._front_end.events_str() + 
             "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + self._extra_measure.events_str() +
              "," + self._retire.events_str() + " --unified-memory-profiling off " + self._program)
+        print(command)
         return command
         pass
 

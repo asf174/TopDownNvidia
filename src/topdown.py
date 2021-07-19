@@ -774,6 +774,10 @@ class TopDown:
                 printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                 output_file = self.output_file(), delete_content_file = False)
                 print()
+
+                message = "\n" + level_execution.retire().name() + ": " + level_execution.retire().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
             self.__show_level_one_results(level_execution)
             print()
             message = "\n\nLEVEL TWO RESULTS"
@@ -793,6 +797,14 @@ class TopDown:
                 output_file = self.output_file(), delete_content_file = False)
                 print()
                 message = "\n" + level_execution.back_memory_bound().name() + ": " + level_execution.back_memory_bound().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
+                print()
+                message = "\n" + level_execution.divergence_branch().name() + ": " + level_execution.divergence_branch().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
+                print()
+                message = "\n" + level_execution.divergence_replay().name() + ": " + level_execution.divergence_replay().description() + "\n\n"
                 printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                 output_file = self.output_file(), delete_content_file = False)
                 print()
@@ -818,7 +830,7 @@ class TopDown:
                         print()
                 self.__show_level_three_results(level_execution)
                 print()
-        else: # level one
+        else: # levelr one
             message = "RESULTS"
             printer.print_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
             print()
@@ -836,6 +848,12 @@ class TopDown:
                 printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                 output_file = self.output_file(), delete_content_file = False)
                 print()
+
+                message = "\n" + level_execution.retire().name() + ": " + level_execution.retire().description() + "\n\n"
+                printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
+                output_file = self.output_file(), delete_content_file = False)
+                print()
+
             self.__show_level_one_results(level_execution)
             print()
         pass

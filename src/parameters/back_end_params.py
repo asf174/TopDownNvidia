@@ -15,15 +15,15 @@ class BackEndParameters:
                                                     + "the instructions, in which aspects such as limitations by functional units, memory limits, etc.\n")
     # NVPROF metrics/arguments
     C_BACK_END_NVPROF_L1_METRICS          : str        = ("stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy," +
-                                                        "stall_memory_throttle")
+                                                        "stall_memory_throttle,stall_exec_dependency")
     C_BACK_END_NVPROF_L1_EVENTS           : str        = ("")
     
     C_BACK_END_NVPROF_L2_METRICS          : str        = ("stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy," +
-                                                        "stall_memory_throttle")
+                                                        "stall_memory_throttle,stall_exec_dependency")
     C_BACK_END_NVPROF_L2_EVENTS           : str        = ("")
 
     C_BACK_END_NVPROF_L3_METRICS          : str        = ("stall_memory_dependency,stall_constant_memory_dependency,stall_pipe_busy," +
-                                                        "stall_memory_throttle")
+                                                        "stall_memory_throttle,stall_exec_dependency")
     C_BACK_END_NVPROF_L3_EVENTS           : str        = ("")
     
     # NSIGHT metrics
