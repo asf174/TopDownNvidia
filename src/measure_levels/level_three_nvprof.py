@@ -67,7 +67,7 @@ class LevelThreeNvprof(LevelThree, LevelTwoNvprof):
             String with command to be executed
         """
         
-        command : str = ("sudo $(which nvprof) --metrics " + self._front_end.metrics_str() + 
+        command : str = ("nvprof --metrics " + self._front_end.metrics_str() + 
             "," + self._back_end.metrics_str() + "," + self._divergence.metrics_str() + "," + self._extra_measure.metrics_str()
             + "," + self._retire.metrics_str() + "," + self._front_decode.metrics_str() + "," + 
             self._front_fetch.metrics_str() + "," + self._back_core_bound.metrics_str() + "," + 
