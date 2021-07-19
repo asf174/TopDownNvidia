@@ -72,7 +72,6 @@ class LevelOneNvprof(LevelOne, LevelExecutionNvprof):
             + "," + self._retire.metrics_str() + "  --events " + self._front_end.events_str() + 
             "," + self._back_end.events_str() + "," + self._divergence.events_str() +  "," + self._extra_measure.events_str() +
              "," + self._retire.events_str() + " --unified-memory-profiling off " + self._program)
-        print(command)
         return command
         pass
 

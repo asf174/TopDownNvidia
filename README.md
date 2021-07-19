@@ -202,7 +202,8 @@ usage: topdown.py [OPTIONS] -f [PROGRAM] -l [NUM]
 TopDown methodology on NVIDIA's GPUs
 
 Optional arguments:
-  -h, --help                                                   show this help message and exit.
+  -h, --help                                                   show this help message and exit
+  -f [PROGRAM [PROGRAM ...]], --file [PROGRAM [PROGRAM ...]]   run file. Path to file.
   -o [FILE], --output [FILE]                                   output file. Path to file.
   -v, --verbose                                                long description of results.
   -dc, --delete-content                                        If '-o/--output' is set delete output's file contents before write results.
@@ -216,8 +217,7 @@ Optional arguments:
   -is [INPUT_SCAN_FILE], --input-scan [INPUT_SCAN_FILE]        input scan file. Path to file.
 
 Required arguments:
-  -f [PROGRAM [PROGRAM ...]], --file [PROGRAM [PROGRAM ...]]   run file. Path to file.
-  -l [[NUM]], --level [[NUM]]                                  level of execution.
+  -l [NUM], --level [NUM]                                      level of execution.
 
 Check options to run program
 ```
