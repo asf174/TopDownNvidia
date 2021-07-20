@@ -141,7 +141,6 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
             self._front_decode.metrics_str() + "," + self._front_fetch.metrics_str() +
             "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
              " " + self._program)
-        print(command)
         return command
         pass
 
