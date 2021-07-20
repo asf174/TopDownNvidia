@@ -16,8 +16,8 @@ from parameters.level_execution_params import LevelExecutionParameters
 class DivergenceParameters:
 
     C_DIVERGENCE_NAME                    : str      = "DIVERGENCE"
-    C_DIVERGENCE_DESCRIPTION             : str      = ("Includes performance losses caused by conditional jumps (in which warp is not " +
-                                                        "generally not fully exploited and repetition of instructions")
+    C_DIVERGENCE_DESCRIPTION             : str      = ("Includes performance losses caused by conditional branches (in which warp is not " +
+                                                        "generally not fully exploited) and repetition of instructions")
     # NVPROF metrics/arguments
     C_DIVERGENCE_NVPROF_L1_METRICS          : str      = (LevelExecutionParameters.C_WARP_EXECUTION_EFFICIENCY_METRIC_NAME_NVPROF + "," + 
                                                         LevelExecutionParameters.C_ISSUE_IPC_METRIC_NAME_NVPROF)
