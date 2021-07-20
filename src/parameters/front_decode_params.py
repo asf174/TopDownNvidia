@@ -11,7 +11,7 @@ class FrontDecodeParameters:
 
     C_FRONT_DECODE_NAME                    : str       = "FRONT-END.DECODE"
     C_FRONT_DECODE_DESCRIPTION             : str       = ("Includes the loss of performance caused by crashes due to not being" + 
-                                                            "able to do the DECODE of the operations")
+                                                            "able to do the DECODE of the operations.")
     
     # NVPROF metrics/arguments
     C_FRONT_DECODE_NVPROF_L2_METRICS          : str       = ("stall_other")

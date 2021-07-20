@@ -8,7 +8,6 @@ Class that represents the level one of the execution with nsight scan tool.
 
 
 import re
-from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)

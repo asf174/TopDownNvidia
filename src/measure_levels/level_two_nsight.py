@@ -53,8 +53,10 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
         self._back_memory_bound : BackMemoryBoundNsight = back_memory_bound
         self._front_decode : FrontDecodeNsight = front_decode
         self._front_fetch : FrontFetchNsight = front_fetch 
-        self._branch_divergence : DivergenceBranchNsight = DivergenceBranchNsight(DivergenceBranchParameters.C_DIVERGENCE_BRANCH_NAME, DivergenceBranchParameters.C_DIVERGENCE_BRANCH_DESCRIPTION, "")
-        self._replay_divergence : DivergenceReplayNsight = DivergenceReplayNsight(DivergenceReplayParameters.C_DIVERGENCE_REPLAY_NAME, DivergenceReplayParameters.C_DIVERGENCE_REPLAY_DESCRIPTION, "")
+        self._branch_divergence : DivergenceBranchNsight = DivergenceBranchNsight(DivergenceBranchParameters.C_DIVERGENCE_BRANCH_NAME, 
+            DivergenceBranchParameters.C_DIVERGENCE_BRANCH_DESCRIPTION, "")
+        self._replay_divergence : DivergenceReplayNsight = DivergenceReplayNsight(DivergenceReplayParameters.C_DIVERGENCE_REPLAY_NAME, 
+            DivergenceReplayParameters.C_DIVERGENCE_REPLAY_DESCRIPTION, "")
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics, front_end, back_end, divergence, retire, extra_measure)
         pass
 
@@ -138,7 +140,8 @@ class LevelTwoNsight(LevelTwo, LevelOneNsight):
             self._extra_measure.metrics_str() + "," + self._retire.metrics_str() + "," +
             self._front_decode.metrics_str() + "," + self._front_fetch.metrics_str() +
             "," + self._back_core_bound.metrics_str() + "," + self._back_memory_bound.metrics_str() +
-             " " + self._program)       
+             " " + self._program)
+        print(command)
         return command
         pass
 

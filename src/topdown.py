@@ -100,7 +100,10 @@ class TopDown:
         self.__level : int = args.level[0]
         self.__output_file : str = args.file
         self.__verbose : bool = args.verbose
-        self.__program : str = " ".join(str(string) for string in args.program)
+        if args.program is None:
+            self.__program : str = None
+        else:
+            self.__program : str = " ".join(str(string) for string in args.program)
         self.__delete_output_file_content : bool = args.delete_output_file_content
         self.__show_desc : bool = args.show_desc
         self.__show_metrics : bool = args.metrics
@@ -209,7 +212,6 @@ class TopDown:
         group.add_argument(
             TopDownParameters.C_FILE_ARGUMENT_SHORT_OPTION, 
             TopDownParameters.C_FILE_ARGUMENT_LONG_OPTION, 
-            required = True,
             help = TopDownParameters.C_FILE_ARGUMENT_DESCRIPTION,
             default = None,
             nargs = '*',  
@@ -894,7 +896,7 @@ class TopDown:
         program : str = self.program()
 
         # check if it's python file
-        if (len(program) > 3 and program[len(program) - 3] == '.' and program[len(program) - 2] == 'p' 
+        if (program is not None and len(program) > 3 and program[len(program) - 3] == '.' and program[len(program) - 2] == 'p' 
             and program[len(program) - 1] == 'y'):
             program = "python3 " + program
         if self.__is_nvprof_mode():

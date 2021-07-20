@@ -6,7 +6,6 @@ Class that represents the level one of the execution with nvprof scan tool.
 @version:   1.0
 """
 
-from abc import ABC, abstractmethod # abstract class
 import os, sys, inspect, re
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)

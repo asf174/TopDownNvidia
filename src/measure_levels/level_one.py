@@ -6,7 +6,6 @@ Class that represents the level one of the execution.
 @version:   1.0
 """
 
-import re
 import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -20,6 +19,7 @@ from measure_parts.divergence import Divergence
 from measure_parts.retire import Retire
 from abc import ABC, abstractmethod # abstract class
 from graph.pie_chart import PieChart
+from pathlib import Path
 
 class LevelOne(LevelExecution, ABC):
  

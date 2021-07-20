@@ -20,16 +20,16 @@ class ExtraMeasureParameters:
     
     # NVPROF metrics/arguments
     C_EXTRA_MEASURE_NVPROF_L1_METRICS          : str      = ("")
-    C_EXTRA_MEASURE_NVPROF_L1_EVENTS           : str      = ("active_cycles," + LevelExecutionParameters.C_CYCLES_ELAPSED_EVENT_NAME_NVPROF)
+    C_EXTRA_MEASURE_NVPROF_L1_EVENTS           : str      = (LevelExecutionParameters.C_CYCLES_ELAPSED_EVENT_NAME_NVPROF)
     
     C_EXTRA_MEASURE_NVPROF_L2_METRICS          : str      = ("")
-    C_EXTRA_MEASURE_NVPROF_L2_EVENTS           : str      = ("active_cycles," + LevelExecutionParameters.C_CYCLES_ELAPSED_EVENT_NAME_NVPROF)
+    C_EXTRA_MEASURE_NVPROF_L2_EVENTS           : str      = (LevelExecutionParameters.C_CYCLES_ELAPSED_EVENT_NAME_NVPROF)
 
     C_EXTRA_MEASURE_NVPROF_L3_METRICS          : str      = ("")
-    C_EXTRA_MEASURE_NVPROF_L3_EVENTS           : str      = ("active_cycles," + LevelExecutionParameters.C_CYCLES_ELAPSED_EVENT_NAME_NVPROF)
+    C_EXTRA_MEASURE_NVPROF_L3_EVENTS           : str      = (LevelExecutionParameters.C_CYCLES_ELAPSED_EVENT_NAME_NVPROF)
     
     # NSIGHT metrics
     C_EXTRA_MEASURE_NSIGHT_L1_METRICS          : str      = (LevelExecutionParameters.C_CYCLES_ELAPSED_METRIC_NAME_NSIGHT)
-    C_EXTRA_MEASURE_NSIGHT_L2_METRICS          : str      = ("sm__cycles_active.avg," + LevelExecutionParameters.C_CYCLES_ELAPSED_METRIC_NAME_NSIGHT)
-    C_EXTRA_MEASURE_NSIGHT_L3_METRICS          : str      = ("sm__inst_executed.avg,sm__cycles_active.avg," + LevelExecutionParameters.C_CYCLES_ELAPSED_METRIC_NAME_NSIGHT)
+    C_EXTRA_MEASURE_NSIGHT_L2_METRICS          : str      = (LevelExecutionParameters.C_CYCLES_ELAPSED_METRIC_NAME_NSIGHT)
+    C_EXTRA_MEASURE_NSIGHT_L3_METRICS          : str      = (LevelExecutionParameters.C_CYCLES_ELAPSED_METRIC_NAME_NSIGHT)
 

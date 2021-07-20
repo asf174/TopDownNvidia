@@ -11,7 +11,7 @@ class FrontFetchParameters:
 
     C_FRONT_FETCH_NAME                    : str       = "FRONT-END.FETCH"
     C_FRONT_FETCH_DESCRIPTION             : str       = ("Includes the loss of performance caused by crashes due to not being" + 
-                                                            "able to do the FETCH of the operations")
+                                                            "able to do the FETCH of the operations.")
 
     # NVPROF metrics/arguments
     C_FRONT_FETCH_NVPROF_L2_METRICS          : str       = ("stall_inst_fetch,stall_sync")

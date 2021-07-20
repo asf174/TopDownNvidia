@@ -248,6 +248,7 @@ class LevelExecution(ABC):
         """
         
         return self._output_scan_file
+        pass
  
     @abstractmethod
     def _percentage_time_kernel(self, kernel_number : int) -> float:

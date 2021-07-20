@@ -3,7 +3,7 @@ Class with all params of BackEnd class
 and their subclasses
 
 @author:    Alvaro Saiz (UC)
-@date:      Jan 2021
+@date:      Jul 2021
 @version:   1.0
 """
 
