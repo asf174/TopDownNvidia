@@ -18,7 +18,7 @@ class Shell:
         """
         Launch Shell command.
         
-        Params:
+        Args:
             command     : str   ; command to launch in shell
 
             message     : str   ; information about command.
@@ -42,13 +42,13 @@ class Shell:
         except:
             pass # No need to do nothing, command was not executed succesfully
         return str_output
-        pass
+        
     
     def launch_command(self, command: str, message : str) -> str:
         """
         Launch Shell command.
         
-        Params:
+        Args:
             command     : str   ; command to launch in shell
 
             message     : str   ; information about command.
@@ -59,14 +59,14 @@ class Shell:
         """
 
         return self.__launch_shell_and_message(command, message, True)
-        pass
+        
     
     def launch_command_redirect(self, command : str, message : str, dest : str, add_to_end_file : bool) -> str :
         """
         Launch Shell command and redirect output to 'dest' file 
         in case the command is executed correctly.
 
-        Params:
+        Args:
             command             : str   ; command to launch in shell
 
             message             : str   ; information about command
@@ -89,7 +89,7 @@ class Shell:
                 open_mode : str = "a+" # set as end by default
                 if not add_to_end_file:
                     open_mode = "w+"
-                f : _io.TextIOWrapper = open(dest, open_mode)
+                f : TextIOWrapper = open(dest, open_mode)
                 try:
                     f.write(str_output)
                 finally:
@@ -97,13 +97,13 @@ class Shell:
         except:
             str_output = None
         return str_output
-        pass
+        
 
     def launch_command_show_all(self, command: str, message : str) -> str:
         """
         Launch Shell command and return the result of the execution (including errors)
         
-        Params:
+        Args:
             command     : str   ; command to launch in shell
 
             message     : str   ; information about command.
@@ -112,5 +112,6 @@ class Shell:
         Returns:
             String with (all of) the output of the command executed
         """
+
         return self.__launch_shell_and_message(command, message, False)
-        pass
+        

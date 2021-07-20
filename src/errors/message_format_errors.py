@@ -15,4 +15,4 @@ class WriteInOutPutFileError(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
-        pass
+        

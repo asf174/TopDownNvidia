@@ -36,7 +36,7 @@ class MetricMeasure(ABC):
         """
         Initialize data structures in the correct way.
         
-        Params:
+        Args:
 
             metrics             : str   ;   string with the metrics   
         """
@@ -52,7 +52,7 @@ class MetricMeasure(ABC):
             self._metrics[key_metrics] = list()
             self._metrics_desc[key_metrics] = list()
         self._metrics_str : str = metrics
-        pass
+        
 
     def __check_data_structures(self): 
         """
@@ -67,13 +67,13 @@ class MetricMeasure(ABC):
         for metric_name in self._metrics: 
             if not metric_name in self._metrics_desc:
                 raise DataStructuresOfMetricError(metric_name)
-        pass
+        
 
     def __init__(self, name : str, description : str, metrics : str):
         """
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -86,13 +86,13 @@ class MetricMeasure(ABC):
         self._description : str = description
         self.__init_dictionaries(metrics)
         self.__check_data_structures() # check dictionaries defined correctly
-        pass
+        
 
     def is_metric(self, metric_name : str) -> bool:
         """
         Check if argument it's a metric or not
 
-        Params:
+        Args:
             metric_name  : str   ; name of the metric
 
         Returns:
@@ -105,13 +105,13 @@ class MetricMeasure(ABC):
         if not (is_in_metrics and is_in_metrics_desc):
             return False
         return True
-        pass
+        
     
     def get_metric_value(self, metric_name : str):# -> list[str]:
         """
         Get the value/s associated with 'metric_name'
 
-        Params:
+        Args:
             metric_name  : str   ; name of the metric
 
         Returns:
@@ -123,13 +123,13 @@ class MetricMeasure(ABC):
         if not self.is_metric(metric_name):
             return None
         return self._metrics.get(metric_name)
-        pass
+        
 
     def set_metric_value(self, metric_name : str, new_value : str) -> bool:
         """
         Update metric with key 'metric_name' with 'new_value' value if 'metric_name' exists.
 
-        Params:
+        Args:
             metric_name     : str   ; name of the metric
             new_value       : str   ; new value to assign to 'metric_name' if name exists
         
@@ -143,7 +143,7 @@ class MetricMeasure(ABC):
         
         self._metrics[metric_name].append(new_value)
         return True
-        pass
+        
 
     def name(self) -> str:
         """ 
@@ -154,7 +154,7 @@ class MetricMeasure(ABC):
         """
 
         return self._name
-        pass
+        
     
     def description(self) -> str:
         """ 
@@ -165,7 +165,7 @@ class MetricMeasure(ABC):
         """
         
         return self._description
-        pass
+        
 
     def metrics(self) -> dict: 
         """ 
@@ -176,7 +176,7 @@ class MetricMeasure(ABC):
         """
 
         return self._metrics # mirar retornar copias
-        pass
+        
 
     def metrics_description(self) -> dict: 
         """ 
@@ -187,7 +187,7 @@ class MetricMeasure(ABC):
         """
 
         return self._metrics_desc # mirar retornar copias
-        pass
+        
 
     def metrics_str(self) -> str:
         """ 
@@ -198,7 +198,7 @@ class MetricMeasure(ABC):
         """
 
         return self._metrics_str
-        pass
+        
 
 class MetricMeasureNsight(MetricMeasure):
     """
@@ -211,7 +211,7 @@ class MetricMeasureNsight(MetricMeasure):
         """
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -222,12 +222,12 @@ class MetricMeasureNsight(MetricMeasure):
         """
         
         super().__init__(name, description, metrics)    
-        pass
+        
 
     def set_metric_unit(self, metric_name : str, new_unit : str) -> bool:
         """
         Update metric with key 'metric_name' with 'new_value' description if 'metric_name' exists.
-        Params:
+        Args:
             metric_name         : str   ; name of the metric
             new_unit     	: str   ; unit to assign to 'metric_name' if name exists
         
@@ -240,13 +240,13 @@ class MetricMeasureNsight(MetricMeasure):
             return False
         self._metrics_desc[metric_name] = new_unit
         return True
-        pass
+        
     
     def get_metric_unit(self, metric_name : str) -> str:
         """
         Get the value/s associated with 'metric_name'
 
-        Params:
+        Args:
             metric_name  : str   ; name of the metric
 
         Returns:
@@ -258,7 +258,7 @@ class MetricMeasureNsight(MetricMeasure):
         if not self.is_metric(metric_name):
             return None
         return self._metrics_desc.get(metric_name)
-        pass
+        
 
 class MetricMeasureNvprof(MetricMeasure):
     """
@@ -280,7 +280,7 @@ class MetricMeasureNvprof(MetricMeasure):
         """
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -294,13 +294,13 @@ class MetricMeasureNvprof(MetricMeasure):
         super().__init__(name, description, metrics)
         self.__init_dictionaries(events)
         self.__check_data_structures() # check dictionaries defined correctly
-        pass
+        
     
     def __init_dictionaries(self, events : str):
         """ 
         Initialize data structures in the correct way.
         
-        Params:
+        Args:
 
             events              : str   ;   string with events
 
@@ -316,7 +316,7 @@ class MetricMeasureNvprof(MetricMeasure):
             self.__events[key_events] = list()
             self.__events_desc[key_events] = list()
         self.__events_str : str = events
-        pass
+        
 
     def __check_data_structures(self): 
         """
@@ -331,13 +331,13 @@ class MetricMeasureNvprof(MetricMeasure):
         for event_name in self.__events: 
             if not event_name in self.__events_desc:
                 raise DataStructuresOfEventError(event_name)
-        pass
+        
                 
     def get_event_value(self, event_name : str):# -> list[str]:
         """
         Get the value/s associated with 'event_name'
 
-        Params:
+        Args:
             event_name  : str   ; name of the event
 
         Returns:
@@ -349,13 +349,13 @@ class MetricMeasureNvprof(MetricMeasure):
         if self.is_metric(event_name) or not self.is_event(event_name):
             return None
         return self.__events.get(event_name)
-        pass
+        
 
     def get_event_description(self, event_name : str):# -> list[str]:
         """
         Get the description/s associated with 'event_name'
 
-        Params:
+        Args:
             event_name  : str   ; name of the event
 
         Returns:
@@ -367,13 +367,13 @@ class MetricMeasureNvprof(MetricMeasure):
         if self.is_metric(event_name) or not self.is_event(event_name):
             return None
         return self._events_desc.get(event_name)
-        pass
+        
 
     def get_metric_description(self, event_name : str):# -> list[str]:
         """
         Get the description/s associated with 'event_name'
 
-        Params:
+        Args:
             event_name  : str   ; name of the event
 
         Returns:
@@ -385,12 +385,12 @@ class MetricMeasureNvprof(MetricMeasure):
         if self.is_metric(event_name) or not self.is_event(event_name):
             return None
         return self._metrics_desc.get(event_name)
-        pass
+        
 
     def set_metric_description(self, metric_name : str, new_description : str) -> bool:
         """
         Update metric with key 'metric_name' with 'new_value' description if 'metric_name' exists.
-        Params:
+        Args:
             metric_name         : str   ; name of the metric
             new_description     : str   ; new description to assign to 'metric_name' if name exists
         
@@ -403,13 +403,13 @@ class MetricMeasureNvprof(MetricMeasure):
             return False
         self._metrics_desc[metric_name] = new_description
         return True
-        pass
+        
 
     def is_event(self, event_name : str) -> bool:
         """
         Check if argument it's an event or not
 
-        Params:
+        Args:
             event_name  : str   ; name of the event
 
         Returns:
@@ -422,13 +422,13 @@ class MetricMeasureNvprof(MetricMeasure):
         if not (is_in_events and is_in_events_desc):
             return False
         return True
-        pass
+        
 
     def set_event_value(self, event_name : str, new_value : str) -> bool:
         """
         Update event with key 'event_name' with 'new_value' value if 'event_name' exists.
 
-        Params:
+        Args:
             event_name     : str   ; name of the event
             new_value       : str   ; new value to assign to 'event_name' if name exists
         
@@ -441,12 +441,12 @@ class MetricMeasureNvprof(MetricMeasure):
             return False
         self.__events[event_name].append(new_value)
         return True
-        pass
+        
 
     def set_event_description(self, event_name : str, new_description : str) -> bool:
         """
         Update event with key 'event_name' with 'new_value' description if 'event_name' exists.
-        Params:
+        Args:
             event_name     : str   ; name of the event
             new_value       : str   ; new description to assign to 'event_name' if name exists
         
@@ -459,7 +459,7 @@ class MetricMeasureNvprof(MetricMeasure):
             return False
         self._events_desc[event_name] = new_description
         return True
-        pass
+        
 
     def events(self) -> dict: 
         """ 
@@ -470,7 +470,7 @@ class MetricMeasureNvprof(MetricMeasure):
         """
         
         return self.__events # mirar retornar copias
-        pass
+        
 
     def events_description(self) -> dict: 
         """ 
@@ -481,7 +481,7 @@ class MetricMeasureNvprof(MetricMeasure):
         """
 
         return self.__events_desc # mirar retornar copias
-        pass
+        
 
     def events_str(self) -> str:
         """ 
@@ -492,4 +492,4 @@ class MetricMeasureNvprof(MetricMeasure):
         """
 
         return self.__events_str
-        pass
+        

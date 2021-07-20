@@ -26,7 +26,7 @@ class FrontDecodeNsight(MetricMeasureNsight, FrontDecode):
         """
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -37,7 +37,7 @@ class FrontDecodeNsight(MetricMeasureNsight, FrontDecode):
         """
 
         super().__init__(name, description, metrics)
-        pass
+        
 
 class FrontDecodeNvprof(MetricMeasureNvprof, FrontDecode):
     """Class that defines the Front-End.Decode part with nvprof scan tool."""
@@ -46,7 +46,7 @@ class FrontDecodeNvprof(MetricMeasureNvprof, FrontDecode):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -58,6 +58,6 @@ class FrontDecodeNvprof(MetricMeasureNvprof, FrontDecode):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 
 

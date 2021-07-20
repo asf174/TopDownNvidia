@@ -12,8 +12,6 @@ import os, sys, inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
-from measure_parts.extra_measure import ExtraMeasure    
-from shell.shell import Shell # launch shell arguments
 from parameters.level_execution_params import LevelExecutionParameters # parameters of program
 from errors.level_execution_errors import *
 from measure_levels.level_execution import LevelExecution
@@ -35,7 +33,7 @@ class LevelExecutionNsight(LevelExecution, ABC):
         locale.setlocale(locale.LC_ALL, 'es_ES.utf8')
         self._extra_measure : ExtraMeasureNsight = extra_measure
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics)
-        pass
+        
 
     def extra_measure(self) -> ExtraMeasureNsight:
         """
@@ -46,7 +44,7 @@ class LevelExecutionNsight(LevelExecution, ABC):
         """
         
         return self._extra_measure
-        pass
+        
 
     @abstractmethod
     def run(self, lst_output : list):
@@ -58,6 +56,7 @@ class LevelExecutionNsight(LevelExecution, ABC):
         """
         
         pass
+        
 
     @abstractmethod
     def _generate_command(self) -> str:
@@ -78,6 +77,7 @@ class LevelExecutionNsight(LevelExecution, ABC):
         Parameters:
             lst_output              : list     ; OUTPUT list with results
         """
+        
         pass
 
     def extra_measure(self) -> ExtraMeasureNsight:
@@ -89,14 +89,14 @@ class LevelExecutionNsight(LevelExecution, ABC):
         """
 
         return self._extra_measure
-        pass
+        
 
     def _add_result_part_to_lst(self, dict_values : dict, dict_desc : dict,
         lst_to_add):
         """
         Add results of execution part (FrontEnd, BackEnd...) to list indicated by argument.
 
-        Params:
+        Args:
             dict_values     : dict      ; diccionary with name_metric/event-value elements of the part to
                                           add to 'lst_to_add'
 
@@ -166,14 +166,14 @@ class LevelExecutionNsight(LevelExecution, ABC):
         lst_to_add.append(line_str)
         lst_to_add.append(total_value_str)
         lst_to_add.append(line_str + "\n")
-        pass
+        
 
     def _percentage_time_kernel(self, kernel_number : int) -> float:
         """ 
         Get time percentage in each Kernel.
         Each kernel measured is an index of dictionaries used by this program.
 
-        Params:
+        Args:
             kernel_number   : int   ; number of kernel
         """
 
@@ -185,4 +185,4 @@ class LevelExecutionNsight(LevelExecution, ABC):
         for value_str in value_lst:
             total_value += locale.atof(value_str)
         return (locale.atof(value_lst[kernel_number])/total_value)*100.0
-        pass
+        

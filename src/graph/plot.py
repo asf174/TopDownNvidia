@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import collections  as mc
 
 #!/usr/bin/env python
-
+# Example
 class Grafica:
     def _addFeatures(self):
         # Add title and axis names

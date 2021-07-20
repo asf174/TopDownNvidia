@@ -40,7 +40,7 @@ class MessageFormat:
                     f.close()
             except:  
                 raise WriteInOutPutFileError
-        pass
+        
 
     def print_msg_box(self, msg, indent, width, title, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
@@ -57,7 +57,7 @@ class MessageFormat:
         box += f'╚{"═" * (width + indent * 2)}╝'  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
-        pass
+        
 
     def print_center_msg_box(self, msg, indent, width, title, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
@@ -74,7 +74,7 @@ class MessageFormat:
         box += f'\t\t\t\t\t\t\t╚{"═" * (width + indent * 2)}╝'  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
-        pass
+        
 
     def print_four_msg_box(self, msgs, titles, indent, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
@@ -120,7 +120,7 @@ class MessageFormat:
         box += f'╚{"═" * (width4 + indent * 2)}╝  '  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
-        pass
+        
  
     def print_three_msg_box(self, msgs, titles, indent, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
@@ -158,7 +158,7 @@ class MessageFormat:
         box += f'╚{"═" * (width3 + indent * 2)}╝  '  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
-        pass
+        
 
     def print_two_msg_box(self, msgs, titles, indent, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
@@ -188,7 +188,7 @@ class MessageFormat:
         box += f'╚{"═" * (width2 + indent * 2)}╝  '  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
-        pass
+        
 
     def print_desplazed_msg_box(self, msg, indent, width, title, output_file : str, delete_content_file : bool):
         """Print message-box with optional title."""
@@ -205,7 +205,7 @@ class MessageFormat:
         box += f'\t\t\t\t\t╚{"═" * (width + indent * 2)}╝\n'  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
-        pass
+        
 
     def print_n_per_line_msg_box(self, matrix : list, titles, indent, width, output_file : str, delete_content_file : bool):
         """Print message-box with optional title.""" # NOT USED. DONT USE
@@ -244,7 +244,7 @@ class MessageFormat:
             box += f'╚{"═" * (width + indent * 2)}╝  '  # lower_border
         print(box)
         self.__write_str_in_file(box, output_file, delete_content_file)
-        pass
+        
 
     def print_max_line_length_message(self, message : str, max_length : int, output_file : str, delete_content_file : bool):
         """Print Message with max length per line."""
@@ -252,7 +252,7 @@ class MessageFormat:
         print('\n'.join(textwrap.wrap(message, max_length, break_long_words = False)))
         if not output_file is None:
             self.__write_str_in_file(message, output_file, delete_content_file)
-        pass
+        
 
     def write_in_file_at_end(self, file : str, message : list):
         """
@@ -277,7 +277,7 @@ class MessageFormat:
                 f.close()
         except:  
             raise WriteInOutPutFileError
-        pass
+        
 
     def print_underlined_str(self, message : str, output_file : str, delete_content_file : bool):
         """ Print a string underlined. """
@@ -285,7 +285,7 @@ class MessageFormat:
         print(message_underlined)
         if not output_file is None:
             self.__write_str_in_file(message_underlined, output_file, delete_content_file)
-        pass
+        
 
     def print_desplazed_underlined_str(self, message : str, output_file : str, delete_content_file : bool):
         """ Print a desplazed string underlined. """
@@ -302,7 +302,7 @@ class MessageFormat:
 
         if not output_file is None:
             self.__write_str_in_file(message, output_file, delete_content_file)
-        pass
+        
 
     def underlined_str(self, message : str) -> str:
         """ Returns a string underlined. """
@@ -310,4 +310,4 @@ class MessageFormat:
         leng : int = len(message)
         message  += "\n" + f'{"-" * (leng)}\n'
         return message 
-        pass
+        

@@ -32,7 +32,7 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         self._extra_measure : ExtraMeasureNvprof = extra_measure
         self._collect_events = collect_events
         super().__init__(program, input_file, output_file, output_scan_file, collect_metrics)
-        pass
+        
 
     def collect_events(self) -> bool:
         """
@@ -43,7 +43,7 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         """
 
         return self._collect_events
-        pass
+        
 
     def extra_measure(self) -> ExtraMeasureNvprof:
         """
@@ -54,7 +54,7 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         """
         
         return self._extra_measure
-        pass
+        
 
     @abstractmethod
     def run(self, lst_output : list):
@@ -87,14 +87,14 @@ class LevelExecutionNvprof(LevelExecution, ABC):
             lst_output              : list     ; OUTPUT list with results
         """
 
-        pass
+        pass 
 
     def _add_result_part_to_lst(self, dict_values : dict, dict_desc : dict,
         lst_to_add , isMetric : bool):
         """
         Add results of execution part (FrontEnd, BackEnd...) to list indicated by argument.
 
-        Params:
+        Args:
             dict_values     : dict      ; diccionary with name_metric/event-value elements of the part to
                                           add to 'lst_to_add'
 
@@ -199,14 +199,14 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         lst_to_add.append(line_str)
         lst_to_add.append(total_value_str)
         lst_to_add.append(line_str + "\n")
-        pass    
+            
 
     def _percentage_time_kernel(self, kernel_number : int) -> float:
         """ 
         Get time percentage in each Kernel.
         Each kernel measured is an index of dictionaries used by this program.
 
-        Params:
+        Args:
             kernel_number   : int   ; number of kernel
         """
         
@@ -218,5 +218,5 @@ class LevelExecutionNvprof(LevelExecution, ABC):
         for value_str in value_lst:
             total_value += float(value_str)
         return (float(value_lst[kernel_number])/total_value)*100.0
-        pass
+        
 

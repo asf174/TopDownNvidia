@@ -38,7 +38,6 @@ class LevelExecution(ABC):
 
         _compute_capability     : float         ; Compute Capbility of the execution
 
-        __kernels               : list[str]     ; list of kernels of execution
     """
     
     def __init__(self, program : str, input_file : str, output_file : str, output_scan_file : str, collect_metrics : bool):
@@ -52,7 +51,6 @@ class LevelExecution(ABC):
         shell.launch_command("rm -f $DIR_UNTIL_TOPDOWN/TopDownNvidia/src/measure_parts/a.out", None) # delete 'a.out' generated
         if not compute_capability_str:
             raise ComputeCapabilityError
-        pass
         self._compute_capability : float = float(compute_capability_str)
 
     @abstractmethod
@@ -65,17 +63,19 @@ class LevelExecution(ABC):
         """
 
         pass
+        
 
     @abstractmethod
     def set_results(output_command : str): 
         """
         Set results of execution ALREADY DONE. Results are in the argument.
         
-        Params:
+        Args:
             output_command : str    ; str with results of execution.
         """
 
         pass
+        
 
     @abstractmethod
     def run(self, lst_output):
@@ -87,19 +87,20 @@ class LevelExecution(ABC):
         """
         
         pass
+        
 
     def _launch(self, command : str) -> str:
         """ 
         Launch NVIDIA scan tool.
         
-        Params:
+        Args:
             command : str ; String with command
 
         Returns:
             String with results.
 
         Raises:
-            ProfilingError              ; raised in case of error reading results from NVIDIA scan tool
+            ProfilingError  ; raised in case of error reading results from NVIDIA scan tool
         """
 
         shell : Shell = Shell()
@@ -107,7 +108,7 @@ class LevelExecution(ABC):
         if output_command is None:
             raise ProfilingError
         return output_command  
-        pass
+        
     
     @abstractmethod
     def _get_results(self, lst_output):
@@ -115,10 +116,11 @@ class LevelExecution(ABC):
         Get results of the different parts.
 
         Parameters:
-            lst_output              : list     ; OUTPUT list with results
+            lst_output  : list     ; OUTPUT list with results
         """
 
         pass
+        
 
     def get_device_max_ipc(self) -> float:
         """
@@ -133,13 +135,13 @@ class LevelExecution(ABC):
         dict_ins_per_cycle : dict = dict({3.0: 1.5, 3.2: 2, 3.5: 2, 3.7: 2, 5.0: 2, 5.2: 2, 5.3: 2, 
             6.0: 2, 6.1: 2, 6.2: 2, 7.0: 1, 7.0: 1, 7.5: 1, 8.0: 1})
         return dict_warps_schedulers_per_cc.get(self._compute_capability)*dict_ins_per_cycle.get(self._compute_capability)
-        pass
+        
     
     def _get_total_value_of_list(self, list_values, computed_as_average : bool) -> float:
         """
         Get total value of list of metric/event.
     
-        Params:
+        Args:
             list_values         : list ; list to be computed
 
             computed_as_average : bool      ; True if you want to obtain total value as average
@@ -170,13 +172,13 @@ class LevelExecution(ABC):
                 total_value += value
             i += 1
         return total_value
-        pass
+        
 
     def _get_stalls_of_part(self, dict : dict) -> float:
         """
         Get percent of stalls of the dictionary indicated by argument.
 
-        Params:
+        Args:
             dic :   dict    ; dictionary with stalls of the corresponding part
 
         Returns:
@@ -187,13 +189,13 @@ class LevelExecution(ABC):
         for key in dict.keys():
             total_value += self._get_total_value_of_list(dict.get(key), True)
         return total_value
-        pass
+        
     
     def _get_stalls_of_part_per_kernel(self, dict : dict) -> float:
         """
         Get percent of stalls of the dictionary indicated by argument in each kernel.
 
-        Params:
+        Args:
             dic :   dict    ; dictionary with stalls of the corresponding part
 
         Returns:
@@ -204,7 +206,7 @@ class LevelExecution(ABC):
         for key in dict.keys():
             total_value += self._get_total_value_of_list(dict.get(key), True)
         return total_value
-        pass
+        
 
     def collect_metrics(self) -> bool:
         """
@@ -215,7 +217,7 @@ class LevelExecution(ABC):
         """
 
         return self._collect_metrics
-        pass
+        
 
     def input_file(self) -> str:
         """ 
@@ -226,7 +228,7 @@ class LevelExecution(ABC):
         """
         
         return self._input_file
-        pass        
+                
 
     def output_file(self) -> str:
         """ 
@@ -237,7 +239,7 @@ class LevelExecution(ABC):
         """
         
         return self._output_file
-        pass
+        
 
     def output_scan_file(self) -> str:
         """ 
@@ -248,7 +250,7 @@ class LevelExecution(ABC):
         """
         
         return self._output_scan_file
-        pass
+        
  
     @abstractmethod
     def _percentage_time_kernel(self, kernel_number : int) -> float:
@@ -256,7 +258,7 @@ class LevelExecution(ABC):
         Get time percentage in each Kernel based on cycles elapsed metric/event name
         Each kernel measured is an index of dictionaries used by this program.
 
-        Params:
+        Args:
                 kernel_number                   : int   ; number of kernel
                 
                 cycles_elapsed_counter_name     : str   ; name of event/metric to obatin cycles elapsed in kernel
@@ -264,7 +266,7 @@ class LevelExecution(ABC):
                 ElapsedCyclesError      ; cycles elapsed in 'kernel_number' cannot be obtained
         """
         
-        pass
+        
    
     @abstractmethod
     def _create_graph(self) -> PieChart:
@@ -276,17 +278,19 @@ class LevelExecution(ABC):
         """
 
         pass
+        
    
     @abstractmethod
     def _add_graph_data(self, graph : PieChart):
         """ 
         Add data to graph.
 
-        Params:
+        Args:
             graph   : PieChart  ; reference to PieChart where save figures        
         """
         
         pass
+        
         
     def showGraph(self):
         """Show graph to show results."""
@@ -294,13 +298,13 @@ class LevelExecution(ABC):
         graph : PieChart = self._create_graph()
         self._add_graph_data(graph)
         graph.show()
-        pass
+        
 
     def saveGraph(self, file_str : str):
         """ 
         Save graph in file indicated as argument.
 
-        Params:
+        Args:
             file_str    : str   ; path to output file where save fig
         """
         
@@ -308,40 +312,3 @@ class LevelExecution(ABC):
         self._add_graph_data(graph)
         graph.save(file_str)
 
-    def add_kernel(kernel_name : str): 
-        """ 
-        Add kernel to list of kernels.
-
-        Params:
-            kernel_name : str   ; name of the kernel to be added.
-        """
-
-        self.__kernels.append(kernel_name)
-        pass
-    
-    def kernels() -> list:
-        """
-        Returns list of kernels.
-
-        Returns:
-            list with kernels.
-        """
-
-        return self.__kernels
-        pass
-
-    def kernel_position(kernel_name : str) -> list:
-        """
-        Returns a list with the positions of the kernel (profiled) indicated by argument.
-
-        Returns:
-            list of integers with the positions of the integer
-        """
-
-        positions : list[int] = list()
-        i : int
-        for i in range(0, len(self.__kernels)):
-            if self.__kernels[i] == kernel_name:
-                positions.append(i)
-        return positions
-        pass

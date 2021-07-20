@@ -27,7 +27,7 @@ class BackMemoryBoundNsight(MetricMeasureNsight, BackMemoryBound):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -38,7 +38,7 @@ class BackMemoryBoundNsight(MetricMeasureNsight, BackMemoryBound):
         """
 
         super().__init__(name, description, metrics)
-        pass
+        
 
 class BackMemoryBoundNvprof(MetricMeasureNvprof, BackMemoryBound):
     """Class that defines the Back-End.MemoryBound part with nvprof scan tool."""
@@ -47,7 +47,7 @@ class BackMemoryBoundNvprof(MetricMeasureNvprof, BackMemoryBound):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -59,6 +59,6 @@ class BackMemoryBoundNvprof(MetricMeasureNvprof, BackMemoryBound):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 
 

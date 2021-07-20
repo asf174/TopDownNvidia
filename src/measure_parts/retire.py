@@ -26,7 +26,7 @@ class RetireNsight(MetricMeasureNsight, Retire):
         """
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -37,7 +37,7 @@ class RetireNsight(MetricMeasureNsight, Retire):
         """
 
         super().__init__(name, description, metrics)    
-        pass
+        
                 
 class RetireNvprof(MetricMeasureNvprof, Retire):
     """Class that defines the Retire part with nvprof scan tool."""
@@ -46,7 +46,7 @@ class RetireNvprof(MetricMeasureNvprof, Retire):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -58,5 +58,5 @@ class RetireNvprof(MetricMeasureNvprof, Retire):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 

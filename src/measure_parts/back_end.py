@@ -25,7 +25,7 @@ class BackEndNsight(MetricMeasureNsight, BackEnd):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -36,7 +36,7 @@ class BackEndNsight(MetricMeasureNsight, BackEnd):
         """
 
         super().__init__(name, description, metrics)        
-        pass
+        
                     
 class BackEndNvprof(MetricMeasureNvprof, BackEnd):
     """Class that defines the BackEnd part with nvprof scan tool."""
@@ -45,7 +45,7 @@ class BackEndNvprof(MetricMeasureNvprof, BackEnd):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -57,5 +57,5 @@ class BackEndNvprof(MetricMeasureNvprof, BackEnd):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 

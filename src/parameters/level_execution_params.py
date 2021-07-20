@@ -49,5 +49,5 @@ class LevelExecutionParameters:
         """
         return (["IPC Degradation (LEVEL ONE)", "STALLS on TOTAL (LEVEL ONE)", "IPC Degradation on TOTAL (LEVEL TWO)", "STALLS on TOTAL (LEVEL TWO)",
                                                                     "STALLS on " + front_end_name + " (LEVEL TWO)", "STALLS on " + back_end_name  + " (LEVEL TWO)"])
-        pass
+        
 

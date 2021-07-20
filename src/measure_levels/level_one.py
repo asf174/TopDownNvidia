@@ -49,7 +49,7 @@ class LevelOne(LevelExecution, ABC):
         """
         Set results of execution ALREADY DONE. Results are in the argument.
 
-        Params:
+        Args:
             output_command : str    ; str with results of execution.
         """
         
@@ -66,13 +66,13 @@ class LevelOne(LevelExecution, ABC):
             output_command = Path(super().input_file()).read_text()      
         self.set_results(output_command)
         self._get_results(lst_output)
-        pass
+        
     
     def _get_ipc(self, ipc_metric_name : str) -> float:
         """
         Get IPC of execution based on metric name.
 
-        Params:
+        Args:
             ipc_metric_name : str ; name of metric computed by NVIDIA scan tool
 
         Raises:
@@ -88,7 +88,7 @@ class LevelOne(LevelExecution, ABC):
             raise IpcMetricNotDefined
         total_ipc : float = self._get_total_value_of_list(ipc_list, True)
         return total_ipc
-        pass
+        
 
     @abstractmethod
     def ipc(self) -> float:
@@ -105,7 +105,7 @@ class LevelOne(LevelExecution, ABC):
         """
         Get "RETIRE" IPC of execution based on warp execution efficiency metric name
 
-        Params:
+        Args:
             warp_exec_efficiency_name : str ; string with warp execution efficiency metricc name
 
         Raises:
@@ -118,7 +118,7 @@ class LevelOne(LevelExecution, ABC):
             raise RetireIpcMetricNotDefined
         total_warp_execution_efficiency : float = self._get_total_value_of_list(warp_execution_efficiency_list, True)
         return self.ipc()*(total_warp_execution_efficiency/100.0)
-        pass
+        
 
     @abstractmethod
     def retire_ipc(self) -> float:
@@ -187,7 +187,7 @@ class LevelOne(LevelExecution, ABC):
         back_end_stall : float = super()._get_stalls_of_part(self._back_end.metrics())
         front_end_stall : float = super()._get_stalls_of_part(self._front_end.metrics())
         return front_end_stall + back_end_stall
-        pass
+        
 
 
     def front_end_stall(self) -> float:
@@ -200,7 +200,7 @@ class LevelOne(LevelExecution, ABC):
 
         front_end_stall : float = super()._get_stalls_of_part(self._front_end.metrics())
         return (front_end_stall/self.total_front_back_stall())*100
-        pass
+        
     
     def back_end_stall(self) -> float:
         """
@@ -212,14 +212,14 @@ class LevelOne(LevelExecution, ABC):
 
         back_end_stall : float = super()._get_stalls_of_part(self._back_end.metrics())
         return (back_end_stall/self.total_front_back_stall())*100
-        pass
+        
     
 
     def _diver_ipc_degradation(self, warp_exec_efficiency_name  : str, issue_ipc_name : str) -> float:
         """
         Find IPC degradation due to Divergence part based on the name of the required metric.
 
-        Params:
+        Args:
             warp_exec_efficiency_name  : str   ; name of metric to obtain warp execution efficiency
 
             issue_ipc_name             : str   ; name of metric to bain issue ipc
@@ -242,7 +242,7 @@ class LevelOne(LevelExecution, ABC):
         if ipc_diference < 0.0:
             ipc_diference = 0.0
         return ipc * (1.0 - (total_warp_execution_efficiency/100.0)) + ipc_diference
-        pass
+        
 
     @abstractmethod
     def _divergence_ipc_degradation(self) -> float:
@@ -282,7 +282,7 @@ class LevelOne(LevelExecution, ABC):
         for i in range(0, len(super().kernels())):
             list_stall_ipc_per_kernel.append(max_ipc - list_retire_ipc[i] - list_divergence_ipc_degradation[i])
         return list_stall_ipc_per_kernel
-        pass
+        
 
 
     def divergence_percentage_ipc_degradation(self) -> float:
@@ -294,7 +294,7 @@ class LevelOne(LevelExecution, ABC):
         """
 
         return (self._divergence_ipc_degradation()/super().get_device_max_ipc())*100.0
-        pass
+        
 
     def front_end_percentage_ipc_degradation(self) -> float:
         """
@@ -305,7 +305,7 @@ class LevelOne(LevelExecution, ABC):
         """
         
         return ((self._stall_ipc()*(self.front_end_stall()/100.0))/self.get_device_max_ipc())*100.0
-        pass
+        
 
     def back_end_percentage_ipc_degradation(self) -> float:
         """
@@ -316,7 +316,7 @@ class LevelOne(LevelExecution, ABC):
         """
         
         return ((self._stall_ipc()*(self.back_end_stall()/100.0))/super().get_device_max_ipc())*100.0
-        pass
+        
 
     def retire_ipc_percentage(self) -> float:
         """
@@ -336,13 +336,13 @@ class LevelOne(LevelExecution, ABC):
         """
         
         return ((self._stall_ipc()*(self.front_end_stall()/100.0))/self.get_device_max_ipc())*100.0
-        pass
+        
 
     @abstractmethod
     def _set_front_back_divergence_retire_results(self, results_launch : str):
         """ Get Results from FrontEnd, BanckEnd, Divergence and Retire parts.
         
-        Params:
+        Args:
             results_launch  : str   ; results generated by NVIDIA scan tool
             
         Raises:
@@ -365,13 +365,13 @@ class LevelOne(LevelExecution, ABC):
         if len(titles_graphs) < 2:
             raise GraphsTitleSizeError
         return PieChart(1,2, "Description of Results", titles_graphs) # pie chart graph
-        pass
+        
    
     def _add_graph_data(self, graph : PieChart):
         """ 
         Add data to graph.
 
-        Params:
+        Args:
             graph   : PieChart  ; reference to PieChart where save figures
             
             title   : str       ; title of graph to be added        

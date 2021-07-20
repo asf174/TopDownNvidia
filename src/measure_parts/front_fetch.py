@@ -26,7 +26,7 @@ class FrontFetchNsight(MetricMeasureNsight, FrontFetch):
         """
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -37,7 +37,7 @@ class FrontFetchNsight(MetricMeasureNsight, FrontFetch):
         """
 
         super(FrontFetch, self).__init__(name, description, metrics)    
-        pass
+        
                 
 class FrontFetchNvprof(MetricMeasureNvprof, FrontFetch):
     """Class that defines the Front-End.Fetch part with nvprof scan tool."""
@@ -46,7 +46,7 @@ class FrontFetchNvprof(MetricMeasureNvprof, FrontFetch):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -58,5 +58,5 @@ class FrontFetchNvprof(MetricMeasureNvprof, FrontFetch):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 

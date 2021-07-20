@@ -26,7 +26,7 @@ class MemoryL1BoundNsight(MetricMeasureNsight, MemoryL1Bound):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -37,5 +37,5 @@ class MemoryL1BoundNsight(MetricMeasureNsight, MemoryL1Bound):
         """
 
         super().__init__(name, description, metrics)
-        pass
+        
   

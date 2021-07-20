@@ -19,7 +19,7 @@ class ComputeCapabilityNumberError(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
-        pass
+        
 
 class ModeExecutionError(Exception):
     """Exception raised when compute capability of (current) device cannot be obtained
@@ -34,5 +34,5 @@ class ModeExecutionError(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
-        pass
+        
 

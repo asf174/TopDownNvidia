@@ -16,7 +16,7 @@ class ProfilingError(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
-        pass
+        
 
 class MetricNotAsignedToPart(Exception):
     """Exception raised when a metric has not been assigned to any analysis part"""
@@ -27,7 +27,7 @@ class MetricNotAsignedToPart(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE + metric_name)
-        pass
+        
 
 class EventNotAsignedToPart(Exception):
     """Exception raised when an event has not been assigned to any analysis part
@@ -42,7 +42,7 @@ class EventNotAsignedToPart(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE + event_name)
-        pass
+        
 
 class MetricNoDefined(Exception):
     """Exception raised when a metric has introduced but does not exist in NVIDIA scan tool.
@@ -57,7 +57,7 @@ class MetricNoDefined(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE + metric_name)
-        pass
+        
 
 class EventNoDefined(Exception):
     """Exception raised when a event has introduced but does not exist in NVIDIA scan tool.
@@ -72,7 +72,7 @@ class EventNoDefined(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE + event_name)
-        pass
+        
 
 class IpcMetricNotDefined(Exception):
     """Exception raised if IPC cannot be obtanied because it was not 
@@ -85,7 +85,7 @@ class IpcMetricNotDefined(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
-        pass
+        
 
 class RetireIpcMetricNotDefined(Exception):
     """Exception raised if "retire" IPC cannot be obtanied because it was not 
@@ -99,7 +99,7 @@ class RetireIpcMetricNotDefined(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
-        pass
+        
 
 class MetricDivergenceIpcDegradationNotDefined(Exception):
     """Exception raised when a metric required to calculate the percentage of IPC lost in 
@@ -115,7 +115,7 @@ class MetricDivergenceIpcDegradationNotDefined(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE + metric_name)
-        pass
+        
 
 class ElapsedCyclesError(Exception):
     """Exception raised if cannot obtain the elapsed time in each kernel measured."""
@@ -126,7 +126,7 @@ class ElapsedCyclesError(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
-        pass
+        
 
 class ComputedAsAverageError(Exception):
     """Exception raised when a metric or event that is a percentage has been configured
@@ -142,7 +142,7 @@ class ComputedAsAverageError(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE + metric_name)
-        pass
+        
 
 class TitleSizeError(Exception):
     """Exception raised if size of graph's title list is less than minimum"""
@@ -153,12 +153,12 @@ class TitleSizeError(Exception):
         """
         Show error message.
         
-        Params:
+        Args:
             minimum_graph_num : int ; minimum number of graphs
         """
 
         super().__init__(self.C_ERROR_MESSAGE + str(minimum_graph_num))
-        pass
+        
 
 class ComputeCapabilityError(Exception):
     """Exception raised if cannot obtain the compute capability"""
@@ -169,7 +169,7 @@ class ComputeCapabilityError(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
-        pass
+        
 
 class MaximumIPCError(Exception):
     """Exception raised if cannot obtain the MAX ipc of GPU"""
@@ -180,4 +180,16 @@ class MaximumIPCError(Exception):
         """Show error message."""
         
         super().__init__(self.C_ERROR_MESSAGE)
-        pass
+        
+
+class GraphsTitleSizeError(Exception):
+    """Exception raised if size of length of titles is incorrect"""
+    
+    C_ERROR_MESSAGE     : str = "INCORRECT size of titles length"
+
+    def __init__(self):
+        """Show error message."""
+        
+        super().__init__(self.C_ERROR_MESSAGE)
+        
+

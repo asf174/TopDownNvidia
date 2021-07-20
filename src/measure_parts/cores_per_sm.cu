@@ -2,7 +2,7 @@
  * Program to show the COMPUTE CAPABILITY of the current device
  *
  * Author: Alvaro Saiz (UC)
- * Version: July-2021
+ * Version: Jul 2021
 */
 #include <stdio.h>
 //#define CURRENT_DEVICE 1

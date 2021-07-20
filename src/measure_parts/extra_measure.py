@@ -25,7 +25,7 @@ class ExtraMeasureNsight(MetricMeasureNsight, ExtraMeasure):
         """
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -36,7 +36,7 @@ class ExtraMeasureNsight(MetricMeasureNsight, ExtraMeasure):
         """
 
         super().__init__(name, description, metrics)    
-        pass
+        
                 
 class ExtraMeasureNvprof(MetricMeasureNvprof, ExtraMeasure):
     """Class that defines the ExtraMeasure part with nvprof scan tool."""
@@ -45,7 +45,7 @@ class ExtraMeasureNvprof(MetricMeasureNvprof, ExtraMeasure):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -57,5 +57,5 @@ class ExtraMeasureNvprof(MetricMeasureNvprof, ExtraMeasure):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 

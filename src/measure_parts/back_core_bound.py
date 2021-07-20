@@ -26,7 +26,7 @@ class BackCoreBoundNsight(MetricMeasureNsight, BackCoreBound):
         """
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -37,7 +37,7 @@ class BackCoreBoundNsight(MetricMeasureNsight, BackCoreBound):
         """
 
         super().__init__(name, description, metrics)
-        pass
+        
 
 class BackCoreBoundNvprof(MetricMeasureNvprof, BackCoreBound):
     """Class that defines the Back-End.CoreBound part with nvprof scan tool."""
@@ -46,7 +46,7 @@ class BackCoreBoundNvprof(MetricMeasureNvprof, BackCoreBound):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -58,6 +58,6 @@ class BackCoreBoundNvprof(MetricMeasureNvprof, BackCoreBound):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 
   

@@ -113,14 +113,14 @@ class TopDown:
         self.__output_graph_file : str = args.output_graph_file
         self.__output_scan_file : str = args.output_scan_file
         self.__input_scan_file : str = args.input_scan_file
-        pass
+        
     
     def __add_show_desc_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add show-description argument. 'C_LONG_DESCRIPTION_ARGUMENT_SHORT_OPTION' is the short 
         option of argument and 'C_LONG_DESCRIPTION_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
@@ -130,14 +130,14 @@ class TopDown:
             help = TopDownParameters.C_SHOW_DESCRIPTION_ARGUMENT_DESCRIPTION, 
             action = 'store_false',
             dest = 'show_desc')
-        pass
+        
 
     def __add_metrics_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add metrics argument. 'C_METRICS_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_METRICS_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
@@ -147,14 +147,14 @@ class TopDown:
             help = TopDownParameters.C_METRICS_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'metrics')
-        pass
+        
     
     def __add_show_graph_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add graph argument. 'C_GRAPH_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_GRAPH_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
@@ -164,14 +164,14 @@ class TopDown:
             help = TopDownParameters.C_GRAPH_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'show_graph')
-        pass
+        
     
     def __add_all_measures_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add all measures argument. 'C_ALL_MEASURES_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_ALL_MEASURES_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
@@ -181,14 +181,14 @@ class TopDown:
             help = TopDownParameters.C_ALL_MEASURES_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'all_measures')
-        pass
+        
 
     def __add_events_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add events argument. 'C_EVENTS_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_EVENTS_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
@@ -198,14 +198,14 @@ class TopDown:
             help = TopDownParameters.C_EVENTS_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'events')
-        pass
+        
         
     def __add_program_argument(self, group : argparse._ArgumentGroup) :
         """ 
         Add program argument. 'C_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             group : argparse._ArgumentGroup ; group of the argument.
         """
 
@@ -219,14 +219,14 @@ class TopDown:
             type = str, 
             #metavar='/path/to/file',
             dest = 'program')
-        pass
+        
 
     def __add_level_argument(self, group : argparse._ArgumentGroup):
         """ 
         Add level argument. 'C_LEVEL_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_LEVEL_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             group : argparse._ArgumentGroup ; group of the argument.
         """
         
@@ -240,14 +240,14 @@ class TopDown:
             choices = range(TopDownParameters.C_MIN_LEVEL_EXECUTION, TopDownParameters.C_MAX_LEVEL_EXECUTION + 1), # range [1,3], produces error, 
             metavar = '[NUM]',
             dest = 'level')
-        pass
+        
 
     def __add_ouput_file_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add output-file argument. 'C_OUTPUT_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_OUTPUT_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
         
@@ -261,14 +261,14 @@ class TopDown:
             type = str, 
             #metavar='/path/to/file',
             dest = 'file')
-        pass
+        
 
     def __add_verbose_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add verbose argument. 'C_VERBOSE_ARGUMENT_SHORT_OPTION' is the short 
         option of argument and 'C_VERBOSE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
@@ -278,14 +278,14 @@ class TopDown:
             help = TopDownParameters.C_VERBOSE_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'verbose')
-        pass
+        
     
     def __add_delete_output_file_content(self, parser : argparse.ArgumentParser):
         """ 
         Add output's file delete content argument. 'C_DELETE_CONTENT_ARGUMENT_SHORT_OPTION' is the short 
         option of argument and 'C_DELETE_CONTENT_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
 
@@ -295,14 +295,14 @@ class TopDown:
             help = TopDownParameters.C_DELETE_CONTENT_ARGUMENT_DESCRIPTION,
             action = 'store_true',
             dest = 'delete_output_file_content')
-        pass
+        
 
     def __add_ouput_graph_file_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add output graph file argument. 'C_OUTPUT_GRAPH_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_OUTPUT_GRAPH_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
         
@@ -316,14 +316,14 @@ class TopDown:
             type = str, 
             #metavar='/path/to/file',
             dest = 'output_graph_file')
-        pass
+        
 
     def __add_input_scan_file_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add input scan file argument. 'C_INPUT_SCAN_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_INPUT_SCAN_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
         
@@ -337,14 +337,14 @@ class TopDown:
             type = str, 
             #metavar='/path/to/file',
             dest = 'input_scan_file')
-        pass
+        
 
     def __add_output_scan_file_argument(self, parser : argparse.ArgumentParser):
         """ 
         Add output scan file argument. 'C_OUTPUT_SCAN_FILE_ARGUMENT_SHORT_OPTION' is the short option of argument
         and 'C_OUTPUT_SCAN_FILE_ARGUMENT_LONG_OPTION' is the long version of argument.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the argument.
         """
         
@@ -358,13 +358,13 @@ class TopDown:
             type = str, 
             #metavar='/path/to/file',
             dest = 'output_scan_file')
-        pass
+        
 
     def __add_arguments(self, parser : argparse.ArgumentParser):
         """ 
         Add arguments of the pogram.
 
-        Params:
+        Args:
             parser : argparse.ArgumentParser ; group of the arguments.
         """
 
@@ -384,7 +384,7 @@ class TopDown:
         self.__add_ouput_graph_file_argument(parser)
         self.__add_output_scan_file_argument(parser)
         self.__add_input_scan_file_argument(parser)
-        pass
+        
 
     def program(self) -> str:
         """
@@ -395,7 +395,7 @@ class TopDown:
         """
 
         return self.__program
-        pass
+        
     
     def level(self) -> int:
         """ 
@@ -406,7 +406,7 @@ class TopDown:
         """ 
 
         return self.__level
-        pass
+        
 
     def output_file(self) -> str:
         """
@@ -418,7 +418,7 @@ class TopDown:
         """
 
         return self.__output_file # descriptor to file or None
-        pass
+        
 
     def output_graph_file(self) -> str:
         """
@@ -430,7 +430,7 @@ class TopDown:
         """
 
         return self.__output_graph_file # descriptor to file or None
-        pass
+        
 
     def output_scan_file(self) -> str:
         """
@@ -442,7 +442,7 @@ class TopDown:
         """
 
         return self.__output_scan_file # descriptor to file or None
-        pass
+        
     
     def input_scan_file(self) -> str:
         """
@@ -454,7 +454,7 @@ class TopDown:
         """
 
         return self.__input_scan_file # descriptor to file or None
-        pass
+        
     
     def show_verbose(self) -> bool:
         """
@@ -465,7 +465,7 @@ class TopDown:
         """
 
         return self.__verbose
-        pass
+        
 
     def show_desc(self) -> bool:
         """
@@ -476,7 +476,7 @@ class TopDown:
         """
 
         return self.__show_desc
-        pass
+        
 
     def show_metrics(self) -> bool:
         """
@@ -488,7 +488,7 @@ class TopDown:
         """
 
         return self.__show_metrics
-        pass
+        
 
     def show_all_measures(self) -> bool:
         """
@@ -500,7 +500,7 @@ class TopDown:
         """
 
         return self.__show_all_measurements 
-        pass
+        
 
     def show_events(self) -> bool:
         """
@@ -512,7 +512,7 @@ class TopDown:
         """
 
         return self.__show_events
-        pass
+        
     
     def delete_output_file_content(self) -> bool:
         """
@@ -523,7 +523,7 @@ class TopDown:
         """
 
         return self.__delete_output_file_content
-        pass
+        
 
     def input_file(self) -> str:
         """
@@ -535,7 +535,7 @@ class TopDown:
         """
 
         return self.__input_scan_file 
-        pass
+        
 
     def show_graph(self) -> bool:
         """ 
@@ -546,7 +546,7 @@ class TopDown:
         """
         
         return self.__show_graph
-        pass
+        
 
     def __intro_message(self): 
         """ Intro message with information."""
@@ -604,7 +604,7 @@ class TopDown:
         printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
             output_file = self.output_file(), delete_content_file = False)
         print()
-        pass
+        
       
     def __show_level_one_results(self, level_execution : LevelOne):
         """Show results of level one."""
@@ -626,7 +626,7 @@ class TopDown:
         titles : list[str] = [level_execution.front_end().name(), level_execution.back_end().name(),
             level_execution.divergence().name(),level_execution.retire().name()]
         MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
-        pass
+        
 
     def __show_level_two_results(self, level_execution : LevelTwo):
         """Show results of level two."""
@@ -676,7 +676,7 @@ class TopDown:
         titles = [level_execution.divergence_branch().name(), level_execution.divergence_replay().name()]
         messages = [[ipc_degradation_branch_divergence_message, ipc_degradation_replay_divergence_message]]
         printer.print_two_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
-        pass
+        
 
     def __show_level_three_results(self, level_execution : LevelThree):
         """Show results of level three."""
@@ -722,7 +722,7 @@ class TopDown:
             + "\n\n" + ipc_degradation_memory_constant_memory_bound_message)
             MessageFormat().print_msg_box(messages, 1, None, level_execution.memory_constant_memory_bound().name(), self.output_file(),
             self.delete_output_file_content())
-        pass
+        
     
     def __show_results(self, level_execution):
         """ Show Results of execution indicated by argument.
@@ -858,7 +858,7 @@ class TopDown:
 
             self.__show_level_one_results(level_execution)
             print()
-        pass
+        
 
     def __is_nvprof_mode(self) -> bool:
         """
@@ -880,7 +880,7 @@ class TopDown:
         if compute_capability_float > TopDownParameters.C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE:
             return False
         return True
-        pass
+        
 
     def launch(self):
         """ Launch execution."""
@@ -1047,7 +1047,7 @@ class TopDown:
             level.showGraph()
         if not self.output_graph_file() is None:
             level.saveGraph(self.output_graph_file())
-    pass 
+     
 
 if __name__ == '__main__':
     td = TopDown()

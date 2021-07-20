@@ -26,7 +26,7 @@ class MemoryMioThrottleNsight(MetricMeasureNsight, MemoryMioThrottle):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -37,5 +37,5 @@ class MemoryMioThrottleNsight(MetricMeasureNsight, MemoryMioThrottle):
         """
 
         super().__init__(name, description, metrics)
-        pass
+        
   

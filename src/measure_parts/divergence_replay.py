@@ -26,7 +26,7 @@ class DivergenceReplayNsight(MetricMeasureNsight, DivergenceReplay):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -37,7 +37,7 @@ class DivergenceReplayNsight(MetricMeasureNsight, DivergenceReplay):
         """
 
         super().__init__(name, description, metrics)
-        pass
+        
 
 class DivergenceReplayNvprof(MetricMeasureNvprof, DivergenceReplay):
     """Class that defines the Divergence.Replay part with nvprof scan tool."""
@@ -46,7 +46,7 @@ class DivergenceReplayNvprof(MetricMeasureNvprof, DivergenceReplay):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -58,6 +58,6 @@ class DivergenceReplayNvprof(MetricMeasureNvprof, DivergenceReplay):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 
 

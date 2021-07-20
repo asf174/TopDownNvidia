@@ -25,7 +25,7 @@ class DivergenceNsight(MetricMeasureNsight, Divergence):
         """
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -36,7 +36,7 @@ class DivergenceNsight(MetricMeasureNsight, Divergence):
         """
 
         super().__init__(name, description, metrics)    
-        pass
+        
                 
 class DivergenceNvprof(MetricMeasureNvprof, Divergence):
     """Class that defines the Divergence part with nvprof scan tool."""
@@ -45,7 +45,7 @@ class DivergenceNvprof(MetricMeasureNvprof, Divergence):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -57,5 +57,5 @@ class DivergenceNvprof(MetricMeasureNvprof, Divergence):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 

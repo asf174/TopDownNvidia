@@ -25,7 +25,7 @@ class MemoryConstantMemoryBoundNsight(MetricMeasureNsight, MemoryConstantMemoryB
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -36,7 +36,7 @@ class MemoryConstantMemoryBoundNsight(MetricMeasureNsight, MemoryConstantMemoryB
         """
 
         super().__init__(name, description, metrics)
-        pass
+        
 
 class MemoryConstantMemoryBoundNvprof(MetricMeasureNvprof, MemoryConstantMemoryBound):
     """Class that defines the Core-Bound.ConstantMemoryBound part with nvprof scan tool."""
@@ -45,7 +45,7 @@ class MemoryConstantMemoryBoundNvprof(MetricMeasureNvprof, MemoryConstantMemoryB
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -57,6 +57,6 @@ class MemoryConstantMemoryBoundNvprof(MetricMeasureNvprof, MemoryConstantMemoryB
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 
   

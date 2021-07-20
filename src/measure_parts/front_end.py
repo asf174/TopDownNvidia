@@ -25,7 +25,7 @@ class FrontEndNsight(MetricMeasureNsight, FrontEnd):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -36,7 +36,7 @@ class FrontEndNsight(MetricMeasureNsight, FrontEnd):
         """
 
         super().__init__(name, description, metrics)        
-        pass
+        
                     
 class FrontEndNvprof(MetricMeasureNvprof, FrontEnd):
     """Class that defines the FrontEnd part with nvprof scan tool."""
@@ -45,7 +45,7 @@ class FrontEndNvprof(MetricMeasureNvprof, FrontEnd):
         """ 
         Set attributtes with argument values.
         
-        Params:
+        Args:
             
             name                : str   ;   measure name.
         
@@ -57,5 +57,5 @@ class FrontEndNvprof(MetricMeasureNvprof, FrontEnd):
         """
 
         super().__init__(name, description, metrics, events)
-        pass
+        
 
