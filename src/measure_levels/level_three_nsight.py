@@ -131,7 +131,6 @@ class LevelThreeNsight(LevelThree, LevelTwoNsight):
         super()._set_front_back_divergence_retire_results(output_command) # level one results
         super()._set_memory_core_decode_fetch_results(output_command) # level two
         self._set_memory_constant_memory_bound_mio_l1_bound_results(output_command) # level three
-        print(self.retire().metrics())
         
 
 
