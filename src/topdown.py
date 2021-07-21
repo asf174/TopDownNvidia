@@ -555,7 +555,7 @@ class TopDown:
         message : str = "TopDown Metholodgy over NVIDIA's GPUs"
         #printer.print_center_msg_box(msg = "TopDown Metholodgy over NVIDIA's GPUs", indent = 1, title = "", output_file = self.output_file(), 
         #        width = None, delete_content_file = self.delete_output_file_content())
-        printer.print_desplazed_underlined_str(message = message, output_file = self.output_file(), delete_content_file = False)
+        printer.print_desplazed_underlined_str(message = message, output_file = self.output_file(), delete_content_file = self.delete_output_file_content())
         print()
         message  = "\n\nWelcome to the " + sys.argv[0] + " program where you can check the bottlenecks of your\n" + \
             "CUDA program running on NVIDIA GPUs. This analysis is carried out considering the architectural\n" + \
@@ -582,9 +582,7 @@ class TopDown:
                    "- Input Scan File:                  " + str(self.input_scan_file()) + "\n" + 
                    "- Output Scan File:                 " + str(self.output_scan_file()))
         execute_with_nvprof : bool = self.__is_nvprof_mode()
-        show_metrics : bool = self.show_metrics()
         show_events : bool = self.show_events()
-        show_all : bool = self.show_all_measures()
         show_events_with_nsight : str = "\n"
         if not execute_with_nvprof:
             if show_events:
@@ -625,7 +623,7 @@ class TopDown:
         ipc_retire_message], [ipc_degradation_front_message, ipc_degradation_back_message, " ", " "]]
         titles : list[str] = [level_execution.front_end().name(), level_execution.back_end().name(),
             level_execution.divergence().name(),level_execution.retire().name()]
-        MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        MessageFormat().print_four_msg_box(messages, titles, 1, self.output_file(), False)
         
 
     def __show_level_two_results(self, level_execution : LevelTwo):
@@ -666,7 +664,7 @@ class TopDown:
             level_execution.back_core_bound().name(),level_execution.back_memory_bound().name()]
     
         printer : MessageFormat = MessageFormat()
-        printer.print_four_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        printer.print_four_msg_box(messages, titles, 1, self.output_file(), False)
         printer.print_max_line_length_message(message = "\n", max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
                 output_file = self.output_file(), delete_content_file = False)
         ipc_degradation_branch_divergence_message : str = ("{:<20} {:<6}".format("IPC DEGRADATION (%): ", 
@@ -675,7 +673,7 @@ class TopDown:
             str(round(level_execution.replay_divergence_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%'))   
         titles = [level_execution.divergence_branch().name(), level_execution.divergence_replay().name()]
         messages = [[ipc_degradation_branch_divergence_message, ipc_degradation_replay_divergence_message]]
-        printer.print_two_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+        printer.print_two_msg_box(messages, titles, 1, self.output_file(), False)
         
 
     def __show_level_three_results(self, level_execution : LevelThree):
@@ -690,8 +688,6 @@ class TopDown:
         ipc_degradation_memory_constant_memory_bound_message : str = ("IPC DEGRADATION                  (%): " +  
             str(round(level_execution.memory_constant_memory_bound_percentage_ipc_degradation(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
         if type(level_execution) is LevelThreeNsight:
-            memory_mio_throttle_name : str = level_execution.memory_mio_throttle().name()
-            memory_l1_bound_name : str = level_execution.memory_l1_bound().name()
             stalls_memory_mio_throttle_on_total_message : str = ("STALLS, on the total             (%): " +  
                 str(round(level_execution.memory_mio_throttle_stall(), TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + '%')
             stalls_memory_l1_bound_on_total_message : str = ("STALLS, on the total             (%): " +
@@ -715,26 +711,32 @@ class TopDown:
             stalls_memory_mio_throttle_on_memory_bound_message, stalls_memory_l1_bound_on_memory_bound_message], [stalls_memory_constant_memory_bound_on_back_message, 
             stalls_memory_mio_throttle_on_back_message, stalls_memory_l1_bound_on_back_message], ["","","",""], 
             [ipc_degradation_memory_constant_memory_bound_message, ipc_degradation_memory_mio_throttle_message, ipc_degradation_memory_l1_bound_message]]
-            MessageFormat().print_three_msg_box(messages, titles, 1, self.output_file(), self.delete_output_file_content())
+            MessageFormat().print_three_msg_box(messages, titles, 1, self.output_file(), False)
         else:
             messages : str = ("\n" + stalls_memory_constant_memory_bound_on_total_message + "\n" + 
             stalls_memory_constant_memory_bound_on_memory_bound_message + "\n" + stalls_memory_constant_memory_bound_on_back_message 
             + "\n\n" + ipc_degradation_memory_constant_memory_bound_message)
             MessageFormat().print_msg_box(messages, 1, None, level_execution.memory_constant_memory_bound().name(), self.output_file(),
-            self.delete_output_file_content())
+            False)
         
     
     def __show_results(self, level_execution):
         """ Show Results of execution indicated by argument.
 
-        Parameters:
-            level_one   : LevelOne/LevelTwo/LevelThree  ; reference to level one/two/three analysis ALREADY DONE.
+        Args:
+            level_execution   : LevelOne/LevelTwo/LevelThree(Nsight/Nvprof)  ; reference to level one/two/three analysis ALREADY DONE in the
         """
+
+        delete_content : bool # check if it has to delete content 
+        if self.show_verbose():
+            delete_content = False
+        else:
+            delete_content = self.delete_output_file_content()
 
         printer : MessageFormat = MessageFormat()
         message : str = "The results have been obtained correctly. General results of IPC are the following:\n\n"
         printer.print_max_line_length_message(message = message, max_length = TopDownParameters.C_NUM_MAX_CHARACTERS_PER_LINE, 
-            output_file = self.output_file(), delete_content_file = False)
+            output_file = self.output_file(), delete_content_file = delete_content)
         print()
         message = ("IPC OBTAINED: " + str(round(level_execution.retire_ipc(),TopDownParameters.C_MAX_NUM_RESULTS_DECIMALS)) + " | MAXIMUM POSSIBLE IPC: " +  
             str(level_execution.get_device_max_ipc()))
@@ -876,7 +878,7 @@ class TopDown:
             raise ModeExecutionError
         compute_capability_float : float = float(compute_capability)
         if compute_capability_float < 0.0:
-            raise ComputeCabilityNumberError
+            raise ComputeCapabilityNumberError
         if compute_capability_float > TopDownParameters.C_COMPUTE_CAPABILITY_NVPROF_MAX_VALUE:
             return False
         return True
