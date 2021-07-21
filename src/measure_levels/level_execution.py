@@ -131,9 +131,9 @@ class LevelExecution(ABC):
         """
 
         dict_warps_schedulers_per_cc : dict = dict({3.0: 4, 3.2: 4, 3.5: 4, 3.7: 4, 5.0: 4, 5.2: 4, 5.3: 4, 
-            6.0: 2, 6.1: 4, 6.2: 4, 7.0: 4, 7.2:4, 7.5: 4, 8.0: 1}) 
-        dict_ins_per_cycle : dict = dict({3.0: 1.5, 3.2: 2, 3.5: 2, 3.7: 2, 5.0: 2, 5.2: 2, 5.3: 2, 
-            6.0: 2, 6.1: 2, 6.2: 2, 7.0: 1, 7.0: 1, 7.5: 1, 8.0: 1})
+            6.0: 2, 6.1: 4, 6.2: 4, 7.0: 4, 7.2: 4, 7.5: 4, 8.0: 1}) 
+        dict_ins_per_cycle : dict = dict({3.0: 2, 3.2: 2, 3.5: 2, 3.7: 2, 5.0: 2, 5.2: 2, 5.3: 2, 
+            6.0: 2, 6.1: 2, 6.2: 2, 7.0: 1, 7.2: 1, 7.5: 1, 8.0: 1})
         return dict_warps_schedulers_per_cc.get(self._compute_capability)*dict_ins_per_cycle.get(self._compute_capability)
         
     
