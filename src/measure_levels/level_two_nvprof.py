@@ -379,7 +379,7 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
         is_defined_extra_measure_value : str = super().extra_measure().get_metric_value(metric_name)
         is_defined_extra_measure_description : str = super().extra_measure().get_metric_description(metric_name)
 
-        # comprobar el "if not"
+    
         if not ((is_defined_front_end_value is None and is_defined_front_end_description is None)
             or (is_defined_back_end_value is None and is_defined_back_end_description is None)
             or (is_defined_divergence_value is None and is_defined_divergence_description is None)
@@ -401,20 +401,20 @@ class LevelTwoNvprof(LevelTwo, LevelOneNvprof):
             or false in other case
         """
 
-        is_defined_front_end_value : str = self.front_end().get_metric_value(event_name)
-        is_defined_front_end_description : str = self.front_end().get_metric_description(event_name)
+        is_defined_front_end_value : str = super().front_end().get_metric_value(event_name)
+        is_defined_front_end_description : str = super().front_end().get_metric_description(event_name)
 
-        is_defined_back_end_value : str = self.back_end().get_metric_value(event_name)
-        is_defined_back_end_description : str = self.back_end().get_metric_description(event_name)
+        is_defined_back_end_value : str = super().back_end().get_metric_value(event_name)
+        is_defined_back_end_description : str = super().back_end().get_metric_description(event_name)
 
-        is_defined_divergence_value : str = self.divergence().get_metric_value(event_name)
-        is_defined_divergence_description : str = self.divergence().get_metric_description(event_name)
+        is_defined_divergence_value : str = super().divergence().get_metric_value(event_name)
+        is_defined_divergence_description : str = super().divergence().get_metric_description(event_name)
 
-        is_defined_retire_value : str = self.retire().get_metric_value(event_name)
-        is_defined_retire_description : str = self.retire().get_metric_description(event_name)
+        is_defined_retire_value : str = super().retire().get_metric_value(event_name)
+        is_defined_retire_description : str = super().retire().get_metric_description(event_name)
 
-        is_defined_extra_measure_value : str = self.extra_measure().get_metric_value(event_name)
-        is_defined_extra_measure_description : str = self.extra_measure().get_metric_description(event_name)
+        is_defined_extra_measure_value : str = super().extra_measure().get_metric_value(event_name)
+        is_defined_extra_measure_description : str = super().extra_measure().get_metric_description(event_name)
 
         if not ((is_defined_front_end_value is None and is_defined_front_end_description is None)
             or (is_defined_back_end_value is None and is_defined_back_end_description is None)

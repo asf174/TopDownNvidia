@@ -54,7 +54,7 @@ class LevelOne(LevelExecution, ABC):
         """
         
         self._set_front_back_divergence_retire_results(output_command)
-        pass
+        
     
     def run(self, lst_output : list):
         """Run execution."""
